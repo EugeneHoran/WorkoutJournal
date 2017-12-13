@@ -1,8 +1,9 @@
-package eh.workout.journal.com.workoutjournal.ui.journal;
+package eh.workout.journal.com.workoutjournal.ui.entry;
 
 
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +16,13 @@ import eh.workout.journal.com.workoutjournal.databinding.RecyclerSetItemWithRecy
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
-import eh.workout.journal.com.workoutjournal.db.relations.DateSetRepRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
 
-public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<DateSetRepRelation> itemList = new ArrayList<>();
-    private JournalRecyclerInterface listener;
+public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<ExerciseSetRepRelation> itemList = new ArrayList<>();
 
-    void setListener(JournalRecyclerInterface listener) {
-        this.listener = listener;
-    }
-
-    interface JournalRecyclerInterface {
-        void onWorkoutClicked(String setId);
-    }
-
-    void setItems(final List<DateSetRepRelation> items) {
+    void setItems(final List<ExerciseSetRepRelation> items) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
@@ -44,19 +36,17 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
 
             @Override
             public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                DateSetRepRelation old = itemList.get(oldItemPosition);
-                DateSetRepRelation newItem = items.get(newItemPosition);
+                ExerciseSetRepRelation old = itemList.get(oldItemPosition);
+                ExerciseSetRepRelation newItem = items.get(newItemPosition);
                 return old.getJournalSetEntity().getId().equals(newItem.getJournalSetEntity().getId());
             }
 
             @Override
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                DateSetRepRelation old = itemList.get(oldItemPosition);
-                DateSetRepRelation newItem = items.get(newItemPosition);
+                ExerciseSetRepRelation old = itemList.get(oldItemPosition);
+                ExerciseSetRepRelation newItem = items.get(newItemPosition);
                 return old.getJournalSetEntity().getId().equals(newItem.getJournalSetEntity().getId())
-                        && old.getJournalRepEntityList().size() == newItem.getJournalRepEntityList().size() &&
-                        old.getJournalRepEntityList().equals(newItem.getJournalRepEntityList()) &&
-                        old.getExerciseOrmEntity().equals(newItem.getExerciseOrmEntity());
+                        && old.getJournalRepEntityList().size() == newItem.getJournalRepEntityList().size();
             }
         });
         this.itemList.clear();
@@ -66,12 +56,12 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new JournalViewHolder(RecyclerSetItemWithRecyclerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new EntryHistoryViewHolder(RecyclerSetItemWithRecyclerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        JournalViewHolder holder = (JournalViewHolder) viewHolder;
+        EntryHistoryViewHolder holder = (EntryHistoryViewHolder) viewHolder;
         holder.bindView();
         viewHolder.itemView.setTag(this);
     }
@@ -81,42 +71,28 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         return itemList.size();
     }
 
-    public class JournalViewHolder extends RecyclerView.ViewHolder {
+    public class EntryHistoryViewHolder extends RecyclerView.ViewHolder {
         private RecyclerSetItemWithRecyclerBinding binding;
-        private JournalChildRepRecyclerAdapter adapter;
+        private EntryHistoryChildRepRecyclerAdapter adapter;
         private JournalSetEntity setEntity;
 
-        JournalViewHolder(RecyclerSetItemWithRecyclerBinding binding) {
+        EntryHistoryViewHolder(RecyclerSetItemWithRecyclerBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            adapter = new JournalChildRepRecyclerAdapter();
+            adapter = new EntryHistoryChildRepRecyclerAdapter();
         }
 
         void bindView() {
-            DateSetRepRelation dateSetRepRelation = itemList.get(getAdapterPosition());
+            ExerciseSetRepRelation dateSetRepRelation = itemList.get(getAdapterPosition());
             ExerciseOrmEntity ormEntity = dateSetRepRelation.getExerciseOrmEntity().get(0);
             setEntity = dateSetRepRelation.getJournalSetEntity();
-            binding.setTitle(setEntity.getName());
-            binding.setListener(workoutClickListener);
+            String title = String.valueOf(DateUtils.getRelativeTimeSpanString(setEntity.getTimestamp()));
+            binding.setTitle(title);
             adapter.setOneRepMax(ormEntity.getOneRepMax(), ormEntity.getRepId());
             binding.recycler.setAdapter(adapter);
             adapter.setItems(dateSetRepRelation.getJournalRepEntityList());
             binding.recycler.setLayoutFrozen(true);
-        }
-
-        public View.OnClickListener workoutClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    listener.onWorkoutClicked(setEntity.getExerciseId());
-                }
-            }
-        };
-
-        public void onWorkoutClicked(View view) {
-            if (listener != null) {
-                listener.onWorkoutClicked(setEntity.getExerciseId());
-            }
+            binding.menuMore.setVisibility(View.GONE);
         }
     }
 
@@ -125,7 +101,7 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
      * <p>
      * Reps
      */
-    class JournalChildRepRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    class EntryHistoryChildRepRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private List<JournalRepEntity> itemList = new ArrayList<>();
         private int setOneRepMax;
         private String repId;
@@ -143,12 +119,12 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new JournalViewHolder(RecyclerRepItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+            return new EntryRepViewHolder(RecyclerRepItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            JournalViewHolder holder = (JournalViewHolder) viewHolder;
+            EntryRepViewHolder holder = (EntryRepViewHolder) viewHolder;
             holder.bindView();
             viewHolder.itemView.setTag(this);
         }
@@ -158,10 +134,10 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             return itemList.size();
         }
 
-        class JournalViewHolder extends RecyclerView.ViewHolder {
+        class EntryRepViewHolder extends RecyclerView.ViewHolder {
             private RecyclerRepItemBinding binding;
 
-            JournalViewHolder(RecyclerRepItemBinding binding) {
+            EntryRepViewHolder(RecyclerRepItemBinding binding) {
                 super(binding.getRoot());
                 this.binding = binding;
             }
@@ -176,5 +152,4 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             }
         }
     }
-
 }

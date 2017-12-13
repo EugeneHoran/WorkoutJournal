@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import eh.workout.journal.com.workoutjournal.model.JournalDate;
 
-@Entity(tableName = "journal_date_entity")
+@Entity(tableName = "journal_date_entities")
 public class JournalDateEntity implements JournalDate {
     @PrimaryKey
     @NonNull
@@ -15,11 +15,6 @@ public class JournalDateEntity implements JournalDate {
     public long timestamp;
 
     public JournalDateEntity() {
-    }
-
-    public JournalDateEntity(@NonNull String id, long timestamp) {
-        this.id = id;
-        this.timestamp = timestamp;
     }
 
     @NonNull

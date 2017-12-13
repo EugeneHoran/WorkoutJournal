@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c4eea08b26a9051c29781d06a535d8eb",
+    "identityHash": "8559b0b398bce012be3e67d541b6996c",
     "entities": [
       {
-        "tableName": "journal_date_entity",
+        "tableName": "journal_date_entities",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -31,8 +31,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "journal_set_entity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `journalDateId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`journalDateId`) REFERENCES `journal_date_entity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "tableName": "journal_set_entities",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `journalDateId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`journalDateId`) REFERENCES `journal_date_entities`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -71,19 +71,10 @@
           ],
           "autoGenerate": false
         },
-        "indices": [
-          {
-            "name": "index_journal_set_entity_journalDateId",
-            "unique": false,
-            "columnNames": [
-              "journalDateId"
-            ],
-            "createSql": "CREATE  INDEX `index_journal_set_entity_journalDateId` ON `${TABLE_NAME}` (`journalDateId`)"
-          }
-        ],
+        "indices": [],
         "foreignKeys": [
           {
-            "table": "journal_date_entity",
+            "table": "journal_date_entities",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
@@ -96,8 +87,8 @@
         ]
       },
       {
-        "tableName": "journal_rep_entity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `position` INTEGER NOT NULL, `liftName` TEXT, `reps` TEXT, `weight` TEXT, `journalSetId` TEXT, `oneRepMax` REAL NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`journalSetId`) REFERENCES `journal_set_entity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "tableName": "journal_rep_entities",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `position` INTEGER NOT NULL, `liftName` TEXT, `reps` TEXT, `weight` TEXT, `journalSetId` TEXT, `oneRepMax` REAL NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`journalSetId`) REFERENCES `journal_set_entities`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -157,7 +148,7 @@
         "indices": [],
         "foreignKeys": [
           {
-            "table": "journal_set_entity",
+            "table": "journal_set_entities",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
@@ -170,7 +161,7 @@
         ]
       },
       {
-        "tableName": "ExerciseLiftEntity",
+        "tableName": "exercise_lift_entities",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `recent` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -202,7 +193,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "exercise_orm_entity",
+        "tableName": "exercise_orm_entities",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `oneRepMax` REAL NOT NULL, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `repId` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -254,7 +245,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c4eea08b26a9051c29781d06a535d8eb\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8559b0b398bce012be3e67d541b6996c\")"
     ]
   }
 }

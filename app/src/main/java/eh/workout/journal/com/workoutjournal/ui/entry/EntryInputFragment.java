@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.add.exercise;
+package eh.workout.journal.com.workoutjournal.ui.entry;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -16,35 +16,35 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.FragmentAddExerciseEntryHolderBinding;
+import eh.workout.journal.com.workoutjournal.databinding.FragmentEntryInputBinding;
 import eh.workout.journal.com.workoutjournal.util.MultiTextWatcher;
 
-public class AddExerciseEntryHolderFragment extends Fragment implements
+public class EntryInputFragment extends Fragment implements
         MultiTextWatcher.MultiTextWatcherInterfacePicker,
         NumberPicker.OnScrollListener,
         View.OnKeyListener {
-    public AddExerciseEntryHolderFragment() {
+    public EntryInputFragment() {
     }
 
-    public static AddExerciseEntryHolderFragment newInstance() {
-        return new AddExerciseEntryHolderFragment();
+    public static EntryInputFragment newInstance() {
+        return new EntryInputFragment();
     }
 
-    private AddExerciseEntryViewModel model;
+    private EntryViewModel model;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getParentFragment() != null) {
-            model = ViewModelProviders.of(getParentFragment()).get(AddExerciseEntryViewModel.class);
+            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModel.class);
         }
     }
 
-    FragmentAddExerciseEntryHolderBinding binding;
+    private FragmentEntryInputBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_exercise_entry_holder, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entry_input, container, false);
         return binding.getRoot();
     }
 
@@ -58,32 +58,46 @@ public class AddExerciseEntryHolderFragment extends Fragment implements
     }
 
     private void initPickers() {
-        editWeight = findInput(binding.pickerWeight);
-        editReps = findInput(binding.pickerReps);
+        editWeight = findInput(binding.viewInput.pickerWeight);
+        editReps = findInput(binding.viewInput.pickerReps);
         MultiTextWatcher multiTextWatcher = new MultiTextWatcher();
         multiTextWatcher.registerEditText(editWeight);
         multiTextWatcher.registerEditText(editReps);
         multiTextWatcher.setCallback(this);
-        binding.pickerReps.setMaxValue(100);
-        binding.pickerReps.setMinValue(1);
-        binding.pickerReps.setValue(10);
-        binding.pickerWeight.setMaxValue(999);
-        binding.pickerWeight.setMinValue(1);
-        binding.pickerWeight.setValue(185);
-        binding.pickerWeight.setOnScrollListener(this);
-        binding.pickerReps.setOnScrollListener(this);
+        binding.viewInput.pickerReps.setMaxValue(100);
+        binding.viewInput.pickerReps.setMinValue(1);
+        binding.viewInput.pickerReps.setValue(10);
+        binding.viewInput.pickerWeight.setMaxValue(999);
+        binding.viewInput.pickerWeight.setMinValue(1);
+        binding.viewInput.pickerWeight.setValue(185);
+        binding.viewInput.pickerWeight.setOnScrollListener(this);
+        binding.viewInput.pickerReps.setOnScrollListener(this);
         editWeight.setOnKeyListener(this);
         editReps.setOnKeyListener(this);
         binding.saveSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    model.saveSet(String.valueOf(binding.pickerWeight.getValue()), String.valueOf(binding.pickerReps.getValue()));
+                    model.saveSet(String.valueOf(binding.viewInput.pickerWeight.getValue()), String.valueOf(binding.viewInput.pickerReps.getValue()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    @Override
+    public void onStop() {
+        binding.cardHolder.setVisibility(View.INVISIBLE);
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (binding.cardHolder.getVisibility() == View.INVISIBLE) {
+            binding.cardHolder.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -106,9 +120,9 @@ public class AddExerciseEntryHolderFragment extends Fragment implements
     @Override
     public void onPickerChanged(EditText editText, Integer value) {
         if (editText == editWeight) {
-            binding.pickerWeight.setValue(value);
+            binding.viewInput.pickerWeight.setValue(value);
         } else if (editText == editReps) {
-            binding.pickerReps.setValue(value);
+            binding.viewInput.pickerReps.setValue(value);
         }
     }
 

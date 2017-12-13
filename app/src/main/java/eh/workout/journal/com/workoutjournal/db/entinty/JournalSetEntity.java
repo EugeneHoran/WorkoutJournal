@@ -9,14 +9,12 @@ import android.support.annotation.NonNull;
 
 import eh.workout.journal.com.workoutjournal.model.JournalSet;
 
-@Entity(tableName = "journal_set_entity",
+@Entity(tableName = "journal_set_entities",
         foreignKeys = {
                 @ForeignKey(entity = JournalDateEntity.class,
                         parentColumns = "id",
                         childColumns = "journalDateId",
-                        onDelete = ForeignKey.CASCADE)},
-        indices = {@Index(value = "journalDateId")
-        })
+                        onDelete = ForeignKey.CASCADE)})
 public class JournalSetEntity implements JournalSet {
     @PrimaryKey
     @NonNull

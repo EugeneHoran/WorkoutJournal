@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import eh.workout.journal.com.workoutjournal.model.JournalRep;
 import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
 
-@Entity(tableName = "journal_rep_entity",
+@Entity(tableName = "journal_rep_entities",
         foreignKeys = {@ForeignKey(entity = JournalSetEntity.class,
                 parentColumns = "id",
                 childColumns = "journalSetId",
@@ -26,8 +26,22 @@ public class JournalRepEntity implements JournalRep {
     private String journalSetId;
     private double oneRepMax;
 
+    @Ignore
+    private int tempPosition;
 
     public JournalRepEntity() {
+    }
+
+    public JournalRepEntity(JournalRepEntity repEntity) {
+        this.id = repEntity.getId();
+        this.timestamp = repEntity.getTimestamp();
+        this.position = repEntity.getPosition();
+        this.liftName = repEntity.getLiftName();
+        this.reps = repEntity.getReps();
+        this.weight = repEntity.getWeight();
+        this.journalSetId = repEntity.getJournalSetId();
+        this.oneRepMax = repEntity.getOneRepMax();
+        this.tempPosition = repEntity.getTempPosition();
     }
 
     @NonNull
@@ -107,4 +121,11 @@ public class JournalRepEntity implements JournalRep {
         this.oneRepMax = oneRepMax;
     }
 
+    public int getTempPosition() {
+        return tempPosition;
+    }
+
+    public void setTempPosition(int tempPosition) {
+        this.tempPosition = tempPosition;
+    }
 }

@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.add.exercise;
+package eh.workout.journal.com.workoutjournal.ui.entry;
 
 
 import android.support.v7.util.DiffUtil;
@@ -17,7 +17,7 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.RecyclerAddExerciseEntryBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 
-public class AddExerciseEntryRecyclerAdapter extends RecyclerView.Adapter<AddExerciseEntryRecyclerAdapter.RepViewHolder> {
+public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecyclerAdapter.RepViewHolder> {
     private List<JournalRepEntity> itemList = new ArrayList<>();
 
     private EntryAdapterInterface listener;
@@ -25,7 +25,7 @@ public class AddExerciseEntryRecyclerAdapter extends RecyclerView.Adapter<AddExe
     interface EntryAdapterInterface {
         void deleteRep(JournalRepEntity journalRepEntity, List<JournalRepEntity> repEntityList);
 
-        void deleteRepEntity(JournalRepEntity repEntity);
+        void editRep(JournalRepEntity repEntity);
     }
 
     void setListener(EntryAdapterInterface listener) {
@@ -57,6 +57,7 @@ public class AddExerciseEntryRecyclerAdapter extends RecyclerView.Adapter<AddExe
                 return oldRep.getId().equals(newRep.getId()) &&
                         oldRep.getReps().equals(newRep.getReps()) &&
                         oldRep.getWeight().equals(newRep.getWeight()) &&
+                        oldRep.getTempPosition() == newRep.getTempPosition() &&
                         oldRep.getPosition() == newRep.getPosition();
             }
         });
@@ -66,7 +67,7 @@ public class AddExerciseEntryRecyclerAdapter extends RecyclerView.Adapter<AddExe
     }
 
     @Override
-    public AddExerciseEntryRecyclerAdapter.RepViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EntryListRecyclerAdapter.RepViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new RepViewHolder(RecyclerAddExerciseEntryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
@@ -104,15 +105,14 @@ public class AddExerciseEntryRecyclerAdapter extends RecyclerView.Adapter<AddExe
                     int id = item.getItemId();
                     if (id == R.id.action_delete) {
                         if (listener != null) {
-//                            listener.deleteRepEntity(repEntity);
-                            int position = getAdapterPosition();
-                            List<JournalRepEntity> newRepList = new ArrayList<>();
-                            newRepList.addAll(itemList);
-                            newRepList.remove(position);
+                            List<JournalRepEntity> newRepList = new ArrayList<>(itemList);
+                            newRepList.remove(getAdapterPosition());
                             listener.deleteRep(repEntity, newRepList);
                         }
                     } else if (id == R.id.action_edit) {
-//                        listener.onEditRep(workoutRep.getId());
+                        if (listener != null) {
+                            listener.editRep(new JournalRepEntity(repEntity));
+                        }
                     }
                     return true;
                 }

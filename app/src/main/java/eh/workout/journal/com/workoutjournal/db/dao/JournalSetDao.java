@@ -20,15 +20,18 @@ public interface JournalSetDao {
     @Delete
     void deleteSets(JournalSetEntity... setEntity);
 
+    @Query("DELETE FROM journal_set_entities WHERE id == :setId")
+    void seleteSerById(String setId);
+
     @Update
     void updateSets(JournalSetEntity... setEntity);
 
-    @Query("SELECT * from journal_set_entity WHERE exerciseId = :exerciseId AND journalDateId = :dateId")
+    @Query("SELECT * from journal_set_entities WHERE exerciseId = :exerciseId AND journalDateId = :dateId")
     JournalSetEntity getSet(String exerciseId, String dateId);
 
-    @Query("SELECT * from journal_set_entity")
+    @Query("SELECT * from journal_set_entities")
     LiveData<List<JournalSetEntity>> getAllSets();
 
-    @Query("SELECT * from journal_set_entity WHERE journalDateId = :dateId")
+    @Query("SELECT * from journal_set_entities WHERE journalDateId = :dateId")
     LiveData<List<JournalSetEntity>> getAllSetsInDate(String dateId);
 }

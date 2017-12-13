@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import eh.workout.journal.com.workoutjournal.model.ExerciseLift;
 
-@Entity
+@Entity(tableName = "exercise_lift_entities")
 public class ExerciseLiftEntity implements ExerciseLift {
     @PrimaryKey
     @NonNull

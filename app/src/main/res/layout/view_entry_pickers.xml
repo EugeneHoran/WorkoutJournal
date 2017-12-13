@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="anew.eugene.onerepmax.com.onerepmaxcalculator.MainActivity">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight=".5" />
+
+        <NumberPicker
+            android:id="@+id/pickerWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:theme="@style/NumberPickerBlue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Weight" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight=".5" />
+
+        <NumberPicker
+            android:id="@+id/pickerReps"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:theme="@style/NumberPickerBlue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Reps" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight=".5" />
+    </LinearLayout>
+
+</layout>

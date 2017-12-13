@@ -3,7 +3,6 @@ package eh.workout.journal.com.workoutjournal.db;
 
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.os.Handler;
 
 import java.util.List;
 
@@ -35,6 +34,7 @@ public class JournalRepository {
         }
         return instance;
     }
+
 
     /**
      * One Rep Max
@@ -105,22 +105,9 @@ public class JournalRepository {
             @Override
             public void run() {
                 database.getJournalRepDao().deleteReps(journalSetEntity);
+                database.getJournalRepDao().updateRepList(repEntityList);
             }
         });
-        // TODO failed trying to create a single transaction with both. But delete has its own transaction
-        // Delaying to help with view animations
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        database.getJournalRepDao().updateRepList(repEntityList);
-                    }
-                });
-            }
-        }, 300);
     }
 
     /**
@@ -133,6 +120,11 @@ public class JournalRepository {
     public LiveData<ExerciseSetRepRelation> loadExerciseSetReps(String exerciseId, Long... times) {
         return database.getRelationDao().getExerciseSetRep(exerciseId, times[0], times[1]);
     }
+
+    public LiveData<List<ExerciseSetRepRelation>> loadExerciseSetRepsHistory(String exerciseId, Long... times) {
+        return database.getRelationDao().getExerciseSetRepHistory(exerciseId, times[0]);
+    }
+
 
     /**
      * Exercises
@@ -166,6 +158,7 @@ public class JournalRepository {
     /**
      * Journal Dates
      */
+
     public JournalDateEntity getDateRun(final long... times) {
         return database.getJournalDateDao().getDateRun(times[0], times[1]);
     }
@@ -173,20 +166,11 @@ public class JournalRepository {
     /**
      * Journal Sets
      */
-    public void insertSets(final JournalSetEntity... setEntities) {
-        appExecutors.networkIO().execute(new Runnable() {
+    public void deleteSet(final String setId) {
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                database.getJournalSetDao().insertSets(setEntities);
-            }
-        });
-    }
-
-    public void deleteSets(final JournalSetEntity... setEntities) {
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                database.getJournalSetDao().deleteSets(setEntities);
+                database.getJournalSetDao().seleteSerById(setId);
             }
         });
     }
@@ -199,7 +183,7 @@ public class JournalRepository {
      * Journal Reps
      */
     public void insertReps(final JournalRepEntity... repEntities) {
-        appExecutors.diskIO().execute(new Runnable() {
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 database.getJournalRepDao().insertReps(repEntities);
@@ -207,11 +191,11 @@ public class JournalRepository {
         });
     }
 
-    public void deleteReps(final JournalRepEntity... repEntities) {
-        appExecutors.diskIO().execute(new Runnable() {
+    public void updateRep(final JournalRepEntity repEntity) {
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                database.getJournalRepDao().deleteReps(repEntities);
+                database.getJournalRepDao().updateReps(repEntity);
             }
         });
     }

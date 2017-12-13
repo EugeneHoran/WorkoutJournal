@@ -1,16 +1,16 @@
-package eh.workout.journal.com.workoutjournal.ui.add.exercise;
+package eh.workout.journal.com.workoutjournal.ui.entry;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class AddExerciseParentPagerAdapter extends FragmentPagerAdapter {
+public class EntryParentPagerAdapter extends FragmentPagerAdapter {
     private String[] titleList = {"Add Set", "History"};
     private Fragment[] fragments;
     private FragmentManager fragmentManager;
 
-    AddExerciseParentPagerAdapter(FragmentManager fm) {
+    EntryParentPagerAdapter(FragmentManager fm) {
         super(fm);
         fragmentManager = fm;
     }
@@ -25,9 +25,9 @@ public class AddExerciseParentPagerAdapter extends FragmentPagerAdapter {
         }
         switch (position) {
             case 0:
-                fragments[0] = AddExerciseEntryFragment.newInstance();
+                fragments[0] = EntryListFragment.newInstance();
             case 1:
-                fragments[1] = AddExerciseHistoryFragment.newInstance();
+                fragments[1] = EntryHistoryFragment.newInstance();
         }
         return fragments[position];
     }

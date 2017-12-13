@@ -26,9 +26,9 @@ public interface JournalRepDao {
     @Update
     void updateRepList(List<JournalRepEntity> repEntityList);
 
-    @Query("SELECT * from journal_rep_entity")
+    @Query("SELECT * from journal_rep_entities")
     LiveData<List<JournalRepEntity>> getAllReps();
 
-    @Query("SELECT * from journal_rep_entity WHERE journalSetId = :setId")
+    @Query("SELECT * from journal_rep_entities WHERE journalSetId = :setId")
     LiveData<List<JournalRepEntity>> getRepsInSet(String setId);
 }

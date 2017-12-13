@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "exercise_orm_entity")
+@Entity(tableName = "exercise_orm_entities")
 public class ExerciseOrmEntity {
     @PrimaryKey
     @NonNull

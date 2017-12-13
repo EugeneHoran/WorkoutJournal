@@ -19,6 +19,6 @@ public interface ExerciseOrmDao {
     @Delete
     void deleteOrms(ExerciseOrmEntity... exerciseOrmEntities);
 
-    @Query("SELECT * from exercise_orm_entity WHERE exerciseId = :exerciseId")
+    @Query("SELECT * from exercise_orm_entities WHERE exerciseId = :exerciseId")
     ExerciseOrmEntity getSet(String exerciseId);
 }

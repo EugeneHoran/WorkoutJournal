@@ -1,10 +1,9 @@
-package eh.workout.journal.com.workoutjournal.ui.add.exercise;
+package eh.workout.journal.com.workoutjournal.ui.entry;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.databinding.ObservableField;
 import android.os.AsyncTask;
@@ -27,59 +26,75 @@ import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
 import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
 
-public class AddExerciseEntryViewModel extends AndroidViewModel {
+public class EntryViewModel extends AndroidViewModel {
     public ObservableField<String> toolbarTitle = new ObservableField<>("Workout");
-    public ObservableField<Boolean> showRepEntry = new ObservableField<>(false);
-
+    public ObservableField<Boolean> showNoItems = new ObservableField<>(false);
     private JournalRepository repository;
     private String exerciseId;
     private Long[] startEndTime;
-    private MutableLiveData<Boolean> dataLoaded = new MutableLiveData<>();
-    private MutableLiveData<ExerciseLiftEntity> exerciseLiftEntityMutableLiveData = new MutableLiveData<>();
+
+    private ExerciseLiftEntity liftEntity;
     private ExerciseOrmEntity ormEntity;
+
+    private boolean isDataLoaded = false;
     private String dateId = null;
     private boolean dateExist = false;
     private String setId = null;
     private boolean setExist = false;
     private final MediatorLiveData<ExerciseSetRepRelation> observableSetReps;
+    private LiveData<List<ExerciseSetRepRelation>> observeHistory;
 
-    AddExerciseEntryViewModel(@NonNull JournalApplication application, String exerciseId, Long timestamp) {
+    void onResume() {
+        new ExerciseLiftTask().execute();
+    }
+
+    void onPauseEmpty() {
+        repository.deleteSet(setId);
+    }
+
+    EntryViewModel(@NonNull JournalApplication application, String exerciseId, Long timestamp) {
         super(application);
         repository = application.getRepository();
         this.exerciseId = exerciseId;
         startEndTime = DateHelper.getStartAndEndTimestamp(timestamp);
-        new ExerciseLiftTask().execute();
+        observeHistory = repository.loadExerciseSetRepsHistory(exerciseId, startEndTime[0]);
         observableSetReps = new MediatorLiveData<>();
         observableSetReps.addSource(
                 repository.loadExerciseSetReps(exerciseId, startEndTime[0], startEndTime[1]),
                 new Observer<ExerciseSetRepRelation>() {
                     @Override
                     public void onChanged(@Nullable ExerciseSetRepRelation exerciseSetRepRelation) {
-                        observableSetReps.setValue(exerciseSetRepRelation);
+                        if (exerciseSetRepRelation != null) {
+                            showNoItems.set(exerciseSetRepRelation.getJournalRepEntityList().size() == 0);
+                            observableSetReps.setValue(exerciseSetRepRelation);
+                        } else {
+                            showNoItems.set(true);
+                        }
                     }
                 });
     }
 
+    LiveData<List<ExerciseSetRepRelation>> getHistory() {
+        return observeHistory;
+    }
+
+    /**
+     * Observe data changes
+     *
+     * @return ExerciseSetRepRelation
+     */
     LiveData<ExerciseSetRepRelation> getObservableSetReps() {
         return observableSetReps;
     }
 
-    private LiveData<ExerciseLiftEntity> getExerciseLiftEntity() {
-        return exerciseLiftEntityMutableLiveData;
-    }
-
-    private LiveData<Boolean> getDataLoaded() {
-        return dataLoaded;
-    }
-
     void saveSet(String weight, String reps) throws Exception {
         double oneRepMax = EquationsHelper.getOneRepMax(weight, reps);
-        if (getExerciseLiftEntity().getValue() != null && getDataLoaded().getValue() != null) {
-            ExerciseLiftEntity exercise = getExerciseLiftEntity().getValue();
+        if (liftEntity != null && isDataLoaded) {
+            ExerciseLiftEntity exercise = liftEntity;
             JournalRepEntity journalRepEntity = new JournalRepEntity();
             journalRepEntity.setId(UUID.randomUUID().toString());
             journalRepEntity.setTimestamp(startEndTime[0]);
-            journalRepEntity.setPosition(repPosition());
+            journalRepEntity.setPosition(EquationsHelper.getRepPosition(observableSetReps.getValue()));
             journalRepEntity.setLiftName(exercise.getName());
             journalRepEntity.setReps(reps);
             journalRepEntity.setWeight(weight);
@@ -110,9 +125,21 @@ public class AddExerciseEntryViewModel extends AndroidViewModel {
         }
     }
 
-    void deleteRep(JournalRepEntity repEntity) {
-        repository.deleteReps(repEntity);
+    void updateRepEntity(JournalRepEntity repEntity) {
+        double oneRepMax = EquationsHelper.getOneRepMax(repEntity.getWeight(), repEntity.getReps());
+        if (ormEntity == null) {
+            createOrm(oneRepMax, repEntity.getId());
+        } else {
+            if (oneRepMax > ormEntity.getOneRepMax()) {
+                ormEntity.setOneRepMax(oneRepMax);
+                ormEntity.setRepId(repEntity.getId());
+                repository.updateExerciseOrm(ormEntity);
+            }
+        }
+        repEntity.setOneRepMax(oneRepMax);
+        repository.updateRep(repEntity);
     }
+
 
     void deleteRepAndFilter(JournalRepEntity repEntity, List<JournalRepEntity> repEntityList) {
         for (int i = 0; i < repEntityList.size(); i++) {
@@ -121,11 +148,15 @@ public class AddExerciseEntryViewModel extends AndroidViewModel {
         repository.deleteRepAndUpdate(repEntity, repEntityList);
     }
 
+    /**
+     * Date Generators
+     */
+
     @SuppressWarnings("ConstantConditions")
     private void createOrm(double orm, String repId) {
         ExerciseOrmEntity newOrmEntity = new ExerciseOrmEntity();
         newOrmEntity.setId(UUID.randomUUID().toString());
-        newOrmEntity.setName(exerciseLiftEntityMutableLiveData.getValue().getName());
+        newOrmEntity.setName(liftEntity.getName());
         newOrmEntity.setOneRepMax(orm);
         newOrmEntity.setTimestamp(DateHelper.getTimestamp(new Date()));
         newOrmEntity.setExerciseId(exerciseId);
@@ -151,20 +182,11 @@ public class AddExerciseEntryViewModel extends AndroidViewModel {
         return journalSetEntity;
     }
 
-    private void setDataLoaded() {
-        showRepEntry.set(true);
-        dataLoaded.setValue(true);
-    }
-
-    private int repPosition() {
-        int pos = 0;
-        if (observableSetReps.getValue() != null) {
-            if (observableSetReps.getValue().getJournalRepEntityList() != null) {
-                pos = observableSetReps.getValue().getJournalRepEntityList().size();
-            }
-        }
-        return pos + 1;
-    }
+    /**
+     * AsyncTasks
+     * <p>
+     * Load Initial Data
+     */
 
     @SuppressLint("StaticFieldLeak")
     class ExerciseLiftTask extends AsyncTask<Void, Void, ExerciseLiftEntity> {
@@ -177,7 +199,7 @@ public class AddExerciseEntryViewModel extends AndroidViewModel {
         protected void onPostExecute(ExerciseLiftEntity exerciseLiftEntity) {
             super.onPostExecute(exerciseLiftEntity);
             toolbarTitle.set(exerciseLiftEntity.getName());
-            exerciseLiftEntityMutableLiveData.setValue(exerciseLiftEntity);
+            liftEntity = exerciseLiftEntity;
             new OneRepMaxTask().execute();
         }
     }
@@ -216,7 +238,7 @@ public class AddExerciseEntryViewModel extends AndroidViewModel {
                 dateExist = false;
                 setId = UUID.randomUUID().toString();
                 setExist = false;
-                setDataLoaded();
+                isDataLoaded = true;
             }
         }
     }
@@ -238,13 +260,12 @@ public class AddExerciseEntryViewModel extends AndroidViewModel {
                 setId = UUID.randomUUID().toString();
                 setExist = false;
             }
-            setDataLoaded();
+            isDataLoaded = true;
         }
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        Log.e("Testing", "Cleared");
     }
 }

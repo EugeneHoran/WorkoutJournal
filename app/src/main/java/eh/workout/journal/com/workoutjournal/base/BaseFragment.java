@@ -7,7 +7,7 @@ import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.ui.MainActivity;
-import eh.workout.journal.com.workoutjournal.ui.add.exercise.AddExerciseParentFragment;
+import eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorFragment;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
@@ -40,7 +40,7 @@ public class BaseFragment extends Fragment {
 
     @SuppressWarnings("ConstantConditions")
     public void navToAddExerciseFragment(View view, String id, Long timestamp) {
-        AddExerciseParentFragment fragment = AddExerciseParentFragment.newInstance(id, timestamp);
+        EntryParentFragment fragment = EntryParentFragment.newInstance(id, timestamp);
         if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getActivity().getSupportFragmentManager().popBackStack();
         }

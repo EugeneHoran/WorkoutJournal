@@ -8,11 +8,11 @@
 
         <variable
             name="model"
-            type="eh.workout.journal.com.workoutjournal.ui.add.exercise.AddExerciseEntryViewModel" />
+            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModel" />
 
         <variable
             name="fragment"
-            type="eh.workout.journal.com.workoutjournal.ui.add.exercise.AddExerciseParentFragment" />
+            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment" />
 
     </data>
 

@@ -14,11 +14,11 @@ public class DateSetRepRelation {
     @Embedded
     public JournalSetEntity journalSetEntity;
 
-    @Relation(parentColumn = "exerciseId", entityColumn = "exerciseId", entity = ExerciseOrmEntity.class)
-    List<ExerciseOrmEntity> exerciseOrmEntity;
-
     @Relation(parentColumn = "id", entityColumn = "journalSetId", entity = JournalRepEntity.class)
-    List<JournalRepEntity> journalRepEntityList;
+    private List<JournalRepEntity> journalRepEntityList;
+
+    @Relation(parentColumn = "exerciseId", entityColumn = "exerciseId", entity = ExerciseOrmEntity.class)
+    private List<ExerciseOrmEntity> exerciseOrmEntity;
 
     public JournalSetEntity getJournalSetEntity() {
         return journalSetEntity;

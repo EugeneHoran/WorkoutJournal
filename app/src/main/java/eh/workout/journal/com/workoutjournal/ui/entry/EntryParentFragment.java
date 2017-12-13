@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.add.exercise;
+package eh.workout.journal.com.workoutjournal.ui.entry;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -13,18 +13,18 @@ import android.view.ViewGroup;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.FragmentAddExerciseParentBinding;
+import eh.workout.journal.com.workoutjournal.databinding.FragmentEntryParentBinding;
 
 
-public class AddExerciseParentFragment extends Fragment {
+public class EntryParentFragment extends Fragment {
     private static final String ARG_LIFT_ID = "param_lift_id";
     private static final String ARG_LIFT_TIMESTAMP = "param_lift_timestamp";
 
-    public AddExerciseParentFragment() {
+    public EntryParentFragment() {
     }
 
-    public static AddExerciseParentFragment newInstance(String exerciseId, Long timestamp) {
-        AddExerciseParentFragment fragment = new AddExerciseParentFragment();
+    public static EntryParentFragment newInstance(String exerciseId, Long timestamp) {
+        EntryParentFragment fragment = new EntryParentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_LIFT_ID, exerciseId);
         args.putLong(ARG_LIFT_TIMESTAMP, timestamp);
@@ -32,8 +32,8 @@ public class AddExerciseParentFragment extends Fragment {
         return fragment;
     }
 
-    private AddExerciseEntryViewModel model;
-    private FragmentAddExerciseParentBinding binding;
+    private EntryViewModel model;
+    private FragmentEntryParentBinding binding;
     private Long timestamp;
     private String liftId;
 
@@ -48,18 +48,18 @@ public class AddExerciseParentFragment extends Fragment {
         if (getActivity() != null) {
             model = ViewModelProviders.of(
                     this,
-                    new AddExerciseEntryVMFactory(
+                    new EntryViewModelFactory(
                             (JournalApplication) getActivity().getApplicationContext(),
                             liftId,
                             timestamp))
-                    .get(AddExerciseEntryViewModel.class);
+                    .get(EntryViewModel.class);
         }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_exercise_parent, container, false);
-        getChildFragmentManager().beginTransaction().replace(R.id.entryHolder, AddExerciseEntryHolderFragment.newInstance()).commit();
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entry_parent, container, false);
+        getChildFragmentManager().beginTransaction().replace(R.id.entryHolder, EntryInputFragment.newInstance()).commit();
         binding.setModel(model);
         binding.setFragment(this);
         return binding.getRoot();
@@ -70,7 +70,7 @@ public class AddExerciseParentFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.pager.setAdapter(new AddExerciseParentPagerAdapter(getChildFragmentManager()));
+        binding.pager.setAdapter(new EntryParentPagerAdapter(getChildFragmentManager()));
         binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
         entryViewHeight = binding.entryHolder.getHeight();
         binding.pager.addOnPageChangeListener(pageChangeListener);

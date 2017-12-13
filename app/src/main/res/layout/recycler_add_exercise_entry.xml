@@ -8,7 +8,7 @@
 
         <variable
             name="holder"
-            type="eh.workout.journal.com.workoutjournal.ui.add.exercise.AddExerciseEntryRecyclerAdapter.RepViewHolder" />
+            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryListRecyclerAdapter.RepViewHolder" />
 
         <variable
             name="repEntity"

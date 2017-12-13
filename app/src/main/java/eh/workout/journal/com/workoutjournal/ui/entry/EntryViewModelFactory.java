@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.add.exercise;
+package eh.workout.journal.com.workoutjournal.ui.entry;
 
 
 import android.app.Application;
@@ -8,13 +8,13 @@ import android.support.annotation.NonNull;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 
-public class AddExerciseEntryVMFactory extends ViewModelProvider.NewInstanceFactory {
+public class EntryViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @NonNull
     private final Application application;
     private final String liftId;
     private final Long timestamp;
 
-    AddExerciseEntryVMFactory(@NonNull Application application, String liftId, Long timestamp) {
+    EntryViewModelFactory(@NonNull Application application, String liftId, Long timestamp) {
         this.application = application;
         this.liftId = liftId;
         this.timestamp = timestamp;
@@ -24,6 +24,6 @@ public class AddExerciseEntryVMFactory extends ViewModelProvider.NewInstanceFact
     @Override
     @SuppressWarnings("all")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new AddExerciseEntryViewModel((JournalApplication) application, liftId, timestamp);
+        return (T) new EntryViewModel((JournalApplication) application, liftId, timestamp);
     }
 }
