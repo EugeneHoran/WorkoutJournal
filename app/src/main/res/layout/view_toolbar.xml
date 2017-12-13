@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="navigation"
+            type="Boolean" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="subTitle"
+            type="String" />
+
+        <variable
+            name="showTabs"
+            type="Boolean" />
+
+        <variable
+            name="menuListener"
+            type="android.support.v7.widget.Toolbar.OnMenuItemClickListener" />
+
+        <variable
+            name="navListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:transitionName="app_bar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@{!navigation || navigation == null ? null: @drawable/ic_arrow_back}"
+            app:onMenuItemClickListener="@{menuListener}"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:setNavigationOnClickListener="@{navListener}"
+            app:subtitle="@{subTitle}"
+            app:title="@{title}">
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search"
+                android:visibility="gone" />
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{showTabs? View.VISIBLE:View.GONE, default = gone}"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
+    </android.support.design.widget.AppBarLayout>
+</layout>

@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Workout Journal</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_one_rep_max_calculator">One Rep Max Calculator</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_next_day">Next Day</string>
+    <string name="action_previous_day">Previous Day</string>
+
+    <!--Journal-->
+    <string name="no_lifts">No lifts save for this day.\n\n Tap the + button to add a lift</string>
+    <string name="today">Today</string>
+    <string name="calendar">Calendar</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="pref_title_unit_system">Unit System</string>
+    <string name="add_exercise">Add Exercise</string>
+    <string name="search">Search</string>
+    <string name="exercise_name">Exercise Name</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string-array name="pref_unit_list_titles">
+        <item>Imperial (lb)</item>
+        <item>Metric (kg)</item>
+    </string-array>
+    <string-array name="pref_unit_list_values">
+        <item>lbs</item>
+        <item>kgs</item>
+    </string-array>
+</resources>

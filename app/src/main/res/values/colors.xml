@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--App-->
+    <color name="colorPrimary">#F5F5F5</color>
+    <color name="colorPrimaryDark">#757575</color>
+    <color name="colorAccent">#2962FF</color>
+    <color name="colorBackground">#FAFAFA</color>
+
+    <color name="blueGreyLight">#78909C</color>
+    <color name="blueGreyNormal">#546E7A</color>
+    <color name="blueGreyDark">#37474F</color>
+
+    <color name="tealLight">#009688</color>
+    <color name="tealNormal">#00796B</color>
+    <color name="tealDark">#004D40</color>
+    <!--Generic-->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>

@@ -1,0 +1,44 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="anew.eugene.onerepmax.com.onerepmaxcalculator.MainActivity">
+
+    <item
+        android:id="@+id/action_today"
+        android:orderInCategory="100"
+        android:title="@string/today"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_previous"
+        android:icon="@drawable/ic_chevron_left"
+        android:orderInCategory="200"
+        android:title="@string/action_previous_day"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_calendar"
+        android:orderInCategory="300"
+        android:title="@string/calendar"
+        app:actionLayout="@layout/view_calendar_icon"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_next"
+        android:icon="@drawable/ic_chevron_right"
+        android:orderInCategory="400"
+        android:title="@string/action_next_day"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_orm"
+        android:orderInCategory="500"
+        android:title="@string/action_one_rep_max_calculator"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="600"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>

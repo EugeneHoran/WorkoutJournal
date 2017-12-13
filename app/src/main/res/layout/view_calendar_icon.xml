@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menuCalRootView"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:background="?selectableItemBackgroundBorderless"
+    android:clickable="false">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_calendar_empty" />
+
+    <TextView
+        android:id="@+id/dayOfMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="1dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="99"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+</FrameLayout>

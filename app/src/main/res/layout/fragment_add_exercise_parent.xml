@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="eh.workout.journal.com.workoutjournal.ui.add.exercise.AddExerciseEntryViewModel" />
+
+        <variable
+            name="fragment"
+            type="eh.workout.journal.com.workoutjournal.ui.add.exercise.AddExerciseParentFragment" />
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/viewToolbar"
+            layout="@layout/view_toolbar"
+            app:navListener="@{fragment.navListener}"
+            app:navigation="@{true}"
+            app:showTabs="@{true}"
+            app:title="@{model.toolbarTitle}" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <FrameLayout
+            android:id="@+id/entryHolder"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="104dp"
+            android:visibility="visible" />
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="exercise"
+            type="eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity" />
+
+        <variable
+            name="holder"
+            type="eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorRecyclerAdapter.ViewHolderExercise" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:elevation=".5dp"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClickListener="@{holder::onExerciseClicked}">
+
+        <TextView
+            android:id="@+id/lift"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@{exercise.name}"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/remove"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:onClickListener="@{holder::onRemoveFromRecents}"
+            android:tint="@color/colorPrimaryDark"
+            android:visibility="@{exercise.isShownInRecent? View.VISIBLE:View.GONE, default = gone}"
+            app:srcCompat="@drawable/ic_remove" />
+    </RelativeLayout>
+</layout>

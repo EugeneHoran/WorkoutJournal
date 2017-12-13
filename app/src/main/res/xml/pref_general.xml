@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="lbs"
+        android:entries="@array/pref_unit_list_titles"
+        android:entryValues="@array/pref_unit_list_values"
+        android:key="key_unit_measure"
+        android:title="@string/pref_title_unit_system" />
+
+</PreferenceScreen>
