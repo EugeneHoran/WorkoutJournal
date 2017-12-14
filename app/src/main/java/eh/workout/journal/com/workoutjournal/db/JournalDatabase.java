@@ -5,15 +5,12 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import eh.workout.journal.com.workoutjournal.BuildConfig;
 import eh.workout.journal.com.workoutjournal.db.dao.ExerciseLiftDao;
-import eh.workout.journal.com.workoutjournal.db.dao.ExerciseOrmDao;
-import eh.workout.journal.com.workoutjournal.db.dao.JournalDateDao;
-import eh.workout.journal.com.workoutjournal.db.dao.JournalRepDao;
-import eh.workout.journal.com.workoutjournal.db.dao.JournalSetDao;
-import eh.workout.journal.com.workoutjournal.db.dao.RelationDao;
+import eh.workout.journal.com.workoutjournal.db.dao.JournalDao;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
@@ -27,17 +24,10 @@ public abstract class JournalDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = BuildConfig.DB_NAME;
     private static JournalDatabase instance;
 
-    public abstract RelationDao getRelationDao();
 
-    public abstract JournalDateDao getJournalDateDao();
-
-    public abstract JournalSetDao getJournalSetDao();
-
-    public abstract JournalRepDao getJournalRepDao();
+    public abstract JournalDao getJournalDao();
 
     public abstract ExerciseLiftDao getExerciseLiftDao();
-
-    public abstract ExerciseOrmDao getOrmDao();
 
     public static JournalDatabase getInstance(final Context context, final AppExecutors executors) {
         if (instance == null) {

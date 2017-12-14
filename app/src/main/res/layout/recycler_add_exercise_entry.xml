@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <data>
@@ -21,10 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:clickable="true"
-        android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:onClickListener="@{holder::onRepClicked}"
         android:orientation="horizontal"
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
@@ -67,6 +66,20 @@
             android:gravity="center"
             android:text="@{MyStringUtil.formatRepReps(repEntity.reps)}"
             android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/menuMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="6dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:onClickListener="@{holder::onRepClicked}"
+            android:padding="6dp"
+            android:tint="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/ic_more_vert" />
     </LinearLayout>
 
 </layout>

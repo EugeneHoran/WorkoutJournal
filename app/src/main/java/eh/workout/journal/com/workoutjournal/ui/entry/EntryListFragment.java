@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,14 +31,14 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
     }
 
     private FragmentEntryListBinding binding;
-    private EntryViewModel model;
+    private EntryViewModelNew model;
     private EntryListRecyclerAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getParentFragment() != null) {
-            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModel.class);
+            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModelNew.class);
         }
         adapter = new EntryListRecyclerAdapter();
     }
@@ -53,13 +53,15 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setModel(model);
+        if (getActivity() != null)
+            binding.recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         binding.recycler.setAdapter(adapter);
         adapter.setListener(this);
         observeSetReps(model);
     }
 
-    private void observeSetReps(EntryViewModel model) {
-        model.getObservableSetReps().observe(this, new Observer<ExerciseSetRepRelation>() {
+    private void observeSetReps(EntryViewModelNew model) {
+        model.getSetRepsRelation().observe(this, new Observer<ExerciseSetRepRelation>() {
             @Override
             public void onChanged(@Nullable ExerciseSetRepRelation exerciseSetRepRelation) {
                 if (exerciseSetRepRelation != null) {
@@ -74,7 +76,7 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
 
     @Override
     public void deleteRep(JournalRepEntity repEntity, List<JournalRepEntity> repEntityList) {
-        model.deleteRepAndFilter(repEntity, repEntityList);
+        model.deleteRep(repEntity, repEntityList);
     }
 
     @Override
@@ -89,14 +91,12 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
 
     @Override
     public void repEdited(JournalRepEntity repEntity) {
-        model.updateRepEntity(repEntity);
+        model.updateRep(repEntity);
     }
 
     @Override
     public void onPause() {
-        if (adapter.getItemCount() == 0) {
-            model.onPauseEmpty();
-        }
+        model.onPauseDelete();
         super.onPause();
     }
 

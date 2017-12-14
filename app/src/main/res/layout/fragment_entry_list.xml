@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModel" />
+            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew" />
     </data>
 
     <RelativeLayout
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingTop="150dp"
+            android:paddingTop="140dp"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

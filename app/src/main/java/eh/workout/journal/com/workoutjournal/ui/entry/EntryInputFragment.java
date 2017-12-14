@@ -30,13 +30,13 @@ public class EntryInputFragment extends Fragment implements
         return new EntryInputFragment();
     }
 
-    private EntryViewModel model;
+    private EntryViewModelNew model;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getParentFragment() != null) {
-            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModel.class);
+            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModelNew.class);
         }
     }
 
@@ -54,6 +54,7 @@ public class EntryInputFragment extends Fragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.setModel(model);
         initPickers();
     }
 
@@ -77,11 +78,7 @@ public class EntryInputFragment extends Fragment implements
         binding.saveSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    model.saveSet(String.valueOf(binding.viewInput.pickerWeight.getValue()), String.valueOf(binding.viewInput.pickerReps.getValue()));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                model.saveRep(String.valueOf(binding.viewInput.pickerWeight.getValue()), String.valueOf(binding.viewInput.pickerReps.getValue()));
             }
         });
     }

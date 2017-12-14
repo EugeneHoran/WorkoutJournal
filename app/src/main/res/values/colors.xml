@@ -13,6 +13,10 @@
     <color name="tealLight">#009688</color>
     <color name="tealNormal">#00796B</color>
     <color name="tealDark">#004D40</color>
+    <color name="colorGrayTransparent">#809E9E9E</color>
+    <color name="colorGrayLight">#E0E0E0</color>
+    <color name="colorGrayNormal">#9E9E9E</color>
+
     <!--Generic-->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

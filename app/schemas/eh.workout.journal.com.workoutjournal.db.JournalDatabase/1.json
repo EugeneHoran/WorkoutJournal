@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8559b0b398bce012be3e67d541b6996c",
+    "identityHash": "7fcc9076ea29fcb2e2e3441dac5d3bcc",
     "entities": [
       {
         "tableName": "journal_date_entities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "journal_set_entities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `journalDateId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`journalDateId`) REFERENCES `journal_date_entities`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `dateId` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -59,9 +59,9 @@
             "notNull": false
           },
           {
-            "fieldPath": "journalDateId",
-            "columnName": "journalDateId",
-            "affinity": "TEXT",
+            "fieldPath": "dateId",
+            "columnName": "dateId",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -72,23 +72,11 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "journal_date_entities",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "journalDateId"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "journal_rep_entities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `position` INTEGER NOT NULL, `liftName` TEXT, `reps` TEXT, `weight` TEXT, `journalSetId` TEXT, `oneRepMax` REAL NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`journalSetId`) REFERENCES `journal_set_entities`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `position` INTEGER NOT NULL, `liftName` TEXT, `reps` TEXT, `weight` TEXT, `oneRepMax` REAL NOT NULL, `journalSetId` TEXT, `exerciseId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`journalSetId`) REFERENCES `journal_set_entities`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -127,16 +115,22 @@
             "notNull": false
           },
           {
+            "fieldPath": "oneRepMax",
+            "columnName": "oneRepMax",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
             "fieldPath": "journalSetId",
             "columnName": "journalSetId",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "oneRepMax",
-            "columnName": "oneRepMax",
-            "affinity": "REAL",
-            "notNull": true
+            "fieldPath": "exerciseId",
+            "columnName": "exerciseId",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -194,7 +188,7 @@
       },
       {
         "tableName": "exercise_orm_entities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `oneRepMax` REAL NOT NULL, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `repId` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `oneRepMax` REAL NOT NULL, `weight` TEXT, `reps` TEXT, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `repId` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -213,6 +207,18 @@
             "columnName": "oneRepMax",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reps",
+            "columnName": "reps",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "timestamp",
@@ -245,7 +251,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8559b0b398bce012be3e67d541b6996c\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7fcc9076ea29fcb2e2e3441dac5d3bcc\")"
     ]
   }
 }

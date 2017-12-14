@@ -16,9 +16,9 @@ import android.widget.SearchView;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.base.BaseFragment;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseSelectorBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
+import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 
 public class ExerciseSelectorFragment extends BaseFragment implements
         SearchView.OnQueryTextListener,

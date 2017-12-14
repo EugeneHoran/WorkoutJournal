@@ -26,7 +26,7 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
         super(application);
         JournalApplication journalApplication = getApplication();
         repository = journalApplication.getRepository();
-        allExercises = repository.loadAllExercises();
+        allExercises = repository.getAllExercises();
         observeExercisesObjects = new MediatorLiveData<>();
         observeExercisesObjects.addSource(allExercises, new Observer<List<ExerciseLiftEntity>>() {
             @Override

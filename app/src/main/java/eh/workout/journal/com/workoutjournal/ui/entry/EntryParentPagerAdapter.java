@@ -8,11 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class EntryParentPagerAdapter extends FragmentPagerAdapter {
     private String[] titleList = {"Add Set", "History"};
     private Fragment[] fragments;
-    private FragmentManager fragmentManager;
 
     EntryParentPagerAdapter(FragmentManager fm) {
         super(fm);
-        fragmentManager = fm;
     }
 
     @Override

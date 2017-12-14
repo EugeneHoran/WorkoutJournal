@@ -23,6 +23,8 @@
             app:navigation="@{true}"
             app:title="@{fragment.toolbarTitle}" />
 
+        <!--app:showTabs="@{true}"-->
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"

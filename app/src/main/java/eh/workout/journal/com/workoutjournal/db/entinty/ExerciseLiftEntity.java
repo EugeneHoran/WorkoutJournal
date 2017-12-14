@@ -5,10 +5,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import eh.workout.journal.com.workoutjournal.model.ExerciseLift;
-
 @Entity(tableName = "exercise_lift_entities")
-public class ExerciseLiftEntity implements ExerciseLift {
+public class ExerciseLiftEntity {
     @PrimaryKey
     @NonNull
     private String id;
@@ -20,6 +18,7 @@ public class ExerciseLiftEntity implements ExerciseLift {
     public ExerciseLiftEntity() {
     }
 
+    @Ignore
     public ExerciseLiftEntity(ExerciseLiftEntity entity) {
         this.id = entity.getId();
         this.name = entity.getName();
@@ -27,6 +26,7 @@ public class ExerciseLiftEntity implements ExerciseLift {
         this.isShownInRecent = true;
     }
 
+    @Ignore
     public ExerciseLiftEntity(@NonNull String id, String name, boolean recent) {
         this.id = id;
         this.name = name;
@@ -34,7 +34,6 @@ public class ExerciseLiftEntity implements ExerciseLift {
     }
 
     @NonNull
-    @Override
     public String getId() {
         return id;
     }
@@ -43,7 +42,6 @@ public class ExerciseLiftEntity implements ExerciseLift {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -52,7 +50,6 @@ public class ExerciseLiftEntity implements ExerciseLift {
         this.name = name;
     }
 
-    @Override
     public boolean getRecent() {
         return recent;
     }
@@ -62,7 +59,6 @@ public class ExerciseLiftEntity implements ExerciseLift {
     }
 
     @Ignore
-    @Override
     public boolean getIsShownInRecent() {
         return isShownInRecent;
     }

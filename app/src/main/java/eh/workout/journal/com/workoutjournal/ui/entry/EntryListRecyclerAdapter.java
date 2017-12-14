@@ -22,13 +22,13 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecy
 
     private EntryAdapterInterface listener;
 
-    interface EntryAdapterInterface {
+    public interface EntryAdapterInterface {
         void deleteRep(JournalRepEntity journalRepEntity, List<JournalRepEntity> repEntityList);
 
         void editRep(JournalRepEntity repEntity);
     }
 
-    void setListener(EntryAdapterInterface listener) {
+    public void setListener(EntryAdapterInterface listener) {
         this.listener = listener;
     }
 

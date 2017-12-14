@@ -1,7 +1,6 @@
 package eh.workout.journal.com.workoutjournal.ui.entry;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.view.LayoutInflater;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ViewEntryPickersBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
+import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
 
 public class EntryEditDialogFragment extends DialogFragment {
 
@@ -25,7 +25,7 @@ public class EntryEditDialogFragment extends DialogFragment {
 
     private EditRepInterface listener;
 
-    void setListener(EditRepInterface listener) {
+    public void setListener(EditRepInterface listener) {
         this.listener = listener;
     }
 
@@ -54,6 +54,8 @@ public class EntryEditDialogFragment extends DialogFragment {
                 if (listener != null) {
                     String weight = String.valueOf(binding.pickerWeight.getValue());
                     String reps = String.valueOf(binding.pickerReps.getValue());
+                    double oneRepMax = EquationsHelper.getOneRepMax(weight, reps);
+                    repEntity.setOneRepMax(oneRepMax);
                     repEntity.setWeight(weight);
                     repEntity.setReps(reps);
                     listener.repEdited(repEntity);

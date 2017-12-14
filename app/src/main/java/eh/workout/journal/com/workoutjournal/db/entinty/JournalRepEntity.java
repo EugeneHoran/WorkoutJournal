@@ -6,7 +6,6 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import eh.workout.journal.com.workoutjournal.model.JournalRep;
 import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
 
 @Entity(tableName = "journal_rep_entities",
@@ -14,7 +13,7 @@ import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
                 parentColumns = "id",
                 childColumns = "journalSetId",
                 onDelete = ForeignKey.CASCADE)})
-public class JournalRepEntity implements JournalRep {
+public class JournalRepEntity {
     @PrimaryKey
     @NonNull
     private String id;
@@ -23,8 +22,9 @@ public class JournalRepEntity implements JournalRep {
     private String liftName;
     private String reps;
     private String weight;
-    private String journalSetId;
     private double oneRepMax;
+    private String journalSetId;
+    private String exerciseId;
 
     @Ignore
     private int tempPosition;
@@ -40,6 +40,7 @@ public class JournalRepEntity implements JournalRep {
         this.reps = repEntity.getReps();
         this.weight = repEntity.getWeight();
         this.journalSetId = repEntity.getJournalSetId();
+        this.exerciseId = repEntity.getExerciseId();
         this.oneRepMax = repEntity.getOneRepMax();
         this.tempPosition = repEntity.getTempPosition();
     }
@@ -53,7 +54,6 @@ public class JournalRepEntity implements JournalRep {
         this.id = id;
     }
 
-    @Override
     public long getTimestamp() {
         return timestamp;
     }
@@ -62,7 +62,6 @@ public class JournalRepEntity implements JournalRep {
         this.timestamp = timestamp;
     }
 
-    @Override
     public int getPosition() {
         return position;
     }
@@ -71,7 +70,6 @@ public class JournalRepEntity implements JournalRep {
         this.position = position;
     }
 
-    @Override
     public String getLiftName() {
         return liftName;
     }
@@ -80,7 +78,6 @@ public class JournalRepEntity implements JournalRep {
         this.liftName = liftName;
     }
 
-    @Override
     public String getReps() {
         return reps;
     }
@@ -89,7 +86,6 @@ public class JournalRepEntity implements JournalRep {
         this.reps = reps;
     }
 
-    @Override
     public String getWeight() {
         return weight;
     }
@@ -98,7 +94,19 @@ public class JournalRepEntity implements JournalRep {
         this.weight = weight;
     }
 
-    @Override
+    public double getOneRepMax() {
+        return oneRepMax;
+    }
+
+    public void setOneRepMax(double oneRepMax) {
+        this.oneRepMax = oneRepMax;
+    }
+
+    @Ignore
+    public int getOrmInt() {
+        return EquationsHelper.getOneRepMaxInt(getOneRepMax());
+    }
+
     public String getJournalSetId() {
         return journalSetId;
     }
@@ -107,25 +115,19 @@ public class JournalRepEntity implements JournalRep {
         this.journalSetId = journalSetId;
     }
 
-    @Override
-    public double getOneRepMax() {
-        return oneRepMax;
-    }
-
-    @Ignore
-    public int getOrmInt() {
-        return EquationsHelper.getOneRepMaxInt(getOneRepMax());
-    }
-
-    public void setOneRepMax(double oneRepMax) {
-        this.oneRepMax = oneRepMax;
-    }
-
     public int getTempPosition() {
         return tempPosition;
     }
 
     public void setTempPosition(int tempPosition) {
         this.tempPosition = tempPosition;
+    }
+
+    public String getExerciseId() {
+        return exerciseId;
+    }
+
+    public void setExerciseId(String exerciseId) {
+        this.exerciseId = exerciseId;
     }
 }

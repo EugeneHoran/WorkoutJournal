@@ -2,27 +2,18 @@ package eh.workout.journal.com.workoutjournal.db.entinty;
 
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import eh.workout.journal.com.workoutjournal.model.JournalSet;
-
-@Entity(tableName = "journal_set_entities",
-        foreignKeys = {
-                @ForeignKey(entity = JournalDateEntity.class,
-                        parentColumns = "id",
-                        childColumns = "journalDateId",
-                        onDelete = ForeignKey.CASCADE)})
-public class JournalSetEntity implements JournalSet {
+@Entity(tableName = "journal_set_entities")
+public class JournalSetEntity {
     @PrimaryKey
     @NonNull
     public String id;
     private String name;
     private long timestamp;
     private String exerciseId;
-    private String journalDateId;
+    private Long dateId;
 
     public JournalSetEntity() {
     }
@@ -36,7 +27,6 @@ public class JournalSetEntity implements JournalSet {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -45,7 +35,6 @@ public class JournalSetEntity implements JournalSet {
         this.name = name;
     }
 
-    @Override
     public long getTimestamp() {
         return timestamp;
     }
@@ -54,7 +43,6 @@ public class JournalSetEntity implements JournalSet {
         this.timestamp = timestamp;
     }
 
-    @Override
     public String getExerciseId() {
         return exerciseId;
     }
@@ -63,12 +51,11 @@ public class JournalSetEntity implements JournalSet {
         this.exerciseId = exerciseId;
     }
 
-    @Override
-    public String getJournalDateId() {
-        return journalDateId;
+    public Long getDateId() {
+        return dateId;
     }
 
-    public void setJournalDateId(String journalDateId) {
-        this.journalDateId = journalDateId;
+    public void setDateId(Long dateId) {
+        this.dateId = dateId;
     }
 }

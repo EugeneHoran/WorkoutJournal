@@ -9,7 +9,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.format.DateUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
@@ -35,6 +37,17 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
         }
         mFragments[position] = journalFragment;
         return journalFragment;
+    }
+
+    public Date getAdapterDate(int dayPosition) {
+        int dayDiff = dayPosition - 5000;
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        Calendar mCalendar = new GregorianCalendar(year, month, day);
+        mCalendar.add(Calendar.DATE, dayDiff);
+        return mCalendar.getTime();
     }
 
     @Override

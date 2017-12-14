@@ -11,7 +11,6 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
-import eh.workout.journal.com.workoutjournal.db.relations.DateSetRepRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 
 public class JournalRepository {
@@ -35,102 +34,165 @@ public class JournalRepository {
         return instance;
     }
 
+    /**
+     * Journal Data
+     */
+    public LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationLive(Long... times) {
+        return database.getJournalDao().getExerciseSetRepRelationLive(times[0], times[1]);
+    }
+
 
     /**
-     * One Rep Max
+     * Entry Data
      */
-    public void insertOrmEntity(final ExerciseOrmEntity... exerciseOrmEntities) {
-        AsyncTask.execute(new Runnable() {
+
+    public LiveData<ExerciseLiftEntity> getExerciseByIdLive(String id) {
+        return database.getJournalDao().getExerciseByIdLive(id);
+    }
+
+    public LiveData<JournalDateEntity> getDateByTimestampLive(final Long... times) {
+        return database.getJournalDao().getDateByTimestampLive(times[0], times[1]);
+    }
+
+    public LiveData<JournalSetEntity> getSetByExerciseIdAndDateId(String exerciseId, Long dateId) {
+        return database.getJournalDao().getSetByExerciseIdAndDateIdLive(exerciseId, dateId);
+    }
+
+    public LiveData<ExerciseOrmEntity> getOneRepMaxByExerciseId(String exerciseId) {
+        return database.getJournalDao().getOneRepMaxByExerciseIdLive(exerciseId);
+    }
+
+    public LiveData<ExerciseSetRepRelation> getEntrySetRepsAndOrm(String exerciseId, Long... times) {
+        return database.getJournalDao().getEntrySetRepsAndOrmLive(exerciseId, times[0], times[1]);
+    }
+
+    public LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationHistoryLive(String exerciseId, Long... times) {
+        return database.getJournalDao().getExerciseSetRepRelationHistoryLive(exerciseId, times[0]);
+    }
+
+    public void insertDate(final JournalDateEntity journalDateEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getOrmDao().insertOrms(exerciseOrmEntities);
+                database.getJournalDao().insertDates(journalDateEntity);
             }
         });
     }
 
-    public ExerciseOrmEntity loadExerciseOrm(String exerciseId) {
-        return database.getOrmDao().getSet(exerciseId);
-    }
-
-    public void updateExerciseOrm(final ExerciseOrmEntity exerciseOrmEntity) {
-        AsyncTask.execute(new Runnable() {
+    public void deleteSet(final JournalSetEntity journalSetEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getOrmDao().updateOrms(exerciseOrmEntity);
+                database.getJournalDao().deleteSets(journalSetEntity);
+            }
+        });
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                final JournalRepEntity journalRepEntity = database.getJournalDao().getRepWithLargestOrm(journalSetEntity.getExerciseId());
+                final ExerciseOrmEntity ormEntity = database.getJournalDao().getOneRepMaxByExerciseId(journalSetEntity.getExerciseId());
+                if (journalRepEntity == null) {
+                    database.getJournalDao().deleteOrms(ormEntity);
+                } else {
+                    ormEntity.setRepId(journalRepEntity.getId());
+                    ormEntity.setOneRepMax(journalRepEntity.getOneRepMax());
+                    ormEntity.setWeight(journalRepEntity.getWeight());
+                    ormEntity.setReps(journalRepEntity.getReps());
+                    ormEntity.setTimestamp(journalRepEntity.getTimestamp());
+                    database.getJournalDao().updateOrms(ormEntity);
+                }
             }
         });
     }
 
-    /**
-     * Async Imports
-     */
-    public void insertDateSetRep(final JournalDateEntity journalDateEntity, final JournalSetEntity journalSetEntity, final JournalRepEntity journalRepEntity) {
-        AsyncTask.execute(new Runnable() {
+    public void insertSet(final JournalSetEntity setEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getJournalDateDao().insertDates(journalDateEntity);
-            }
-        });
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                database.getJournalSetDao().insertSets(journalSetEntity);
-            }
-        });
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                database.getJournalRepDao().insertReps(journalRepEntity);
+                database.getJournalDao().insertSets(setEntity);
             }
         });
     }
 
-    public void insertSetRep(final JournalSetEntity journalSetEntity, final JournalRepEntity journalRepEntity) {
-        AsyncTask.execute(new Runnable() {
+    public void insertRepAndOrmTransaction(final JournalRepEntity repEntity, final ExerciseOrmEntity ormEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getJournalSetDao().insertSets(journalSetEntity);
-            }
-        });
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                database.getJournalRepDao().insertReps(journalRepEntity);
+                database.getJournalDao().insertSetAndOrmTransaction(repEntity, ormEntity);
             }
         });
     }
 
-    public void deleteRepAndUpdate(final JournalRepEntity journalSetEntity, final List<JournalRepEntity> repEntityList) {
-        AsyncTask.execute(new Runnable() {
+    public void insertRepAndUpdateOrmTransaction(final JournalRepEntity repEntity, final ExerciseOrmEntity ormEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getJournalRepDao().deleteReps(journalSetEntity);
-                database.getJournalRepDao().updateRepList(repEntityList);
+                database.getJournalDao().insertSetAndUpdateOrmTransaction(repEntity, ormEntity);
             }
         });
     }
 
-    /**
-     * Relations
-     */
-    public LiveData<List<DateSetRepRelation>> loadSetAndRepsByDate(Long... times) {
-        return database.getRelationDao().getDateSetRepList(times[0], times[1]);
+    public void insertReps(final JournalRepEntity... repEntities) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getJournalDao().insertReps(repEntities);
+            }
+        });
     }
 
-    public LiveData<ExerciseSetRepRelation> loadExerciseSetReps(String exerciseId, Long... times) {
-        return database.getRelationDao().getExerciseSetRep(exerciseId, times[0], times[1]);
+    public void deleteRepAndUpdateOrm(final JournalRepEntity repEntity, final List<JournalRepEntity> repEntityList, final ExerciseOrmEntity ormEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getJournalDao().deleteRepAndUpdateListPositions(repEntity, repEntityList);
+            }
+        });
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                final JournalRepEntity journalRepEntity = database.getJournalDao().getRepWithLargestOrm(repEntity.getExerciseId());
+                if (journalRepEntity == null) {
+                    database.getJournalDao().deleteOrms(ormEntity);
+                } else {
+                    ormEntity.setRepId(journalRepEntity.getId());
+                    ormEntity.setOneRepMax(journalRepEntity.getOneRepMax());
+                    ormEntity.setWeight(journalRepEntity.getWeight());
+                    ormEntity.setReps(journalRepEntity.getReps());
+                    ormEntity.setTimestamp(journalRepEntity.getTimestamp());
+                    database.getJournalDao().updateOrms(ormEntity);
+                }
+            }
+        });
     }
 
-    public LiveData<List<ExerciseSetRepRelation>> loadExerciseSetRepsHistory(String exerciseId, Long... times) {
-        return database.getRelationDao().getExerciseSetRepHistory(exerciseId, times[0]);
+    public void updateRepNew(final JournalRepEntity repEntity, final ExerciseOrmEntity ormEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getJournalDao().updateReps(repEntity);
+            }
+        });
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                JournalRepEntity journalRepEntity = database.getJournalDao().getRepWithLargestOrm(repEntity.getExerciseId());
+                ormEntity.setRepId(journalRepEntity.getId());
+                ormEntity.setOneRepMax(journalRepEntity.getOneRepMax());
+                ormEntity.setWeight(journalRepEntity.getWeight());
+                ormEntity.setReps(journalRepEntity.getReps());
+                ormEntity.setTimestamp(journalRepEntity.getTimestamp());
+                database.getJournalDao().updateOrms(ormEntity);
+            }
+        });
     }
 
 
     /**
      * Exercises
      */
-    public LiveData<List<ExerciseLiftEntity>> loadAllExercises() {
-        return database.getExerciseLiftDao().loadAllExercises();
+    public LiveData<List<ExerciseLiftEntity>> getAllExercises() {
+        return database.getExerciseLiftDao().getAllExercises();
     }
 
     public void insertExercises(final ExerciseLiftEntity... exerciseLiftEntities) {
@@ -147,55 +209,6 @@ public class JournalRepository {
             @Override
             public void run() {
                 database.getExerciseLiftDao().updateExercises(exerciseLiftEntities);
-            }
-        });
-    }
-
-    public ExerciseLiftEntity loadExerciseById(String id) {
-        return database.getExerciseLiftDao().loadExercise(id);
-    }
-
-    /**
-     * Journal Dates
-     */
-
-    public JournalDateEntity getDateRun(final long... times) {
-        return database.getJournalDateDao().getDateRun(times[0], times[1]);
-    }
-
-    /**
-     * Journal Sets
-     */
-    public void deleteSet(final String setId) {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                database.getJournalSetDao().seleteSerById(setId);
-            }
-        });
-    }
-
-    public JournalSetEntity getSet(String exerciseId, String dateId) {
-        return database.getJournalSetDao().getSet(exerciseId, dateId);
-    }
-
-    /**
-     * Journal Reps
-     */
-    public void insertReps(final JournalRepEntity... repEntities) {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                database.getJournalRepDao().insertReps(repEntities);
-            }
-        });
-    }
-
-    public void updateRep(final JournalRepEntity repEntity) {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                database.getJournalRepDao().updateReps(repEntity);
             }
         });
     }

@@ -9,6 +9,10 @@
             type="android.view.View.OnClickListener" />
 
         <variable
+            name="menuListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
             name="title"
             type="String" />
     </data>
@@ -58,6 +62,7 @@
                 android:contentDescription="@null"
                 android:focusable="true"
                 android:foreground="?selectableItemBackgroundBorderless"
+                android:onClickListener="@{menuListener}"
                 android:padding="6dp"
                 android:tint="@color/white"
                 app:srcCompat="@drawable/ic_more_vert" />

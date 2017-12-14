@@ -5,28 +5,25 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import eh.workout.journal.com.workoutjournal.model.JournalDate;
-
 @Entity(tableName = "journal_date_entities")
-public class JournalDateEntity implements JournalDate {
+public class JournalDateEntity {
     @PrimaryKey
     @NonNull
-    public String id;
+    private Long id;
     public long timestamp;
 
     public JournalDateEntity() {
     }
 
     @NonNull
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(@NonNull Long id) {
         this.id = id;
     }
 
-    @Override
     public long getTimestamp() {
         return timestamp;
     }

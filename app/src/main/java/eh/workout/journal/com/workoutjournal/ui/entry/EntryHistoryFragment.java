@@ -27,19 +27,19 @@ public class EntryHistoryFragment extends Fragment {
         return new EntryHistoryFragment();
     }
 
-    private EntryViewModel model;
-    private EntryHistoryRecyclerAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getParentFragment() != null) {
-            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModel.class);
+            model = ViewModelProviders.of(getParentFragment()).get(EntryHistoryViewModel.class);
         }
         adapter = new EntryHistoryRecyclerAdapter();
     }
 
-    FragmentEntryHistoryListBinding binding;
+    private EntryHistoryViewModel model;
+    private EntryHistoryRecyclerAdapter adapter;
+    private FragmentEntryHistoryListBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class EntryHistoryFragment extends Fragment {
         observeSetReps(model);
     }
 
-    private void observeSetReps(EntryViewModel model) {
+    private void observeSetReps(EntryHistoryViewModel model) {
         model.getHistory().observe(this, new Observer<List<ExerciseSetRepRelation>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseSetRepRelation> exerciseSetRepRelations) {

@@ -6,6 +6,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew" />
     </data>
 
     <android.support.v7.widget.CardView
@@ -13,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
+        android:visibility="@{model.dataLoaded?View.VISIBLE:View.GONE, default=gone}"
         app:cardBackgroundColor="@color/white">
 
         <LinearLayout

@@ -1,5 +1,6 @@
 package eh.workout.journal.com.workoutjournal.ui.entry;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentEntryParentBinding;
+import eh.workout.journal.com.workoutjournal.ui.factory.AppFactory;
 
 
 public class EntryParentFragment extends Fragment {
@@ -32,7 +34,7 @@ public class EntryParentFragment extends Fragment {
         return fragment;
     }
 
-    private EntryViewModel model;
+    private EntryViewModelNew model;
     private FragmentEntryParentBinding binding;
     private Long timestamp;
     private String liftId;
@@ -46,13 +48,9 @@ public class EntryParentFragment extends Fragment {
             liftId = getArguments().getString(ARG_LIFT_ID);
         }
         if (getActivity() != null) {
-            model = ViewModelProviders.of(
-                    this,
-                    new EntryViewModelFactory(
-                            (JournalApplication) getActivity().getApplicationContext(),
-                            liftId,
-                            timestamp))
-                    .get(EntryViewModel.class);
+            ViewModelProvider.Factory appFactory = new AppFactory((JournalApplication) getActivity().getApplicationContext(), liftId, timestamp);
+            model = ViewModelProviders.of(this, appFactory).get(EntryViewModelNew.class);
+            ViewModelProviders.of(this, appFactory).get(EntryHistoryViewModel.class);
         }
     }
 

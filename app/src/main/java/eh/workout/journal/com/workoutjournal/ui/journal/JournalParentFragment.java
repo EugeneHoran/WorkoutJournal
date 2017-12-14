@@ -17,21 +17,27 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.roomorama.caldroid.CaldroidListener;
+
 import java.util.Calendar;
+import java.util.Date;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.base.BaseFragment;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalParentBinding;
+import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
+import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
+import eh.workout.journal.com.workoutjournal.util.DateHelper;
 
 public class JournalParentFragment extends BaseFragment {
     private static final String ARG_DATE_PAGE = "arg_date_page";
-    private int datePage = 5000;
+    private int datePage = Constants.PAGE_TODAY;
 
 
     public ObservableField<String> toolbarTitle = new ObservableField<>("Today");
     public ObservableField<String> toolbarSubTitle = new ObservableField<>();
+    private CalendarBottomSheetFragment caldroidFragment;
 
     public JournalParentFragment() {
     }
@@ -55,7 +61,7 @@ public class JournalParentFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            datePage = getArguments().getInt(ARG_DATE_PAGE, 5000);
+            datePage = getArguments().getInt(ARG_DATE_PAGE, Constants.PAGE_TODAY);
         }
         journalPagerAdapter = new JournalParentPagerAdapter(getChildFragmentManager());
     }
@@ -110,7 +116,9 @@ public class JournalParentFragment extends BaseFragment {
                     binding.pager.setCurrentItem(binding.pager.getCurrentItem() - 1);
                     break;
                 case R.id.action_calendar:
-
+                    caldroidFragment = new CalendarBottomSheetFragment();
+                    caldroidFragment.setCaldroidListener(calListener);
+                    showCalendarBottomSheet(caldroidFragment, journalPagerAdapter.getAdapterDate(binding.pager.getCurrentItem()));
                     break;
                 case R.id.action_next:
                     binding.pager.setCurrentItem(binding.pager.getCurrentItem() + 1);
@@ -128,6 +136,14 @@ public class JournalParentFragment extends BaseFragment {
                     return false;
             }
             return false;
+        }
+    };
+
+    final CaldroidListener calListener = new CaldroidListener() {
+        @Override
+        public void onSelectDate(Date date, View view) {
+            caldroidFragment.dismiss();
+            binding.pager.setCurrentItem((5000 - DateHelper.findDaysDiff(date.getTime(), new Date().getTime())), true);
         }
     };
 

@@ -15,6 +15,7 @@
         android:icon="@drawable/ic_chevron_left"
         android:orderInCategory="200"
         android:title="@string/action_previous_day"
+        android:visible="false"
         app:showAsAction="always" />
 
     <item
@@ -29,6 +30,7 @@
         android:icon="@drawable/ic_chevron_right"
         android:orderInCategory="400"
         android:title="@string/action_next_day"
+        android:visible="false"
         app:showAsAction="always" />
 
     <item

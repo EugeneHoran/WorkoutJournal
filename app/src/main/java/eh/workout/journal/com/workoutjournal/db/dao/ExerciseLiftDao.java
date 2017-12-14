@@ -12,19 +12,16 @@ import java.util.List;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 
 @Dao
-public interface ExerciseLiftDao {
+public abstract class ExerciseLiftDao {
     @Insert
-    void insertExercises(ExerciseLiftEntity... exerciseEntities);
+    public abstract void insertExercises(ExerciseLiftEntity... exerciseEntities);
 
     @Insert
-    void insertExerciseList(List<ExerciseLiftEntity> exerciseEntities);
+    public abstract void insertExerciseList(List<ExerciseLiftEntity> exerciseEntities);
 
     @Update
-    void updateExercises(ExerciseLiftEntity... exerciseEntities);
+    public abstract void updateExercises(ExerciseLiftEntity... exerciseEntities);
 
     @Query("SELECT * FROM exercise_lift_entities  ORDER BY name")
-    LiveData<List<ExerciseLiftEntity>> loadAllExercises();
-
-    @Query("select * FROM exercise_lift_entities WHERE id = :id")
-    ExerciseLiftEntity loadExercise(String id);
+    public abstract LiveData<List<ExerciseLiftEntity>> getAllExercises();
 }
