@@ -19,14 +19,11 @@ import android.widget.TextView;
 
 import com.roomorama.caldroid.CaldroidListener;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalParentBinding;
-import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
@@ -37,11 +34,9 @@ public class JournalParentFragment extends BaseFragment {
     private static final String ARG_DATE_PAGE = "arg_date_page";
     private int datePage = Constants.PAGE_TODAY;
 
-
     public ObservableField<String> toolbarTitle = new ObservableField<>("Today");
     public ObservableField<String> toolbarSubTitle = new ObservableField<>();
     private CalendarBottomSheetFragment caldroidFragment;
-    private List<JournalDateEntity> dateEntities = new ArrayList<>();
 
     public JournalParentFragment() {
     }
@@ -89,8 +84,8 @@ public class JournalParentFragment extends BaseFragment {
         binding.setFragment(this);
     }
 
-    public void onExerciseClicked(String setId) {
-        navToAddExerciseFragment(binding.viewToolbar.appBar, setId, journalPagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
+    public void onExerciseClicked(String setId, int inputType) {
+        navToAddExerciseFragment(binding.viewToolbar.appBar, setId, inputType, journalPagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
     }
 
     @SuppressWarnings("unused")

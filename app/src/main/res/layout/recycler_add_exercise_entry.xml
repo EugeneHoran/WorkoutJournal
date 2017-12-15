@@ -7,6 +7,8 @@
 
         <import type="eh.workout.journal.com.workoutjournal.util.MyStringUtil" />
 
+        <import type="android.view.View" />
+
         <variable
             name="holder"
             type="eh.workout.journal.com.workoutjournal.ui.entry.EntryListRecyclerAdapter.RepViewHolder" />
@@ -22,12 +24,13 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
-        android:weightSum="3">
+        android:weightSum="@{holder.showWeight? 3:2, default = 3}">
 
         <TextView
             android:id="@+id/set"
@@ -41,7 +44,8 @@
 
         <android.support.v4.widget.Space
             android:layout_width="16dp"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:visibility="@{holder.showWeight? View.VISIBLE:View.GONE, default = visible}" />
 
         <TextView
             android:id="@+id/weight"
@@ -51,11 +55,13 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="@{MyStringUtil.formatRepWeight(repEntity.weight)}"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="@{holder.showWeight? View.VISIBLE:View.GONE, default = visible}" />
 
         <android.support.v4.widget.Space
             android:layout_width="16dp"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:visibility="@{holder.showWeight? View.VISIBLE:View.GONE, default = visible}" />
 
         <TextView
             android:id="@+id/reps"

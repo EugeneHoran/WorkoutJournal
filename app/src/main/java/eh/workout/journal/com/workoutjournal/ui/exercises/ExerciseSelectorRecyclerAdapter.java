@@ -14,8 +14,8 @@ import eh.workout.journal.com.workoutjournal.databinding.RecyclerHeaderBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 
 public class ExerciseSelectorRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int HOLDER_HEADER = 0;
-    private static final int HOLDER_EXERCISE = 1;
+    public static final int HOLDER_HEADER = 0;
+    public static final int HOLDER_EXERCISE = 1;
 
     private ExerciseAdapterInterface listener;
 

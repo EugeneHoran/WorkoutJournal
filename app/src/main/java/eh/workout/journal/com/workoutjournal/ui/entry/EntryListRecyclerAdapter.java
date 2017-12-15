@@ -54,11 +54,18 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecy
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                 JournalRepEntity oldRep = itemList.get(oldItemPosition);
                 JournalRepEntity newRep = items.get(newItemPosition);
-                return oldRep.getId().equals(newRep.getId()) &&
-                        oldRep.getReps().equals(newRep.getReps()) &&
-                        oldRep.getWeight().equals(newRep.getWeight()) &&
-                        oldRep.getTempPosition() == newRep.getTempPosition() &&
-                        oldRep.getPosition() == newRep.getPosition();
+                if (oldRep.getWeight() == null || newRep.getWeight() == null) {
+                    return oldRep.getId().equals(newRep.getId()) &&
+                            oldRep.getReps().equals(newRep.getReps()) &&
+                            oldRep.getTempPosition() == newRep.getTempPosition() &&
+                            oldRep.getPosition() == newRep.getPosition();
+                } else {
+                    return oldRep.getId().equals(newRep.getId()) &&
+                            oldRep.getReps().equals(newRep.getReps()) &&
+                            oldRep.getWeight().equals(newRep.getWeight()) &&
+                            oldRep.getTempPosition() == newRep.getTempPosition() &&
+                            oldRep.getPosition() == newRep.getPosition();
+                }
             }
         });
         this.itemList.clear();
@@ -85,6 +92,7 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecy
     public class RepViewHolder extends RecyclerView.ViewHolder {
         private RecyclerAddExerciseEntryBinding binding;
         private JournalRepEntity repEntity;
+        public boolean showWeight = true;
 
         RepViewHolder(RecyclerAddExerciseEntryBinding binding) {
             super(binding.getRoot());
@@ -93,6 +101,7 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecy
 
         void bindView() {
             repEntity = itemList.get(getAdapterPosition());
+            showWeight = repEntity.getExerciseInputType() == 0;
             binding.setRepEntity(repEntity);
             binding.setHolder(this);
         }

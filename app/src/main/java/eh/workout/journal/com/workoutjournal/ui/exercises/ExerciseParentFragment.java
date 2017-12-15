@@ -1,0 +1,120 @@
+package eh.workout.journal.com.workoutjournal.ui.exercises;
+
+
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
+import eh.workout.journal.com.workoutjournal.R;
+import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseParentBinding;
+import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
+import eh.workout.journal.com.workoutjournal.util.CustomSearchView;
+
+public class ExerciseParentFragment extends BaseFragment {
+    private static final String ARG_DATE_TIMESTAMP = "arg_date_timestamp";
+
+    public ExerciseParentFragment() {
+    }
+
+    public static ExerciseParentFragment newInstance(Long timestamp) {
+        ExerciseParentFragment fragment = new ExerciseParentFragment();
+        Bundle args = new Bundle();
+        args.putLong(ARG_DATE_TIMESTAMP, timestamp);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        model = ViewModelProviders.of(this).get(ExerciseSelectorViewModel.class);
+        if (getArguments() != null) {
+            timestamp = getArguments().getLong(ARG_DATE_TIMESTAMP);
+        }
+        adapter = new ExerciseParentPagerAdapter(getChildFragmentManager());
+    }
+
+    private FragmentExerciseParentBinding binding;
+    private ExerciseSelectorViewModel model;
+    private ExerciseParentPagerAdapter adapter;
+    private CustomSearchView customSearchView;
+    private Long timestamp;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercise_parent, container, false);
+        customSearchView = new CustomSearchView(binding.viewToolbar != null ? binding.viewToolbar.toolbar : null);
+        customSearchView.setListener(new CustomSearchView.SearchInterface() {
+            @Override
+            public void onSearchQuery(String query) {
+                model.queryExercises(query);
+            }
+        });
+        binding.setFragment(this);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.pager.setAdapter(adapter);
+        binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
+        if (savedInstanceState != null) {
+            if (model.searchVisible) {
+                customSearchView.show();
+            }
+        }
+        ExerciseSelectorFragment fragment = (ExerciseSelectorFragment) adapter.getItem(0);
+        if (fragment != null) {
+            fragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
+                @Override
+                public void liftSelected(String exerciseId, int inputType) {
+                    navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
+                }
+            });
+        }
+    }
+
+    public boolean searchVisible() {
+        return binding.viewToolbar.searchHolder.getVisibility() == View.VISIBLE;
+    }
+
+    public void hideSearch() {
+        model.searchVisible = false;
+        customSearchView.hide();
+    }
+
+    public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            int id = item.getItemId();
+            switch (id) {
+                case R.id.action_add_exercise:
+                    dialogNewExercise();
+                    break;
+                case R.id.action_search_exercise:
+                    model.searchVisible = true;
+                    customSearchView.show();
+                    break;
+                default:
+                    return false;
+            }
+            return false;
+        }
+    };
+    public View.OnClickListener navListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        }
+    };
+}

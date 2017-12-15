@@ -7,4 +7,16 @@
         android:key="key_unit_measure"
         android:title="@string/pref_title_unit_system" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="example_switch"
+        android:summary="Countdown timer will be on the bottom of the screen"
+        android:title="Display countdown timer" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:dependency="example_switch"
+        android:key="example_switch1"
+        android:title="Countdown timer notifications" />
+
 </PreferenceScreen>

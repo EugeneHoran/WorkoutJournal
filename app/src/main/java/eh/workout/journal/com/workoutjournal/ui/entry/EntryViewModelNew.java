@@ -95,8 +95,7 @@ public class EntryViewModelNew extends AndroidViewModel {
         return observableSetReps;
     }
 
-    void saveRep(String weight, String reps) {
-        double oneRepMax = EquationsHelper.getOneRepMax(weight, reps);
+    void saveRep(String weight, String reps, double oneRepMax) {
         JournalRepEntity journalRepEntity = new JournalRepEntity();
         journalRepEntity.setId(UUID.randomUUID().toString());
         journalRepEntity.setTimestamp(dateId);
@@ -106,6 +105,7 @@ public class EntryViewModelNew extends AndroidViewModel {
         journalRepEntity.setWeight(weight);
         journalRepEntity.setJournalSetId(setEntity.getId());
         journalRepEntity.setExerciseId(liftEntity.getId());
+        journalRepEntity.setExerciseInputType(liftEntity.getExerciseInputType());
         journalRepEntity.setOneRepMax(oneRepMax);
         if (ormEntity == null) {
             ExerciseOrmEntity exerciseOrmEntity = new ExerciseOrmEntity();
@@ -199,6 +199,7 @@ public class EntryViewModelNew extends AndroidViewModel {
                 newSetEntity.setTimestamp(dateId);
                 newSetEntity.setExerciseId(liftEntity.getId());
                 newSetEntity.setDateId(dateId);
+                newSetEntity.setExerciseInputType(liftEntity.getExerciseInputType());
                 repository.insertSet(newSetEntity);
             } else {
                 dataLoaded.set(true);

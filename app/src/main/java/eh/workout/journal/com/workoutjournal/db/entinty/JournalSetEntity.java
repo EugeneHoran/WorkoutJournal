@@ -11,9 +11,11 @@ public class JournalSetEntity {
     @NonNull
     public String id;
     private String name;
+    private int exerciseType;
     private long timestamp;
     private String exerciseId;
     private Long dateId;
+    private int exerciseInputType;
 
     public JournalSetEntity() {
     }
@@ -33,6 +35,14 @@ public class JournalSetEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getExerciseType() {
+        return exerciseType;
+    }
+
+    public void setExerciseType(int exerciseType) {
+        this.exerciseType = exerciseType;
     }
 
     public long getTimestamp() {
@@ -57,5 +67,13 @@ public class JournalSetEntity {
 
     public void setDateId(Long dateId) {
         this.dateId = dateId;
+    }
+
+    public int getExerciseInputType() {
+        return exerciseInputType;
+    }
+
+    public void setExerciseInputType(int exerciseInputType) {
+        this.exerciseInputType = exerciseInputType;
     }
 }

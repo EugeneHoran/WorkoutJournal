@@ -20,15 +20,17 @@ import eh.workout.journal.com.workoutjournal.ui.factory.AppFactory;
 
 public class EntryParentFragment extends Fragment {
     private static final String ARG_LIFT_ID = "param_lift_id";
+    public static final String ARG_LIFT_INPUT_TYPE = "param_lift_input_type";
     private static final String ARG_LIFT_TIMESTAMP = "param_lift_timestamp";
 
     public EntryParentFragment() {
     }
 
-    public static EntryParentFragment newInstance(String exerciseId, Long timestamp) {
+    public static EntryParentFragment newInstance(String exerciseId, int inputType, Long timestamp) {
         EntryParentFragment fragment = new EntryParentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_LIFT_ID, exerciseId);
+        args.putInt(ARG_LIFT_INPUT_TYPE, inputType);
         args.putLong(ARG_LIFT_TIMESTAMP, timestamp);
         fragment.setArguments(args);
         return fragment;
@@ -37,6 +39,7 @@ public class EntryParentFragment extends Fragment {
     private EntryViewModelNew model;
     private FragmentEntryParentBinding binding;
     private Long timestamp;
+    private int inputType = 0;
     private String liftId;
 
 
@@ -45,6 +48,7 @@ public class EntryParentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             timestamp = getArguments().getLong(ARG_LIFT_TIMESTAMP);
+            inputType = getArguments().getInt(ARG_LIFT_INPUT_TYPE);
             liftId = getArguments().getString(ARG_LIFT_ID);
         }
         if (getActivity() != null) {
@@ -57,7 +61,7 @@ public class EntryParentFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entry_parent, container, false);
-        getChildFragmentManager().beginTransaction().replace(R.id.entryHolder, EntryInputFragment.newInstance()).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.entryHolder, EntryInputFragment.newInstance(inputType)).commit();
         binding.setModel(model);
         binding.setFragment(this);
         return binding.getRoot();

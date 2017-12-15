@@ -17,6 +17,8 @@ import android.widget.NumberPicker;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentEntryInputBinding;
+import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
+import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
 import eh.workout.journal.com.workoutjournal.util.MultiTextWatcher;
 
 public class EntryInputFragment extends Fragment implements
@@ -26,17 +28,25 @@ public class EntryInputFragment extends Fragment implements
     public EntryInputFragment() {
     }
 
-    public static EntryInputFragment newInstance() {
-        return new EntryInputFragment();
+    public static EntryInputFragment newInstance(int inputType) {
+        EntryInputFragment fragment = new EntryInputFragment();
+        Bundle args = new Bundle();
+        args.putInt(EntryParentFragment.ARG_LIFT_INPUT_TYPE, inputType);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     private EntryViewModelNew model;
+    private int inputType = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getParentFragment() != null) {
             model = ViewModelProviders.of(getParentFragment()).get(EntryViewModelNew.class);
+        }
+        if (getArguments() != null) {
+            inputType = getArguments().getInt(EntryParentFragment.ARG_LIFT_INPUT_TYPE);
         }
     }
 
@@ -45,6 +55,11 @@ public class EntryInputFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entry_input, container, false);
+        if (inputType == ExerciseDataHelper.EXERCISE_TYPE_BODY) {
+            binding.viewInput.pickerWeight.setVisibility(View.GONE);
+            binding.viewInput.textWeight.setVisibility(View.GONE);
+            binding.viewInput.spaceWeight.setVisibility(View.GONE);
+        }
         return binding.getRoot();
     }
 
@@ -78,9 +93,22 @@ public class EntryInputFragment extends Fragment implements
         binding.saveSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                model.saveRep(String.valueOf(binding.viewInput.pickerWeight.getValue()), String.valueOf(binding.viewInput.pickerReps.getValue()));
+                String weight = String.valueOf(binding.viewInput.pickerWeight.getValue());
+                String reps = String.valueOf(binding.viewInput.pickerReps.getValue());
+                model.saveRep(inputType == 0 ? weight : null, reps, getOneRepMax(weight, reps));
             }
         });
+    }
+
+    private double getOneRepMax(String weight, String reps) {
+        switch (inputType) {
+            case ExerciseDataHelper.EXERCISE_TYPE_WEIGHT:
+                return EquationsHelper.getOneRepMax(weight, reps);
+            case ExerciseDataHelper.EXERCISE_TYPE_BODY:
+                return Double.valueOf(reps);
+            default:
+                return 0;
+        }
     }
 
     @Override

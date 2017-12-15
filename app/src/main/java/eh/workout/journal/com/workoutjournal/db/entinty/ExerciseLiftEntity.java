@@ -1,17 +1,25 @@
 package eh.workout.journal.com.workoutjournal.db.entinty;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "exercise_lift_entities")
-public class ExerciseLiftEntity {
+@Entity(tableName = "exercise_lift_entities",
+        foreignKeys = {@ForeignKey(entity = ExerciseGroupEntity.class,
+                parentColumns = "id",
+                childColumns = "exerciseGroupId",
+                deferred = true)})
+public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
     @PrimaryKey
     @NonNull
     private String id;
     private String name;
     private boolean recent;
+    private Long timestampRecent;
+    private int exerciseGroupId;
+    private int exerciseInputType;
     @Ignore
     private boolean isShownInRecent = false;
 
@@ -23,7 +31,10 @@ public class ExerciseLiftEntity {
         this.id = entity.getId();
         this.name = entity.getName();
         this.recent = entity.getRecent();
+        this.timestampRecent = entity.getTimestampRecent();
         this.isShownInRecent = true;
+        this.exerciseGroupId = entity.getExerciseGroupId();
+        this.exerciseInputType = entity.getExerciseInputType();
     }
 
     @Ignore
@@ -58,6 +69,30 @@ public class ExerciseLiftEntity {
         this.recent = recent;
     }
 
+    public Long getTimestampRecent() {
+        return timestampRecent;
+    }
+
+    public void setTimestampRecent(Long timestampRecent) {
+        this.timestampRecent = timestampRecent;
+    }
+
+    public int getExerciseGroupId() {
+        return exerciseGroupId;
+    }
+
+    public void setExerciseGroupId(int exerciseGroupId) {
+        this.exerciseGroupId = exerciseGroupId;
+    }
+
+    public int getExerciseInputType() {
+        return exerciseInputType;
+    }
+
+    public void setExerciseInputType(int exerciseInputType) {
+        this.exerciseInputType = exerciseInputType;
+    }
+
     @Ignore
     public boolean getIsShownInRecent() {
         return isShownInRecent;
@@ -67,4 +102,13 @@ public class ExerciseLiftEntity {
     public void setShownInRecent(boolean shownInRecent) {
         isShownInRecent = shownInRecent;
     }
+
+    /**
+     * Comparator
+     */
+    @Override
+    public int compareTo(@NonNull ExerciseLiftEntity exerciseLiftEntity) {
+        return (this.timestampRecent).compareTo(exerciseLiftEntity.timestampRecent);
+    }
+
 }

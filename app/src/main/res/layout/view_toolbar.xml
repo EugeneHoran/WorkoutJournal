@@ -49,14 +49,37 @@
             app:subtitle="@{subTitle}"
             app:title="@{title}">
 
-            <SearchView
-                android:id="@+id/searchView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:iconifiedByDefault="false"
-                android:queryHint="Search"
-                android:visibility="gone" />
+            <LinearLayout
+                android:id="@+id/searchHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/editSearchView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="Search"
+                    android:inputType="textCapWords" />
+
+                <ImageView
+                    android:id="@+id/imgSearchClear"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@null"
+                    android:focusable="true"
+                    android:padding="6dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_clear" />
+            </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout

@@ -83,10 +83,10 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     }
 
     @Override
-    public void onWorkoutClicked(String setId) {
+    public void onWorkoutClicked(String setId, int inputType) {
         if (getParentFragment() != null) {
             JournalParentFragment journalParentFragment = (JournalParentFragment) getParentFragment();
-            journalParentFragment.onExerciseClicked(setId);
+            journalParentFragment.onExerciseClicked(setId, inputType);
         }
     }
 

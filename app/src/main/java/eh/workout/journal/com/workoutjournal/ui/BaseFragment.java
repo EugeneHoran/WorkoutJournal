@@ -18,6 +18,7 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CaldroidBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment;
+import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorFragment;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
@@ -48,9 +49,8 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    public void dialogNewExercise(ExerciseSelectorFragment fragment) {
+    public void dialogNewExercise() {
         ExerciseSelectorAddExerciseDialogFragment addExerciseDialogFragment = ExerciseSelectorAddExerciseDialogFragment.newInstance();
-        addExerciseDialogFragment.setListener(fragment);
         addExerciseDialogFragment.show(getChildFragmentManager(), TAG_ADD_LIFT_DIALOG_FRAGMENT);
     }
 
@@ -73,7 +73,7 @@ public class BaseFragment extends Fragment {
     }
 
     public void navToSelectExerciseFragment(View view, Long timestamp) {
-        ExerciseSelectorFragment exerciseSelectorFragment = ExerciseSelectorFragment.newInstance(timestamp);
+        ExerciseParentFragment exerciseSelectorFragment = ExerciseParentFragment.newInstance(timestamp);
         initTransition(exerciseSelectorFragment);
         if (getActivity() != null) {
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -85,8 +85,8 @@ public class BaseFragment extends Fragment {
 
 
     @SuppressWarnings("ConstantConditions")
-    public void navToAddExerciseFragment(View view, String id, Long timestamp) {
-        EntryParentFragment fragment = EntryParentFragment.newInstance(id, timestamp);
+    public void navToAddExerciseFragment(View view, String id, int inputType, Long timestamp) {
+        EntryParentFragment fragment = EntryParentFragment.newInstance(id, inputType, timestamp);
         if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getActivity().getSupportFragmentManager().popBackStack();
         }

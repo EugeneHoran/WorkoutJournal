@@ -21,7 +21,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         pageNumber = getIntent().getIntExtra(Constants.PAGE_RESULT_CODE_SETTINGS, 5000);
         setupActionBar();
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new GeneralPreferenceFragment()).commit();
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new MainPreference()).commit();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onBackPressed();
     }
 
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
+    public static class MainPreference extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -122,6 +122,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * Make sure to deny any unknown fragments here.
      */
     protected boolean isValidFragment(String fragmentName) {
-        return GeneralPreferenceFragment.class.getName().equals(fragmentName);
+        return MainPreference.class.getName().equals(fragmentName);
     }
 }

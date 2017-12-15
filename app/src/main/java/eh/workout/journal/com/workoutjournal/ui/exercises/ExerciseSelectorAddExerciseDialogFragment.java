@@ -1,16 +1,21 @@
 package eh.workout.journal.com.workoutjournal.ui.exercises;
 
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -18,9 +23,8 @@ import eh.workout.journal.com.workoutjournal.databinding.DialogAddExerciseBindin
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 
 
+@SuppressWarnings("ConstantConditions")
 public class ExerciseSelectorAddExerciseDialogFragment extends DialogFragment {
-    private AddExerciseDialogInterface listener;
-
     public ExerciseSelectorAddExerciseDialogFragment() {
     }
 
@@ -28,12 +32,17 @@ public class ExerciseSelectorAddExerciseDialogFragment extends DialogFragment {
         return new ExerciseSelectorAddExerciseDialogFragment();
     }
 
+    private ExerciseSelectorViewModel model;
     private DialogAddExerciseBinding binding;
+    private List<ExerciseLiftEntity> lifts;
+    private boolean dataLoaded = false;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        model = ViewModelProviders.of(getParentFragment()).get(ExerciseSelectorViewModel.class);
+        observeExerciseList(model);
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_add_exercise, null, false);
         builder.setTitle("Add Exercise");
         builder.setNegativeButton("Cancel", null);
@@ -41,12 +50,19 @@ public class ExerciseSelectorAddExerciseDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (!TextUtils.isEmpty(binding.exercise.getText().toString().trim())) {
-                    ExerciseLiftEntity exerciseLiftEntity = new ExerciseLiftEntity(
-                            UUID.randomUUID().toString(),
-                            binding.exercise.getText().toString().trim(),
-                            true);
-                    if (listener != null) {
-                        listener.saveNewExercise(exerciseLiftEntity);
+                    if (!duplicates(binding.exercise.getText().toString().trim())) {
+                        ExerciseLiftEntity liftEntity = new ExerciseLiftEntity();
+                        liftEntity.setId(UUID.randomUUID().toString());
+                        liftEntity.setName(binding.exercise.getText().toString().trim());
+                        liftEntity.setRecent(true);
+                        liftEntity.setTimestampRecent(new Date().getTime());
+                        liftEntity.setExerciseGroupId(binding.spinnerExerciseBody.getSelectedItemPosition());
+                        liftEntity.setExerciseInputType(binding.spinnerExerciseType.getSelectedItemPosition());
+                        if (dataLoaded) {
+                            model.addExercise(liftEntity);
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Duplicate", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getActivity(), "Exercise can't be empty", Toast.LENGTH_LONG).show();
@@ -57,17 +73,23 @@ public class ExerciseSelectorAddExerciseDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    public void setListener(AddExerciseDialogInterface listener) {
-        this.listener = listener;
+    boolean duplicates(String exerciseName) {
+        boolean duplicate = false;
+        for (int i = 0; i < lifts.size(); i++) {
+            if (lifts.get(i).getName().equalsIgnoreCase(exerciseName)) {
+                duplicate = true;
+            }
+        }
+        return duplicate;
     }
 
-    public interface AddExerciseDialogInterface {
-        void saveNewExercise(ExerciseLiftEntity exerciseLiftEntity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
+    private void observeExerciseList(ExerciseSelectorViewModel model) {
+        model.getAllExercises().observe(this, new Observer<List<ExerciseLiftEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
+                lifts = exerciseLiftEntities;
+                dataLoaded = true;
+            }
+        });
     }
 }

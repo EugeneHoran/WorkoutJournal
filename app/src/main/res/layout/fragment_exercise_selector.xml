@@ -4,32 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="anew.eugene.onerepmax.com.onerepmaxcalculator.MainActivity">
 
-    <data>
+    <data></data>
 
-        <variable
-            name="fragment"
-            type="eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorFragment" />
-    </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include
-            android:id="@+id/viewToolbar"
-            layout="@layout/view_toolbar"
-            app:menuListener="@{fragment.menuItemClickListener}"
-            app:navListener="@{fragment.navListener}"
-            app:navigation="@{true}"
-            app:title="@{fragment.toolbarTitle}" />
-
-        <!--app:showTabs="@{true}"-->
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    </android.support.design.widget.CoordinatorLayout>
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </layout>

@@ -2,11 +2,10 @@ package eh.workout.journal.com.workoutjournal.util;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 public class MultiTextWatcher {
-
-    private boolean register = true;
 
 
     private MultiTextWatcherInterfacePicker pickerCallback;
@@ -20,20 +19,23 @@ public class MultiTextWatcher {
         return this;
     }
 
+
+    public boolean registered = false;
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
     //
     private MultiTextWatcherInterface callback;
 
     public interface MultiTextWatcherInterface {
-        void onWeightChanged(int count);
+        void onQuery(String query);
     }
 
     public MultiTextWatcher setCallback(MultiTextWatcherInterface callback) {
         this.callback = callback;
         return this;
-    }
-
-    public void registerCallback(boolean register) {
-        this.register = register;
     }
 
     public MultiTextWatcher registerEditText(final EditText editText) {
@@ -43,11 +45,11 @@ public class MultiTextWatcher {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (register) {
-                    if (callback != null) {
-                        callback.onWeightChanged(s.length());
-                    }
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                if (callback != null && registered) {
+                    final StringBuilder sb = new StringBuilder(charSequence.length());
+                    sb.append(charSequence);
+                    callback.onQuery(sb.toString());
                 }
             }
 

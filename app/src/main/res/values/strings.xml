@@ -17,7 +17,7 @@
     <string name="pref_title_unit_system">Unit System</string>
     <string name="add_exercise">Add Exercise</string>
     <string name="search">Search</string>
-    <string name="exercise_name">Exercise Name</string>
+    <string name="exercise_name">Exercise name</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string-array name="pref_unit_list_titles">
@@ -27,5 +27,25 @@
     <string-array name="pref_unit_list_values">
         <item>lbs</item>
         <item>kgs</item>
+    </string-array>
+
+    <string-array name="exercise_body">
+        <item>Chest</item>
+        <item>Triceps</item>
+        <item>Biceps</item>
+        <item>Forearm</item>
+        <item>Shoulders</item>
+        <item>Back</item>
+        <item>Legs</item>
+        <item>Abs</item>
+        <item>Cardio</item>
+        <item>Weights and reps</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="exercise_type">
+        <item>Weights and reps</item>
+        <item>Reps only</item>
+        <item>Cardio</item>
     </string-array>
 </resources>

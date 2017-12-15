@@ -10,17 +10,19 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
-import eh.workout.journal.com.workoutjournal.util.DataGenerator;
+import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
 
 public class ExerciseSelectorViewModel extends AndroidViewModel {
     private JournalRepository repository;
     private LiveData<List<ExerciseLiftEntity>> allExercises;
     private final MediatorLiveData<List<Object>> observeExercisesObjects;
+    boolean searchVisible = false;
 
     public ExerciseSelectorViewModel(@NonNull Application application) {
         super(application);
@@ -31,14 +33,18 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
         observeExercisesObjects.addSource(allExercises, new Observer<List<ExerciseLiftEntity>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
-                observeExercisesObjects.setValue(DataGenerator.getFormattedExerciseList(exerciseLiftEntities));
+                observeExercisesObjects.setValue(ExerciseDataHelper.getFormattedExerciseList(exerciseLiftEntities));
             }
         });
     }
 
+    LiveData<List<ExerciseLiftEntity>> getAllExercises() {
+        return allExercises;
+    }
+
     void queryExercises(String query) {
         if (TextUtils.isEmpty(query)) {
-            observeExercisesObjects.setValue(DataGenerator.getFormattedExerciseList(allExercises.getValue()));
+            observeExercisesObjects.setValue(ExerciseDataHelper.getFormattedExerciseList(allExercises.getValue()));
         } else {
             List<ExerciseLiftEntity> exerciseLiftEntities = allExercises.getValue();
             if (exerciseLiftEntities != null) {
@@ -53,7 +59,7 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
                 }
                 observeExercisesObjects.setValue(temp);
             } else {
-                observeExercisesObjects.setValue(DataGenerator.getFormattedExerciseList(allExercises.getValue()));
+                observeExercisesObjects.setValue(ExerciseDataHelper.getFormattedExerciseList(allExercises.getValue()));
             }
         }
     }
@@ -63,14 +69,13 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
     }
 
     void addExerciseToRecent(ExerciseLiftEntity exerciseLiftEntity) {
-        if (exerciseLiftEntity.getIsShownInRecent()) {
-            return;
-        }
+        exerciseLiftEntity.setTimestampRecent(new Date().getTime());
         exerciseLiftEntity.setRecent(true);
         repository.updateExercises(exerciseLiftEntity);
     }
 
     void removeExerciseFromRecent(ExerciseLiftEntity exerciseLiftEntity) {
+        exerciseLiftEntity.setTimestampRecent(null);
         exerciseLiftEntity.setRecent(false);
         repository.updateExercises(exerciseLiftEntity);
     }

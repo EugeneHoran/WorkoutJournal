@@ -25,6 +25,7 @@ public class JournalRepEntity {
     private double oneRepMax;
     private String journalSetId;
     private String exerciseId;
+    private int exerciseInputType;
 
     @Ignore
     private int tempPosition;
@@ -43,6 +44,7 @@ public class JournalRepEntity {
         this.exerciseId = repEntity.getExerciseId();
         this.oneRepMax = repEntity.getOneRepMax();
         this.tempPosition = repEntity.getTempPosition();
+        this.exerciseInputType = repEntity.getExerciseInputType();
     }
 
     @NonNull
@@ -129,5 +131,13 @@ public class JournalRepEntity {
 
     public void setExerciseId(String exerciseId) {
         this.exerciseId = exerciseId;
+    }
+
+    public int getExerciseInputType() {
+        return exerciseInputType;
+    }
+
+    public void setExerciseInputType(int exerciseInputType) {
+        this.exerciseInputType = exerciseInputType;
     }
 }
