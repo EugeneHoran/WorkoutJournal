@@ -197,10 +197,12 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             void bindView() {
                 JournalRepEntity repEntity = itemList.get(getAdapterPosition());
                 binding.imageTrophy.setVisibility(repId.equals(repEntity.getId()) ? View.VISIBLE : View.INVISIBLE);
-                binding.progressBar.setMax(setOneRepMax / 2);
-                binding.progressBar.setProgress(repEntity.getOrmInt() / 2);
                 binding.setSetPos(repEntity.getPosition());
                 binding.setRepEntity(repEntity);
+                int max = setOneRepMax;
+                int progress = repEntity.getOrmInt();
+                binding.progressBar.setMax(max);
+                binding.progressBar.setProgress(progress);
             }
         }
     }

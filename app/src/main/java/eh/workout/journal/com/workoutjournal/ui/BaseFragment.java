@@ -11,6 +11,7 @@ import com.roomorama.caldroid.CaldroidFragment;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
@@ -57,10 +58,11 @@ public class BaseFragment extends Fragment {
      * Navigation
      */
 
-    public void showCalendarBottomSheet(CalendarBottomSheetFragment caldroidFragment, Date date) {
+    public void showCalendarBottomSheet(CalendarBottomSheetFragment caldroidFragment, Date date, HashMap<String, Object> dateList) {
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
         caldroidFragment.setSelectedDate(date);
+        caldroidFragment.setExtraData(dateList);
         args.putInt(CaldroidBottomSheetFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidBottomSheetFragment.YEAR, cal.get(Calendar.YEAR));
         args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidCustom);

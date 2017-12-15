@@ -19,11 +19,14 @@ import android.widget.TextView;
 
 import com.roomorama.caldroid.CaldroidListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalParentBinding;
+import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
@@ -38,6 +41,7 @@ public class JournalParentFragment extends BaseFragment {
     public ObservableField<String> toolbarTitle = new ObservableField<>("Today");
     public ObservableField<String> toolbarSubTitle = new ObservableField<>();
     private CalendarBottomSheetFragment caldroidFragment;
+    private List<JournalDateEntity> dateEntities = new ArrayList<>();
 
     public JournalParentFragment() {
     }
@@ -112,16 +116,10 @@ public class JournalParentFragment extends BaseFragment {
                 case R.id.action_today:
                     binding.pager.setCurrentItem(5000, true);
                     break;
-                case R.id.action_previous:
-                    binding.pager.setCurrentItem(binding.pager.getCurrentItem() - 1);
-                    break;
                 case R.id.action_calendar:
                     caldroidFragment = new CalendarBottomSheetFragment();
                     caldroidFragment.setCaldroidListener(calListener);
-                    showCalendarBottomSheet(caldroidFragment, journalPagerAdapter.getAdapterDate(binding.pager.getCurrentItem()));
-                    break;
-                case R.id.action_next:
-                    binding.pager.setCurrentItem(binding.pager.getCurrentItem() + 1);
+                    showCalendarBottomSheet(caldroidFragment, journalPagerAdapter.getAdapterDate(binding.pager.getCurrentItem()), null);
                     break;
                 case R.id.action_orm:
                     break;

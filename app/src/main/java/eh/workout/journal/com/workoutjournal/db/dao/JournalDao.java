@@ -21,6 +21,12 @@ import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation
 @Dao
 public abstract class JournalDao {
 
+
+    @Transaction
+    @Query("SELECT * FROM journal_set_entities WHERE timestamp BETWEEN :start AND :end")
+    public abstract LiveData<List<JournalSetEntity>> getSetListByIdLive(long start, long end);
+
+
     @Transaction
     @Query("SELECT * FROM journal_set_entities WHERE timestamp BETWEEN :start AND :end")
     public abstract LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationLive(long start, long end);
@@ -41,6 +47,10 @@ public abstract class JournalDao {
     @Query("SELECT * FROM journal_date_entities WHERE timestamp BETWEEN  :start AND :end")
     public abstract LiveData<JournalDateEntity> getDateByTimestampLive(long start, long end);
 
+    // Date All
+    @Query("SELECT * FROM journal_date_entities ORDER BY id DESC LIMIT :limit")
+    public abstract LiveData<List<JournalDateEntity>> getDateListLimitLive(int limit);
+
     // Set
     @Query("SELECT * from journal_set_entities WHERE exerciseId = :exerciseId AND dateId = :dateId")
     public abstract LiveData<JournalSetEntity> getSetByExerciseIdAndDateIdLive(String exerciseId, Long dateId);
@@ -53,6 +63,9 @@ public abstract class JournalDao {
     @Query("SELECT * from exercise_orm_entities WHERE exerciseId = :exerciseId")
     public abstract LiveData<ExerciseOrmEntity> getOneRepMaxByExerciseIdLive(String exerciseId);
 
+    // One Rep Max Live
+    @Query("SELECT * from journal_date_entities WHERE id = :dateId")
+    public abstract JournalDateEntity getDateById(Long dateId);
 
     // Largest One Rep Max by Exercise
     @Query("SELECT * from journal_rep_entities WHERE exerciseId = :exerciseId  ORDER BY oneRepMax DESC LIMIT 1")
@@ -92,6 +105,9 @@ public abstract class JournalDao {
     // Date
     @Insert
     public abstract void insertDates(JournalDateEntity... dateEntity);
+
+    @Delete
+    public abstract void deleteDates(JournalDateEntity... dateEntity);
 
     // Set
     @Insert

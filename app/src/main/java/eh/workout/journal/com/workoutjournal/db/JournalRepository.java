@@ -2,7 +2,6 @@ package eh.workout.journal.com.workoutjournal.db;
 
 
 import android.arch.lifecycle.LiveData;
-import android.os.AsyncTask;
 
 import java.util.List;
 
@@ -37,15 +36,42 @@ public class JournalRepository {
     /**
      * Journal Data
      */
+    public LiveData<List<JournalDateEntity>> getDateListLimitLive(int limit) {
+        return database.getJournalDao().getDateListLimitLive(limit);
+    }
+
     public LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationLive(Long... times) {
         return database.getJournalDao().getExerciseSetRepRelationLive(times[0], times[1]);
     }
 
+    public LiveData<List<JournalSetEntity>> getSetListByIdLive(Long... times) {
+        return database.getJournalDao().getSetListByIdLive(times[0], times[1]);
+    }
+
+    private JournalDateEntity getDateById(Long dateId) {
+        return database.getJournalDao().getDateById(dateId);
+    }
+
+    private void deleteDate(JournalDateEntity dateEntity) {
+        database.getJournalDao().deleteDates(dateEntity);
+    }
+
+    public void deleteDateSetsNull(final Long dateId) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                JournalDateEntity dateEntity = getDateById(dateId);
+                if (dateEntity == null) {
+                    return;
+                }
+                deleteDate(dateEntity);
+            }
+        });
+    }
 
     /**
      * Entry Data
      */
-
     public LiveData<ExerciseLiftEntity> getExerciseByIdLive(String id) {
         return database.getJournalDao().getExerciseByIdLive(id);
     }
@@ -92,7 +118,9 @@ public class JournalRepository {
                 final JournalRepEntity journalRepEntity = database.getJournalDao().getRepWithLargestOrm(journalSetEntity.getExerciseId());
                 final ExerciseOrmEntity ormEntity = database.getJournalDao().getOneRepMaxByExerciseId(journalSetEntity.getExerciseId());
                 if (journalRepEntity == null) {
-                    database.getJournalDao().deleteOrms(ormEntity);
+                    if (ormEntity != null) {
+                        database.getJournalDao().deleteOrms(ormEntity);
+                    }
                 } else {
                     ormEntity.setRepId(journalRepEntity.getId());
                     ormEntity.setOneRepMax(journalRepEntity.getOneRepMax());

@@ -52,6 +52,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
         }
         ViewModelProvider.Factory journalChildFactory = new AppFactory(getApplicationChild(), timestamp);
         model = ViewModelProviders.of(this, journalChildFactory).get(JournalChildViewModel.class);
+        getLifecycle().addObserver(model);
         adapter = new JournalChildRecyclerAdapter(this);
     }
 

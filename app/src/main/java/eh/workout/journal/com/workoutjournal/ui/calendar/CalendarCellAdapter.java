@@ -36,8 +36,7 @@ public class CalendarCellAdapter extends CaldroidGridAdapter {
 
         TextView tv1 = cellView.findViewById(R.id.tv1);
         View viewIndicator = cellView.findViewById(R.id.viewIndicator);
-        viewIndicator.setVisibility(View.INVISIBLE); // TODO delete
-
+        viewIndicator.setVisibility(View.INVISIBLE);
         // Remove previous selected date
         if (getSelectedDates().size() > 1) {
             getSelectedDates().remove(0);
