@@ -28,8 +28,10 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
         super(application);
         JournalApplication journalApplication = getApplication();
         repository = journalApplication.getRepository();
-        allExercises = repository.getAllExercises();
+        allExercises = repository.getAllExercisesLive();
         observeExercisesObjects = new MediatorLiveData<>();
+
+
         observeExercisesObjects.addSource(allExercises, new Observer<List<ExerciseLiftEntity>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {

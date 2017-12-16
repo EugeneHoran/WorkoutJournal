@@ -34,7 +34,8 @@ public class ExerciseParentFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        model = ViewModelProviders.of(this).get(ExerciseSelectorViewModel.class);
+        selectorModel = ViewModelProviders.of(this).get(ExerciseSelectorViewModel.class);
+        ViewModelProviders.of(this).get(ExerciseGroupViewModel.class);
         if (getArguments() != null) {
             timestamp = getArguments().getLong(ARG_DATE_TIMESTAMP);
         }
@@ -42,7 +43,7 @@ public class ExerciseParentFragment extends BaseFragment {
     }
 
     private FragmentExerciseParentBinding binding;
-    private ExerciseSelectorViewModel model;
+    private ExerciseSelectorViewModel selectorModel;
     private ExerciseParentPagerAdapter adapter;
     private CustomSearchView customSearchView;
     private Long timestamp;
@@ -50,11 +51,12 @@ public class ExerciseParentFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercise_parent, container, false);
+
         customSearchView = new CustomSearchView(binding.viewToolbar != null ? binding.viewToolbar.toolbar : null);
         customSearchView.setListener(new CustomSearchView.SearchInterface() {
             @Override
             public void onSearchQuery(String query) {
-                model.queryExercises(query);
+                selectorModel.queryExercises(query);
             }
         });
         binding.setFragment(this);
@@ -66,19 +68,35 @@ public class ExerciseParentFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         binding.pager.setAdapter(adapter);
         binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
-        if (savedInstanceState != null) {
-            if (model.searchVisible) {
-                customSearchView.show();
-            }
-        }
-        ExerciseSelectorFragment fragment = (ExerciseSelectorFragment) adapter.getItem(0);
-        if (fragment != null) {
-            fragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
+        ExerciseSelectorFragment selectorFragment = (ExerciseSelectorFragment) adapter.getItem(0);
+        if (selectorFragment != null) {
+            selectorFragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
                 @Override
                 public void liftSelected(String exerciseId, int inputType) {
                     navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
                 }
             });
+        }
+        ExerciseGroupFragment groupFragment = (ExerciseGroupFragment) adapter.getItem(1);
+        if (groupFragment != null) {
+            groupFragment.setListener(new ExerciseGroupFragment.ExerciseSelectorInterface() {
+                @Override
+                public void liftSelected(String exerciseId, int inputType) {
+                    navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
+                }
+            });
+        }
+        if (savedInstanceState != null) {
+            if (selectorModel.searchVisible) {
+                customSearchView.show();
+                binding.setShowTabs(false);
+                binding.viewToolbar.tabs.setVisibility(View.GONE);
+                binding.pager.enableSwiping(false);
+            } else {
+                binding.setShowTabs(true);
+            }
+        } else {
+            binding.setShowTabs(true);
         }
     }
 
@@ -87,8 +105,10 @@ public class ExerciseParentFragment extends BaseFragment {
     }
 
     public void hideSearch() {
-        model.searchVisible = false;
+        binding.pager.enableSwiping(true);
+        selectorModel.searchVisible = false;
         customSearchView.hide();
+        binding.viewToolbar.tabs.setVisibility(View.VISIBLE);
     }
 
     public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
@@ -100,7 +120,10 @@ public class ExerciseParentFragment extends BaseFragment {
                     dialogNewExercise();
                     break;
                 case R.id.action_search_exercise:
-                    model.searchVisible = true;
+                    binding.pager.setCurrentItem(0);
+                    binding.viewToolbar.tabs.setVisibility(View.GONE);
+                    selectorModel.searchVisible = true;
+                    binding.pager.enableSwiping(false);
                     customSearchView.show();
                     break;
                 default:

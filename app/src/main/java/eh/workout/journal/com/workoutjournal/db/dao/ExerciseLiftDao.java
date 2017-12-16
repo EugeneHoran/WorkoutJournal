@@ -23,7 +23,10 @@ public abstract class ExerciseLiftDao {
     public abstract void insertExerciseGroupList(List<ExerciseGroupEntity> exerciseEntities);
 
     @Query("SELECT * FROM exercise_group_entities")
-    public abstract LiveData<List<ExerciseGroupEntity>> getAllExercisesGroups();
+    public abstract LiveData<List<ExerciseGroupEntity>> getAllExercisesGroupsLive();
+
+    @Query("SELECT * FROM exercise_group_entities")
+    public abstract List<ExerciseGroupEntity> getAllExercisesGroupsList();
 
     /**
      * Exercises
@@ -38,7 +41,10 @@ public abstract class ExerciseLiftDao {
     public abstract void updateExercises(ExerciseLiftEntity... exerciseEntities);
 
     @Query("SELECT * FROM exercise_lift_entities  ORDER BY name")
-    public abstract LiveData<List<ExerciseLiftEntity>> getAllExercises();
+    public abstract List<ExerciseLiftEntity> getAllExercisesList();
+
+    @Query("SELECT * FROM exercise_lift_entities  ORDER BY name")
+    public abstract LiveData<List<ExerciseLiftEntity>> getAllExercisesLive();
 
     @Transaction
     public void insertGroupAndExercises(List<ExerciseGroupEntity> exerciseGroupEntities, List<ExerciseLiftEntity> exerciseLiftEntities) {

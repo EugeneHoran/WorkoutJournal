@@ -24,7 +24,6 @@ public abstract class JournalDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = BuildConfig.DB_NAME;
     private static JournalDatabase instance;
 
-
     public abstract JournalDao getJournalDao();
 
     public abstract ExerciseLiftDao getExerciseLiftDao();

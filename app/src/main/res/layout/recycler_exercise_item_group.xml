@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="exercise"
+            type="eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:elevation=".5dp"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClickListener="@{listener}">
+
+        <TextView
+            android:id="@+id/lift"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@{exercise.name}"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</layout>

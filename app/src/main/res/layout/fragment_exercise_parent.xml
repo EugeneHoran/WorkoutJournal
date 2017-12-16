@@ -9,6 +9,10 @@
         <import type="eh.workout.journal.com.workoutjournal.util.Constants" />
 
         <variable
+            name="showTabs"
+            type="Boolean" />
+
+        <variable
             name="fragment"
             type="eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment" />
     </data>
@@ -23,11 +27,11 @@
             app:menuListener="@{fragment.menuItemClickListener}"
             app:navListener="@{fragment.navListener}"
             app:navigation="@{true}"
-            app:showTabs="@{true}"
+            app:showTabs="@{showTabs}"
             app:title="@{Constants.TOOLBAR_EXERCISE_TITLE}" />
 
 
-        <android.support.v4.view.ViewPager
+        <eh.workout.journal.com.workoutjournal.util.LockingViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

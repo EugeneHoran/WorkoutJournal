@@ -35,6 +35,7 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:transitionName="app_bar">
 
@@ -42,6 +43,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:animateLayoutChanges="false"
             app:navigationIcon="@{!navigation || navigation == null ? null: @drawable/ic_arrow_back}"
             app:onMenuItemClickListener="@{menuListener}"
             app:popupTheme="@style/AppTheme.PopupOverlay"

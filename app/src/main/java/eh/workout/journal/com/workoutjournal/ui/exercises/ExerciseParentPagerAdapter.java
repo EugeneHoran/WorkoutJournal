@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
-    private String[] titleList = {"All Exercises", "Body Part"};
+    private String[] titleList = {"Exercises", "Groups"};
     private Fragment[] fragments;
 
     ExerciseParentPagerAdapter(FragmentManager fm) {
@@ -25,7 +25,7 @@ public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 fragments[0] = ExerciseSelectorFragment.newInstance();
             case 1:
-                fragments[1] = ExerciseSelectorFragment.newInstance();
+                fragments[1] = ExerciseGroupFragment.newInstance();
         }
         return fragments[position];
     }
