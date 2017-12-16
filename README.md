@@ -3,6 +3,11 @@ Track your exercises with the Workout Journal.
 
 Readme coming soon...
 
+MVVM 
+Room Database
+LiveData
+
+
 
 ### Libraries
 
