@@ -10,6 +10,7 @@ import eh.workout.journal.com.workoutjournal.db.AppExecutors;
 public class JournalApplication extends Application {
     private AppExecutors appExecutors;
 
+    
     @Override
     public void onCreate() {
         super.onCreate();
