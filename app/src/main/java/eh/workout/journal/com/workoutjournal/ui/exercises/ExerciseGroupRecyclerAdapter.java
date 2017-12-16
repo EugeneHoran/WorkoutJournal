@@ -36,57 +36,45 @@ public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public void setItems(final List<Object> items) {
-        try {
-            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return objectList.size();
-                }
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return objectList.size();
+            }
 
-                @Override
-                public int getNewListSize() {
-                    return items.size();
-                }
+            @Override
+            public int getNewListSize() {
+                return items.size();
+            }
 
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    Object oldItem = objectList.get(oldItemPosition);
-                    Object newItem = items.get(newItemPosition);
-                    return oldItem.equals(newItem);
-                }
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                Object oldItem = objectList.get(oldItemPosition);
+                Object newItem = items.get(newItemPosition);
+                return oldItem.equals(newItem);
+            }
 
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    Object oldItem = objectList.get(oldItemPosition);
-                    Object newItem = items.get(newItemPosition);
-                    if (oldItem instanceof String && newItem instanceof String) {
-                        String oldString = (String) oldItem;
-                        String newString = (String) newItem;
-                        return oldString.equalsIgnoreCase(newString);
-                    } else if (oldItem instanceof ExerciseGroupEntity && newItem instanceof ExerciseGroupEntity) {
-                        ExerciseGroupEntity oldGroup = (ExerciseGroupEntity) oldItem;
-                        ExerciseGroupEntity newGroup = (ExerciseGroupEntity) newItem;
-                        return oldGroup.getId() == newGroup.getId();
-                    } else {
-                        ExerciseLiftEntity oldExercise = (ExerciseLiftEntity) oldItem;
-                        ExerciseLiftEntity newExercise = (ExerciseLiftEntity) newItem;
-                        return oldExercise.getId().equals(newExercise.getId());
-                    }
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                Object oldItem = objectList.get(oldItemPosition);
+                Object newItem = items.get(newItemPosition);
+                if (oldItem instanceof String && newItem instanceof String) {
+                    String oldString = (String) oldItem;
+                    String newString = (String) newItem;
+                    return oldString.equalsIgnoreCase(newString);
+                } else if (oldItem instanceof ExerciseGroupEntity && newItem instanceof ExerciseGroupEntity) {
+                    ExerciseGroupEntity oldGroup = (ExerciseGroupEntity) oldItem;
+                    ExerciseGroupEntity newGroup = (ExerciseGroupEntity) newItem;
+                    return oldGroup.getId() == newGroup.getId();
+                } else {
+                    ExerciseLiftEntity oldExercise = (ExerciseLiftEntity) oldItem;
+                    ExerciseLiftEntity newExercise = (ExerciseLiftEntity) newItem;
+                    return oldExercise.getId().equals(newExercise.getId());
                 }
-            });
-            objectList = items;
-            diffResult.dispatchUpdatesTo(this);
-        } catch (Exception e) {
-            this.objectList.clear();
-            this.objectList.addAll(items);
-            notifyDataSetChanged();
-        }
-    }
-
-    public void setItemsTesting(List<Object> objectList) {
-        this.objectList.clear();
-        this.objectList.addAll(objectList);
-        notifyDataSetChanged();
+            }
+        });
+        objectList = items;
+        diffResult.dispatchUpdatesTo(this);
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,21 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
 
     @Override
     public void onDeleteSetClicked(JournalSetEntity setEntity) {
+        if (adapter.getItemCount() == 0) {
+            noItems.set(true);
+        }
+        JournalParentFragment journalParentFragment = (JournalParentFragment) getParentFragment();
+        if (journalParentFragment != null) {
+            if (getParentFragment().getView() != null) {
+                Snackbar.make(getParentFragment().getView().findViewById(R.id.fab), "Deleted " + setEntity.getName(), Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        model.deleteItem = false;
+                        observeSetsAndReps(model);
+                    }
+                }).show();
+            }
+        }
         model.deleteSet(setEntity);
     }
 }

@@ -7,9 +7,9 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.List;
 
@@ -40,9 +40,24 @@ public class JournalChildViewModel extends AndroidViewModel implements Lifecycle
         return observeSetAndReps;
     }
 
-    void deleteSet(JournalSetEntity setEntity) {
-        repository.deleteSet(setEntity);
+    boolean deleteItem = true;
+
+    void deleteSet(final JournalSetEntity setEntity) {
+        new CountDownTimer(2500, 1000) {
+            @Override
+            public void onTick(long l) {
+            }
+
+            @Override
+            public void onFinish() {
+                if (deleteItem) {
+                    repository.deleteSet(setEntity);
+                }
+                deleteItem = true;
+            }
+        }.start();
     }
+
 
     private Observer<List<JournalSetEntity>> ormObserver = new Observer<List<JournalSetEntity>>() {
         @Override

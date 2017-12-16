@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -134,11 +135,14 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
             popup.getMenuInflater().inflate(R.menu.menu_edit_rep, popup.getMenu());
             popup.getMenu().findItem(R.id.action_edit).setVisible(false);
+            popup.getMenu().findItem(R.id.action_move).setVisible(false);
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
                     int id = item.getItemId();
                     if (id == R.id.action_delete) {
                         if (listener != null) {
+                            itemList.remove(getAdapterPosition());
+                            notifyItemRemoved(getAdapterPosition());
                             listener.onDeleteSetClicked(setEntity);
                         }
                     }

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collections;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -92,6 +93,11 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
     @Override
     public void repEdited(JournalRepEntity repEntity) {
         model.updateRep(repEntity);
+    }
+
+    @Override
+    public void moveRep(int oldPosition) {
+//        model.updateRepList(oldPosition, 0);
     }
 
     @Override

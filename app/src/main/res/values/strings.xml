@@ -20,6 +20,7 @@
     <string name="exercise_name">Exercise name</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="move_rep_position">Move Rep Position</string>
     <string-array name="pref_unit_list_titles">
         <item>Imperial (lb)</item>
         <item>Metric (kg)</item>

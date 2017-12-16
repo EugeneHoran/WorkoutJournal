@@ -6,6 +6,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Comparator;
+
 import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
 
 @Entity(tableName = "journal_rep_entities",
