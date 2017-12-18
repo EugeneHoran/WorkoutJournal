@@ -8,11 +8,30 @@ import java.util.UUID;
 
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseGroupEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
+import eh.workout.journal.com.workoutjournal.model.DaySelector;
 
 public class ExerciseDataHelper {
     public static final int EXERCISE_TYPE_WEIGHT = 0;
     public static final int EXERCISE_TYPE_BODY = 1;
     public static final int EXERCISE_TYPE_CARDIO = 2;
+    public static final String[] DAYS = new String[]{
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+    };
+
+    public static List<DaySelector> getDays() {
+        List<DaySelector> daySelectorList = new ArrayList<>();
+        for (String DAY : DAYS) {
+            daySelectorList.add(new DaySelector(DAY, false));
+        }
+        return daySelectorList;
+    }
+
 
     public static final String[] EXERCISE_TYPES = new String[]{
             "Weights or Machine",
@@ -50,9 +69,9 @@ public class ExerciseDataHelper {
             "Bench Press Incline,0,0",
             "Bench Press Decline,0,0",
             "Push Ups,0,1",
-            "Bench Press (Barbell),0,0",
-            "Bench Press Incline (Barbell),0,0",
-            "Bench Press Decline (Barbell),0,0",
+            "Bench Press (Dumbbell),0,0",
+            "Bench Press Incline (Dumbbell),0,0",
+            "Bench Press Decline (Dumbbell),0,0",
             "Hang Clean,4,0",
             "Power Clean,4,0",
             "Squat,6,0"};

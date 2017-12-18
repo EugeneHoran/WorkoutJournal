@@ -17,6 +17,7 @@ public class ExerciseOrmEntity {
     private long timestamp;
     private String exerciseId;
     private String repId;
+    private int inputType;
 
     public ExerciseOrmEntity() {
     }
@@ -94,5 +95,13 @@ public class ExerciseOrmEntity {
 
     public void setRepId(String repId) {
         this.repId = repId;
+    }
+
+    public int getInputType() {
+        return inputType;
+    }
+
+    public void setInputType(int inputType) {
+        this.inputType = inputType;
     }
 }

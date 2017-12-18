@@ -342,6 +342,7 @@ public class CaldroidBottomSheetFragment extends BottomSheetDialogFragment {
         return caldroidData;
     }
 
+
     /**
      * Extra data is data belong to Client
      *
@@ -1271,7 +1272,6 @@ public class CaldroidBottomSheetFragment extends BottomSheetDialogFragment {
 
         // Refresh view
         refreshView();
-
         return view;
     }
 

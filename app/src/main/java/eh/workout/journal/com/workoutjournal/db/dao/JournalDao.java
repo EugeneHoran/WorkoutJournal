@@ -43,9 +43,17 @@ public abstract class JournalDao {
     @Query("select * FROM exercise_lift_entities WHERE id = :id")
     public abstract LiveData<ExerciseLiftEntity> getExerciseByIdLive(String id);
 
+    // Exercise
+    @Query("select * FROM exercise_lift_entities WHERE id = :id")
+    public abstract ExerciseLiftEntity getExerciseById(String id);
+
     // Date
     @Query("SELECT * FROM journal_date_entities WHERE timestamp BETWEEN  :start AND :end")
     public abstract LiveData<JournalDateEntity> getDateByTimestampLive(long start, long end);
+
+    // Date All
+    @Query("SELECT * FROM journal_date_entities")
+    public abstract List<JournalDateEntity> getDateList();
 
     // Date All
     @Query("SELECT * FROM journal_date_entities ORDER BY id DESC LIMIT :limit")

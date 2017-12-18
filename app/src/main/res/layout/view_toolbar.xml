@@ -35,7 +35,6 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:transitionName="app_bar">
 
@@ -65,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="Search"
+                    android:hint="@string/search"
                     android:inputType="textCapWords" />
 
                 <ImageView

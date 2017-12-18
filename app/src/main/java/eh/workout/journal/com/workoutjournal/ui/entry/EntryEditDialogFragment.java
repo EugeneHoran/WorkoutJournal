@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ViewEntryPickersBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
-import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
+import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 
 public class EntryEditDialogFragment extends DialogFragment {
 
@@ -54,7 +54,7 @@ public class EntryEditDialogFragment extends DialogFragment {
                 if (listener != null) {
                     String weight = String.valueOf(binding.pickerWeight.getValue());
                     String reps = String.valueOf(binding.pickerReps.getValue());
-                    double oneRepMax = EquationsHelper.getOneRepMax(weight, reps);
+                    double oneRepMax = OrmHelper.getOneRepMax(weight, reps);
                     repEntity.setOneRepMax(oneRepMax);
                     repEntity.setWeight(weight);
                     repEntity.setReps(reps);

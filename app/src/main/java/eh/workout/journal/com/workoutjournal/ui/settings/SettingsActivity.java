@@ -19,7 +19,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = getIntent().getIntExtra(Constants.PAGE_RESULT_CODE_SETTINGS, 5000);
+        pageNumber = getIntent().getIntExtra(Constants.JOURNAL_PAGE_RESULT_CODE_SETTINGS, 5000);
         setupActionBar();
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MainPreference()).commit();
     }

@@ -11,7 +11,6 @@ import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
-import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorFragment;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalParentFragment;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 
@@ -19,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG_FRAG_JOURNAL = "tag_frag_journal";
     public static final String TAG_FRAG_EXERCISE_SELECTOR = "tag_frag_exercise_selector";
     public static final String TAG_FRAG_ADD_EXERCISE = "tag_frag_add_exercise";
+    public static final String TAG_FRAG_ORM = "tag_frag_one_rep_max";
     private SharedPreferences sp;
     private FragmentManager fm;
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         DataBindingUtil.setContentView(this, R.layout.activity_main);
         fm = getSupportFragmentManager();
         if (savedInstanceState == null) {
-            initJournalFragment(Constants.PAGE_TODAY);
+            initJournalFragment(Constants.JOURNAL_PAGE_TODAY);
         }
         handleTimer();
     }
@@ -51,17 +51,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        if (getExerciseFragment() != null) {
+//            if (getExerciseFragment().searchVisible()) {
+//                getExerciseFragment().hideSearch();
+//            } else {
+//                super.onBackPressed();
+//            }
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
+
     @Override
     public void onBackPressed() {
         if (getExerciseFragment() != null) {
             if (getExerciseFragment().searchVisible()) {
                 getExerciseFragment().hideSearch();
-            } else {
-                super.onBackPressed();
+                return;
             }
-        } else {
-            super.onBackPressed();
         }
+        super.onBackPressed();
     }
 
     private void handleTimer() {

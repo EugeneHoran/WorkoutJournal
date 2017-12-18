@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="navListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:transitionName="app_bar"
+        tools:targetApi="lollipop">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:setNavigationOnClickListener="@{navListener}"
+            app:title="@{title}" />
+
+        <LinearLayout
+            android:id="@+id/eqHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:weightSum="2">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/editWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/weight_lifted"
+                    android:inputType="number"
+                    android:maxLength="3" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Space
+                android:layout_width="32dp"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="-2dp"
+                    android:text="@string/reps_performed"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerReps"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/reps_array" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+</layout>

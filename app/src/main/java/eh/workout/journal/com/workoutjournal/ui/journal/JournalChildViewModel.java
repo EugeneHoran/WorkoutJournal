@@ -5,11 +5,9 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -23,24 +21,18 @@ import eh.workout.journal.com.workoutjournal.util.DateHelper;
 public class JournalChildViewModel extends AndroidViewModel implements LifecycleObserver {
     private JournalRepository repository;
     private LiveData<List<ExerciseSetRepRelation>> observeSetAndReps;
-    private LiveData<List<JournalSetEntity>> setEntityList;
-
-    private Long timestamp;
+    boolean deleteSet = true;
 
     public JournalChildViewModel(@NonNull Application application, Long timestamp) {
         super(application);
         JournalApplication journalApplication = (JournalApplication) application;
-        this.timestamp = timestamp;
         repository = journalApplication.getRepository();
-        setEntityList = repository.getSetListByIdLive(DateHelper.getStartAndEndTimestamp(timestamp));
         observeSetAndReps = repository.getExerciseSetRepRelationLive(DateHelper.getStartAndEndTimestamp(timestamp));
     }
 
     LiveData<List<ExerciseSetRepRelation>> getSetAndReps() {
         return observeSetAndReps;
     }
-
-    boolean deleteItem = true;
 
     void deleteSet(final JournalSetEntity setEntity) {
         new CountDownTimer(2500, 1000) {
@@ -50,45 +42,26 @@ public class JournalChildViewModel extends AndroidViewModel implements Lifecycle
 
             @Override
             public void onFinish() {
-                if (deleteItem) {
+                if (deleteSet) {
                     repository.deleteSet(setEntity);
                 }
-                deleteItem = true;
+                deleteSet = true;
             }
         }.start();
     }
 
-
-    private Observer<List<JournalSetEntity>> ormObserver = new Observer<List<JournalSetEntity>>() {
-        @Override
-        public void onChanged(@Nullable List<JournalSetEntity> exerciseOrmEntity) {
-            if (exerciseOrmEntity != null) {
-                if (exerciseOrmEntity.size() == 0) {
-                    repository.deleteDateSetsNull(timestamp);
-                }
-            }
-        }
-    };
-
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void initObserver() {
-        if (!setEntityList.hasActiveObservers()) {
-            setEntityList.observeForever(ormObserver);
-        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void removeObserver() {
-        if (setEntityList.hasActiveObservers()) {
-            setEntityList.removeObserver(ormObserver);
-        }
+
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        if (setEntityList.hasActiveObservers()) {
-            setEntityList.removeObserver(ormObserver);
-        }
+
     }
 }

@@ -21,7 +21,7 @@ import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalChildBin
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
-import eh.workout.journal.com.workoutjournal.ui.factory.AppFactory;
+import eh.workout.journal.com.workoutjournal.util.AppFactory;
 
 public class JournalChildFragment extends BaseFragment implements JournalChildRecyclerAdapter.JournalRecyclerInterface {
     private static final String ARG_DATE_TIMESTAMP = "arg_date_timestamp";
@@ -102,7 +102,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
                 Snackbar.make(getParentFragment().getView().findViewById(R.id.fab), "Deleted " + setEntity.getName(), Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        model.deleteItem = false;
+                        model.deleteSet = false;
                         observeSetsAndReps(model);
                     }
                 }).show();

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Collections;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -66,9 +65,6 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
             @Override
             public void onChanged(@Nullable ExerciseSetRepRelation exerciseSetRepRelation) {
                 if (exerciseSetRepRelation != null) {
-                    for (int i = 0; i < exerciseSetRepRelation.getJournalRepEntityList().size(); i++) {
-                        exerciseSetRepRelation.getJournalRepEntityList().get(i).setTempPosition(i + 1);
-                    }
                     adapter.setItems(exerciseSetRepRelation.getJournalRepEntityList());
                 }
             }

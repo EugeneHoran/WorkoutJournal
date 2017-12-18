@@ -26,6 +26,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="eh.workout.journal.com.workoutjournal.ui.MainActivity" />
         </activity>
+        <activity android:name=".ui.plan.AddPlanActivity"></activity>
     </application>
 
 </manifest>

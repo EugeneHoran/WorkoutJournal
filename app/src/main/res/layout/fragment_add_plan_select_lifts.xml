@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="anew.eugene.onerepmax.com.onerepmaxcalculator.MainActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/liftHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginTop="4dp"
+            android:focusable="true"
+            android:text="Select exercises"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginTop="16dp"
+            android:hint="Search"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:visibility="visible" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    </LinearLayout>
+</layout>

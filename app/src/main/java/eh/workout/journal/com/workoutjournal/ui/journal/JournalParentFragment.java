@@ -7,7 +7,6 @@ import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -27,13 +26,14 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalParentBinding;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
+import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanActivity;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
 
 public class JournalParentFragment extends BaseFragment {
     private static final String ARG_DATE_PAGE = "arg_date_page";
-    private int datePage = Constants.PAGE_TODAY;
+    private int datePage = Constants.JOURNAL_PAGE_TODAY;
 
     public ObservableField<String> toolbarTitle = new ObservableField<>("Today");
     public ObservableField<String> toolbarSubTitle = new ObservableField<>();
@@ -54,16 +54,16 @@ public class JournalParentFragment extends BaseFragment {
         return new JournalParentFragment();
     }
 
-    public JournalParentPagerAdapter journalPagerAdapter;
+    public JournalParentPagerAdapter pagerAdapter;
     private MenuItem menuItemToday;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            datePage = getArguments().getInt(ARG_DATE_PAGE, Constants.PAGE_TODAY);
+            datePage = getArguments().getInt(ARG_DATE_PAGE, Constants.JOURNAL_PAGE_TODAY);
         }
-        journalPagerAdapter = new JournalParentPagerAdapter(getChildFragmentManager());
+        pagerAdapter = new JournalParentPagerAdapter(getChildFragmentManager());
     }
 
     private FragmentJournalParentBinding binding;
@@ -79,28 +79,28 @@ public class JournalParentFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         binding.viewToolbar.toolbar.inflateMenu(R.menu.menu_journal_parent);
         initMenu(binding.viewToolbar.toolbar.getMenu());
-        binding.pager.setAdapter(journalPagerAdapter);
+        binding.pager.setAdapter(pagerAdapter);
         binding.pager.addOnPageChangeListener(pageChangeListener);
         binding.pager.setCurrentItem(datePage, false);
         binding.setFragment(this);
     }
 
     public void onExerciseClicked(String setId, int inputType) {
-        navToAddExerciseFragment(binding.viewToolbar.appBar, setId, inputType, journalPagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
+        navToAddExerciseFragment(binding.viewToolbar.appBar, setId, inputType, pagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
     }
 
     @SuppressWarnings("unused")
     public void onAddNewLiftClicked(View view) {
-        navToSelectExerciseFragment(binding.viewToolbar.appBar, journalPagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
+        navToSelectExerciseFragment(binding.viewToolbar.appBar, pagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
     }
 
     private ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
-            String[] titleSub = journalPagerAdapter.getTitleAndSubTitle(getActivity(), position);
+            String[] titleSub = pagerAdapter.getTitleAndSubTitle(getActivity(), position);
             toolbarTitle.set(titleSub[0]);
             toolbarSubTitle.set(titleSub[1]);
-            menuItemToday.setVisible(position != 5000);
+            menuItemToday.setVisible(position != Constants.JOURNAL_PAGE_TODAY);
         }
     };
 
@@ -110,19 +110,27 @@ public class JournalParentFragment extends BaseFragment {
             int id = item.getItemId();
             switch (id) {
                 case R.id.action_today:
-                    binding.pager.setCurrentItem(5000, true);
+                    binding.pager.setCurrentItem(Constants.JOURNAL_PAGE_TODAY, true);
                     break;
                 case R.id.action_calendar:
                     caldroidFragment = new CalendarBottomSheetFragment();
                     caldroidFragment.setCaldroidListener(calListener);
-                    showCalendarBottomSheet(caldroidFragment, journalPagerAdapter.getAdapterDate(binding.pager.getCurrentItem()), null);
+                    showCalendarBottomSheet(caldroidFragment, pagerAdapter.getAdapterDate(binding.pager.getCurrentItem()), null);
+                    break;
+                case R.id.action_plan:
+                    Intent intentPlan = new Intent(getActivity(), AddPlanActivity.class);
+                    getActivity().startActivity(intentPlan);
                     break;
                 case R.id.action_orm:
+                    navToOneRepMaxFragment(binding.viewToolbar.appBar, Constants.ORM_ONE_REP_MAX);
+                    break;
+                case R.id.action_percentage:
+                    navToOneRepMaxFragment(binding.viewToolbar.appBar, Constants.ORM_PERCENTAGES);
                     break;
                 case R.id.action_settings:
                     if (getActivity() != null) {
                         Intent intentSettings = new Intent(getActivity(), SettingsActivity.class);
-                        intentSettings.putExtra(Constants.PAGE_RESULT_CODE_SETTINGS, binding.pager.getCurrentItem());
+                        intentSettings.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_SETTINGS, binding.pager.getCurrentItem());
                         getActivity().startActivityForResult(intentSettings, Constants.REQUEST_CODE_SETTINGS);
                     }
                     break;
@@ -137,7 +145,7 @@ public class JournalParentFragment extends BaseFragment {
         @Override
         public void onSelectDate(Date date, View view) {
             caldroidFragment.dismiss();
-            binding.pager.setCurrentItem((5000 - DateHelper.findDaysDiff(date.getTime(), new Date().getTime())), true);
+            binding.pager.setCurrentItem((Constants.JOURNAL_PAGE_TODAY - DateHelper.findDaysDiff(date.getTime(), new Date().getTime())), true);
         }
     };
 

@@ -2,23 +2,30 @@ package eh.workout.journal.com.workoutjournal.ui.entry;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentEntryParentBinding;
-import eh.workout.journal.com.workoutjournal.ui.factory.AppFactory;
+import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
+import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
+import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
+import eh.workout.journal.com.workoutjournal.util.AppFactory;
+import eh.workout.journal.com.workoutjournal.util.Constants;
 
 
-public class EntryParentFragment extends Fragment {
+public class EntryParentFragment extends BaseFragment {
     private static final String ARG_LIFT_ID = "param_lift_id";
     public static final String ARG_LIFT_INPUT_TYPE = "param_lift_input_type";
     private static final String ARG_LIFT_TIMESTAMP = "param_lift_timestamp";
@@ -61,6 +68,7 @@ public class EntryParentFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entry_parent, container, false);
+        binding.viewToolbar.toolbar.inflateMenu(R.menu.menu_entry);
         getChildFragmentManager().beginTransaction().replace(R.id.entryHolder, EntryInputFragment.newInstance(inputType)).commit();
         binding.setModel(model);
         binding.setFragment(this);
@@ -78,6 +86,23 @@ public class EntryParentFragment extends Fragment {
         binding.pager.addOnPageChangeListener(pageChangeListener);
     }
 
+    public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            int id = item.getItemId();
+            switch (id) {
+                case R.id.action_orm:
+                    navToOneRepMaxFragment(binding.viewToolbar.appBar, Constants.ORM_ONE_REP_MAX);
+                    break;
+                case R.id.action_percentage:
+                    navToOneRepMaxFragment(binding.viewToolbar.appBar, Constants.ORM_PERCENTAGES);
+                    break;
+                default:
+                    return false;
+            }
+            return false;
+        }
+    };
 
     ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override

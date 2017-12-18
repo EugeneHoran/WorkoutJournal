@@ -20,22 +20,13 @@ import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFrag
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
-import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorFragment;
+import eh.workout.journal.com.workoutjournal.ui.orm.OneRepMaxFragment;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
-
+@SuppressWarnings("ConstantConditions")
 public class BaseFragment extends Fragment {
     private static final String TAG_FRAG_CALENDAR = "tag_calendar_frag";
     private static final String TAG_ADD_LIFT_DIALOG_FRAGMENT = "tag_add_lift_dialog_fragment";
-
-
-    public Application getApplicationParent() {
-        if (getActivity() != null) {
-            return (JournalApplication) getActivity().getApplicationContext();
-        } else {
-            return null;
-        }
-    }
 
     public Application getApplicationChild() {
         if (getParentFragment() != null) {
@@ -57,12 +48,11 @@ public class BaseFragment extends Fragment {
     /**
      * Navigation
      */
-
     public void showCalendarBottomSheet(CalendarBottomSheetFragment caldroidFragment, Date date, HashMap<String, Object> dateList) {
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
         caldroidFragment.setSelectedDate(date);
-        caldroidFragment.setExtraData(dateList);
+//        caldroidFragment.setExtraData(dateList);
         args.putInt(CaldroidBottomSheetFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidBottomSheetFragment.YEAR, cal.get(Calendar.YEAR));
         args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidCustom);
@@ -84,7 +74,6 @@ public class BaseFragment extends Fragment {
     }
 
 
-    @SuppressWarnings("ConstantConditions")
     public void navToAddExerciseFragment(View view, String id, int inputType, Long timestamp) {
         EntryParentFragment fragment = EntryParentFragment.newInstance(id, inputType, timestamp);
         if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -98,6 +87,17 @@ public class BaseFragment extends Fragment {
                         fragment,
                         MainActivity.TAG_FRAG_ADD_EXERCISE)
                 .addToBackStack(MainActivity.TAG_FRAG_ADD_EXERCISE)
+                .commit();
+    }
+
+    public void navToOneRepMaxFragment(View view, int which) {
+        OneRepMaxFragment oneRepMaxFragment = OneRepMaxFragment.newInstance(which);
+        initTransition(oneRepMaxFragment);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .addSharedElement(view, "app_bar")
+                .replace(R.id.container, oneRepMaxFragment, MainActivity.TAG_FRAG_ORM)
+                .addToBackStack(MainActivity.TAG_FRAG_ORM)
                 .commit();
     }
 

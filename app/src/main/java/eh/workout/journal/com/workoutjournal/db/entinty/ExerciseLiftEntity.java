@@ -22,6 +22,8 @@ public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
     private int exerciseInputType;
     @Ignore
     private boolean isShownInRecent = false;
+    @Ignore
+    private boolean selected = false;
 
     public ExerciseLiftEntity() {
     }
@@ -101,6 +103,16 @@ public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
     @Ignore
     public void setShownInRecent(boolean shownInRecent) {
         isShownInRecent = shownInRecent;
+    }
+
+    @Ignore
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Ignore
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     /**

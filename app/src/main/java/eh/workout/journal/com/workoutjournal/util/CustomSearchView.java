@@ -1,9 +1,11 @@
 package eh.workout.journal.com.workoutjournal.util;
 
+import android.content.Context;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,7 +40,10 @@ public class CustomSearchView {
     public void show() {
         toolbar.getMenu().clear();
         searchHolder.setVisibility(View.VISIBLE);
-        ViewHelper.showSoftKeyboard(editSearch);
+        InputMethodManager inputMethodManager = (InputMethodManager) editSearch.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        editSearch.requestFocus();
+        if (inputMethodManager != null)
+            inputMethodManager.showSoftInput(editSearch, 0);
         enableSearch = true;
     }
 
@@ -46,13 +51,15 @@ public class CustomSearchView {
         searchHolder.setVisibility(View.GONE);
         editSearch.setText(null);
         toolbar.inflateMenu(R.menu.menu_exercise_selector);
-        ViewHelper.hideSoftKeyboard(editSearch);
+        InputMethodManager inputMethodManager = (InputMethodManager) editSearch.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        editSearch.clearFocus();
+        if (inputMethodManager != null)
+            inputMethodManager.hideSoftInputFromWindow(editSearch.getWindowToken(), 0);
         enableSearch = false;
     }
 
 
     private TextWatcher searchTextWatcher = new TextWatcher() {
-
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             if (listener != null) {
@@ -62,7 +69,6 @@ public class CustomSearchView {
                 }
             }
         }
-
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

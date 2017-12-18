@@ -23,6 +23,7 @@
         <include
             android:id="@+id/viewToolbar"
             layout="@layout/view_toolbar"
+            app:menuListener="@{fragment.menuItemClickListener}"
             app:navListener="@{fragment.navListener}"
             app:navigation="@{true}"
             app:showTabs="@{true}"
@@ -37,7 +38,7 @@
         <FrameLayout
             android:id="@+id/entryHolder"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="192dp"
             android:layout_marginTop="104dp"
             android:visibility="visible" />
     </android.support.design.widget.CoordinatorLayout>

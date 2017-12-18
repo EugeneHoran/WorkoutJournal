@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.factory;
+package eh.workout.journal.com.workoutjournal.util;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModel;
@@ -9,6 +9,7 @@ import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryHistoryViewModel;
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalChildViewModel;
+import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanViewModel;
 
 
 public class AppFactory extends ViewModelProvider.NewInstanceFactory {
@@ -16,6 +17,12 @@ public class AppFactory extends ViewModelProvider.NewInstanceFactory {
     private final Application application;
     private final String liftId;
     private final Long timestamp;
+
+    public AppFactory(@NonNull Application application) {
+        this.application = application;
+        this.timestamp = null;
+        liftId = null;
+    }
 
     public AppFactory(@NonNull Application application, Long timestamp) {
         this.application = application;
@@ -39,6 +46,8 @@ public class AppFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new EntryViewModelNew((JournalApplication) application, liftId, timestamp);
         } else if (modelClass.isAssignableFrom(EntryHistoryViewModel.class)) {
             return (T) new EntryHistoryViewModel((JournalApplication) application, liftId, timestamp);
+        } else if (modelClass.isAssignableFrom(AddPlanViewModel.class)) {
+            return (T) new AddPlanViewModel((JournalApplication) application);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

@@ -6,9 +6,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import java.util.Comparator;
-
-import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
+import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 
 @Entity(tableName = "journal_rep_entities",
         foreignKeys = {@ForeignKey(entity = JournalSetEntity.class,
@@ -108,7 +106,7 @@ public class JournalRepEntity {
 
     @Ignore
     public int getOrmInt() {
-        return EquationsHelper.getOneRepMaxInt(getOneRepMax());
+        return OrmHelper.getOneRepMaxInt(getOneRepMax());
     }
 
     public String getJournalSetId() {

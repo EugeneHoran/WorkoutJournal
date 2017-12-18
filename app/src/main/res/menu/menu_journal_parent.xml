@@ -12,19 +12,29 @@
 
     <item
         android:id="@+id/action_calendar"
-        android:orderInCategory="300"
+        android:orderInCategory="200"
         android:title="@string/calendar"
         app:actionLayout="@layout/view_calendar_icon"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_plan"
+        android:orderInCategory="200"
+        android:title="@string/create_workout_plan"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_orm"
         android:orderInCategory="500"
         android:title="@string/action_one_rep_max_calculator"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_percentage"
         android:orderInCategory="600"
+        android:title="@string/percentage_calculator"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="700"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>

@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="anew.eugene.onerepmax.com.onerepmaxcalculator.MainActivity">
+
+    <item
+        android:id="@+id/action_orm"
+        android:orderInCategory="500"
+        android:title="@string/action_one_rep_max_calculator"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_percentage"
+        android:orderInCategory="500"
+        android:title="@string/percentage_calculator"
+        app:showAsAction="never" />
+</menu>

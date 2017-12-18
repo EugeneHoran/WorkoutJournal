@@ -1,5 +1,6 @@
 package eh.workout.journal.com.workoutjournal.ui.entry;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -17,12 +18,15 @@ import android.widget.NumberPicker;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentEntryInputBinding;
-import eh.workout.journal.com.workoutjournal.util.EquationsHelper;
+import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
+import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
-import eh.workout.journal.com.workoutjournal.util.MultiTextWatcher;
+import eh.workout.journal.com.workoutjournal.util.MyStringUtil;
+import eh.workout.journal.com.workoutjournal.util.OrmHelper;
+import eh.workout.journal.com.workoutjournal.util.QueryTextWatcher;
 
 public class EntryInputFragment extends Fragment implements
-        MultiTextWatcher.MultiTextWatcherInterfacePicker,
+        QueryTextWatcher.MultiTextWatcherInterfacePicker,
         NumberPicker.OnScrollListener,
         View.OnKeyListener {
     public EntryInputFragment() {
@@ -70,16 +74,35 @@ public class EntryInputFragment extends Fragment implements
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setModel(model);
+        observeOneRepMax(model);
         initPickers();
+    }
+
+    private void observeOneRepMax(EntryViewModelNew model) {
+        model.getOrmEntityLiveData().observe(this, new Observer<ExerciseOrmEntity>() {
+            @Override
+            public void onChanged(@Nullable ExerciseOrmEntity ormEntity) {
+                if (ormEntity == null) {
+                    binding.ormHolder.setVisibility(View.GONE);
+                } else {
+                    binding.ormHolder.setVisibility(View.VISIBLE);
+                    if (ormEntity.getInputType() == Constants.EXERCISE_TYPE_WEIGHT) {
+                        binding.txtOrm.setText(MyStringUtil.formatOneRepMaxWeight(ormEntity));
+                    } else {
+                        binding.txtOrm.setText(MyStringUtil.formatOneRepMaxReps(ormEntity));
+                    }
+                }
+            }
+        });
     }
 
     private void initPickers() {
         editWeight = findInput(binding.viewInput.pickerWeight);
         editReps = findInput(binding.viewInput.pickerReps);
-        MultiTextWatcher multiTextWatcher = new MultiTextWatcher();
-        multiTextWatcher.registerEditText(editWeight);
-        multiTextWatcher.registerEditText(editReps);
-        multiTextWatcher.setCallback(this);
+        QueryTextWatcher queryTextWatcher = new QueryTextWatcher();
+        queryTextWatcher.registerEditText(editWeight);
+        queryTextWatcher.registerEditText(editReps);
+        queryTextWatcher.setCallback(this);
         binding.viewInput.pickerReps.setMaxValue(100);
         binding.viewInput.pickerReps.setMinValue(1);
         binding.viewInput.pickerReps.setValue(10);
@@ -93,6 +116,7 @@ public class EntryInputFragment extends Fragment implements
         binding.saveSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                binding.ormHolder.setVisibility(View.VISIBLE);
                 String weight = String.valueOf(binding.viewInput.pickerWeight.getValue());
                 String reps = String.valueOf(binding.viewInput.pickerReps.getValue());
                 model.saveRep(inputType == 0 ? weight : null, reps, getOneRepMax(weight, reps));
@@ -103,7 +127,7 @@ public class EntryInputFragment extends Fragment implements
     private double getOneRepMax(String weight, String reps) {
         switch (inputType) {
             case ExerciseDataHelper.EXERCISE_TYPE_WEIGHT:
-                return EquationsHelper.getOneRepMax(weight, reps);
+                return OrmHelper.getOneRepMax(weight, reps);
             case ExerciseDataHelper.EXERCISE_TYPE_BODY:
                 return Double.valueOf(reps);
             default:

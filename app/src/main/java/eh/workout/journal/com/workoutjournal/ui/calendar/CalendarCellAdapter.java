@@ -2,6 +2,7 @@ package eh.workout.journal.com.workoutjournal.ui.calendar;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,9 @@ import eh.workout.journal.com.workoutjournal.R;
 import hirondelle.date4j.DateTime;
 
 public class CalendarCellAdapter extends CaldroidGridAdapter {
-
     public CalendarCellAdapter(Context context, int month, int year, Map<String, Object> caldroidData, Map<String, Object> extraData) {
         super(context, month, year, caldroidData, extraData);
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

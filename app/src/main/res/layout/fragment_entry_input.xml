@@ -22,35 +22,83 @@
         app:cardBackgroundColor="@color/white">
 
         <LinearLayout
-            android:id="@+id/parentHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="8dp">
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
-            <include
-                android:id="@+id/viewInput"
-                layout="@layout/view_entry_pickers"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/parentHolder"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-            <View
-                android:layout_width=".5dp"
-                android:layout_height="match_parent"
-                android:background="#E0E0E0" />
+                <include
+                    android:id="@+id/viewInput"
+                    layout="@layout/view_entry_pickers"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/saveSet"
-                android:layout_width="wrap_content"
+                <View
+                    android:layout_width=".5dp"
+                    android:layout_height="match_parent"
+                    android:background="#E0E0E0" />
+
+                <Button
+                    android:id="@+id/saveSet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:text="Save Set"
+                    android:theme="@style/ButtonBlue" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/ormHolder"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="12dp"
-                android:text="Save Set"
-                android:theme="@style/ButtonBlue" />
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:background="@color/colorGrayTransparent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="12dp"
+                    android:text="Personal Best"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txtOrm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/divider"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="12dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

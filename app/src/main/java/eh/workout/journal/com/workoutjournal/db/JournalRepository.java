@@ -2,6 +2,7 @@ package eh.workout.journal.com.workoutjournal.db;
 
 
 import android.arch.lifecycle.LiveData;
+import android.util.Log;
 
 import java.util.List;
 
@@ -41,6 +42,10 @@ public class JournalRepository {
         return database.getJournalDao().getDateListLimitLive(limit);
     }
 
+    public List<JournalDateEntity> getDateList() {
+        return database.getJournalDao().getDateList();
+    }
+
     public LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationLive(Long... times) {
         return database.getJournalDao().getExerciseSetRepRelationLive(times[0], times[1]);
     }
@@ -73,6 +78,11 @@ public class JournalRepository {
     /**
      * Entry Data
      */
+
+    public ExerciseLiftEntity getExerciseById(String id) {
+        return database.getJournalDao().getExerciseById(id);
+    }
+
     public LiveData<ExerciseLiftEntity> getExerciseByIdLive(String id) {
         return database.getJournalDao().getExerciseByIdLive(id);
     }
@@ -110,6 +120,7 @@ public class JournalRepository {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
+                Log.e("Testing", "Deleted");
                 database.getJournalDao().deleteSets(journalSetEntity);
             }
         });

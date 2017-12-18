@@ -21,6 +21,11 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="move_rep_position">Move Rep Position</string>
+    <string name="reps">Reps</string>
+    <string name="weight">Weight</string>
+    <string name="sets">Sets</string>
+    <string name="weight_lifted">Weight Lifted</string>
+    <string name="reps_performed">Reps Performed</string>
     <string-array name="pref_unit_list_titles">
         <item>Imperial (lb)</item>
         <item>Metric (kg)</item>
@@ -48,5 +53,33 @@
         <item>Weights and reps</item>
         <item>Reps only</item>
         <item>Cardio</item>
+    </string-array>
+
+    <string-array name="reps_array">
+        <item>2 Reps</item>
+        <item>3 Reps</item>
+        <item>4 Reps</item>
+        <item>5 Reps</item>
+        <item>6 Reps</item>
+        <item>7 Reps</item>
+        <item>8 Reps</item>
+        <item>9 Reps</item>
+        <item>10 Reps</item>
+        <item>11 Reps</item>
+        <item>12 Reps</item>
+    </string-array>
+    <string name="_1rm">1RM</string>
+    <string name="percentage_calculator">Percentage Calculator</string>
+    <string name="create_workout_plan">Create Workout Plan</string>
+
+
+    <string-array name="days_per_week">
+        <item>1 day per week</item>
+        <item>2 days per week</item>
+        <item>3 days per week</item>
+        <item>4 days per week</item>
+        <item>5 days per week</item>
+        <item>6 days per week</item>
+        <item>7 days per week</item>
     </string-array>
 </resources>

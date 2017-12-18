@@ -14,16 +14,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
 
 
 public class JournalParentPagerAdapter extends FragmentPagerAdapter {
-    private FragmentManager fragmentManager;
     private JournalChildFragment[] mFragments;
 
-    public JournalParentPagerAdapter(FragmentManager fragmentManager) {
+    JournalParentPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -39,8 +38,8 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
         return journalFragment;
     }
 
-    public Date getAdapterDate(int dayPosition) {
-        int dayDiff = dayPosition - 5000;
+    Date getAdapterDate(int dayPosition) {
+        int dayDiff = dayPosition - Constants.JOURNAL_PAGE_TODAY;
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -57,29 +56,22 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 10000;
+        return Constants.JOURNAL_TOTAL_PAGES_DATES;
     }
 
     public Long getTimestamp(int page) {
         return DateHelper.getAdapterTimestamp(page);
     }
 
-    public String[] getTitleAndSubTitle(Context context, int page) {
+    String[] getTitleAndSubTitle(Context context, int page) {
         String[] titleSubTitle = new String[2];
-        if (page == 5000) {
+        if (page == Constants.JOURNAL_PAGE_TODAY) {
             titleSubTitle[0] = "Today";
             titleSubTitle[1] = String.valueOf(new SimpleDateFormat("MMM dd", Locale.getDefault()).format(new Date()));
         } else {
-            titleSubTitle[0] = getDayFormatted(context, page);
+            titleSubTitle[0] = String.valueOf(DateUtils.getRelativeTimeSpanString(context, DateHelper.getAdapterTimestamp(page)));
             titleSubTitle[1] = null;
         }
         return titleSubTitle;
-    }
-
-    private String getDayFormatted(Context context, int page) {
-        CharSequence charSequence = DateUtils.getRelativeTimeSpanString(context, DateHelper.getAdapterTimestamp(page));
-        StringBuilder sb = new StringBuilder(charSequence.length());
-        sb.append(charSequence);
-        return sb.toString();
     }
 }
