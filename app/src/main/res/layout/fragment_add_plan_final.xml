@@ -26,7 +26,7 @@
                 android:layout_marginRight="56dp"
                 android:layout_marginTop="4dp"
                 android:focusable="true"
-                android:text="Save workout plan"
+                android:text="Save routine"
                 android:textColor="@color/black"
                 android:textSize="28sp" />
 
@@ -41,7 +41,7 @@
                     android:id="@+id/editPlanName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Workout plan name"
+                    android:hint="Routine name (optional)"
                     android:paddingTop="16dp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -87,7 +87,7 @@
                         android:drawableLeft="@drawable/ic_calendar_empty"
                         android:drawablePadding="16dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Plan days"
+                        android:text="Routine days"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:visibility="visible" />
@@ -126,7 +126,7 @@
                         android:drawableLeft="@drawable/ic_weight_normal"
                         android:drawablePadding="16dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Plan exercises"
+                        android:text="Exercises"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:visibility="visible" />

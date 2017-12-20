@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b2f33a34d6a460d449df132f926399a2",
+    "identityHash": "1c023beaa704e1e7fb2d7dc0eb715f6c",
     "entities": [
       {
         "tableName": "journal_date_entities",
@@ -330,7 +330,7 @@
       },
       {
         "tableName": "plans",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `planName` TEXT, `planDayString` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `planName` TEXT, `planDayString` TEXT, `timestamp` INTEGER, `parentId` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -347,6 +347,18 @@
           {
             "fieldPath": "planDayString",
             "columnName": "planDayString",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "parentId",
+            "columnName": "parentId",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -419,7 +431,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b2f33a34d6a460d449df132f926399a2\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1c023beaa704e1e7fb2d7dc0eb715f6c\")"
     ]
   }
 }

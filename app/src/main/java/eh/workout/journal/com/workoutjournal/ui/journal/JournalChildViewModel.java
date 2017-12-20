@@ -38,7 +38,7 @@ public class JournalChildViewModel extends AndroidViewModel {
                 if (deletingSet == null) {
                     observeSetAndReps.setValue(exerciseSetRepRelations);
                 }
-                new PlanTask().execute(DateHelper.getDayOfWeek(timestamp));
+                new PlanTask().execute(timestamp);
             }
         });
     }
@@ -87,10 +87,11 @@ public class JournalChildViewModel extends AndroidViewModel {
 
     // TODO find a better solution
     @SuppressLint("StaticFieldLeak")
-    class PlanTask extends AsyncTask<Integer, Void, List<PlanSetRelation>> {
+    class PlanTask extends AsyncTask<Long, Void, List<PlanSetRelation>> {
         @Override
-        protected List<PlanSetRelation> doInBackground(Integer... integers) {
-            List<PlanSetRelation> planSetRelations = repository.getPlanSetRelationList(integers[0]);
+        protected List<PlanSetRelation> doInBackground(Long... integers) {
+            List<PlanSetRelation> planSetRelations = repository.getPlanSetRelationList(DateHelper.getDayOfWeek(integers[0]));
+
             if (getSetAndReps().getValue() != null) {
                 if (getSetAndReps().getValue().size() > 0 && planSetRelations != null) {
                     for (int i = 0; i < planSetRelations.size(); i++) {

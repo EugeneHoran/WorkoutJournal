@@ -67,8 +67,9 @@ public class ExerciseParentFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.pager.setAdapter(adapter);
+        binding.pager.setCurrentItem(1, false);
         binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
-        ExerciseSelectorFragment selectorFragment = (ExerciseSelectorFragment) adapter.getItem(0);
+        ExerciseSelectorFragment selectorFragment = (ExerciseSelectorFragment) adapter.getItem(1);
         if (selectorFragment != null) {
             selectorFragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
                 @Override
@@ -77,7 +78,7 @@ public class ExerciseParentFragment extends BaseFragment {
                 }
             });
         }
-        ExerciseGroupFragment groupFragment = (ExerciseGroupFragment) adapter.getItem(1);
+        ExerciseGroupFragment groupFragment = (ExerciseGroupFragment) adapter.getItem(2);
         if (groupFragment != null) {
             groupFragment.setListener(new ExerciseGroupFragment.ExerciseSelectorInterface() {
                 @Override
@@ -100,7 +101,6 @@ public class ExerciseParentFragment extends BaseFragment {
         }
     }
 
-
     public boolean searchVisible() {
         return binding.viewToolbar.searchHolder.getVisibility() == View.VISIBLE;
     }
@@ -121,7 +121,7 @@ public class ExerciseParentFragment extends BaseFragment {
                     dialogNewExercise();
                     break;
                 case R.id.action_search_exercise:
-                    binding.pager.setCurrentItem(0);
+                    binding.pager.setCurrentItem(1);
                     binding.viewToolbar.tabs.setVisibility(View.GONE);
                     selectorModel.searchVisible = true;
                     binding.pager.enableSwiping(false);
