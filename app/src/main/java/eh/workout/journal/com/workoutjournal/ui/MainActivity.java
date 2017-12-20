@@ -48,21 +48,10 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == Constants.REQUEST_CODE_SETTINGS) {
             initJournalFragment(resultCode);
             handleTimer();
+        } else if (requestCode == Constants.REQUEST_CODE_PLAN) {
+            initJournalFragment(resultCode);
         }
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        if (getExerciseFragment() != null) {
-//            if (getExerciseFragment().searchVisible()) {
-//                getExerciseFragment().hideSearch();
-//            } else {
-//                super.onBackPressed();
-//            }
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
 
     @Override
     public void onBackPressed() {

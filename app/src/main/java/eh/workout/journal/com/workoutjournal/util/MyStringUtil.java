@@ -29,4 +29,9 @@ public class MyStringUtil {
         String test = ormEntity.getReps() + "<small> reps</small>";
         return Html.fromHtml(test);
     }
+
+    public static String showWorkoutPlan(boolean showWorkoutPlan) {
+        return showWorkoutPlan ? "Hide workout plan" : "Show workout plan";
+    }
+
 }

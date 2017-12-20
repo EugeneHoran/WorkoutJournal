@@ -14,20 +14,20 @@ public class ExerciseDataHelper {
     public static final int EXERCISE_TYPE_WEIGHT = 0;
     public static final int EXERCISE_TYPE_BODY = 1;
     public static final int EXERCISE_TYPE_CARDIO = 2;
-    public static final String[] DAYS = new String[]{
+    private static final String[] DAYS = new String[]{
+            "Sunday",
             "Monday",
             "Tuesday",
             "Wednesday",
             "Thursday",
             "Friday",
-            "Saturday",
-            "Sunday"
+            "Saturday"
     };
 
     public static List<DaySelector> getDays() {
         List<DaySelector> daySelectorList = new ArrayList<>();
-        for (String DAY : DAYS) {
-            daySelectorList.add(new DaySelector(DAY, false));
+        for (int i = 0; i < DAYS.length; i++) {
+            daySelectorList.add(new DaySelector(DAYS[i], false, i + 1));
         }
         return daySelectorList;
     }

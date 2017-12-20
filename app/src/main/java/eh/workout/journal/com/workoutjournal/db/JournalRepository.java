@@ -12,7 +12,10 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 
 public class JournalRepository {
     private static JournalRepository instance;
@@ -34,6 +37,28 @@ public class JournalRepository {
         }
         return instance;
     }
+
+
+    /**
+     * Plans
+     */
+    public LiveData<List<PlanSetRelation>> getPlanSetRelationListLive(Integer day) {
+        return database.getPlanDao().getPlanSetRelationListLive("%" + String.valueOf(day) + "%");
+    }
+
+    public List<PlanSetRelation> getPlanSetRelationList(Integer day) {
+        return database.getPlanDao().getPlanSetRelationList("%" + String.valueOf(day) + "%");
+    }
+
+    public void insertPlan(final PlanEntity planEntity, final List<PlanSetEntity> planSetEntityList) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().insertNewPlan(planEntity, planSetEntityList);
+            }
+        });
+    }
+
 
     /**
      * Journal Data

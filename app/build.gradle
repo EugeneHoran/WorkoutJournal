@@ -46,6 +46,8 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:${rootProject.ext.archLibVersion}"
     annotationProcessor "android.arch.lifecycle:compiler:${rootProject.ext.archLibVersion}"
     annotationProcessor "android.arch.persistence.room:compiler:${rootProject.ext.archLibVersion}"
+    //Keyboard
+    compile 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

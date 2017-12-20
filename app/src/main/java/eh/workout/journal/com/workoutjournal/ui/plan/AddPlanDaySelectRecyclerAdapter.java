@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
+import eh.workout.journal.com.workoutjournal.db.CustomTypeConverters;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
 import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
 
@@ -28,6 +29,21 @@ public class AddPlanDaySelectRecyclerAdapter extends RecyclerView.Adapter<Recycl
         this.itemList.addAll(itemList);
         notifyDataSetChanged();
     }
+
+    String getDaysString() {
+        List<Integer> daySelectorList = new ArrayList<>();
+        for (int i = 0; i < itemList.size(); i++) {
+            if (itemList.get(i).isSelected()) {
+                daySelectorList.add(itemList.get(i).getDayInt());
+            }
+        }
+        Integer[] integers = new Integer[daySelectorList.size()];
+        for (int i = 0; i < daySelectorList.size(); i++) {
+            integers[i] = daySelectorList.get(i);
+        }
+        return CustomTypeConverters.fromDayListToString(integers);
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

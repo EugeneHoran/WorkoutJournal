@@ -6,6 +6,8 @@
 
         <import type="android.view.View" />
 
+        <import type="eh.workout.journal.com.workoutjournal.util.MyStringUtil" />
+
         <import type="eh.workout.journal.com.workoutjournal.util.Constants" />
 
         <variable
@@ -13,12 +15,12 @@
             type="eh.workout.journal.com.workoutjournal.ui.journal.JournalChildFragment" />
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/recyclerJournal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -29,11 +31,11 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:layout_marginTop="-36dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="@{fragment.noItems?View.VISIBLE:View.GONE, default = gone}">
+            android:visibility="@{fragment.noItems?View.VISIBLE:View.GONE, default = visible}">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -63,5 +65,5 @@
                 android:gravity="center"
                 android:text="@string/no_lifts" />
         </LinearLayout>
-    </FrameLayout>
+    </RelativeLayout>
 </layout>

@@ -4,38 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="eh.workout.journal.com.workoutjournal.ui.plan.AddPlanActivity">
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back" />
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_arrow_back" />
 
-        <TextView
-            android:id="@+id/next"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorAccent"
-            android:clickable="true"
-            android:elevation="12dp"
-            android:focusable="true"
-            android:fontFamily="sans-serif-medium"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="right|center_vertical"
-            android:paddingRight="16dp"
-            android:text="NEXT"
-            android:textColor="@color/white" />
-    </LinearLayout>
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:tint="@color/white"
+            app:srcCompat="@drawable/ic_arrow_forward" />
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -13,6 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
+
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -30,11 +34,14 @@ public class AddPlanSelectLiftsFragment extends Fragment {
 
     private AddPlanViewModel model;
     private AddPlanLiftRecyclerAdapter adapter;
+    private Unregistrar keyboardRegister;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        model = ViewModelProviders.of(getActivity()).get(AddPlanViewModel.class);
+        if (getActivity() != null) {
+            model = ViewModelProviders.of(getActivity()).get(AddPlanViewModel.class);
+        }
         adapter = new AddPlanLiftRecyclerAdapter();
     }
 
@@ -69,6 +76,24 @@ public class AddPlanSelectLiftsFragment extends Fragment {
         });
         model.initLifts();
         observeLifts(model);
+        if (getActivity() != null) {
+            keyboardRegister = KeyboardVisibilityEvent.registerEventListener(getActivity(), new KeyboardVisibilityEventListener() {
+                @Override
+                public void onVisibilityChanged(boolean isOpen) {
+                    binding.title.setVisibility(isOpen ? View.GONE : View.VISIBLE);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        keyboardRegister.unregister();
+        super.onDetach();
+    }
+
+    public List<ExerciseLiftEntity> getSelectedList() {
+        return adapter.getSelectedList();
     }
 
     private void observeLifts(AddPlanViewModel model) {

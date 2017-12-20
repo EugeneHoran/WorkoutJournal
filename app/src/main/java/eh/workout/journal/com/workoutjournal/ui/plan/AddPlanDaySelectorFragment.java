@@ -20,6 +20,7 @@ public class AddPlanDaySelectorFragment extends Fragment {
         return new AddPlanDaySelectorFragment();
     }
 
+    FragmentAddLiftDayPickerBinding binding;
     private AddPlanDaySelectRecyclerAdapter adapter;
 
     @Override
@@ -28,12 +29,15 @@ public class AddPlanDaySelectorFragment extends Fragment {
         adapter = new AddPlanDaySelectRecyclerAdapter();
     }
 
-    FragmentAddLiftDayPickerBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_lift_day_picker, container, false);
         binding.recyclerDays.setAdapter(adapter);
         return binding.getRoot();
+    }
+
+    public String getDaysString() {
+        return adapter.getDaysString();
     }
 }

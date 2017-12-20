@@ -12,21 +12,24 @@
     <LinearLayout
         android:id="@+id/liftParent"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:paddingBottom="8dp"
         android:paddingLeft="64dp"
-        android:paddingRight="56dp">
+        android:paddingRight="56dp"
+        android:paddingTop="8dp">
 
         <TextView
             android:id="@+id/liftName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:maxLines="1"
+            android:maxLines="2"
+            android:text="Testing SDfdfsf SDEFDSF SDFdsf sdfsdf s"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -34,6 +37,6 @@
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical" />
+            android:layout_gravity="end|center_vertical" />
     </LinearLayout>
 </layout>

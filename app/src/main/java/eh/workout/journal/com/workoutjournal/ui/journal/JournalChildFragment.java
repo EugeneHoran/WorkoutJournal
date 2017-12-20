@@ -1,6 +1,7 @@
 package eh.workout.journal.com.workoutjournal.ui.journal;
 
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -20,6 +21,7 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalChildBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.util.AppFactory;
 
@@ -43,7 +45,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
 
     private FragmentJournalChildBinding binding;
     private JournalChildViewModel model;
-    private JournalChildRecyclerAdapter adapter;
+    private JournalChildRecyclerAdapter adapterJournal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
         }
         ViewModelProvider.Factory journalChildFactory = new AppFactory(getApplicationChild(), timestamp);
         model = ViewModelProviders.of(this, journalChildFactory).get(JournalChildViewModel.class);
-        getLifecycle().addObserver(model);
-        adapter = new JournalChildRecyclerAdapter(this);
+        adapterJournal = new JournalChildRecyclerAdapter(this);
     }
 
     @Override
@@ -67,8 +68,10 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setFragment(this);
-        binding.recycler.setAdapter(adapter);
+        binding.recyclerJournal.setNestedScrollingEnabled(false);
+        binding.recyclerJournal.setAdapter(adapterJournal);
         observeSetsAndReps(model);
+        observePlans(model);
     }
 
     private void observeSetsAndReps(JournalChildViewModel model) {
@@ -76,12 +79,37 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
             @Override
             public void onChanged(@Nullable List<ExerciseSetRepRelation> dateSetRepRelations) {
                 if (dateSetRepRelations != null) {
-                    adapter.setItems(dateSetRepRelations);
+                    adapterJournal.setItems(dateSetRepRelations);
                     noItems.set(dateSetRepRelations.size() == 0);
                 }
             }
         });
     }
+
+    private void observePlans(JournalChildViewModel model) {
+        model.getPlans().observe(this, new Observer<List<PlanSetRelation>>() {
+            @Override
+            public void onChanged(@Nullable List<PlanSetRelation> planSetRelations) {
+                getPlanSetRelation().setValue(planSetRelations);
+            }
+        });
+    }
+
+    MutableLiveData<List<PlanSetRelation>> getPlanSetRelation;
+
+    public MutableLiveData<List<PlanSetRelation>> getPlanSetRelation() {
+        if (getPlanSetRelation == null) {
+            getPlanSetRelation = new MutableLiveData<>();
+        }
+        return getPlanSetRelation;
+    }
+
+    public View.OnClickListener planExpandListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            model.expandWorkoutPlan.set(!model.expandWorkoutPlan.get());
+        }
+    };
 
     @Override
     public void onWorkoutClicked(String setId, int inputType) {
@@ -93,7 +121,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
 
     @Override
     public void onDeleteSetClicked(JournalSetEntity setEntity) {
-        if (adapter.getItemCount() == 0) {
+        if (adapterJournal.getItemCount() == 0) {
             noItems.set(true);
         }
         JournalParentFragment journalParentFragment = (JournalParentFragment) getParentFragment();

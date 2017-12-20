@@ -16,11 +16,11 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 
 @Dao
 public abstract class JournalDao {
-
 
     @Transaction
     @Query("SELECT * FROM journal_set_entities WHERE timestamp BETWEEN :start AND :end")

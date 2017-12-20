@@ -21,12 +21,14 @@ public class AddPlanLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<ExerciseLiftEntity> itemListFiltered = new ArrayList<>();
 
     public void setItems(List<ExerciseLiftEntity> itemList) {
+        this.itemList.clear();
         this.itemList.addAll(itemList);
+        this.itemListFiltered.clear();
         this.itemListFiltered.addAll(itemList);
         notifyDataSetChanged();
     }
 
-    public List<ExerciseLiftEntity> getSelectedList() {
+    List<ExerciseLiftEntity> getSelectedList() {
         List<ExerciseLiftEntity> selectedList = new ArrayList<>();
         for (int i = 0; i < itemList.size(); i++) {
             if (itemList.get(i).isSelected()) {

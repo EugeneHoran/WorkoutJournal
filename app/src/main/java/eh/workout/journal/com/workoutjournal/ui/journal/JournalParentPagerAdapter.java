@@ -26,7 +26,7 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public JournalChildFragment getItem(int position) {
         if (mFragments != null && mFragments.length > position && mFragments[position] != null) {
             return mFragments[position];
         }

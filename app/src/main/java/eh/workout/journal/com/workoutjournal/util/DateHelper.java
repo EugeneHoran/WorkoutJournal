@@ -22,6 +22,16 @@ public class DateHelper {
         return (int) ((calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) / (24 * 60 * 60 * 1000));
     }
 
+    public static int getDayOfWeek(long timestamp) {
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTimeInMillis(timestamp);
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        calendar1.set(Calendar.SECOND, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+        return calendar1.get(Calendar.DAY_OF_WEEK);
+    }
+
     private static Date getStartOfDay(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

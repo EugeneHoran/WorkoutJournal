@@ -18,10 +18,14 @@ public class Constants {
 
 
     public static final int JOURNAL_TOTAL_PAGES_DATES = 10000;
-    public static final String JOURNAL_PAGE_RESULT_CODE_SETTINGS = "page_result_code";
     public static final int JOURNAL_PAGE_TODAY = 5000;
 
+
+    public static final String JOURNAL_PAGE_RESULT_CODE_SETTINGS = "page_result_code";
     public static final int REQUEST_CODE_SETTINGS = 50;
+
+    public static final String JOURNAL_PAGE_RESULT_CODE_PLAN = "page_result_code";
+    public static final int REQUEST_CODE_PLAN = 60;
 
     public static final String TOOLBAR_EXERCISE_TITLE = "Select Exercise";
 }
