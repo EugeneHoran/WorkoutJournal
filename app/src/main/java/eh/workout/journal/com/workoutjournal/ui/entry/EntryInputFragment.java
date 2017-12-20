@@ -23,7 +23,8 @@ import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
 import eh.workout.journal.com.workoutjournal.util.MyStringUtil;
 import eh.workout.journal.com.workoutjournal.util.OrmHelper;
-import eh.workout.journal.com.workoutjournal.util.QueryTextWatcher;
+import eh.workout.journal.com.workoutjournal.util.views.QueryTextWatcher;
+import eh.workout.journal.com.workoutjournal.util.views.SimpleTextWatcher;
 
 public class EntryInputFragment extends Fragment implements
         QueryTextWatcher.MultiTextWatcherInterfacePicker,
@@ -99,6 +100,12 @@ public class EntryInputFragment extends Fragment implements
     private void initPickers() {
         editWeight = findInput(binding.viewInput.pickerWeight);
         editReps = findInput(binding.viewInput.pickerReps);
+        new SimpleTextWatcher(new SimpleTextWatcher.SimpleTextWatcherInterface() {
+            @Override
+            public void onTextChanged(EditText editText, String string, CharSequence charSequence, int count) {
+
+            }
+        }, true).registerEditText(editWeight).registerEditText(editReps);
         QueryTextWatcher queryTextWatcher = new QueryTextWatcher();
         queryTextWatcher.registerEditText(editWeight);
         queryTextWatcher.registerEditText(editReps);

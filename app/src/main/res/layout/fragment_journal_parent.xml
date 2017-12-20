@@ -47,37 +47,47 @@
             android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@android:color/transparent"
             android:clickable="true"
             android:elevation="2dp"
             android:focusable="true"
-            android:minHeight="48dp"
             android:orientation="vertical"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="48dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
 
             <TextView
                 android:id="@+id/txtPlanHeader"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@color/colorGrayNormal"
+                android:background="#FFFFFF"
                 android:clickable="true"
                 android:drawableLeft="@drawable/ic_list"
                 android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_list"
+                android:drawableTint="@color/black"
                 android:focusable="true"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_vertical"
                 android:onClickListener="@{fragment.onBottomSheetHeaderListener}"
                 android:paddingLeft="16dp"
-                android:text="Today's plan"
-                android:textColor="@color/white"
+                android:paddingRight="16dp"
+                android:text="@string/today_s_plan"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBackground" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerPlan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorBackgroundSecondary"
                 android:paddingBottom="12dp"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
         </LinearLayout>

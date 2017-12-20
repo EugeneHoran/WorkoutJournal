@@ -18,9 +18,9 @@ import android.widget.Spinner;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentOneRepMaxBinding;
 import eh.workout.journal.com.workoutjournal.util.Constants;
-import eh.workout.journal.com.workoutjournal.util.MultiTextWatcher;
 import eh.workout.journal.com.workoutjournal.util.OrmHelper;
-import eh.workout.journal.com.workoutjournal.util.SimpleSpinnerListener;
+import eh.workout.journal.com.workoutjournal.util.views.SimpleSpinnerListener;
+import eh.workout.journal.com.workoutjournal.util.views.SimpleTextWatcher;
 
 
 public class OneRepMaxFragment extends Fragment {
@@ -42,6 +42,7 @@ public class OneRepMaxFragment extends Fragment {
     private EditText editWeight;
     private Spinner spinnerReps;
     private OneRepMaxRecyclerAdapter adapterOrm;
+    private SimpleTextWatcher simpleTextWatcher;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,17 +71,13 @@ public class OneRepMaxFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private MultiTextWatcher textWatcherPercentages;
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (which == Constants.ORM_PERCENTAGES) {
-            textWatcherPercentages = new MultiTextWatcher();
-            textWatcherPercentages.registerEditText(binding.orm);
-            textWatcherPercentages.setCallback(new MultiTextWatcher.MultiTextWatcherInterface() {
+            simpleTextWatcher = new SimpleTextWatcher(new SimpleTextWatcher.SimpleTextWatcherInterface() {
                 @Override
-                public void onWeightChanged(int count) {
+                public void onTextChanged(EditText editText, String string, CharSequence charSequence, int count) {
                     if (count == 0) {
                         adapterOrm.setItems(null);
                         return;
@@ -90,19 +87,20 @@ public class OneRepMaxFragment extends Fragment {
                     }
                     adapterOrm.setItems(OrmHelper.getPercentageList(null, 0, Double.valueOf(binding.orm.getText().toString().trim())));
                 }
-            });
+            }, true)
+                    .registerEditText(binding.orm);
         }
-        MultiTextWatcher textWatcherOrm = new MultiTextWatcher();
-        textWatcherOrm.registerEditText(editWeight);
-        textWatcherOrm.setCallback(new MultiTextWatcher.MultiTextWatcherInterface() {
+        new SimpleTextWatcher(new SimpleTextWatcher.SimpleTextWatcherInterface() {
             @Override
-            public void onWeightChanged(int textLength) {
+            public void onTextChanged(EditText editText, String string, CharSequence charSequence, int count) {
                 sendDataToAdapter(getWeightLifted(), getRepsPerformed());
-                if (textLength == 3) {
+                if (count == 3) {
                     removeWeightFocus();
                 }
             }
-        });
+        }, true)
+                .registerEditText(editWeight);
+
         new SimpleSpinnerListener().registerSpinner(spinnerReps)
                 .setCallback(new SimpleSpinnerListener.RepsSpinnerInterface() {
                     @Override
@@ -122,10 +120,10 @@ public class OneRepMaxFragment extends Fragment {
                 adapterOrm.setItems(null);
                 return;
             }
-            textWatcherPercentages.registerCallback(false);
+            simpleTextWatcher.setRegister(false);
             binding.orm.setText(OrmHelper.getOrm(weight, reps));
             adapterOrm.setItems(OrmHelper.getPercentageList(weight, reps, null));
-            textWatcherPercentages.registerCallback(true);
+            simpleTextWatcher.setRegister(true);
         }
     }
 

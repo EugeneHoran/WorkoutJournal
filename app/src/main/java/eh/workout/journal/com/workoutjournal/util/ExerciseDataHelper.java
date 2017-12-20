@@ -24,6 +24,14 @@ public class ExerciseDataHelper {
             "Saturday"
     };
 
+    public static List<String> getDays(Integer[] integers) {
+        List<String> daySelectorList = new ArrayList<>();
+        for (int i = 0; i < integers.length; i++) {
+            daySelectorList.add(DAYS[integers[i]]);
+        }
+        return daySelectorList;
+    }
+
     public static List<DaySelector> getDays() {
         List<DaySelector> daySelectorList = new ArrayList<>();
         for (int i = 0; i < DAYS.length; i++) {

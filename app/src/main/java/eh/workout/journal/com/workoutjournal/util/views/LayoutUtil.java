@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.util;
+package eh.workout.journal.com.workoutjournal.util.views;
 
 import android.content.Context;
 import android.graphics.PorterDuff;

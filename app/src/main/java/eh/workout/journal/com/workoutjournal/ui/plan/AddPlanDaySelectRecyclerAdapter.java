@@ -1,7 +1,6 @@
 package eh.workout.journal.com.workoutjournal.ui.plan;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +18,29 @@ import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
 
 public class AddPlanDaySelectRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<DaySelector> itemList = new ArrayList<>();
+    private boolean showCheckBox;
 
-    AddPlanDaySelectRecyclerAdapter() {
-        setItems(ExerciseDataHelper.getDays());
+    AddPlanDaySelectRecyclerAdapter(boolean showCheckBox) {
+        this.showCheckBox = showCheckBox;
+        if (showCheckBox) {
+            setItems(ExerciseDataHelper.getDays());
+        }
     }
 
     public void setItems(List<DaySelector> itemList) {
         this.itemList.clear();
         this.itemList.addAll(itemList);
         notifyDataSetChanged();
+    }
+
+    List<DaySelector> getSelectedList() {
+        List<DaySelector> selectorList = new ArrayList<>();
+        for (int i = 0; i < itemList.size(); i++) {
+            if (itemList.get(i).isSelected()) {
+                selectorList.add(itemList.get(i));
+            }
+        }
+        return selectorList;
     }
 
     String getDaysString() {
@@ -72,6 +85,7 @@ public class AddPlanDaySelectRecyclerAdapter extends RecyclerView.Adapter<Recycl
             super(itemView);
             liftName = itemView.findViewById(R.id.liftName);
             checkBox = itemView.findViewById(R.id.checkbox);
+            checkBox.setVisibility(showCheckBox ? View.VISIBLE : View.GONE);
             itemView.findViewById(R.id.liftParent).setOnClickListener(this);
         }
 

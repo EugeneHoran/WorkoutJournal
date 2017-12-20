@@ -64,6 +64,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/no_lifts" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="48dp" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

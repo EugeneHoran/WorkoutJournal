@@ -16,9 +16,14 @@ import java.util.List;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 
-public class AddPlanLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
+public class AddPlanSelectLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
     private List<ExerciseLiftEntity> itemList = new ArrayList<>();
     private List<ExerciseLiftEntity> itemListFiltered = new ArrayList<>();
+    private boolean showCheckBox;
+
+    AddPlanSelectLiftRecyclerAdapter(boolean showCheckBox) {
+        this.showCheckBox = showCheckBox;
+    }
 
     public void setItems(List<ExerciseLiftEntity> itemList) {
         this.itemList.clear();
@@ -26,6 +31,10 @@ public class AddPlanLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         this.itemListFiltered.clear();
         this.itemListFiltered.addAll(itemList);
         notifyDataSetChanged();
+    }
+
+    List<ExerciseLiftEntity> getAllCheckedList() {
+        return new ArrayList<>(itemList);
     }
 
     List<ExerciseLiftEntity> getSelectedList() {
@@ -40,13 +49,13 @@ public class AddPlanLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolderTest(LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_add_plan_lift_item, parent, false));
+        return new ViewHolderLifts(LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_add_plan_lift_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (viewHolder instanceof ViewHolderTest) {
-            ViewHolderTest holder = (ViewHolderTest) viewHolder;
+        if (viewHolder instanceof ViewHolderLifts) {
+            ViewHolderLifts holder = (ViewHolderLifts) viewHolder;
             holder.bindView();
         }
     }
@@ -86,15 +95,16 @@ public class AddPlanLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         };
     }
 
-    class ViewHolderTest extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+    class ViewHolderLifts extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
         TextView liftName;
         CheckBox checkBox;
         private ExerciseLiftEntity exerciseLiftEntity;
 
-        ViewHolderTest(View itemView) {
+        ViewHolderLifts(View itemView) {
             super(itemView);
             liftName = itemView.findViewById(R.id.liftName);
             checkBox = itemView.findViewById(R.id.checkbox);
+            checkBox.setVisibility(showCheckBox ? View.VISIBLE : View.GONE);
             itemView.findViewById(R.id.liftParent).setOnClickListener(this);
         }
 

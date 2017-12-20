@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,7 +15,7 @@ import android.view.ViewGroup;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseParentBinding;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
-import eh.workout.journal.com.workoutjournal.util.CustomSearchView;
+import eh.workout.journal.com.workoutjournal.util.views.CustomSearchView;
 
 public class ExerciseParentFragment extends BaseFragment {
     private static final String ARG_DATE_TIMESTAMP = "arg_date_timestamp";

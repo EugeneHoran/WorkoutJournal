@@ -3,15 +3,17 @@ package eh.workout.journal.com.workoutjournal.ui.plan;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
@@ -22,6 +24,8 @@ import java.util.List;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentAddPlanSelectLiftsBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
+import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
+import eh.workout.journal.com.workoutjournal.util.views.SimpleTextWatcher;
 
 
 public class AddPlanSelectLiftsFragment extends Fragment {
@@ -33,7 +37,7 @@ public class AddPlanSelectLiftsFragment extends Fragment {
     }
 
     private AddPlanViewModel model;
-    private AddPlanLiftRecyclerAdapter adapter;
+    private AddPlanSelectLiftRecyclerAdapter adapter;
     private Unregistrar keyboardRegister;
 
     @Override
@@ -42,7 +46,7 @@ public class AddPlanSelectLiftsFragment extends Fragment {
         if (getActivity() != null) {
             model = ViewModelProviders.of(getActivity()).get(AddPlanViewModel.class);
         }
-        adapter = new AddPlanLiftRecyclerAdapter();
+        adapter = new AddPlanSelectLiftRecyclerAdapter(true);
     }
 
     private FragmentAddPlanSelectLiftsBinding binding;
@@ -57,24 +61,14 @@ public class AddPlanSelectLiftsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.recycler.setAdapter(adapter);
-        binding.editSearch.addTextChangedListener(new TextWatcher() {
+        model.initLifts();
+        new SimpleTextWatcher(new SimpleTextWatcher.SimpleTextWatcherInterface() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(EditText editText, String string, CharSequence charSequence, int count) {
                 adapter.getFilter().filter(charSequence);
                 binding.recycler.scrollToPosition(0);
             }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        model.initLifts();
+        }, true).registerEditText(binding.editSearch);
         observeLifts(model);
         if (getActivity() != null) {
             keyboardRegister = KeyboardVisibilityEvent.registerEventListener(getActivity(), new KeyboardVisibilityEventListener() {
@@ -83,6 +77,34 @@ public class AddPlanSelectLiftsFragment extends Fragment {
                     binding.title.setVisibility(isOpen ? View.GONE : View.VISIBLE);
                 }
             });
+        }
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getSelectedList().size() == 0) {
+                    Snackbar.make(binding.fab, "Select lifts to continue", Snackbar.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    model.setRetainedLiftList(adapter.getAllCheckedList());
+                    model.setLifts(getSelectedList());
+                }
+                AddPlanDaySelectorFragment fragment = AddPlanDaySelectorFragment.newInstance();
+                initTransition(fragment);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .addSharedElement(binding.fab, "fab")
+                        .replace(R.id.container, fragment, AddPlanActivity.TAG_DAY_SELECTOR_FRAGMENT).addToBackStack(AddPlanActivity.TAG_DAY_SELECTOR_FRAGMENT)
+                        .commit();
+            }
+        });
+    }
+
+    private void initTransition(Fragment fragment) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setEnterTransition(new Slide());
+            fragment.setSharedElementReturnTransition(new DetailsTransition());
+            fragment.setExitTransition(new Slide());
         }
     }
 

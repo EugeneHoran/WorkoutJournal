@@ -10,13 +10,13 @@ public class PlanEntity {
     @PrimaryKey
     @NonNull
     private String id;
+    private String planName;
     private String planDayString;
-//    private Integer[] planDayList;
 
-    public PlanEntity(@NonNull String id, String planDayString) {
+    public PlanEntity(@NonNull String id, String planName, String planDayString) {
         this.id = id;
+        this.planName = planName;
         this.planDayString = planDayString;
-//        this.planDayList = CustomTypeConverters.fromStringToDayList(planDayString);
     }
 
     @NonNull
@@ -28,6 +28,17 @@ public class PlanEntity {
         this.id = id;
     }
 
+    public String getPlanName() {
+        if (planName == null) {
+            return "Workout plan";
+        }
+        return planName;
+    }
+
+    public void setPlanName(String planName) {
+        this.planName = planName;
+    }
+
     public String getPlanDayString() {
         return planDayString;
     }
@@ -36,11 +47,4 @@ public class PlanEntity {
         this.planDayString = planDayString;
     }
 
-//    public Integer[] getPlanDayList() {
-//        return planDayList;
-//    }
-//
-//    public void setPlanDayList(Integer[] planDayList) {
-//        this.planDayList = planDayList;
-//    }
 }

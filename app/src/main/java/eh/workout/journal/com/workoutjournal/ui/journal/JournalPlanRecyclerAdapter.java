@@ -14,7 +14,7 @@ import eh.workout.journal.com.workoutjournal.databinding.RecyclerPlanChildItemBi
 import eh.workout.journal.com.workoutjournal.databinding.RecyclerPlanParentItemBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
-import eh.workout.journal.com.workoutjournal.util.LayoutUtil;
+import eh.workout.journal.com.workoutjournal.util.views.LayoutUtil;
 
 public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<PlanSetRelation> itemList = new ArrayList<>();
@@ -63,6 +63,7 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
         void bindItem() {
             PlanSetRelation planSetRelation = itemList.get(getAdapterPosition());
+            binding.planTitle.setText(planSetRelation.getPlanEntity().getPlanName());
             binding.recycler.setAdapter(adapter);
             adapter.setItems(planSetRelation.getPlanSetEntityList());
         }

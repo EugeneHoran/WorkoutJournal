@@ -1,13 +1,10 @@
-package eh.workout.journal.com.workoutjournal.util;
+package eh.workout.journal.com.workoutjournal.util.views;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-
-public class MultiTextWatcher {
-
-    private boolean register = true;
+public class QueryTextWatcher {
 
 
     private MultiTextWatcherInterfacePicker pickerCallback;
@@ -16,39 +13,41 @@ public class MultiTextWatcher {
         void onPickerChanged(EditText editText, Integer value);
     }
 
-    public MultiTextWatcher setCallback(MultiTextWatcherInterfacePicker pickerCallback) {
+    public QueryTextWatcher setCallback(MultiTextWatcherInterfacePicker pickerCallback) {
         this.pickerCallback = pickerCallback;
         return this;
     }
 
-    //
+
+    public boolean registered = false;
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
     private MultiTextWatcherInterface callback;
 
     public interface MultiTextWatcherInterface {
-        void onWeightChanged(int count);
+        void onQuery(String query);
     }
 
-    public MultiTextWatcher setCallback(MultiTextWatcherInterface callback) {
+    public QueryTextWatcher setCallback(MultiTextWatcherInterface callback) {
         this.callback = callback;
         return this;
     }
 
-    public void registerCallback(boolean register) {
-        this.register = register;
-    }
-
-    public MultiTextWatcher registerEditText(final EditText editText) {
+    public QueryTextWatcher registerEditText(final EditText editText) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (register) {
-                    if (callback != null) {
-                        callback.onWeightChanged(s.length());
-                    }
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                if (callback != null && registered) {
+                    final StringBuilder sb = new StringBuilder(charSequence.length());
+                    sb.append(charSequence);
+                    callback.onQuery(sb.toString());
                 }
             }
 

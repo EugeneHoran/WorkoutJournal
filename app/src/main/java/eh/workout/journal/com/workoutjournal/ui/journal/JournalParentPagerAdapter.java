@@ -59,7 +59,7 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
         return Constants.JOURNAL_TOTAL_PAGES_DATES;
     }
 
-    public Long getTimestamp(int page) {
+    Long getTimestamp(int page) {
         return DateHelper.getAdapterTimestamp(page);
     }
 

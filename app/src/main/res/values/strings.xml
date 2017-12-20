@@ -71,6 +71,8 @@
     <string name="_1rm">1RM</string>
     <string name="percentage_calculator">Percentage Calculator</string>
     <string name="create_workout_plan">Create Workout Plan</string>
+    <string name="workout_plan">Workout plan</string>
+    <string name="today_s_plan">Workout Plan</string>
 
 
     <string-array name="days_per_week">

@@ -7,7 +7,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
-import android.databinding.ObservableField;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -24,15 +23,9 @@ import eh.workout.journal.com.workoutjournal.util.DateHelper;
 
 
 public class JournalChildViewModel extends AndroidViewModel {
-    public ObservableField<Boolean> showWorkoutPlan = new ObservableField<>(false);
-    public ObservableField<Boolean> expandWorkoutPlan = new ObservableField<>(false);
-
     private JournalRepository repository;
     private MediatorLiveData<List<ExerciseSetRepRelation>> observeSetAndReps;
     private MutableLiveData<List<PlanSetRelation>> observePlans;
-
-
-    boolean deleteSet = true;
 
     public JournalChildViewModel(@NonNull Application application, final Long timestamp) {
         super(application);
@@ -42,7 +35,9 @@ public class JournalChildViewModel extends AndroidViewModel {
         observeSetAndReps.addSource(repository.getExerciseSetRepRelationLive(DateHelper.getStartAndEndTimestamp(timestamp)), new Observer<List<ExerciseSetRepRelation>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseSetRepRelation> exerciseSetRepRelations) {
-                observeSetAndReps.setValue(exerciseSetRepRelations);
+                if (deletingSet == null) {
+                    observeSetAndReps.setValue(exerciseSetRepRelations);
+                }
                 new PlanTask().execute(DateHelper.getDayOfWeek(timestamp));
             }
         });
@@ -59,22 +54,38 @@ public class JournalChildViewModel extends AndroidViewModel {
         return observePlans;
     }
 
-    void deleteSet(final JournalSetEntity setEntity) {
-        new CountDownTimer(2500, 1000) {
-            @Override
-            public void onTick(long l) {
-            }
+    private JournalSetEntity deletingSet;
 
-            @Override
-            public void onFinish() {
-                if (deleteSet) {
-                    repository.deleteSet(setEntity);
-                }
-                deleteSet = true;
-            }
-        }.start();
+
+    void cancelDeleteSet() {
+        deleteTimer.cancel();
+        deletingSet = null;
     }
 
+    void deleteSet(final JournalSetEntity setEntity) {
+        deleteTimer.cancel();
+        if (deletingSet != null) {
+            repository.deleteSet(deletingSet);
+            deletingSet = null;
+        }
+        deletingSet = setEntity;
+        deleteTimer.start();
+    }
+
+
+    private CountDownTimer deleteTimer = new CountDownTimer(2500, 1000) {
+        @Override
+        public void onTick(long l) {
+        }
+
+        @Override
+        public void onFinish() {
+            repository.deleteSet(deletingSet);
+            deletingSet = null;
+        }
+    };
+
+    // TODO find a better solution
     @SuppressLint("StaticFieldLeak")
     class PlanTask extends AsyncTask<Integer, Void, List<PlanSetRelation>> {
         @Override
@@ -100,12 +111,9 @@ public class JournalChildViewModel extends AndroidViewModel {
         @Override
         protected void onPostExecute(List<PlanSetRelation> planSetRelations) {
             super.onPostExecute(planSetRelations);
-            if (planSetRelations != null) {
-                showWorkoutPlan.set(planSetRelations.size() > 0);
-            } else {
-                showWorkoutPlan.set(false);
-            }
             getPlans().setValue(planSetRelations);
         }
     }
+
+
 }

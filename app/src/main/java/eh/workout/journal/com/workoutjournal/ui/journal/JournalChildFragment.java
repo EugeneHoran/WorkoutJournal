@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     }
 
     private Long timestamp;
-
+    private MutableLiveData<List<PlanSetRelation>> getPlanSetRelation;
     private FragmentJournalChildBinding binding;
     private JournalChildViewModel model;
     private JournalChildRecyclerAdapter adapterJournal;
@@ -95,21 +96,12 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
         });
     }
 
-    MutableLiveData<List<PlanSetRelation>> getPlanSetRelation;
-
     public MutableLiveData<List<PlanSetRelation>> getPlanSetRelation() {
         if (getPlanSetRelation == null) {
             getPlanSetRelation = new MutableLiveData<>();
         }
         return getPlanSetRelation;
     }
-
-    public View.OnClickListener planExpandListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            model.expandWorkoutPlan.set(!model.expandWorkoutPlan.get());
-        }
-    };
 
     @Override
     public void onWorkoutClicked(String setId, int inputType) {
@@ -130,7 +122,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
                 Snackbar.make(getParentFragment().getView().findViewById(R.id.fab), "Deleted " + setEntity.getName(), Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        model.deleteSet = false;
+                        model.cancelDeleteSet();
                         observeSetsAndReps(model);
                     }
                 }).show();
