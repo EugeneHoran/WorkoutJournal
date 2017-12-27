@@ -21,7 +21,7 @@ public class AddPlanSelectLiftRecyclerAdapter extends RecyclerView.Adapter<Recyc
     private List<ExerciseLiftEntity> itemListFiltered = new ArrayList<>();
     private boolean showCheckBox;
 
-    AddPlanSelectLiftRecyclerAdapter(boolean showCheckBox) {
+    public AddPlanSelectLiftRecyclerAdapter(boolean showCheckBox) {
         this.showCheckBox = showCheckBox;
     }
 
@@ -33,11 +33,11 @@ public class AddPlanSelectLiftRecyclerAdapter extends RecyclerView.Adapter<Recyc
         notifyDataSetChanged();
     }
 
-    List<ExerciseLiftEntity> getAllCheckedList() {
+    public List<ExerciseLiftEntity> getAllCheckedList() {
         return new ArrayList<>(itemList);
     }
 
-    List<ExerciseLiftEntity> getSelectedList() {
+    public List<ExerciseLiftEntity> getSelectedList() {
         List<ExerciseLiftEntity> selectedList = new ArrayList<>();
         for (int i = 0; i < itemList.size(); i++) {
             if (itemList.get(i).isSelected()) {
@@ -95,7 +95,7 @@ public class AddPlanSelectLiftRecyclerAdapter extends RecyclerView.Adapter<Recyc
         };
     }
 
-    class ViewHolderLifts extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+    public class ViewHolderLifts extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
         TextView liftName;
         CheckBox checkBox;
         private ExerciseLiftEntity exerciseLiftEntity;

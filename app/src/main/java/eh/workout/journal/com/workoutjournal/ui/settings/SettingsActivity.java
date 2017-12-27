@@ -74,7 +74,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
                 preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
-                Constants.UNIT = stringValue;
+                Constants.SETTINGS_UNIT_MEASURE = stringValue;
             }
             return true;
         }

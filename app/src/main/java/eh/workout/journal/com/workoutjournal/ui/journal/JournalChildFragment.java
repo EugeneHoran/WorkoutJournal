@@ -75,6 +75,12 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
         observePlans(model);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        model.resetTasks();
+    }
+
     private void observeSetsAndReps(JournalChildViewModel model) {
         model.getSetAndReps().observe(this, new Observer<List<ExerciseSetRepRelation>>() {
             @Override

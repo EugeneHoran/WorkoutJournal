@@ -1,5 +1,7 @@
 package eh.workout.journal.com.workoutjournal.ui.exercises;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,25 +11,79 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseSelectorBinding;
+import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 
 
 public class ExercisePlanFragment extends Fragment {
+    private static final String ARG_DATE_TIMESTAMP = "arg_date_timestamp";
 
     public ExercisePlanFragment() {
     }
 
-    public static ExercisePlanFragment newInstance() {
-        return new ExercisePlanFragment();
+    public static ExercisePlanFragment newInstance(Long timestamp) {
+        ExercisePlanFragment fragment = new ExercisePlanFragment();
+        Bundle args = new Bundle();
+        args.putLong(ARG_DATE_TIMESTAMP, timestamp);
+        fragment.setArguments(args);
+        return fragment;
     }
 
+
     private FragmentExerciseSelectorBinding binding;
+
+    private ExercisePlanViewModel model;
+    private ExercisePlanRecyclerAdapter adapter;
+    private Long timestamp;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            timestamp = getArguments().getLong(ARG_DATE_TIMESTAMP);
+        }
+        if (getParentFragment() != null) {
+            model = ViewModelProviders.of(getParentFragment()).get(ExercisePlanViewModel.class);
+        }
+        adapter = new ExercisePlanRecyclerAdapter(new ExercisePlanRecyclerAdapter.ExercisePlanInterface() {
+            @Override
+            public void onPlanClicked(String planId) {
+
+            }
+
+            @Override
+            public void onEditPlanClicked(String planId) {
+                ExerciseParentFragment parent = (ExerciseParentFragment) getParentFragment();
+                if (parent != null) {
+                    parent.onEditPlanClicked(planId);
+                }
+            }
+        });
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercise_selector, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.recycler.setAdapter(adapter);
+        observerPlanList(model);
+    }
+
+    private void observerPlanList(ExercisePlanViewModel model) {
+        model.getPlanSetRelationList().observe(this, new Observer<List<PlanSetRelation>>() {
+            @Override
+            public void onChanged(@Nullable List<PlanSetRelation> planSetRelations) {
+                adapter.setItems(planSetRelations);
+            }
+        });
     }
 }

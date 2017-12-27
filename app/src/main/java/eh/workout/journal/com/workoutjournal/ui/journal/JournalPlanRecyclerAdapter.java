@@ -1,8 +1,11 @@
 package eh.workout.journal.com.workoutjournal.ui.journal;
 
 
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,6 +26,8 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public interface PlanChildInterface {
         void onExerciseClicked(String setId, int inputType);
+
+        void onEditPlanClicked(String planId);
     }
 
     JournalPlanRecyclerAdapter(PlanChildInterface listener) {
@@ -51,21 +56,42 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         return itemList == null ? 0 : itemList.size();
     }
 
-    class PlanParentViewHolder extends RecyclerView.ViewHolder {
-        RecyclerPlanParentItemBinding binding;
-        JournalPlanChildRecyclerAdapter adapter;
+    public class PlanParentViewHolder extends RecyclerView.ViewHolder {
+        private RecyclerPlanParentItemBinding binding;
+        private JournalPlanChildRecyclerAdapter adapter;
+        private PlanSetRelation planSetRelation;
 
         PlanParentViewHolder(RecyclerPlanParentItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            binding.setHolder(this);
             adapter = new JournalPlanChildRecyclerAdapter();
         }
 
         void bindItem() {
-            PlanSetRelation planSetRelation = itemList.get(getAdapterPosition());
+            planSetRelation = itemList.get(getAdapterPosition());
             binding.planTitle.setText(planSetRelation.getPlanEntity().getPlanName());
             binding.recycler.setAdapter(adapter);
             adapter.setItems(planSetRelation.getPlanSetEntityList());
+        }
+
+        public void onMenuClicked(View view) {
+            PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
+            popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
+            popup.getMenu().findItem(R.id.action_move).setVisible(false);
+            popup.getMenu().findItem(R.id.action_delete).setVisible(false);
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+                    if (id == R.id.action_edit) {
+                        if (listener != null) {
+                            listener.onEditPlanClicked(planSetRelation.getPlanEntity().getId());
+                        }
+                    }
+                    return true;
+                }
+            });
+            popup.show();
         }
     }
 

@@ -122,5 +122,4 @@ public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
     public int compareTo(@NonNull ExerciseLiftEntity exerciseLiftEntity) {
         return (this.timestampRecent).compareTo(exerciseLiftEntity.timestampRecent);
     }
-
 }

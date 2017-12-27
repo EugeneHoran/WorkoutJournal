@@ -13,7 +13,7 @@ public class MyStringUtil {
     }
 
     public static Spanned formatRepWeight(String weight) {
-        return Html.fromHtml(weight + "<small> " + Constants.UNIT + "</small>");
+        return Html.fromHtml(weight + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small>");
     }
 
     public static Spanned formatRepReps(String reps) {
@@ -21,7 +21,7 @@ public class MyStringUtil {
     }
 
     public static Spanned formatOneRepMaxWeight(ExerciseOrmEntity ormEntity) {
-        String test = ormEntity.getWeight() + "<small> " + Constants.UNIT + "</small>" + " for " + ormEntity.getReps() + "<small> reps</small> = " + OrmHelper.getOneRepMaxInt(ormEntity.getOneRepMax()) + "<small> " + Constants.UNIT + " (1RM)" + "</small>";
+        String test = ormEntity.getWeight() + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small>" + " for " + ormEntity.getReps() + "<small> reps</small> = " + OrmHelper.getOneRepMaxInt(ormEntity.getOneRepMax()) + "<small> " + Constants.SETTINGS_UNIT_MEASURE + " (1RM)" + "</small>";
         return Html.fromHtml(test);
     }
 

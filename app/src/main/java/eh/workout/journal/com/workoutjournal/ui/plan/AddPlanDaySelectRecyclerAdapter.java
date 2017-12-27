@@ -20,10 +20,12 @@ public class AddPlanDaySelectRecyclerAdapter extends RecyclerView.Adapter<Recycl
     private List<DaySelector> itemList = new ArrayList<>();
     private boolean showCheckBox;
 
-    AddPlanDaySelectRecyclerAdapter(boolean showCheckBox) {
+    public AddPlanDaySelectRecyclerAdapter(boolean showCheckBox, boolean fromEdit) {
         this.showCheckBox = showCheckBox;
-        if (showCheckBox) {
-            setItems(ExerciseDataHelper.getDays());
+        if (!fromEdit) {
+            if (showCheckBox) {
+                setItems(ExerciseDataHelper.getDays());
+            }
         }
     }
 
@@ -33,7 +35,11 @@ public class AddPlanDaySelectRecyclerAdapter extends RecyclerView.Adapter<Recycl
         notifyDataSetChanged();
     }
 
-    List<DaySelector> getSelectedList() {
+    public List<DaySelector> getItemList() {
+        return itemList;
+    }
+
+    public List<DaySelector> getSelectedList() {
         List<DaySelector> selectorList = new ArrayList<>();
         for (int i = 0; i < itemList.size(); i++) {
             if (itemList.get(i).isSelected()) {
@@ -43,7 +49,7 @@ public class AddPlanDaySelectRecyclerAdapter extends RecyclerView.Adapter<Recycl
         return selectorList;
     }
 
-    String getDaysString() {
+    public String getDaysString() {
         List<Integer> daySelectorList = new ArrayList<>();
         for (int i = 0; i < itemList.size(); i++) {
             if (itemList.get(i).isSelected()) {

@@ -11,12 +11,9 @@
         <variable
             name="navigation"
             type="Boolean" />
-
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <android.support.design.widget.CoordinatorLayout style="@style/MatchParentMatchParent">
 
         <include
             android:id="@+id/viewToolbar"
@@ -28,68 +25,43 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            style="@style/MatchParentMatchParent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:tint="@color/white"
+            style="@style/Fab"
+            android:onClickListener="@{fragment::onAddNewLiftClicked}"
             app:layout_anchor="@+id/bottom_sheet"
             app:layout_anchorGravity="top|end"
-            app:onClickListener="@{fragment::onAddNewLiftClicked}"
             app:srcCompat="@drawable/ic_add" />
 
         <LinearLayout
             android:id="@+id/bottom_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:clickable="true"
-            android:elevation="2dp"
-            android:focusable="true"
-            android:orientation="vertical"
-            app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+            style="@style/BottomSheet">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="48dp" />
+            <Space style="@style/MatchParent48" />
 
             <TextView
                 android:id="@+id/txtPlanHeader"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="#FFFFFF"
+                style="@style/TextHeader.Small"
+                android:background="@color/white"
                 android:clickable="true"
                 android:drawableLeft="@drawable/ic_list"
-                android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_list"
-                android:drawableTint="@color/black"
                 android:focusable="true"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center_vertical"
+                android:foreground="?attr/selectableItemBackground"
                 android:onClickListener="@{fragment.onBottomSheetHeaderListener}"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
                 android:text="@string/today_s_plan"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/black" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorBackground" />
+            <View style="@style/Divider" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerPlan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/RecyclerChildVertical"
                 android:background="@color/colorBackgroundSecondary"
-                android:paddingBottom="12dp"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+                android:paddingBottom="12dp" />
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

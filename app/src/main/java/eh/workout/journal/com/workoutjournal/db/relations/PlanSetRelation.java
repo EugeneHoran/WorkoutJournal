@@ -4,6 +4,7 @@ package eh.workout.journal.com.workoutjournal.db.relations;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Relation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
@@ -30,5 +31,14 @@ public class PlanSetRelation {
 
     public void setPlanSetEntityList(List<PlanSetEntity> planSetEntityList) {
         this.planSetEntityList = planSetEntityList;
+    }
+
+    public List<Integer> getDaysList() {
+        List<Integer> daysIntList = new ArrayList<>();
+        String[] dayStringArray = planEntity.getPlanDayString().split(",");
+        for (String aDayStringArray : dayStringArray) {
+            daysIntList.add(Integer.valueOf(aDayStringArray));
+        }
+        return daysIntList;
     }
 }

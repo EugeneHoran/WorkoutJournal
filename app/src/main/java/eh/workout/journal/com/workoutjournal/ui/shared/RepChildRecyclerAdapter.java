@@ -112,7 +112,7 @@ public class RepChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
 
         void bindView() {
-            String type = ormEntity.getInputType() == Constants.EXERCISE_TYPE_WEIGHT ? Constants.UNIT : "reps";
+            String type = ormEntity.getInputType() == Constants.EXERCISE_TYPE_WEIGHT ? Constants.SETTINGS_UNIT_MEASURE : "reps";
             binding.repMax.setText(String.format("%% of 1RM (%s %s)", setOneRepMax, type));
         }
     }
@@ -127,7 +127,7 @@ public class RepChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         void bindView() {
             if (ormEntity != null) {
-                String type = ormEntity.getInputType() == Constants.EXERCISE_TYPE_WEIGHT ? Constants.UNIT : "reps";
+                String type = ormEntity.getInputType() == Constants.EXERCISE_TYPE_WEIGHT ? Constants.SETTINGS_UNIT_MEASURE : "reps";
                 binding.repMax.setText(String.format("%% of 1RM (%s %s)", setOneRepMax, type));
             }
         }

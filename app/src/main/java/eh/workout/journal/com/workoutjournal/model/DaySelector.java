@@ -11,11 +11,6 @@ public class DaySelector {
         this.dayInt = dayInt;
     }
 
-    public DaySelector(String dayName, boolean selected) {
-        this.dayName = dayName;
-        this.selected = selected;
-    }
-
     public String getDayName() {
         return dayName;
     }

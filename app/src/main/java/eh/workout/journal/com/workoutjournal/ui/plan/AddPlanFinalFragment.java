@@ -34,7 +34,7 @@ public class AddPlanFinalFragment extends Fragment {
         if (getActivity() != null) {
             model = ViewModelProviders.of(getActivity()).get(AddPlanViewModel.class);
         }
-        dayAdapter = new AddPlanDaySelectRecyclerAdapter(false);
+        dayAdapter = new AddPlanDaySelectRecyclerAdapter(false, false);
         liftAdapter = new AddPlanSelectLiftRecyclerAdapter(false);
         dayAdapter.setItems(model.getDaySelectorList());
         liftAdapter.setItems(model.getLifts());

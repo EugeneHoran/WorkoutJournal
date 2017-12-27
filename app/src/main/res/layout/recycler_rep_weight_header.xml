@@ -62,7 +62,6 @@
             android:textColor="@color/white"
             android:textSize="12sp" />
 
-
         <TextView
             android:id="@+id/repMax"
             android:layout_width="0dp"

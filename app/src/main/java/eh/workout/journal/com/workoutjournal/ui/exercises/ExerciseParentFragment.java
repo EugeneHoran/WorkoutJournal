@@ -2,31 +2,40 @@ package eh.workout.journal.com.workoutjournal.ui.exercises;
 
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseParentBinding;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
+import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanActivity;
+import eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanActivity;
+import eh.workout.journal.com.workoutjournal.util.AppFactory;
+import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.views.CustomSearchView;
 
 public class ExerciseParentFragment extends BaseFragment {
     private static final String ARG_DATE_TIMESTAMP = "arg_date_timestamp";
+    private static final String ARG_PAGE = "arg_page";
 
     public ExerciseParentFragment() {
     }
 
-    public static ExerciseParentFragment newInstance(Long timestamp) {
+    public static ExerciseParentFragment newInstance(Long timestamp, int page) {
         ExerciseParentFragment fragment = new ExerciseParentFragment();
         Bundle args = new Bundle();
         args.putLong(ARG_DATE_TIMESTAMP, timestamp);
+        args.putInt(ARG_PAGE, page);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,8 +47,10 @@ public class ExerciseParentFragment extends BaseFragment {
         ViewModelProviders.of(this).get(ExerciseGroupViewModel.class);
         if (getArguments() != null) {
             timestamp = getArguments().getLong(ARG_DATE_TIMESTAMP);
+            page = getArguments().getInt(ARG_PAGE);
         }
-        adapter = new ExerciseParentPagerAdapter(getChildFragmentManager());
+        planViewModel = ViewModelProviders.of(this, new AppFactory((JournalApplication) getActivity().getApplicationContext(), timestamp)).get(ExercisePlanViewModel.class);
+        adapter = new ExerciseParentPagerAdapter(getChildFragmentManager(), timestamp);
     }
 
     private FragmentExerciseParentBinding binding;
@@ -47,11 +58,12 @@ public class ExerciseParentFragment extends BaseFragment {
     private ExerciseParentPagerAdapter adapter;
     private CustomSearchView customSearchView;
     private Long timestamp;
+    private int page;
+    private ExercisePlanViewModel planViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercise_parent, container, false);
-
         customSearchView = new CustomSearchView(binding.viewToolbar != null ? binding.viewToolbar.toolbar : null);
         customSearchView.setListener(new CustomSearchView.SearchInterface() {
             @Override
@@ -66,27 +78,10 @@ public class ExerciseParentFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.pager.setOffscreenPageLimit(3);
         binding.pager.setAdapter(adapter);
         binding.pager.setCurrentItem(1, false);
         binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
-        ExerciseSelectorFragment selectorFragment = (ExerciseSelectorFragment) adapter.getItem(1);
-        if (selectorFragment != null) {
-            selectorFragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
-                @Override
-                public void liftSelected(String exerciseId, int inputType) {
-                    navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
-                }
-            });
-        }
-        ExerciseGroupFragment groupFragment = (ExerciseGroupFragment) adapter.getItem(2);
-        if (groupFragment != null) {
-            groupFragment.setListener(new ExerciseGroupFragment.ExerciseSelectorInterface() {
-                @Override
-                public void liftSelected(String exerciseId, int inputType) {
-                    navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
-                }
-            });
-        }
         if (savedInstanceState != null) {
             if (selectorModel.searchVisible) {
                 customSearchView.show();
@@ -99,7 +94,36 @@ public class ExerciseParentFragment extends BaseFragment {
         } else {
             binding.setShowTabs(true);
         }
+
+        ExerciseSelectorFragment selectorFragment = (ExerciseSelectorFragment) adapter.getItem(1);
+        if (selectorFragment != null) {
+            selectorFragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
+                @Override
+                public void liftSelected(String exerciseId, int inputType) {
+                    navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
+                }
+            });
+        }
+
+        binding.pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position == 2) {
+                    if (adapter.getGroupFragment() != null) {
+                        adapter.getGroupFragment().setListener(groupInterface);
+                    }
+                }
+            }
+        });
     }
+
+    private ExerciseGroupFragment.GroupInterface groupInterface = new ExerciseGroupFragment.GroupInterface() {
+        @Override
+        public void liftSelected(String exerciseId, int inputType) {
+            navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
+        }
+    };
 
     public boolean searchVisible() {
         return binding.viewToolbar.searchHolder.getVisibility() == View.VISIBLE;
@@ -112,13 +136,21 @@ public class ExerciseParentFragment extends BaseFragment {
         binding.viewToolbar.tabs.setVisibility(View.VISIBLE);
     }
 
+    public void resetPlanFragment() {
+        planViewModel.resetPlan();
+    }
+
     public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             int id = item.getItemId();
             switch (id) {
                 case R.id.action_add_exercise:
-                    dialogNewExercise();
+                    if (binding.pager.getCurrentItem() == 0) {
+                        navToAddPlanActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE);
+                    } else {
+                        dialogNewExercise();
+                    }
                     break;
                 case R.id.action_search_exercise:
                     binding.pager.setCurrentItem(1);
@@ -133,6 +165,7 @@ public class ExerciseParentFragment extends BaseFragment {
             return false;
         }
     };
+
     public View.OnClickListener navListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -141,4 +174,8 @@ public class ExerciseParentFragment extends BaseFragment {
             }
         }
     };
+
+    public void onEditPlanClicked(String planId) {
+        navToEditPlanActivity(page, planId, Constants.ADD_EDIT_PLAN_EXERCISE);
+    }
 }

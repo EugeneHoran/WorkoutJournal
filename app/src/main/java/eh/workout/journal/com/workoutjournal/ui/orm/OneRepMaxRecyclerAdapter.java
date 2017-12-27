@@ -65,9 +65,9 @@ public class OneRepMaxRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             if (which == Constants.ORM_ONE_REP_MAX) {
                 String amount;
                 if (itemList.get(getAdapterPosition()).equalsIgnoreCase("0")) {
-                    amount = "<font color='#000000'>" + itemList.get(getAdapterPosition()) + "<small> " + Constants.UNIT + "</small></font>";
+                    amount = "<font color='#000000'>" + itemList.get(getAdapterPosition()) + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small></font>";
                 } else {
-                    amount = "<font color='#0039cb'>" + itemList.get(getAdapterPosition()) + "<small> " + Constants.UNIT + "</small></font>";
+                    amount = "<font color='#0039cb'>" + itemList.get(getAdapterPosition()) + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small></font>";
                 }
                 binding.setPosition(Html.fromHtml(String.valueOf(getAdapterPosition() + 1) + "<small> Reps</small>"));
                 binding.setOrm(Html.fromHtml(amount));

@@ -13,7 +13,6 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +33,7 @@ import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanActivity;
+import eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanActivity;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
@@ -98,11 +98,6 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-//                if (slideOffset > .4) {
-//                    binding.fab.animate().scaleX(0).scaleY(0).setDuration(150).start();
-//                } else {
-//                    binding.fab.animate().scaleX(1).scaleY(1).setDuration(150).start();
-//                }
             }
         });
         return binding.getRoot();
@@ -117,8 +112,9 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
         binding.pager.setAdapter(dayPagerAdapter);
         binding.pager.setCurrentItem(datePage, false);
         binding.pager.addOnPageChangeListener(pageChangeListener);
-        if (getActivity() != null)
+        if (getActivity() != null) {
             binding.recyclerPlan.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        }
         binding.recyclerPlan.setAdapter(planRecyclerAdapter);
         updateToolbarDateChange(datePage);
         binding.setFragment(this);
@@ -137,9 +133,14 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
         navToAddExerciseFragment(binding.viewToolbar.appBar, setId, inputType, dayPagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
     }
 
+    @Override
+    public void onEditPlanClicked(String planId) {
+        navToEditPlanActivity(binding.pager.getCurrentItem(), planId, Constants.ADD_EDIT_PLAN_JOURNAL);
+    }
+
     @SuppressWarnings("unused")
     public void onAddNewLiftClicked(View view) {
-        navToSelectExerciseFragment(binding.viewToolbar.appBar, dayPagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
+        navToSelectExerciseFragment(binding.viewToolbar.appBar, dayPagerAdapter.getTimestamp(binding.pager.getCurrentItem()), binding.pager.getCurrentItem());
     }
 
     ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
@@ -218,11 +219,7 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
                     showCalendarBottomSheet(calendarBottomSheetFragment, dayPagerAdapter.getAdapterDate(binding.pager.getCurrentItem()), null);
                     break;
                 case R.id.action_plan:
-                    if (getActivity() != null) {
-                        Intent intentPlan = new Intent(getActivity(), AddPlanActivity.class);
-                        intentPlan.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, binding.pager.getCurrentItem());
-                        getActivity().startActivityForResult(intentPlan, Constants.REQUEST_CODE_PLAN);
-                    }
+                    navToAddPlanActivity(binding.pager.getCurrentItem(), Constants.ADD_EDIT_PLAN_JOURNAL);
                     break;
                 case R.id.action_orm:
                     navToOneRepMaxFragment(binding.viewToolbar.appBar, Constants.ORM_ONE_REP_MAX);

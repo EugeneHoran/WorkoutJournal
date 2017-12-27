@@ -3,13 +3,14 @@ package eh.workout.journal.com.workoutjournal.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableBoolean;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
+import eh.workout.journal.com.workoutjournal.databinding.ActivityMainBinding;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalParentFragment;
 import eh.workout.journal.com.workoutjournal.util.Constants;
@@ -22,13 +23,16 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private FragmentManager fm;
 
+    public ObservableBoolean showTimer = new ObservableBoolean(false);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        Constants.UNIT = sp.getString(Constants.KEY_UNIT_MEASURES, null);
-        DataBindingUtil.setContentView(this, R.layout.activity_main);
+        Constants.SETTINGS_UNIT_MEASURE = sp.getString(Constants.KEY_UNIT_MEASURES, null);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.setActivity(this);
         fm = getSupportFragmentManager();
         if (savedInstanceState == null) {
             initJournalFragment(Constants.JOURNAL_PAGE_TODAY);
@@ -48,8 +52,19 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == Constants.REQUEST_CODE_SETTINGS) {
             initJournalFragment(resultCode);
             handleTimer();
-        } else if (requestCode == Constants.REQUEST_CODE_PLAN) {
-            initJournalFragment(resultCode);
+        } else if (requestCode == Constants.ADD_EDIT_PLAN_JOURNAL) {
+            if (data != null) {
+                if (data.getExtras() != null) {
+                    int page = data.getExtras().getInt(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, Constants.JOURNAL_PAGE_TODAY);
+                    fm.popBackStack();
+                    initJournalFragment(page);
+                }
+            }
+        } else if (requestCode == Constants.ADD_EDIT_PLAN_EXERCISE) {
+            ExerciseParentFragment exerciseParentFragment = (ExerciseParentFragment) fm.findFragmentByTag(TAG_FRAG_EXERCISE_SELECTOR);
+            if (exerciseParentFragment != null) {
+                exerciseParentFragment.resetPlanFragment();
+            }
         }
     }
 
@@ -65,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleTimer() {
-        findViewById(R.id.containerTimer).setVisibility(sp.getBoolean("example_switch", false) ? View.VISIBLE : View.GONE);
+        showTimer.set(sp.getBoolean(Constants.KEY_ENABLED_TIMER, false));
     }
 
     private ExerciseParentFragment getExerciseFragment() {

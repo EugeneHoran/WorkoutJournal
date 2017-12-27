@@ -18,7 +18,7 @@ import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseSelecto
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseGroupEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 
-public class ExerciseGroupFragment extends Fragment implements ExerciseGroupRecyclerAdapter.GroupRecyclerInterface {
+public class ExerciseGroupFragment extends Fragment {
 
 
     public ExerciseGroupFragment() {
@@ -31,7 +31,6 @@ public class ExerciseGroupFragment extends Fragment implements ExerciseGroupRecy
     private FragmentExerciseSelectorBinding binding;
     private ExerciseGroupViewModel model;
     private ExerciseGroupRecyclerAdapter adapter;
-    private ExerciseSelectorInterface listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +38,24 @@ public class ExerciseGroupFragment extends Fragment implements ExerciseGroupRecy
         if (getParentFragment() != null) {
             model = ViewModelProviders.of(getParentFragment()).get(ExerciseGroupViewModel.class);
         }
-        adapter = new ExerciseGroupRecyclerAdapter(this);
+        adapter = new ExerciseGroupRecyclerAdapter(new ExerciseGroupRecyclerAdapter.GroupRecyclerInterface() {
+            @Override
+            public void onGroupItemClicked(ExerciseGroupEntity exerciseGroupEntity) {
+                model.groupItemClicked(exerciseGroupEntity);
+            }
+
+            @Override
+            public void onReturnToGroupClicked() {
+                model.returnToGroupList();
+            }
+
+            @Override
+            public void exerciseSelected(ExerciseLiftEntity exerciseLift) {
+                if (listener != null) {
+                    listener.liftSelected(exerciseLift.getId(), exerciseLift.getExerciseInputType());
+                }
+            }
+        });
     }
 
     @Nullable
@@ -65,26 +81,27 @@ public class ExerciseGroupFragment extends Fragment implements ExerciseGroupRecy
         });
     }
 
-    @Override
-    public void onGroupItemClicked(ExerciseGroupEntity exerciseGroupEntity) {
-        model.groupItemClicked(exerciseGroupEntity);
-    }
+    //    @Override
+//    public void onGroupItemClicked(ExerciseGroupEntity exerciseGroupEntity) {
+//        model.groupItemClicked(exerciseGroupEntity);
+//    }
+//
+//    @Override
+//    public void onReturnToGroupClicked() {
+//        model.returnToGroupList();
+//    }
+//
+//    @Override
+//    public void exerciseSelected(ExerciseLiftEntity exerciseLift) {
+////        listener.liftSelected(exerciseLift.getId(), exerciseLift.getExerciseInputType());
+//    }
+    private GroupInterface listener;
 
-    @Override
-    public void onReturnToGroupClicked() {
-        model.returnToGroupList();
-    }
-
-    @Override
-    public void exerciseSelected(ExerciseLiftEntity exerciseLift) {
-        listener.liftSelected(exerciseLift.getId(), exerciseLift.getExerciseInputType());
-    }
-
-    public void setListener(ExerciseSelectorInterface listener) {
+    public void setListener(GroupInterface listener) {
         this.listener = listener;
     }
 
-    public interface ExerciseSelectorInterface {
+    public interface GroupInterface {
         void liftSelected(String exerciseId, int inputType);
     }
 }

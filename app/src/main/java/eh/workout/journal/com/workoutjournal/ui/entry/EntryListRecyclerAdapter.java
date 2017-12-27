@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -111,7 +110,7 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecy
 
         public void onRepClicked(View view) {
             PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
-            popup.getMenuInflater().inflate(R.menu.menu_edit_rep, popup.getMenu());
+            popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
             popup.getMenu().findItem(R.id.action_move).setVisible(false);
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {

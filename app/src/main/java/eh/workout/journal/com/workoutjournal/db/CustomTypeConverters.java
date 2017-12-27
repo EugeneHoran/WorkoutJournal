@@ -1,6 +1,8 @@
 package eh.workout.journal.com.workoutjournal.db;
 
 
+import java.util.List;
+
 public class CustomTypeConverters {
     public static String fromDayListToString(Integer[] days) {
         if (days.length == 0) {
@@ -13,6 +15,23 @@ public class CustomTypeConverters {
                 adding = String.valueOf(days[i]);
             } else {
                 adding = daysString + "," + String.valueOf(days[i]);
+            }
+            daysString = adding;
+        }
+        return daysString;
+    }
+
+    public static String fromDayListToString(List<Integer> days) {
+        if (days.size() == 0) {
+            return "";
+        }
+        String daysString = "";
+        String adding;
+        for (int i = 0; i < days.size(); i++) {
+            if (i == 0) {
+                adding = String.valueOf(days.get(i));
+            } else {
+                adding = daysString + "," + String.valueOf(days.get(i));
             }
             daysString = adding;
         }

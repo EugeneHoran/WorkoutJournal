@@ -62,7 +62,7 @@ public class OneRepMaxFragment extends Fragment {
         }
         if (which == Constants.ORM_PERCENTAGES) {
             binding.setTitle("Percentage Calculator");
-            binding.percentageContainer.setVisibility(View.VISIBLE);
+            binding.viewToolbarWeightReps.percentageContainer.setVisibility(View.VISIBLE);
         } else {
             binding.setTitle("One Rep Max Calculator");
         }
@@ -85,10 +85,10 @@ public class OneRepMaxFragment extends Fragment {
                     if (count == 3) {
                         removeWeightFocus();
                     }
-                    adapterOrm.setItems(OrmHelper.getPercentageList(null, 0, Double.valueOf(binding.orm.getText().toString().trim())));
+                    adapterOrm.setItems(OrmHelper.getPercentageList(null, 0, Double.valueOf(binding.viewToolbarWeightReps.orm.getText().toString().trim())));
                 }
             }, true)
-                    .registerEditText(binding.orm);
+                    .registerEditText(binding.viewToolbarWeightReps.orm);
         }
         new SimpleTextWatcher(new SimpleTextWatcher.SimpleTextWatcherInterface() {
             @Override
@@ -121,7 +121,7 @@ public class OneRepMaxFragment extends Fragment {
                 return;
             }
             simpleTextWatcher.setRegister(false);
-            binding.orm.setText(OrmHelper.getOrm(weight, reps));
+            binding.viewToolbarWeightReps.orm.setText(OrmHelper.getOrm(weight, reps));
             adapterOrm.setItems(OrmHelper.getPercentageList(weight, reps, null));
             simpleTextWatcher.setRegister(true);
         }

@@ -26,9 +26,11 @@ public class JournalChildViewModel extends AndroidViewModel {
     private JournalRepository repository;
     private MediatorLiveData<List<ExerciseSetRepRelation>> observeSetAndReps;
     private MutableLiveData<List<PlanSetRelation>> observePlans;
+    private Long timestamp;
 
     public JournalChildViewModel(@NonNull Application application, final Long timestamp) {
         super(application);
+        this.timestamp = timestamp;
         JournalApplication journalApplication = (JournalApplication) application;
         repository = journalApplication.getRepository();
         observeSetAndReps = new MediatorLiveData<>();
@@ -41,6 +43,10 @@ public class JournalChildViewModel extends AndroidViewModel {
                 new PlanTask().execute(timestamp);
             }
         });
+    }
+
+    public void resetTasks() {
+        new PlanTask().execute(timestamp);
     }
 
     LiveData<List<ExerciseSetRepRelation>> getSetAndReps() {
@@ -85,13 +91,11 @@ public class JournalChildViewModel extends AndroidViewModel {
         }
     };
 
-    // TODO find a better solution
     @SuppressLint("StaticFieldLeak")
     class PlanTask extends AsyncTask<Long, Void, List<PlanSetRelation>> {
         @Override
         protected List<PlanSetRelation> doInBackground(Long... integers) {
             List<PlanSetRelation> planSetRelations = repository.getPlanSetRelationList(DateHelper.getDayOfWeek(integers[0]));
-
             if (getSetAndReps().getValue() != null) {
                 if (getSetAndReps().getValue().size() > 0 && planSetRelations != null) {
                     for (int i = 0; i < planSetRelations.size(); i++) {
@@ -101,7 +105,6 @@ public class JournalChildViewModel extends AndroidViewModel {
                                     planSetRelations.get(i).getPlanSetEntityList().get(j).setSetCompleted(true);
                                 }
                             }
-
                         }
                     }
                 }

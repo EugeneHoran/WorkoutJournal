@@ -1,36 +1,37 @@
-package eh.workout.journal.com.workoutjournal.ui.plan;
+package eh.workout.journal.com.workoutjournal.ui.plan.edit;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.transition.Fade;
 import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentAddLiftDayPickerBinding;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
+import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanDaySelectRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
-public class AddPlanDaySelectorFragment extends Fragment {
-    public AddPlanDaySelectorFragment() {
+
+public class EditPlanDaySelectorFragment extends Fragment {
+    public EditPlanDaySelectorFragment() {
     }
 
-    public static AddPlanDaySelectorFragment newInstance() {
-        return new AddPlanDaySelectorFragment();
+    public static EditPlanDaySelectorFragment newInstance() {
+        return new EditPlanDaySelectorFragment();
     }
 
-    private AddPlanViewModel model;
+    private EditPlanViewModel model;
     private AddPlanDaySelectRecyclerAdapter adapter;
     private FragmentAddLiftDayPickerBinding binding;
 
@@ -38,9 +39,9 @@ public class AddPlanDaySelectorFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(AddPlanViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(EditPlanViewModel.class);
         }
-        adapter = new AddPlanDaySelectRecyclerAdapter(true, false);
+        adapter = new AddPlanDaySelectRecyclerAdapter(true, true);
     }
 
     @Override
@@ -56,26 +57,11 @@ public class AddPlanDaySelectorFragment extends Fragment {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                model.setDaysString(adapter.getDaysString());
-                model.setDaySelectorList(adapter.getSelectedList());
-                AddPlanFinalFragment fragment = AddPlanFinalFragment.newInstance();
-                initTransition(fragment);
-                if (getActivity() != null) {
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .addSharedElement(binding.fab, "fab")
-                            .replace(R.id.container, fragment, AddPlanActivity.TAG_FINAL_FRAGMENT).addToBackStack(AddPlanActivity.TAG_FINAL_FRAGMENT)
-                            .commit();
-                }
+                model.getSelectedDaysOfWeek().setValue(adapter.getSelectedList());
+                model.getAllDaysOfWeek().setValue(adapter.getItemList());
+                getActivity().onBackPressed();
             }
         });
-    }
-
-    private void initTransition(Fragment fragment) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
-            fragment.setEnterTransition(new Slide());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
-            fragment.setExitTransition(new Slide());
-        }
+        adapter.setItems(model.getAllDaysOfWeek().getValue());
     }
 }

@@ -1,6 +1,7 @@
 package eh.workout.journal.com.workoutjournal.ui.plan;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,14 +51,20 @@ public class AddPlanActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        setResult(pageNumber);
+        setResultFrom();
         super.onBackPressed();
     }
 
     @Override
     public void finish() {
-        setResult(pageNumber);
+        setResultFrom();
         super.finish();
+    }
+
+    public void setResultFrom() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, pageNumber);
+        setResult(RESULT_OK, returnIntent);
     }
 
     public View.OnClickListener navListener = new View.OnClickListener() {

@@ -42,12 +42,21 @@ public class JournalRepository {
     /**
      * Plans
      */
+
     public LiveData<List<PlanSetRelation>> getPlanSetRelationListLive(Integer day) {
         return database.getPlanDao().getPlanSetRelationListLive("%" + String.valueOf(day) + "%");
     }
 
+    public List<PlanSetRelation> getAllPlansWithSets() {
+        return database.getPlanDao().getAllPlansWithSets();
+    }
+
     public List<PlanSetRelation> getPlanSetRelationList(Integer day) {
         return database.getPlanDao().getPlanSetRelationList("%" + String.valueOf(day) + "%");
+    }
+
+    public PlanSetRelation getPlanSetRelation(String planId) {
+        return database.getPlanDao().getPlanSetRelation(planId);
     }
 
     public void insertPlan(final PlanEntity planEntity, final List<PlanSetEntity> planSetEntityList) {
@@ -55,6 +64,30 @@ public class JournalRepository {
             @Override
             public void run() {
                 database.getPlanDao().insertNewPlan(planEntity, planSetEntityList);
+            }
+        });
+    }
+
+    public void deletePlan(final PlanEntity deletePlanEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().deletePlanEntity(deletePlanEntity);
+            }
+        });
+    }
+
+    public void deleteAndInsertPlan(final PlanEntity deletePlanEntity, final PlanEntity newPlanEntity, final List<PlanSetEntity> newPlanSetEntityList) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().deletePlanEntity(deletePlanEntity);
+            }
+        });
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().insertNewPlan(newPlanEntity, newPlanSetEntityList);
             }
         });
     }

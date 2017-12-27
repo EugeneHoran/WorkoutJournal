@@ -7,12 +7,17 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,13 +25,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="64dp"
                 android:layout_marginRight="56dp"
                 android:layout_marginTop="4dp"
                 android:focusable="true"
-                android:text="Save routine"
+                android:focusableInTouchMode="true"
+                android:text="Edit routine"
                 android:textColor="@color/black"
                 android:textSize="28sp" />
 
@@ -38,27 +45,6 @@
                 android:background="@color/colorGrayTransparent"
                 android:visibility="visible" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="64dp"
-                android:layout_marginRight="74dp">
-
-                <EditText
-                    android:id="@+id/editPlanName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Routine name (optional)"
-                    android:paddingTop="16dp" />
-            </android.support.design.widget.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="12dp"
-                android:background="@color/colorGrayTransparent" />
-
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -68,6 +54,26 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginRight="74dp">
+
+                        <EditText
+                            android:id="@+id/editPlanName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Routine name (optional)"
+                            android:paddingTop="16dp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/colorGrayTransparent" />
+
                     <Switch
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -76,24 +82,30 @@
                         android:text="Set reminder"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:layout_marginBottom="16dp"
                         android:layout_marginTop="16dp"
                         android:background="@color/colorGrayTransparent"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/daysTitle"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="64dp"
-                        android:layout_marginRight="56dp"
+                        android:clickable="true"
                         android:drawableLeft="@drawable/ic_calendar_empty"
                         android:drawablePadding="16dp"
+                        android:drawableRight="@drawable/ic_edit"
+                        android:focusable="true"
                         android:fontFamily="sans-serif-medium"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="64dp"
+                        android:paddingRight="56dp"
+                        android:paddingTop="16dp"
                         android:text="Routine days"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -105,34 +117,38 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="64dp"
                         android:layout_marginRight="56dp"
-                        android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif"
                         android:text="No selected dates"
                         android:textSize="14sp"
-                        android:visibility="gone" />
+                        android:visibility="@{model.noSelectedDays?View.VISIBLE:View.GONE, default = gone}" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerDays"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:layout_marginBottom="16dp"
                         android:layout_marginTop="16dp"
                         android:background="@color/colorGrayTransparent" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/liftsTitle"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="64dp"
-                        android:layout_marginRight="56dp"
+                        android:clickable="true"
                         android:drawableLeft="@drawable/ic_weight_normal"
                         android:drawablePadding="16dp"
+                        android:drawableRight="@drawable/ic_edit"
+                        android:focusable="true"
                         android:fontFamily="sans-serif-medium"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="64dp"
+                        android:paddingRight="56dp"
+                        android:paddingTop="16dp"
                         android:text="Exercises"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -142,7 +158,6 @@
                         android:id="@+id/recyclerLifts"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>

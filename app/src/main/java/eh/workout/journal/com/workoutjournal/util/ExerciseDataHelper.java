@@ -26,8 +26,8 @@ public class ExerciseDataHelper {
 
     public static List<String> getDays(Integer[] integers) {
         List<String> daySelectorList = new ArrayList<>();
-        for (int i = 0; i < integers.length; i++) {
-            daySelectorList.add(DAYS[integers[i]]);
+        for (Integer integer : integers) {
+            daySelectorList.add(DAYS[integer]);
         }
         return daySelectorList;
     }

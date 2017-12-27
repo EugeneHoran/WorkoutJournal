@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="NoItemsLinearLayout" parent="@style/WrapContentWrapContent">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginTop">-36dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="NoItemsUnitTextView" parent="@style/WrapContentWrapContent">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">42dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NoItemsDirectionsTextView" parent="@style/WrapContentWrapContent">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/no_lifts</item>
+    </style>
+
+    <style name="IcWeightIcon" parent="@style/WrapContentWrapContent">
+        <item name="android:tint">@color/colorGrayIcon</item>
+        <item name="android:contentDescription">@null</item>
+        <item name="srcCompat">@drawable/ic_weight</item>
+    </style>
+</resources>

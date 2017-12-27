@@ -8,6 +8,9 @@
 
         <import type="android.view.View" />
 
+        <variable
+            name="holder"
+            type="eh.workout.journal.com.workoutjournal.ui.journal.JournalPlanRecyclerAdapter.PlanParentViewHolder" />
     </data>
 
     <LinearLayout
@@ -46,10 +49,10 @@
                 android:contentDescription="@null"
                 android:focusable="true"
                 android:foreground="?selectableItemBackgroundBorderless"
+                android:onClickListener="@{holder::onMenuClicked}"
                 android:padding="8dp"
                 android:tint="@color/black"
                 app:srcCompat="@drawable/ic_more_vert" />
-
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView

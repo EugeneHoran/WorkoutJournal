@@ -15,6 +15,9 @@ public class PlanEntity {
     private Long timestamp;
     private String parentId;
 
+    public PlanEntity() {
+    }
+
     public PlanEntity(@NonNull String id, String planName, String planDayString) {
         this.id = id;
         this.planName = planName;

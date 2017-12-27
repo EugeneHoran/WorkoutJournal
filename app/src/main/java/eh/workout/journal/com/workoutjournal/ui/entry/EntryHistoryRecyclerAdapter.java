@@ -94,7 +94,7 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
                 }
             }
             binding.recycler.setLayoutFrozen(true);
-            binding.menuMore.setVisibility(View.GONE);
+            binding.setHideMenu(true);
         }
     }
 }

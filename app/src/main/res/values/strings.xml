@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Workout Journal</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="action_one_rep_max_calculator">One Rep Max Calculator</string>
     <string name="action_settings">Settings</string>
     <string name="action_next_day">Next Day</string>
     <string name="action_previous_day">Previous Day</string>
@@ -69,8 +68,9 @@
         <item>12 Reps</item>
     </string-array>
     <string name="_1rm">1RM</string>
+    <string name="action_one_rep_max_calculator">1RM Calculator</string>
     <string name="percentage_calculator">Percentage Calculator</string>
-    <string name="create_workout_plan">Create Workout Routine</string>
+    <string name="create_workout_plan">Build Routine</string>
     <string name="workout_plan">Workout plan</string>
     <string name="today_s_plan">Workout Routine</string>
 

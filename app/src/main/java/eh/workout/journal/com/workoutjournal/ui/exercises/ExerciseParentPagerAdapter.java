@@ -4,13 +4,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
     private String[] titleList = {"Routines", "Exercises", "Groups"};
     private Fragment[] fragments;
+    private Long timestamp;
 
-    ExerciseParentPagerAdapter(FragmentManager fm) {
+    ExerciseParentPagerAdapter(FragmentManager fm, Long timestamp) {
         super(fm);
+        this.timestamp = timestamp;
     }
 
     @Override
@@ -23,13 +26,17 @@ public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
         }
         switch (position) {
             case 0:
-                fragments[0] = ExercisePlanFragment.newInstance();
+                fragments[0] = ExercisePlanFragment.newInstance(timestamp);
             case 1:
                 fragments[1] = ExerciseSelectorFragment.newInstance();
             case 2:
                 fragments[2] = ExerciseGroupFragment.newInstance();
         }
         return fragments[position];
+    }
+
+    public ExerciseGroupFragment getGroupFragment() {
+        return (ExerciseGroupFragment) fragments[2];
     }
 
     @Override

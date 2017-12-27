@@ -1,6 +1,7 @@
 package eh.workout.journal.com.workoutjournal.ui;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.transition.Fade;
@@ -21,6 +22,9 @@ import eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
 import eh.workout.journal.com.workoutjournal.ui.orm.OneRepMaxFragment;
+import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanActivity;
+import eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanActivity;
+import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
 @SuppressWarnings("ConstantConditions")
@@ -45,6 +49,24 @@ public class BaseFragment extends Fragment {
         addExerciseDialogFragment.show(getChildFragmentManager(), TAG_ADD_LIFT_DIALOG_FRAGMENT);
     }
 
+
+    public void navToAddPlanActivity(int page, int requestCode) {
+        if (getActivity() != null) {
+            Intent intentPlan = new Intent(getActivity(), AddPlanActivity.class);
+            intentPlan.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
+            getActivity().startActivityForResult(intentPlan, requestCode);
+        }
+    }
+
+    public void navToEditPlanActivity(int page, String planId, int requestCode) {
+        if (getActivity() != null) {
+            Intent editPlanIntent = new Intent(getActivity(), EditPlanActivity.class);
+            editPlanIntent.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
+            editPlanIntent.putExtra(Constants.EDIT_PLAN_ID, planId);
+            getActivity().startActivityForResult(editPlanIntent, requestCode);
+        }
+    }
+
     /**
      * Navigation
      */
@@ -52,7 +74,6 @@ public class BaseFragment extends Fragment {
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
         caldroidFragment.setSelectedDate(date);
-//        caldroidFragment.setExtraData(dateList);
         args.putInt(CaldroidBottomSheetFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidBottomSheetFragment.YEAR, cal.get(Calendar.YEAR));
         args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidCustom);
@@ -62,8 +83,8 @@ public class BaseFragment extends Fragment {
         caldroidFragment.show(getChildFragmentManager(), TAG_FRAG_CALENDAR);
     }
 
-    public void navToSelectExerciseFragment(View view, Long timestamp) {
-        ExerciseParentFragment exerciseSelectorFragment = ExerciseParentFragment.newInstance(timestamp);
+    public void navToSelectExerciseFragment(View view, Long timestamp, int page) {
+        ExerciseParentFragment exerciseSelectorFragment = ExerciseParentFragment.newInstance(timestamp, page);
         initTransition(exerciseSelectorFragment);
         if (getActivity() != null) {
             getActivity().getSupportFragmentManager().beginTransaction()

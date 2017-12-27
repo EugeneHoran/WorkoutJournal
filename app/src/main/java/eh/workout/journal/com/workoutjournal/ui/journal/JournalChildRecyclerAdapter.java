@@ -98,12 +98,12 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
 
         void bindView() {
             ExerciseSetRepRelation dateSetRepRelation = itemList.get(getAdapterPosition());
+            setEntity = dateSetRepRelation.getJournalSetEntity();
             if (dateSetRepRelation.getExerciseOrmEntity().size() > 0) {
                 ExerciseOrmEntity ormEntity = dateSetRepRelation.getExerciseOrmEntity().get(0);
                 adapter.setOneRepMax(ormEntity);
-//                adapter.setOneRepMax(ormEntity.getOneRepMax(), ormEntity.getRepId());
             }
-            setEntity = dateSetRepRelation.getJournalSetEntity();
+            binding.setHideMenu(false);
             binding.setTitle(setEntity.getName());
             binding.setListener(workoutClickListener);
             binding.setMenuListener(menuClickListener);
@@ -130,7 +130,7 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
 
         private void showMenu(View view) {
             PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
-            popup.getMenuInflater().inflate(R.menu.menu_edit_rep, popup.getMenu());
+            popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
             popup.getMenu().findItem(R.id.action_edit).setVisible(false);
             popup.getMenu().findItem(R.id.action_move).setVisible(false);
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
