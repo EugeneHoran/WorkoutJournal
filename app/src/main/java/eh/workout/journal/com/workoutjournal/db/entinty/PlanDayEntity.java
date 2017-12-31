@@ -4,12 +4,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "plans")
-public class PlanEntity {
+@Entity(tableName = "plan_days")
+public class PlanDayEntity {
     @PrimaryKey
     @NonNull
     private String id;
     private String planName;
+    private long timestamp;
 
     @NonNull
     public String getId() {
@@ -21,9 +22,6 @@ public class PlanEntity {
     }
 
     public String getPlanName() {
-        if (planName == null) {
-            return "Workout plan";
-        }
         return planName;
     }
 
@@ -31,4 +29,11 @@ public class PlanEntity {
         this.planName = planName;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 }

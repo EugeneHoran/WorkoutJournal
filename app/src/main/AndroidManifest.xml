@@ -4,7 +4,7 @@
 
     <application
         android:name=".JournalApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -26,8 +26,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="eh.workout.journal.com.workoutjournal.ui.MainActivity" />
         </activity>
-        <activity android:name=".ui.plan.AddPlanActivity" />
-        <activity android:name=".ui.plan.edit.EditPlanActivity"></activity>
+        <activity android:name=".ui.plan.edit.EditPlanActivity" />
+        <activity android:name=".ui.routine.RoutineAddActivity"></activity>
     </application>
 
 </manifest>

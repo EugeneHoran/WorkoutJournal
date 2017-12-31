@@ -15,12 +15,12 @@ import java.util.List;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.RecyclerPlanChildItemBinding;
 import eh.workout.journal.com.workoutjournal.databinding.RecyclerPlanParentItemBinding;
-import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
-import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
+import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
+import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.util.views.LayoutUtil;
 
 public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<PlanSetRelation> itemList = new ArrayList<>();
+    private List<RoutineSetRelation> itemList = new ArrayList<>();
 
     private PlanChildInterface listener;
 
@@ -34,7 +34,12 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         this.listener = listener;
     }
 
-    void setItems(List<PlanSetRelation> itemList) {
+    void setItems(List<RoutineSetRelation> itemList) {
+        if (itemList == null) {
+            this.itemList.clear();
+            notifyDataSetChanged();
+            return;
+        }
         this.itemList.clear();
         this.itemList.addAll(itemList);
         notifyDataSetChanged();
@@ -47,19 +52,19 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        PlanParentViewHolder holder = (PlanParentViewHolder) viewHolder;
-        holder.bindItem();
+        PlanParentViewHolder holderPlan = (PlanParentViewHolder) viewHolder;
+        holderPlan.bindItem();
     }
 
     @Override
     public int getItemCount() {
-        return itemList == null ? 0 : itemList.size();
+        return itemList.size();
     }
 
     public class PlanParentViewHolder extends RecyclerView.ViewHolder {
         private RecyclerPlanParentItemBinding binding;
         private JournalPlanChildRecyclerAdapter adapter;
-        private PlanSetRelation planSetRelation;
+        private RoutineSetRelation routineSetRelation;
 
         PlanParentViewHolder(RecyclerPlanParentItemBinding binding) {
             super(binding.getRoot());
@@ -69,10 +74,10 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         }
 
         void bindItem() {
-            planSetRelation = itemList.get(getAdapterPosition());
-            binding.planTitle.setText(planSetRelation.getPlanEntity().getPlanName());
+            routineSetRelation = itemList.get(getAdapterPosition());
+            binding.planTitle.setText(routineSetRelation.getRoutineEntity().getRoutineName());
             binding.recycler.setAdapter(adapter);
-            adapter.setItems(planSetRelation.getPlanSetEntityList());
+            adapter.setItems(routineSetRelation.getPlanSetEntityList());
         }
 
         public void onMenuClicked(View view) {
@@ -85,7 +90,7 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     int id = item.getItemId();
                     if (id == R.id.action_edit) {
                         if (listener != null) {
-                            listener.onEditPlanClicked(planSetRelation.getPlanEntity().getId());
+                            listener.onEditPlanClicked(routineSetRelation.getRoutineEntity().getId());
                         }
                     }
                     return true;
@@ -96,10 +101,10 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     private class JournalPlanChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private List<PlanSetEntity> itemList = new ArrayList<>();
+        private List<RoutineSetEntity> itemList = new ArrayList<>();
 
 
-        void setItems(List<PlanSetEntity> itemList) {
+        void setItems(List<RoutineSetEntity> itemList) {
             this.itemList.clear();
             this.itemList.addAll(itemList);
             notifyDataSetChanged();
@@ -123,7 +128,7 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
         class PlanChildViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private RecyclerPlanChildItemBinding binding;
-            private PlanSetEntity planSetEntity;
+            private RoutineSetEntity planSetEntity;
 
             PlanChildViewHolder(RecyclerPlanChildItemBinding binding) {
                 super(binding.getRoot());
@@ -139,7 +144,7 @@ public class JournalPlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     binding.imageComplete.setImageDrawable(LayoutUtil.getDrawableMutate(itemView.getContext(), R.drawable.ic_check_circle, R.color.colorAccent));
                 } else {
                     binding.imageEdit.setImageResource(R.drawable.ic_chevron_right);
-                    binding.imageComplete.setImageDrawable(LayoutUtil.getDrawableMutate(itemView.getContext(), R.drawable.ic_circle_empty, R.color.black));
+                    binding.imageComplete.setImageDrawable(null);
                 }
             }
 

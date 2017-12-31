@@ -15,17 +15,17 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseSelectorBinding;
-import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 
 
-public class ExercisePlanFragment extends Fragment {
+public class ExerciseRoutineFragment extends Fragment {
     private static final String ARG_DATE_TIMESTAMP = "arg_date_timestamp";
 
-    public ExercisePlanFragment() {
+    public ExerciseRoutineFragment() {
     }
 
-    public static ExercisePlanFragment newInstance(Long timestamp) {
-        ExercisePlanFragment fragment = new ExercisePlanFragment();
+    public static ExerciseRoutineFragment newInstance(Long timestamp) {
+        ExerciseRoutineFragment fragment = new ExerciseRoutineFragment();
         Bundle args = new Bundle();
         args.putLong(ARG_DATE_TIMESTAMP, timestamp);
         fragment.setArguments(args);
@@ -35,8 +35,8 @@ public class ExercisePlanFragment extends Fragment {
 
     private FragmentExerciseSelectorBinding binding;
 
-    private ExercisePlanViewModel model;
-    private ExercisePlanRecyclerAdapter adapter;
+    private ExerciseRoutineViewModel model;
+    private ExerciseRoutineRecyclerAdapter adapter;
     private Long timestamp;
 
     @Override
@@ -46,9 +46,9 @@ public class ExercisePlanFragment extends Fragment {
             timestamp = getArguments().getLong(ARG_DATE_TIMESTAMP);
         }
         if (getParentFragment() != null) {
-            model = ViewModelProviders.of(getParentFragment()).get(ExercisePlanViewModel.class);
+            model = ViewModelProviders.of(getParentFragment()).get(ExerciseRoutineViewModel.class);
         }
-        adapter = new ExercisePlanRecyclerAdapter(new ExercisePlanRecyclerAdapter.ExercisePlanInterface() {
+        adapter = new ExerciseRoutineRecyclerAdapter(new ExerciseRoutineRecyclerAdapter.ExercisePlanInterface() {
             @Override
             public void onPlanClicked(String planId) {
 
@@ -78,11 +78,11 @@ public class ExercisePlanFragment extends Fragment {
         observerPlanList(model);
     }
 
-    private void observerPlanList(ExercisePlanViewModel model) {
-        model.getPlanSetRelationList().observe(this, new Observer<List<PlanSetRelation>>() {
+    private void observerPlanList(ExerciseRoutineViewModel model) {
+        model.getRoutineSetRelationList().observe(this, new Observer<List<RoutineSetRelation>>() {
             @Override
-            public void onChanged(@Nullable List<PlanSetRelation> planSetRelations) {
-                adapter.setItems(planSetRelations);
+            public void onChanged(@Nullable List<RoutineSetRelation> routineSetRelations) {
+                adapter.setItems(routineSetRelations);
             }
         });
     }

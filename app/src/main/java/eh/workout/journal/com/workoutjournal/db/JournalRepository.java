@@ -12,10 +12,10 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
-import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
-import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
-import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 
 public class JournalRepository {
     private static JournalRepository instance;
@@ -43,51 +43,51 @@ public class JournalRepository {
      * Plans
      */
 
-    public LiveData<List<PlanSetRelation>> getPlanSetRelationListLive(Integer day) {
-        return database.getPlanDao().getPlanSetRelationListLive("%" + String.valueOf(day) + "%");
+    public LiveData<List<RoutineSetRelation>> getPlanSetRelationListLive(Integer day) {
+        return database.getRoutineDao().getRoutineSetRelationListLive("%" + String.valueOf(day) + "%");
     }
 
-    public List<PlanSetRelation> getAllPlansWithSets() {
-        return database.getPlanDao().getAllPlansWithSets();
+    public List<RoutineSetRelation> getAllRoutinesWithSets() {
+        return database.getRoutineDao().getAllRoutinesWithSets();
     }
 
-    public List<PlanSetRelation> getPlanSetRelationList(Integer day) {
-        return database.getPlanDao().getPlanSetRelationList("%" + String.valueOf(day) + "%");
+    public List<RoutineSetRelation> getRoutineSetRelationList(Integer day) {
+        return database.getRoutineDao().getRoutineSetRelationList("%" + String.valueOf(day) + "%");
     }
 
-    public PlanSetRelation getPlanSetRelation(String planId) {
-        return database.getPlanDao().getPlanSetRelation(planId);
+    public RoutineSetRelation getRoutineSetRelation(String routineId) {
+        return database.getRoutineDao().getRoutineSetRelation(routineId);
     }
 
-    public void insertPlan(final PlanEntity planEntity, final List<PlanSetEntity> planSetEntityList) {
+    public void insertRoutine(final RoutineEntity routineEntity, final List<RoutineSetEntity> planSetEntityList) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getPlanDao().insertNewPlan(planEntity, planSetEntityList);
+                database.getRoutineDao().insertNewRoutine(routineEntity, planSetEntityList);
             }
         });
     }
 
-    public void deletePlan(final PlanEntity deletePlanEntity) {
+    public void deleteRoutine(final RoutineEntity deleteRoutineEntity) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getPlanDao().deletePlanEntity(deletePlanEntity);
+                database.getRoutineDao().deleteRoutineEntity(deleteRoutineEntity);
             }
         });
     }
 
-    public void deleteAndInsertPlan(final PlanEntity deletePlanEntity, final PlanEntity newPlanEntity, final List<PlanSetEntity> newPlanSetEntityList) {
+    public void deleteAndInsertRoutine(final RoutineEntity deleteRoutineEntity, final RoutineEntity newRoutineEntity, final List<RoutineSetEntity> newPlanSetEntityList) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getPlanDao().deletePlanEntity(deletePlanEntity);
+                database.getRoutineDao().deleteRoutineEntity(deleteRoutineEntity);
             }
         });
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getPlanDao().insertNewPlan(newPlanEntity, newPlanSetEntityList);
+                database.getRoutineDao().insertNewRoutine(newRoutineEntity, newPlanSetEntityList);
             }
         });
     }

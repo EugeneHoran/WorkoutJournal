@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="anew.eugene.onerepmax.com.onerepmaxcalculator.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
 
     </data>
 
     <RelativeLayout
+        android:id="@+id/liftHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:layout_marginLeft="64dp"
             android:layout_marginRight="56dp"
             android:layout_marginTop="4dp"
             android:focusable="true"
-            android:text="How often?"
+            android:text="Select exercises"
             android:textColor="@color/black"
             android:textSize="28sp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerDays"
+        <EditText
+            android:id="@+id/editSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="56dp"
+            android:hint="@string/search"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:visibility="visible" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/editSearch"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:paddingBottom="88dp"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
         <android.support.design.widget.FloatingActionButton

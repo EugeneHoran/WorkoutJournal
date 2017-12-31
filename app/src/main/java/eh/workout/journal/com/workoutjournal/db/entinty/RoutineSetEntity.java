@@ -1,27 +1,46 @@
 package eh.workout.journal.com.workoutjournal.db.entinty;
 
+
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "plan_sets",
-        foreignKeys = {@ForeignKey(entity = PlanEntity.class,
+import java.util.UUID;
+
+@Entity(tableName = "routine_sets",
+        foreignKeys = {@ForeignKey(entity = RoutineEntity.class,
                 deferred = true,
                 parentColumns = "id",
-                childColumns = "planTempId",
+                childColumns = "routineId",
                 onDelete = ForeignKey.CASCADE)})
-public class PlanSetEntity {
+public class RoutineSetEntity {
     @PrimaryKey
     @NonNull
     public String id;
     private String name;
     private String exerciseId;
     private int exerciseInputType;
-    private String planTempId;
+    private String routineId;
     @Ignore
     private boolean setCompleted = false;
+
+    public RoutineSetEntity(@NonNull String id, String name, String exerciseId, int exerciseInputType, String routineId) {
+        this.id = id;
+        this.name = name;
+        this.exerciseId = exerciseId;
+        this.exerciseInputType = exerciseInputType;
+        this.routineId = routineId;
+    }
+
+    public RoutineSetEntity(ExerciseLiftEntity liftEntity, String routineId) {
+        this.id = UUID.randomUUID().toString();
+        this.name = liftEntity.getName();
+        this.exerciseId = liftEntity.getId();
+        this.exerciseInputType = liftEntity.getExerciseInputType();
+        this.routineId = routineId;
+    }
 
     @NonNull
     public String getId() {
@@ -56,12 +75,12 @@ public class PlanSetEntity {
         this.exerciseInputType = exerciseInputType;
     }
 
-    public String getPlanTempId() {
-        return planTempId;
+    public String getRoutineId() {
+        return routineId;
     }
 
-    public void setPlanTempId(String planTempId) {
-        this.planTempId = planTempId;
+    public void setRoutineId(String routineId) {
+        this.routineId = routineId;
     }
 
     @Ignore

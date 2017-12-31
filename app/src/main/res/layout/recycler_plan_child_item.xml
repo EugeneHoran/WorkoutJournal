@@ -10,7 +10,7 @@
 
         <variable
             name="setEntity"
-            type="eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity" />
+            type="eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity" />
     </data>
 
     <LinearLayout

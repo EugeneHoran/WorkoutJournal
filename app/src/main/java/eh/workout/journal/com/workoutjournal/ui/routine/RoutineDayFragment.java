@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.plan;
+package eh.workout.journal.com.workoutjournal.ui.routine;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -14,35 +14,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.FragmentAddLiftDayPickerBinding;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineAddActivity;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineDayRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.databinding.FragmentRoutineDaysBinding;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
-public class AddPlanDaySelectorFragment extends Fragment {
-    public AddPlanDaySelectorFragment() {
+public class RoutineDayFragment extends Fragment {
+    public RoutineDayFragment() {
     }
 
-    public static AddPlanDaySelectorFragment newInstance() {
-        return new AddPlanDaySelectorFragment();
+    public static RoutineDayFragment newInstance() {
+        return new RoutineDayFragment();
     }
 
-    private AddPlanViewModel model;
+    private RoutineAddViewModel model;
     private RoutineDayRecyclerAdapter adapter;
-    private FragmentAddLiftDayPickerBinding binding;
+    private FragmentRoutineDaysBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(AddPlanViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(RoutineAddViewModel.class);
         }
         adapter = new RoutineDayRecyclerAdapter(true, false);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_lift_day_picker, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_routine_days, container, false);
         return binding.getRoot();
     }
 
@@ -59,7 +57,7 @@ public class AddPlanDaySelectorFragment extends Fragment {
                 }
                 model.setDaysString(adapter.getDaysString());
                 model.setDaySelectorList(adapter.getSelectedList());
-                AddPlanFinalFragment fragment = AddPlanFinalFragment.newInstance();
+                RoutineAddFinalFragment fragment = RoutineAddFinalFragment.newInstance();
                 initTransition(fragment);
                 if (getActivity() != null) {
                     getActivity().getSupportFragmentManager().beginTransaction()

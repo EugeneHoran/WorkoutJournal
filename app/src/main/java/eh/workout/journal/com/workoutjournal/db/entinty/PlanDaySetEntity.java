@@ -6,13 +6,13 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "plan_sets",
-        foreignKeys = {@ForeignKey(entity = PlanEntity.class,
+@Entity(tableName = "plan_day_sets",
+        foreignKeys = {@ForeignKey(entity = PlanDayEntity.class,
                 deferred = true,
                 parentColumns = "id",
                 childColumns = "planTempId",
                 onDelete = ForeignKey.CASCADE)})
-public class PlanSetEntity {
+public class PlanDaySetEntity {
     @PrimaryKey
     @NonNull
     public String id;
@@ -64,12 +64,10 @@ public class PlanSetEntity {
         this.planTempId = planTempId;
     }
 
-    @Ignore
     public boolean isSetCompleted() {
         return setCompleted;
     }
 
-    @Ignore
     public void setSetCompleted(boolean setCompleted) {
         this.setCompleted = setCompleted;
     }

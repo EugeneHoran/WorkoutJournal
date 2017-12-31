@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.plan;
+package eh.workout.journal.com.workoutjournal.ui.routine;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -22,47 +22,45 @@ import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.FragmentAddPlanSelectLiftsBinding;
+import eh.workout.journal.com.workoutjournal.databinding.FragmentRoutineLiftsBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineAddActivity;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 import eh.workout.journal.com.workoutjournal.util.views.SimpleTextWatcher;
 
-
-public class AddPlanSelectLiftsFragment extends Fragment {
-    public AddPlanSelectLiftsFragment() {
+public class RoutineLiftFragment extends Fragment {
+    public RoutineLiftFragment() {
     }
 
-    public static AddPlanSelectLiftsFragment newInstance() {
-        return new AddPlanSelectLiftsFragment();
+    public static RoutineLiftFragment newInstance() {
+        return new RoutineLiftFragment();
     }
 
-    private AddPlanViewModel model;
-    private AddPlanSelectLiftRecyclerAdapter adapter;
+    private RoutineAddViewModel model;
+    private RoutineLiftRecyclerAdapter adapter;
     private Unregistrar keyboardRegister;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(AddPlanViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(RoutineAddViewModel.class);
         }
-        adapter = new AddPlanSelectLiftRecyclerAdapter(true);
+        adapter = new RoutineLiftRecyclerAdapter(true);
     }
 
-    private FragmentAddPlanSelectLiftsBinding binding;
+    private FragmentRoutineLiftsBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_plan_select_lifts, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_routine_lifts, container, false);
         return binding.getRoot();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.recycler.setAdapter(adapter);
-        model.initLifts();
         new SimpleTextWatcher(new SimpleTextWatcher.SimpleTextWatcherInterface() {
             @Override
             public void onTextChanged(EditText editText, String string, CharSequence charSequence, int count) {
@@ -70,7 +68,7 @@ public class AddPlanSelectLiftsFragment extends Fragment {
                 binding.recycler.scrollToPosition(0);
             }
         }, true).registerEditText(binding.editSearch);
-        observeLifts(model);
+        observeLiftList(model);
         if (getActivity() != null) {
             keyboardRegister = KeyboardVisibilityEvent.registerEventListener(getActivity(), new KeyboardVisibilityEventListener() {
                 @Override
@@ -79,23 +77,31 @@ public class AddPlanSelectLiftsFragment extends Fragment {
                 }
             });
         }
-
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getSelectedList().size() == 0) {
+                if (adapter.getSelectedList().size() == 0) {
                     Snackbar.make(binding.fab, "Select lifts to continue", Snackbar.LENGTH_SHORT).show();
                     return;
                 } else {
-                    model.setRetainedLiftList(adapter.getAllCheckedList());
-                    model.setLifts(getSelectedList());
+                    model.getLiftList().setValue(adapter.getAllCheckedList());
+                    model.setLiftListSelected(adapter.getSelectedList());
                 }
-                AddPlanDaySelectorFragment fragment = AddPlanDaySelectorFragment.newInstance();
+                RoutineDayFragment fragment = RoutineDayFragment.newInstance();
                 initTransition(fragment);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .addSharedElement(binding.fab, "fab")
                         .replace(R.id.container, fragment, RoutineAddActivity.TAG_DAY_SELECTOR_FRAGMENT).addToBackStack(RoutineAddActivity.TAG_DAY_SELECTOR_FRAGMENT)
                         .commit();
+            }
+        });
+    }
+
+    private void observeLiftList(RoutineAddViewModel model) {
+        model.getLiftList().observe(this, new Observer<List<ExerciseLiftEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
+                adapter.setItems(exerciseLiftEntities);
             }
         });
     }
@@ -113,18 +119,5 @@ public class AddPlanSelectLiftsFragment extends Fragment {
     public void onDetach() {
         keyboardRegister.unregister();
         super.onDetach();
-    }
-
-    public List<ExerciseLiftEntity> getSelectedList() {
-        return adapter.getSelectedList();
-    }
-
-    private void observeLifts(AddPlanViewModel model) {
-        model.observeLiftList().observe(this, new Observer<List<ExerciseLiftEntity>>() {
-            @Override
-            public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
-                adapter.setItems(exerciseLiftEntities);
-            }
-        });
     }
 }

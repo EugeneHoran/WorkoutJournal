@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryHistoryViewModel;
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew;
-import eh.workout.journal.com.workoutjournal.ui.exercises.ExercisePlanViewModel;
+import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseRoutineViewModel;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalChildViewModel;
 import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanViewModel;
 import eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanViewModel;
@@ -53,8 +53,8 @@ public class AppFactory extends ViewModelProvider.NewInstanceFactory {
     @Override
     @SuppressWarnings("all")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(ExercisePlanViewModel.class)) {
-            return (T) new ExercisePlanViewModel(application, timestamp);
+        if (modelClass.isAssignableFrom(ExerciseRoutineViewModel.class)) {
+            return (T) new ExerciseRoutineViewModel(application, timestamp);
         } else if (modelClass.isAssignableFrom(JournalChildViewModel.class)) {
             return (T) new JournalChildViewModel(application, timestamp);
         } else if (modelClass.isAssignableFrom(EditPlanViewModel.class)) {

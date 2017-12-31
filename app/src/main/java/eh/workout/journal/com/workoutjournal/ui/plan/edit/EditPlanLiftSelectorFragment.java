@@ -18,7 +18,7 @@ import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentAddPlanSelectLiftsBinding;
-import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanSelectLiftRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.util.views.SimpleTextWatcher;
 
 
@@ -31,7 +31,7 @@ public class EditPlanLiftSelectorFragment extends Fragment {
     }
 
     private EditPlanViewModel model;
-    private AddPlanSelectLiftRecyclerAdapter adapter;
+    private RoutineLiftRecyclerAdapter adapter;
     private Unregistrar keyboardRegister;
 
     @Override
@@ -40,7 +40,7 @@ public class EditPlanLiftSelectorFragment extends Fragment {
         if (getActivity() != null) {
             model = ViewModelProviders.of(getActivity()).get(EditPlanViewModel.class);
         }
-        adapter = new AddPlanSelectLiftRecyclerAdapter(true);
+        adapter = new RoutineLiftRecyclerAdapter(true);
         adapter.setItems(model.getAllExercises().getValue());
     }
 

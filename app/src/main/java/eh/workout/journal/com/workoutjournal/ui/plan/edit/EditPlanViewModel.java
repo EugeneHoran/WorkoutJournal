@@ -14,9 +14,9 @@ import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.CustomTypeConverters;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
-import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
-import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
-import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
+import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
+import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
 import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
 
@@ -25,18 +25,18 @@ public class EditPlanViewModel extends AndroidViewModel {
     public ObservableBoolean noSelectedDays = new ObservableBoolean(false);
     boolean titleSet = false;
 
-    private String planId;
+    private String routineId;
     private JournalRepository repository;
-    private PlanSetRelation planSet;
-    private final MutableLiveData<PlanSetRelation> planSetRelation;
+    private RoutineSetRelation routineSet;
+    private final MutableLiveData<RoutineSetRelation> planSetRelation;
     private final MutableLiveData<List<ExerciseLiftEntity>> allExercises;
     private final MutableLiveData<List<ExerciseLiftEntity>> allSelectedExercises;
     private final MutableLiveData<List<DaySelector>> allDaysOfWeek;
     private final MutableLiveData<List<DaySelector>> selectedDaysOfWeek;
 
-    public EditPlanViewModel(@NonNull JournalApplication application, String planId) {
+    public EditPlanViewModel(@NonNull JournalApplication application, String routineId) {
         super(application);
-        this.planId = planId;
+        this.routineId = routineId;
         repository = application.getRepository();
         planSetRelation = new MutableLiveData<>();
         allExercises = new MutableLiveData<>();
@@ -46,26 +46,26 @@ public class EditPlanViewModel extends AndroidViewModel {
     }
 
     void initEditData() {
-        new TaskPlan().execute(planId);
+        new TaskRoutine().execute(routineId);
     }
 
     void updatePlan(String planTitle) {
-        PlanEntity newPlanEntity = new PlanEntity();
-        newPlanEntity.setId(planSet.getPlanEntity().getId());
-        newPlanEntity.setPlanDayString(getDaysString());
-        newPlanEntity.setPlanName(planTitle);
-        List<PlanSetEntity> newPlanSetList = new ArrayList<>();
+        RoutineEntity newRoutineEntity = new RoutineEntity();
+        newRoutineEntity.setId(routineSet.getRoutineEntity().getId());
+        newRoutineEntity.setRoutineDayListString(getDaysString());
+        newRoutineEntity.setRoutineName(planTitle);
+        List<RoutineSetEntity> newPlanSetList = new ArrayList<>();
         for (int i = 0; i < getAllSelectedExercises().getValue().size(); i++) {
-            newPlanSetList.add(new PlanSetEntity(getAllSelectedExercises().getValue().get(i), newPlanEntity.getId()));
+            newPlanSetList.add(new RoutineSetEntity(getAllSelectedExercises().getValue().get(i), newRoutineEntity.getId()));
         }
-        repository.deleteAndInsertPlan(planSet.getPlanEntity(), newPlanEntity, newPlanSetList);
+        repository.deleteAndInsertRoutine(routineSet.getRoutineEntity(), newRoutineEntity, newPlanSetList);
     }
 
     void deletePlan() {
-        repository.deletePlan(planSet.getPlanEntity());
+        repository.deleteRoutine(routineSet.getRoutineEntity());
     }
 
-    MutableLiveData<PlanSetRelation> getPlanSetRelation() {
+    MutableLiveData<RoutineSetRelation> getPlanSetRelation() {
         return planSetRelation;
     }
 
@@ -89,15 +89,15 @@ public class EditPlanViewModel extends AndroidViewModel {
 
 
     @SuppressLint("StaticFieldLeak")
-    class TaskPlan extends AsyncTask<String, Void, PlanSetRelation> {
+    class TaskRoutine extends AsyncTask<String, Void, RoutineSetRelation> {
         @Override
-        protected PlanSetRelation doInBackground(String... strings) {
-            return repository.getPlanSetRelation(strings[0]);
+        protected RoutineSetRelation doInBackground(String... strings) {
+            return repository.getRoutineSetRelation(strings[0]);
         }
 
         @Override
-        protected void onPostExecute(PlanSetRelation planSetResponse) {
-            planSet = planSetResponse;
+        protected void onPostExecute(RoutineSetRelation planSetResponse) {
+            routineSet = planSetResponse;
             super.onPostExecute(planSetResponse);
             getPlanSetRelation().setValue(planSetResponse);
             getAllDaysOfWeek().setValue(daySelectorList(planSetResponse.getDaysList()));
@@ -118,7 +118,7 @@ public class EditPlanViewModel extends AndroidViewModel {
             super.onPostExecute(exerciseLiftEntities);
             List<ExerciseLiftEntity> selectedExercises = new ArrayList<>();
             for (int i = 0; i < getPlanSetRelation().getValue().getPlanSetEntityList().size(); i++) {
-                PlanSetEntity set = getPlanSetRelation().getValue().getPlanSetEntityList().get(i);
+                RoutineSetEntity set = getPlanSetRelation().getValue().getPlanSetEntityList().get(i);
                 for (ExerciseLiftEntity lift : exerciseLiftEntities) {
                     if (set.getExerciseId().equalsIgnoreCase(lift.getId())) {
                         lift.setSelected(true);

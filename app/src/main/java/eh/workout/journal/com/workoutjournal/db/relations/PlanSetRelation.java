@@ -1,10 +1,8 @@
 package eh.workout.journal.com.workoutjournal.db.relations;
 
-
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Relation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
@@ -14,7 +12,7 @@ public class PlanSetRelation {
     @Embedded
     public PlanEntity planEntity;
 
-    @Relation(parentColumn = "id", entityColumn = "planId", entity = PlanSetEntity.class)
+    @Relation(parentColumn = "id", entityColumn = "planTempId", entity = PlanSetEntity.class)
     private List<PlanSetEntity> planSetEntityList;
 
     public PlanEntity getPlanEntity() {
@@ -31,14 +29,5 @@ public class PlanSetRelation {
 
     public void setPlanSetEntityList(List<PlanSetEntity> planSetEntityList) {
         this.planSetEntityList = planSetEntityList;
-    }
-
-    public List<Integer> getDaysList() {
-        List<Integer> daysIntList = new ArrayList<>();
-        String[] dayStringArray = planEntity.getPlanDayString().split(",");
-        for (String aDayStringArray : dayStringArray) {
-            daysIntList.add(Integer.valueOf(aDayStringArray));
-        }
-        return daysIntList;
     }
 }

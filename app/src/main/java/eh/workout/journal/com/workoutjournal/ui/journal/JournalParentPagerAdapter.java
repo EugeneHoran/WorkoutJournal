@@ -2,7 +2,6 @@ package eh.workout.journal.com.workoutjournal.ui.journal;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -57,6 +56,10 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return Constants.JOURNAL_TOTAL_PAGES_DATES;
+    }
+
+    public static Long getTimestampStatic(int page) {
+        return DateHelper.getAdapterTimestamp(page);
     }
 
     Long getTimestamp(int page) {

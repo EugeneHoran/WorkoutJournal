@@ -19,10 +19,10 @@ import java.util.List;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentEditPlanEditorBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
-import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
-import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanDaySelectRecyclerAdapter;
-import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanSelectLiftRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.routine.RoutineDayRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
 
@@ -36,8 +36,8 @@ public class EditPlanFragment extends Fragment {
 
     private EditPlanViewModel model;
     private FragmentEditPlanEditorBinding binding;
-    private AddPlanDaySelectRecyclerAdapter adapterDays;
-    private AddPlanSelectLiftRecyclerAdapter adapterLifts;
+    private RoutineDayRecyclerAdapter adapterDays;
+    private RoutineLiftRecyclerAdapter adapterLifts;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,8 +45,8 @@ public class EditPlanFragment extends Fragment {
         if (getActivity() != null) {
             model = ViewModelProviders.of(getActivity()).get(EditPlanViewModel.class);
         }
-        adapterDays = new AddPlanDaySelectRecyclerAdapter(false, true);
-        adapterLifts = new AddPlanSelectLiftRecyclerAdapter(false);
+        adapterDays = new RoutineDayRecyclerAdapter(false, true);
+        adapterLifts = new RoutineLiftRecyclerAdapter(false);
     }
 
     @Override
@@ -102,12 +102,12 @@ public class EditPlanFragment extends Fragment {
     }
 
     private void observePlanData(final EditPlanViewModel model) {
-        model.getPlanSetRelation().observe(this, new Observer<PlanSetRelation>() {
+        model.getPlanSetRelation().observe(this, new Observer<RoutineSetRelation>() {
             @Override
-            public void onChanged(@Nullable PlanSetRelation planSetRelation) {
-                if (planSetRelation != null) {
+            public void onChanged(@Nullable RoutineSetRelation routineSetRelation) {
+                if (routineSetRelation != null) {
                     if (!model.titleSet) {
-                        binding.editPlanName.setText(planSetRelation.getPlanEntity().getPlanName());
+                        binding.editPlanName.setText(routineSetRelation.getRoutineEntity().getRoutineName());
                     }
                     binding.title.requestFocus();
                 }

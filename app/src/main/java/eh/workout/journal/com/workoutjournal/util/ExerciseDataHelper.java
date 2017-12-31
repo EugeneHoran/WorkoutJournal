@@ -1,8 +1,11 @@
 package eh.workout.journal.com.workoutjournal.util;
 
 
+import android.util.SparseArray;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,10 +14,18 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
 
 public class ExerciseDataHelper {
+
+    public static void testing() {
+        SparseArray<String> testing = new SparseArray<>();
+        for (int i = 0; i < DAYS.length; i++) {
+            testing.put(i, DAYS[i]);
+        }
+    }
+
     public static final int EXERCISE_TYPE_WEIGHT = 0;
     public static final int EXERCISE_TYPE_BODY = 1;
     public static final int EXERCISE_TYPE_CARDIO = 2;
-    private static final String[] DAYS = new String[]{
+    public static final String[] DAYS = new String[]{
             "Sunday",
             "Monday",
             "Tuesday",

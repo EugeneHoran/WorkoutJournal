@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalChildBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
-import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.util.AppFactory;
 
@@ -43,7 +42,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     }
 
     private Long timestamp;
-    private MutableLiveData<List<PlanSetRelation>> getPlanSetRelation;
+    private MutableLiveData<List<RoutineSetRelation>> getPlanSetRelation;
     private FragmentJournalChildBinding binding;
     private JournalChildViewModel model;
     private JournalChildRecyclerAdapter adapterJournal;
@@ -94,15 +93,15 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     }
 
     private void observePlans(JournalChildViewModel model) {
-        model.getPlans().observe(this, new Observer<List<PlanSetRelation>>() {
+        model.getRoutines().observe(this, new Observer<List<RoutineSetRelation>>() {
             @Override
-            public void onChanged(@Nullable List<PlanSetRelation> planSetRelations) {
-                getPlanSetRelation().setValue(planSetRelations);
+            public void onChanged(@Nullable List<RoutineSetRelation> routineSetRelations) {
+                getPlanSetRelation().setValue(routineSetRelations);
             }
         });
     }
 
-    public MutableLiveData<List<PlanSetRelation>> getPlanSetRelation() {
+    public MutableLiveData<List<RoutineSetRelation>> getPlanSetRelation() {
         if (getPlanSetRelation == null) {
             getPlanSetRelation = new MutableLiveData<>();
         }

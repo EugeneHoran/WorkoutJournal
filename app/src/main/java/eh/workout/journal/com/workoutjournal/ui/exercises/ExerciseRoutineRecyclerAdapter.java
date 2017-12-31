@@ -14,11 +14,11 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.RecyclerPlanExerciseViewBinding;
-import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
-import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
+import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
+import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 
-public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePlanRecyclerAdapter.PlanViewHolder> {
-    List<PlanSetRelation> itemList = new ArrayList<>();
+public class ExerciseRoutineRecyclerAdapter extends RecyclerView.Adapter<ExerciseRoutineRecyclerAdapter.PlanViewHolder> {
+    List<RoutineSetRelation> itemList = new ArrayList<>();
     ExercisePlanInterface listener;
 
     public interface ExercisePlanInterface {
@@ -27,11 +27,11 @@ public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePl
         void onEditPlanClicked(String planId);
     }
 
-    public ExercisePlanRecyclerAdapter(ExercisePlanInterface listener) {
+    public ExerciseRoutineRecyclerAdapter(ExercisePlanInterface listener) {
         this.listener = listener;
     }
 
-    public void setItems(List<PlanSetRelation> itemList) {
+    public void setItems(List<RoutineSetRelation> itemList) {
         this.itemList.clear();
         this.itemList.addAll(itemList);
         notifyDataSetChanged();
@@ -54,7 +54,7 @@ public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePl
 
     public class PlanViewHolder extends RecyclerView.ViewHolder {
         RecyclerPlanExerciseViewBinding binding;
-        PlanSetRelation planSetRelation;
+        RoutineSetRelation routineSetRelation;
 
         public PlanViewHolder(RecyclerPlanExerciseViewBinding binding) {
             super(binding.getRoot());
@@ -63,17 +63,17 @@ public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePl
 
         void bindItem() {
             binding.setHolder(this);
-            planSetRelation = itemList.get(getAdapterPosition());
+            routineSetRelation = itemList.get(getAdapterPosition());
             String planList = null;
-            for (int i = 0; i < planSetRelation.getPlanSetEntityList().size(); i++) {
-                PlanSetEntity setEntity = planSetRelation.getPlanSetEntityList().get(i);
+            for (int i = 0; i < routineSetRelation.getPlanSetEntityList().size(); i++) {
+                RoutineSetEntity setEntity = routineSetRelation.getPlanSetEntityList().get(i);
                 if (planList == null) {
                     planList = "• " + setEntity.getName();
                 } else {
                     planList = planList + "\n" + "• " + setEntity.getName();
                 }
             }
-            binding.planTitle.setText(planSetRelation.getPlanEntity().getPlanName());
+            binding.planTitle.setText(routineSetRelation.getRoutineEntity().getRoutineName());
             binding.planList.setText(planList);
         }
 
@@ -86,7 +86,7 @@ public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePl
                 public boolean onMenuItemClick(MenuItem item) {
                     int id = item.getItemId();
                     if (id == R.id.action_edit) {
-                        listener.onEditPlanClicked(planSetRelation.getPlanEntity().getId());
+                        listener.onEditPlanClicked(routineSetRelation.getRoutineEntity().getId());
                     }
                     return true;
                 }

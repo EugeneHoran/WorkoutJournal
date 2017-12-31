@@ -2,7 +2,6 @@ package eh.workout.journal.com.workoutjournal.ui.exercises;
 
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,8 +17,6 @@ import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseParentBinding;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
-import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanActivity;
-import eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanActivity;
 import eh.workout.journal.com.workoutjournal.util.AppFactory;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.views.CustomSearchView;
@@ -49,7 +46,7 @@ public class ExerciseParentFragment extends BaseFragment {
             timestamp = getArguments().getLong(ARG_DATE_TIMESTAMP);
             page = getArguments().getInt(ARG_PAGE);
         }
-        planViewModel = ViewModelProviders.of(this, new AppFactory((JournalApplication) getActivity().getApplicationContext(), timestamp)).get(ExercisePlanViewModel.class);
+        planViewModel = ViewModelProviders.of(this, new AppFactory((JournalApplication) getActivity().getApplicationContext(), timestamp)).get(ExerciseRoutineViewModel.class);
         adapter = new ExerciseParentPagerAdapter(getChildFragmentManager(), timestamp);
     }
 
@@ -59,7 +56,7 @@ public class ExerciseParentFragment extends BaseFragment {
     private CustomSearchView customSearchView;
     private Long timestamp;
     private int page;
-    private ExercisePlanViewModel planViewModel;
+    private ExerciseRoutineViewModel planViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,9 +75,9 @@ public class ExerciseParentFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.pager.setOffscreenPageLimit(3);
+        binding.pager.setOffscreenPageLimit(4);
         binding.pager.setAdapter(adapter);
-        binding.pager.setCurrentItem(1, false);
+        binding.pager.setCurrentItem(0, false);
         binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
         if (savedInstanceState != null) {
             if (selectorModel.searchVisible) {
@@ -95,7 +92,7 @@ public class ExerciseParentFragment extends BaseFragment {
             binding.setShowTabs(true);
         }
 
-        ExerciseSelectorFragment selectorFragment = (ExerciseSelectorFragment) adapter.getItem(1);
+        ExerciseSelectorFragment selectorFragment = (ExerciseSelectorFragment) adapter.getItem(0);
         if (selectorFragment != null) {
             selectorFragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
                 @Override
@@ -109,7 +106,7 @@ public class ExerciseParentFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if (position == 2) {
+                if (position == 1) {
                     if (adapter.getGroupFragment() != null) {
                         adapter.getGroupFragment().setListener(groupInterface);
                     }
@@ -137,7 +134,7 @@ public class ExerciseParentFragment extends BaseFragment {
     }
 
     public void resetPlanFragment() {
-        planViewModel.resetPlan();
+        planViewModel.resetRoutine();
     }
 
     public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
@@ -146,14 +143,14 @@ public class ExerciseParentFragment extends BaseFragment {
             int id = item.getItemId();
             switch (id) {
                 case R.id.action_add_exercise:
-                    if (binding.pager.getCurrentItem() == 0) {
-                        navToAddPlanActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE);
+                    if (binding.pager.getCurrentItem() == 3) {
+                        navToAddRoutineActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE);
                     } else {
                         dialogNewExercise();
                     }
                     break;
                 case R.id.action_search_exercise:
-                    binding.pager.setCurrentItem(1);
+                    binding.pager.setCurrentItem(0, false);
                     binding.viewToolbar.tabs.setVisibility(View.GONE);
                     selectorModel.searchVisible = true;
                     binding.pager.enableSwiping(false);
