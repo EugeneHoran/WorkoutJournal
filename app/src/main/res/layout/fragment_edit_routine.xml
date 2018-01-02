@@ -11,7 +11,7 @@
 
         <variable
             name="model"
-            type="eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanViewModel" />
+            type="eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineViewModel" />
     </data>
 
     <RelativeLayout

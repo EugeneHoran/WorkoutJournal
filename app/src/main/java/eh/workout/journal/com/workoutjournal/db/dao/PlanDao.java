@@ -33,7 +33,7 @@ public abstract class PlanDao {
     public abstract void insertPlanDaySetEntity(List<PlanDaySetEntity> planDaySetEntities);
 
     @Transaction
-    public void insertNewRoutine(PlanEntity planEntity, List<PlanSetEntity> planSetEntities) {
+    public void insertPlanSets(PlanEntity planEntity, List<PlanSetEntity> planSetEntities) {
         insertPlan(planEntity);
         insertPlanSetEntity(planSetEntities);
     }

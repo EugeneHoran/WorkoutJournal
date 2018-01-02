@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -29,7 +28,6 @@
             style="@style/MatchParentMatchParent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             style="@style/Fab"
@@ -38,83 +36,11 @@
             app:layout_anchorGravity="top|end"
             app:srcCompat="@drawable/ic_add" />
 
-        <View
-            android:id="@+id/viewClicker"
+        <include
+            android:id="@+id/bottom"
+            layout="@layout/view_journal_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBlackTransparent"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/bottom_sheet"
-            style="@style/BottomSheet">
-
-            <Space style="@style/MatchParent48" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@color/colorAccent"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Plan/Routine"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/addPlan"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/addRoutine"
-                    android:text="@string/add_plan"
-                    android:textColor="@color/white"
-                    tools:ignore="RelativeOverlap" />
-
-                <Button
-                    android:id="@+id/addRoutine"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="-6dp"
-                    android:layout_marginRight="-6dp"
-                    android:text="@string/add_routine"
-                    android:textColor="@color/white" />
-            </RelativeLayout>
-
-            <!--<View style="@style/Divider" />-->
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerPlan"
-                style="@style/RecyclerChildVertical"
-                android:background="@color/colorBackgroundSecondary"
-                android:paddingBottom="48dp" />
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/bottom_sheet_header"
-            style="@style/TextHeader.Small"
-            android:layout_gravity="bottom"
-            android:background="@color/white"
-            android:clickable="true"
-            android:drawableLeft="@drawable/ic_list"
-            android:drawableStart="@drawable/ic_list"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:onClickListener="@{fragment.onBottomSheetHeaderListener}"
-            android:text="@string/today_s_plan"
-            android:textColor="@color/black" />
-
+            app:fragment="@{fragment}" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

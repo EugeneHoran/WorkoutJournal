@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.plan.edit;
+package eh.workout.journal.com.workoutjournal.ui.routine.edit;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.FragmentEditPlanEditorBinding;
+import eh.workout.journal.com.workoutjournal.databinding.FragmentEditRoutineBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
@@ -26,16 +26,16 @@ import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapt
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
 
-public class EditPlanFragment extends Fragment {
-    public EditPlanFragment() {
+public class EditRoutineFragment extends Fragment {
+    public EditRoutineFragment() {
     }
 
-    public static EditPlanFragment newInstance() {
-        return new EditPlanFragment();
+    public static EditRoutineFragment newInstance() {
+        return new EditRoutineFragment();
     }
 
-    private EditPlanViewModel model;
-    private FragmentEditPlanEditorBinding binding;
+    private EditRoutineViewModel model;
+    private FragmentEditRoutineBinding binding;
     private RoutineDayRecyclerAdapter adapterDays;
     private RoutineLiftRecyclerAdapter adapterLifts;
 
@@ -43,7 +43,7 @@ public class EditPlanFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(EditPlanViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(EditRoutineViewModel.class);
         }
         adapterDays = new RoutineDayRecyclerAdapter(false, true);
         adapterLifts = new RoutineLiftRecyclerAdapter(false);
@@ -51,7 +51,7 @@ public class EditPlanFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_plan_editor, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_routine, container, false);
         binding.setModel(model);
         return binding.getRoot();
     }
@@ -65,7 +65,7 @@ public class EditPlanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (getActivity() != null) {
-                    EditPlanDaySelectorFragment fragment = EditPlanDaySelectorFragment.newInstance();
+                    EditRoutineDaySelectorFragment fragment = EditRoutineDaySelectorFragment.newInstance();
                     initTransition(fragment);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
@@ -79,7 +79,7 @@ public class EditPlanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (getActivity() != null) {
-                    EditPlanLiftSelectorFragment fragment = EditPlanLiftSelectorFragment.newInstance();
+                    EditRoutineLiftSelectorFragment fragment = EditRoutineLiftSelectorFragment.newInstance();
                     initTransition(fragment);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
@@ -101,7 +101,7 @@ public class EditPlanFragment extends Fragment {
         observePlanData(model);
     }
 
-    private void observePlanData(final EditPlanViewModel model) {
+    private void observePlanData(final EditRoutineViewModel model) {
         model.getPlanSetRelation().observe(this, new Observer<RoutineSetRelation>() {
             @Override
             public void onChanged(@Nullable RoutineSetRelation routineSetRelation) {

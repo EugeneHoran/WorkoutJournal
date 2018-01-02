@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.plan.edit;
+package eh.workout.journal.com.workoutjournal.ui.routine.edit;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -11,34 +11,34 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.FragmentAddLiftDayPickerBinding;
+import eh.workout.journal.com.workoutjournal.databinding.FragmentEditRoutineDayBinding;
 import eh.workout.journal.com.workoutjournal.ui.routine.RoutineDayRecyclerAdapter;
 
 
-public class EditPlanDaySelectorFragment extends Fragment {
-    public EditPlanDaySelectorFragment() {
+public class EditRoutineDaySelectorFragment extends Fragment {
+    public EditRoutineDaySelectorFragment() {
     }
 
-    public static EditPlanDaySelectorFragment newInstance() {
-        return new EditPlanDaySelectorFragment();
+    public static EditRoutineDaySelectorFragment newInstance() {
+        return new EditRoutineDaySelectorFragment();
     }
 
-    private EditPlanViewModel model;
+    private EditRoutineViewModel model;
     private RoutineDayRecyclerAdapter adapter;
-    private FragmentAddLiftDayPickerBinding binding;
+    private FragmentEditRoutineDayBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(EditPlanViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(EditRoutineViewModel.class);
         }
         adapter = new RoutineDayRecyclerAdapter(true, true);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_lift_day_picker, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_routine_day, container, false);
         return binding.getRoot();
     }
 

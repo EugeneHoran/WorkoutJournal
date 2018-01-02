@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>     <!--suppress AndroidElementNotAllowed -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="eh.workout.journal.com.workoutjournal.ui.journal.JournalParentFragment" />
+
+    </data>
+
+    <merge>
+
+        <View
+            android:id="@+id/viewClicker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlackTransparent"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/bottom_sheet"
+            style="@style/BottomSheet">
+
+            <Space style="@style/MatchParent48" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <Button
+                    android:id="@+id/addPlan"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="1dp"
+                    android:layout_toLeftOf="@+id/addRoutine"
+                    android:layout_toStartOf="@+id/addRoutine"
+                    android:text="@string/add_plan"
+                    android:textColor="@color/colorAccent"
+                    tools:ignore="RelativeOverlap" />
+
+                <Button
+                    android:id="@+id/addRoutine"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="-6dp"
+                    android:layout_marginRight="-6dp"
+                    android:text="@string/add_routine"
+                    android:textColor="@color/colorAccent" />
+
+                <View
+                    style="@style/Divider"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerPlan"
+                style="@style/RecyclerChildVertical"
+                android:background="@color/colorBackground"
+                android:paddingBottom="48dp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/bottom_sheet_header"
+            style="@style/TextHeader.Small"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_list"
+            android:drawableStart="@drawable/ic_list"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClickListener="@{fragment.onBottomSheetHeaderListener}"
+            android:text="@string/today_s_plan"
+            android:textColor="@color/black" />
+
+    </merge>
+</layout>

@@ -28,7 +28,7 @@ public class OneRepMaxRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         } else {
             this.itemList.addAll(items == null ? OrmHelper.percentageEmptyList() : items);
         }
-        notifyDataSetChanged();
+        notifyItemRangeChanged(0, getItemCount());
     }
 
     @Override

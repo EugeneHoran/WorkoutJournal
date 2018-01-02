@@ -11,7 +11,7 @@ import eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseRoutineViewModel;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalChildViewModel;
 import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanViewModel;
-import eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanViewModel;
+import eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineViewModel;
 
 
 public class AppFactory extends ViewModelProvider.NewInstanceFactory {
@@ -57,8 +57,8 @@ public class AppFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new ExerciseRoutineViewModel(application, timestamp);
         } else if (modelClass.isAssignableFrom(JournalChildViewModel.class)) {
             return (T) new JournalChildViewModel(application, timestamp);
-        } else if (modelClass.isAssignableFrom(EditPlanViewModel.class)) {
-            return (T) new EditPlanViewModel((JournalApplication) application, planId);
+        } else if (modelClass.isAssignableFrom(EditRoutineViewModel.class)) {
+            return (T) new EditRoutineViewModel((JournalApplication) application, planId);
         } else if (modelClass.isAssignableFrom(EntryViewModelNew.class)) {
             return (T) new EntryViewModelNew((JournalApplication) application, liftId, timestamp);
         } else if (modelClass.isAssignableFrom(EntryHistoryViewModel.class)) {

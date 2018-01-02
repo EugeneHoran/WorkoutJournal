@@ -15,6 +15,8 @@ import java.util.UUID;
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
@@ -33,9 +35,8 @@ public class RoutineAddViewModel extends AndroidViewModel {
     }
 
     /**
-     * Insert
+     * Insert Routine
      */
-
     void insertNewPlan(String planName) {
         String planId = UUID.randomUUID().toString();
         RoutineEntity routineEntity = new RoutineEntity(planId, planName, daysString);
@@ -51,6 +52,21 @@ public class RoutineAddViewModel extends AndroidViewModel {
             planSetEntityList.add(routineSetEntity);
         }
         repository.insertRoutine(routineEntity, planSetEntityList);
+    }
+
+
+    /**
+     * Insert Plan
+     */
+    void insertPlan(String planName) {
+        String planId = UUID.randomUUID().toString();
+        PlanEntity planEntity = new PlanEntity(planId, planName);
+        List<PlanSetEntity> planSetEntityList = new ArrayList<>();
+        for (int i = 0; i < liftListSelected.size(); i++) {
+            ExerciseLiftEntity exerciseLiftEntity = liftListSelected.get(i);
+            planSetEntityList.add(new PlanSetEntity(planId, exerciseLiftEntity));
+        }
+        repository.insertPlanSets(planEntity, planSetEntityList);
     }
 
     /**

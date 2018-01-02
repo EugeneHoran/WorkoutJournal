@@ -9,8 +9,10 @@ import android.support.v4.content.ContextCompat;
 public class LayoutUtil {
     public static Drawable getDrawableMutate(Context context, int resDrawable, int resColor) {
         Drawable drawableChange = ContextCompat.getDrawable(context, resDrawable);
-        drawableChange.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, resColor), PorterDuff.Mode.MULTIPLY));
-        drawableChange.mutate();
+        if (drawableChange != null) {
+            drawableChange.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, resColor), PorterDuff.Mode.MULTIPLY));
+            drawableChange.mutate();
+        }
         return drawableChange;
     }
 

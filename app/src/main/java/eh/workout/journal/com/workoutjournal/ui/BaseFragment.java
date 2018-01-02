@@ -22,7 +22,7 @@ import eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
 import eh.workout.journal.com.workoutjournal.ui.orm.OneRepMaxFragment;
-import eh.workout.journal.com.workoutjournal.ui.plan.edit.EditPlanActivity;
+import eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineActivity;
 import eh.workout.journal.com.workoutjournal.ui.routine.RoutineAddActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
@@ -59,7 +59,7 @@ public class BaseFragment extends Fragment {
 
     public void navToEditPlanActivity(int page, String planId, int requestCode) {
         if (getActivity() != null) {
-            Intent editPlanIntent = new Intent(getActivity(), EditPlanActivity.class);
+            Intent editPlanIntent = new Intent(getActivity(), EditRoutineActivity.class);
             editPlanIntent.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
             editPlanIntent.putExtra(Constants.EDIT_PLAN_ID, planId);
             getActivity().startActivityForResult(editPlanIntent, requestCode);

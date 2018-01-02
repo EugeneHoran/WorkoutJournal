@@ -11,6 +11,11 @@ public class PlanEntity {
     private String id;
     private String planName;
 
+    public PlanEntity(@NonNull String id, String planName) {
+        this.id = id;
+        this.planName = planName;
+    }
+
     @NonNull
     public String getId() {
         return id;

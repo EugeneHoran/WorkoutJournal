@@ -6,9 +6,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
-    private String[] titleList = {"Exercises", "Groups", "Plans", "Routine"};
-    private Fragment[] fragments;
+
+    private static final int FRAG_EXERCISES = 0;
+    private static final int FRAG_GROUPS = 1;
+    private static final int FRAG_PLAN = 2;
+    private static final int FRAG_ROUTINE = 3;
+
     private Long timestamp;
+    private Fragment[] fragments;
+    private String[] titleList = {
+            "Exercises",
+            "Groups",
+            "Plans",
+            "Routine"};
 
     ExerciseParentPagerAdapter(FragmentManager fm, Long timestamp) {
         super(fm);
@@ -24,25 +34,25 @@ public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
             fragments = new Fragment[getCount()];
         }
         switch (position) {
-            case 0:
-                fragments[0] = ExerciseSelectorFragment.newInstance();
-            case 1:
-                fragments[1] = ExerciseGroupFragment.newInstance();
-            case 2:
-                fragments[2] = ExerciseRoutineFragment.newInstance(timestamp);
-            case 3:
-                fragments[3] = ExerciseRoutineFragment.newInstance(timestamp);
+            case FRAG_EXERCISES:
+                fragments[FRAG_EXERCISES] = ExerciseSelectorFragment.newInstance();
+            case FRAG_GROUPS:
+                fragments[FRAG_GROUPS] = ExerciseGroupFragment.newInstance();
+            case FRAG_PLAN:
+                fragments[FRAG_PLAN] = ExercisePlanFragment.newInstance(timestamp);
+            case FRAG_ROUTINE:
+                fragments[FRAG_ROUTINE] = ExerciseRoutineFragment.newInstance(timestamp);
         }
         return fragments[position];
-    }
-
-    ExerciseGroupFragment getGroupFragment() {
-        return (ExerciseGroupFragment) fragments[1];
     }
 
     @Override
     public int getCount() {
         return titleList.length;
+    }
+
+    ExerciseGroupFragment getGroupFragment() {
+        return (ExerciseGroupFragment) fragments[FRAG_GROUPS];
     }
 
     @Nullable

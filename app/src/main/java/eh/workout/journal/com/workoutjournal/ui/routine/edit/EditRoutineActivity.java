@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.plan.edit;
+package eh.workout.journal.com.workoutjournal.ui.routine.edit;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -11,30 +11,30 @@ import android.view.MenuItem;
 import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.ActivityEditPlanBinding;
+import eh.workout.journal.com.workoutjournal.databinding.ActivityEditRoutineBinding;
 import eh.workout.journal.com.workoutjournal.util.AppFactory;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 
-public class EditPlanActivity extends AppCompatActivity {
+public class EditRoutineActivity extends AppCompatActivity {
 
     private int pageNumber;
-    private EditPlanViewModel model;
+    private EditRoutineViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageNumber = getIntent().getIntExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, Constants.JOURNAL_PAGE_TODAY);
         String planId = getIntent().getStringExtra(Constants.EDIT_PLAN_ID);
-        ActivityEditPlanBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_plan);
+        ActivityEditRoutineBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_routine);
         initToolbar(binding);
-        model = ViewModelProviders.of(this, new AppFactory(getApplication(), planId)).get(EditPlanViewModel.class);
+        model = ViewModelProviders.of(this, new AppFactory(getApplication(), planId)).get(EditRoutineViewModel.class);
         model.initEditData();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, EditPlanFragment.newInstance()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, EditRoutineFragment.newInstance()).commit();
         }
     }
 
-    private void initToolbar(ActivityEditPlanBinding binding) {
+    private void initToolbar(ActivityEditRoutineBinding binding) {
         binding.toolbar.setNavigationOnClickListener(navListener);
         binding.toolbar.inflateMenu(R.menu.menu_edit_move_delete);
         Menu menu = binding.toolbar.getMenu();

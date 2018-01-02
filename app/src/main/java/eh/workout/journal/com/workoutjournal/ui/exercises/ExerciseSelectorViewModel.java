@@ -16,7 +16,7 @@ import java.util.List;
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
-import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
 
 public class ExerciseSelectorViewModel extends AndroidViewModel {
     private JournalRepository repository;
@@ -35,7 +35,7 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
         observeExercisesObjects.addSource(allExercises, new Observer<List<ExerciseLiftEntity>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
-                observeExercisesObjects.setValue(ExerciseDataHelper.getFormattedExerciseList(exerciseLiftEntities));
+                observeExercisesObjects.setValue(new DataHelper().getFormattedExerciseList(exerciseLiftEntities));
             }
         });
     }
@@ -46,7 +46,7 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
 
     void queryExercises(String query) {
         if (TextUtils.isEmpty(query)) {
-            observeExercisesObjects.setValue(ExerciseDataHelper.getFormattedExerciseList(allExercises.getValue()));
+            observeExercisesObjects.setValue(new DataHelper().getFormattedExerciseList(allExercises.getValue()));
         } else {
             List<ExerciseLiftEntity> exerciseLiftEntities = allExercises.getValue();
             if (exerciseLiftEntities != null) {
@@ -61,7 +61,7 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
                 }
                 observeExercisesObjects.setValue(temp);
             } else {
-                observeExercisesObjects.setValue(ExerciseDataHelper.getFormattedExerciseList(allExercises.getValue()));
+                observeExercisesObjects.setValue(new DataHelper().getFormattedExerciseList(allExercises.getValue()));
             }
         }
     }

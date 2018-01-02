@@ -1,11 +1,8 @@
 package eh.workout.journal.com.workoutjournal.util;
 
 
-import android.util.SparseArray;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,15 +10,7 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseGroupEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
 
-public class ExerciseDataHelper {
-
-    public static void testing() {
-        SparseArray<String> testing = new SparseArray<>();
-        for (int i = 0; i < DAYS.length; i++) {
-            testing.put(i, DAYS[i]);
-        }
-    }
-
+public class DataHelper {
     public static final int EXERCISE_TYPE_WEIGHT = 0;
     public static final int EXERCISE_TYPE_BODY = 1;
     public static final int EXERCISE_TYPE_CARDIO = 2;
@@ -34,24 +23,6 @@ public class ExerciseDataHelper {
             "Friday",
             "Saturday"
     };
-
-    public static List<String> getDays(Integer[] integers) {
-        List<String> daySelectorList = new ArrayList<>();
-        for (Integer integer : integers) {
-            daySelectorList.add(DAYS[integer]);
-        }
-        return daySelectorList;
-    }
-
-    public static List<DaySelector> getDays() {
-        List<DaySelector> daySelectorList = new ArrayList<>();
-        for (int i = 0; i < DAYS.length; i++) {
-            daySelectorList.add(new DaySelector(DAYS[i], false, i + 1));
-        }
-        return daySelectorList;
-    }
-
-
     public static final String[] EXERCISE_TYPES = new String[]{
             "Weights or Machine",
             "Body Weight",
@@ -95,8 +66,15 @@ public class ExerciseDataHelper {
             "Power Clean,4,0",
             "Squat,6,0"};
 
+    public List<DaySelector> getDays() {
+        List<DaySelector> daySelectorList = new ArrayList<>();
+        for (int i = 0; i < DAYS.length; i++) {
+            daySelectorList.add(new DaySelector(DAYS[i], false, i + 1));
+        }
+        return daySelectorList;
+    }
 
-    public static List<ExerciseGroupEntity> generateExerciseGroups() {
+    public List<ExerciseGroupEntity> generateExerciseGroups() {
         List<ExerciseGroupEntity> groupEntityList = new ArrayList<>();
         for (String typeArray : EXERCISE_BODY_TYPE_ARRAY) {
             String[] exercise = typeArray.split(",");
@@ -127,7 +105,7 @@ public class ExerciseDataHelper {
     }
 
 
-    public static List<Object> getFormattedExerciseList(List<ExerciseLiftEntity> liftList) {
+    public List<Object> getFormattedExerciseList(List<ExerciseLiftEntity> liftList) {
         List<Object> objectList = new ArrayList<>();
         List<ExerciseLiftEntity> recentList = new ArrayList<>();
         for (int i = 0; i < liftList.size(); i++) {

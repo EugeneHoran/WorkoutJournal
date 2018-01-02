@@ -14,6 +14,8 @@ import java.util.UUID;
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
@@ -77,8 +79,8 @@ public class AddPlanViewModel extends AndroidViewModel {
     }
 
     void insertNewPlan() {
-        String planId = UUID.randomUUID().toString();
-        RoutineEntity routineEntity = new RoutineEntity(planId, planName, daysString);
+        String routineId = UUID.randomUUID().toString();
+        RoutineEntity routineEntity = new RoutineEntity(routineId, planName, daysString);
         List<RoutineSetEntity> planSetEntityList = new ArrayList<>();
         for (int i = 0; i < liftEntityList.size(); i++) {
             ExerciseLiftEntity exerciseLiftEntity = liftEntityList.get(i);
@@ -87,10 +89,23 @@ public class AddPlanViewModel extends AndroidViewModel {
                     exerciseLiftEntity.getName(),
                     exerciseLiftEntity.getId(),
                     exerciseLiftEntity.getExerciseInputType(),
-                    planId);
+                    routineId);
             planSetEntityList.add(routineSetEntity);
         }
         repository.insertRoutine(routineEntity, planSetEntityList);
+        insertPlan();
+    }
+
+
+    private void insertPlan() {
+        String planId = UUID.randomUUID().toString();
+        PlanEntity planEntity = new PlanEntity(planId, planName);
+        List<PlanSetEntity> planSetEntityList = new ArrayList<>();
+        for (int i = 0; i < liftEntityList.size(); i++) {
+            ExerciseLiftEntity exerciseLiftEntity = liftEntityList.get(i);
+            planSetEntityList.add(new PlanSetEntity(planId, exerciseLiftEntity));
+        }
+        repository.insertPlanSets(planEntity, planSetEntityList);
     }
 
     @SuppressLint("StaticFieldLeak")

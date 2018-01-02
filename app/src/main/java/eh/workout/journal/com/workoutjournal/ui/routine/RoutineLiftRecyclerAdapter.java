@@ -16,7 +16,6 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
-import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanSelectLiftRecyclerAdapter;
 
 public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
     private List<ExerciseLiftEntity> itemList = new ArrayList<>();

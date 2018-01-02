@@ -55,7 +55,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="6dp"
                 android:layout_marginTop="12dp"
                 android:background="@color/colorGrayTransparent" />
 
@@ -69,10 +69,34 @@
                     android:orientation="vertical">
 
                     <Switch
+                        android:id="@+id/switchAddPlan"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="64dp"
-                        android:layout_marginRight="56dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical"
+                        android:checked="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:paddingLeft="64dp"
+                        android:paddingRight="56dp"
+                        android:text="Add to workout plans"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="visible" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/colorGrayTransparent"
+                        android:visibility="visible" />
+
+                    <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="64dp"
+                        android:paddingRight="56dp"
                         android:text="Set reminder"
                         android:textColor="@color/black"
                         android:textSize="16sp"
@@ -82,7 +106,7 @@
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
                         android:layout_marginBottom="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="6dp"
                         android:background="@color/colorGrayTransparent"
                         android:visibility="visible" />
 

@@ -9,8 +9,9 @@
         <import type="android.view.View" />
 
         <variable
-            name="holder"
-            type="eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseRoutineRecyclerAdapter.PlanViewHolder" />
+            name="listener"
+            type="android.view.View.OnClickListener" />
+
     </data>
 
     <android.support.v7.widget.CardView
@@ -58,7 +59,7 @@
                     android:contentDescription="@null"
                     android:focusable="true"
                     android:foreground="?selectableItemBackgroundBorderless"
-                    android:onClickListener="@{holder::onMenuClicked}"
+                    android:onClickListener="@{listener}"
                     android:padding="8dp"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_more_vert" />

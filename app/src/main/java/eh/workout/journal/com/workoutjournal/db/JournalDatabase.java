@@ -24,7 +24,7 @@ import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
-import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
 
 
 @Database(entities = {
@@ -72,7 +72,7 @@ public abstract class JournalDatabase extends RoomDatabase {
                     @Override
                     public void run() {
                         JournalDatabase database = JournalDatabase.getInstance(context, executors);
-                        database.getExerciseLiftDao().insertGroupAndExercises(ExerciseDataHelper.generateExerciseGroups(), ExerciseDataHelper.generateExerciseLifts());
+                        database.getExerciseLiftDao().insertGroupAndExercises(new DataHelper().generateExerciseGroups(), DataHelper.generateExerciseLifts());
                     }
                 });
             }

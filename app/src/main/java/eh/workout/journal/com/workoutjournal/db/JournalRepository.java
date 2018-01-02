@@ -12,9 +12,12 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 
 public class JournalRepository {
@@ -38,9 +41,24 @@ public class JournalRepository {
         return instance;
     }
 
-
     /**
      * Plans
+     */
+    public void insertPlanSets(final PlanEntity planEntity, final List<PlanSetEntity> planSetEntities) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().insertPlanSets(planEntity, planSetEntities);
+            }
+        });
+    }
+
+    public LiveData<List<PlanSetRelation>> getPlanSetRelationListLive() {
+        return database.getPlanDao().getPlanSetRelationListLive();
+    }
+
+    /**
+     * Routines
      */
 
     public LiveData<List<RoutineSetRelation>> getPlanSetRelationListLive(Integer day) {

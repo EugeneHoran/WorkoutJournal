@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.plan.edit;
+package eh.workout.journal.com.workoutjournal.ui.routine.edit;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.AndroidViewModel;
@@ -18,27 +18,27 @@ import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
-import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
 
 
-public class EditPlanViewModel extends AndroidViewModel {
+public class EditRoutineViewModel extends AndroidViewModel {
     public ObservableBoolean noSelectedDays = new ObservableBoolean(false);
     boolean titleSet = false;
 
     private String routineId;
     private JournalRepository repository;
     private RoutineSetRelation routineSet;
-    private final MutableLiveData<RoutineSetRelation> planSetRelation;
+    private final MutableLiveData<RoutineSetRelation> routineSetRelation;
     private final MutableLiveData<List<ExerciseLiftEntity>> allExercises;
     private final MutableLiveData<List<ExerciseLiftEntity>> allSelectedExercises;
     private final MutableLiveData<List<DaySelector>> allDaysOfWeek;
     private final MutableLiveData<List<DaySelector>> selectedDaysOfWeek;
 
-    public EditPlanViewModel(@NonNull JournalApplication application, String routineId) {
+    public EditRoutineViewModel(@NonNull JournalApplication application, String routineId) {
         super(application);
         this.routineId = routineId;
         repository = application.getRepository();
-        planSetRelation = new MutableLiveData<>();
+        routineSetRelation = new MutableLiveData<>();
         allExercises = new MutableLiveData<>();
         allSelectedExercises = new MutableLiveData<>();
         allDaysOfWeek = new MutableLiveData<>();
@@ -66,7 +66,7 @@ public class EditPlanViewModel extends AndroidViewModel {
     }
 
     MutableLiveData<RoutineSetRelation> getPlanSetRelation() {
-        return planSetRelation;
+        return routineSetRelation;
     }
 
     // Days
@@ -134,7 +134,7 @@ public class EditPlanViewModel extends AndroidViewModel {
     private List<DaySelector> daySelectorList(List<Integer> selectedDaysInt) {
         noSelectedDays.set(selectedDaysInt.size() == 0);
         List<DaySelector> selectedDaysOfWeek = new ArrayList<>();
-        List<DaySelector> daySelectorList = ExerciseDataHelper.getDays();
+        List<DaySelector> daySelectorList = new DataHelper().getDays();
         for (int i = 0; i < daySelectorList.size(); i++) {
             DaySelector daySelector = daySelectorList.get(i);
             for (int j = 0; j < selectedDaysInt.size(); j++) {

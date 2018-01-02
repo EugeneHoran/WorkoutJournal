@@ -17,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.routine.edit.EditRoutineActivity" />
+        <activity android:name=".ui.routine.RoutineAddActivity" />
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -26,8 +28,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="eh.workout.journal.com.workoutjournal.ui.MainActivity" />
         </activity>
-        <activity android:name=".ui.plan.edit.EditPlanActivity" />
-        <activity android:name=".ui.routine.RoutineAddActivity"></activity>
     </application>
 
 </manifest>

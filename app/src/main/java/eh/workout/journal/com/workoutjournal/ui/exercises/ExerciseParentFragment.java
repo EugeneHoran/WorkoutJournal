@@ -46,7 +46,9 @@ public class ExerciseParentFragment extends BaseFragment {
             timestamp = getArguments().getLong(ARG_DATE_TIMESTAMP);
             page = getArguments().getInt(ARG_PAGE);
         }
-        planViewModel = ViewModelProviders.of(this, new AppFactory((JournalApplication) getActivity().getApplicationContext(), timestamp)).get(ExerciseRoutineViewModel.class);
+        if (getActivity() != null && getActivity().getApplicationContext() != null) {
+            planViewModel = ViewModelProviders.of(this, new AppFactory((JournalApplication) getActivity().getApplicationContext(), timestamp)).get(ExerciseRoutineViewModel.class);
+        }
         adapter = new ExerciseParentPagerAdapter(getChildFragmentManager(), timestamp);
     }
 

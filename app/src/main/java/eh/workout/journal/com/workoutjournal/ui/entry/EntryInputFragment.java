@@ -20,7 +20,7 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentEntryInputBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
-import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
 import eh.workout.journal.com.workoutjournal.util.MyStringUtil;
 import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 import eh.workout.journal.com.workoutjournal.util.views.QueryTextWatcher;
@@ -60,7 +60,7 @@ public class EntryInputFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entry_input, container, false);
-        if (inputType == ExerciseDataHelper.EXERCISE_TYPE_BODY) {
+        if (inputType == DataHelper.EXERCISE_TYPE_BODY) {
             binding.viewInput.pickerWeight.setVisibility(View.GONE);
             binding.viewInput.textWeight.setVisibility(View.GONE);
             binding.viewInput.spaceWeight.setVisibility(View.GONE);
@@ -133,9 +133,9 @@ public class EntryInputFragment extends Fragment implements
 
     private double getOneRepMax(String weight, String reps) {
         switch (inputType) {
-            case ExerciseDataHelper.EXERCISE_TYPE_WEIGHT:
+            case DataHelper.EXERCISE_TYPE_WEIGHT:
                 return OrmHelper.getOneRepMax(weight, reps);
-            case ExerciseDataHelper.EXERCISE_TYPE_BODY:
+            case DataHelper.EXERCISE_TYPE_BODY:
                 return Double.valueOf(reps);
             default:
                 return 0;

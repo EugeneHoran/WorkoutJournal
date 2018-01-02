@@ -14,7 +14,7 @@ import java.util.List;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.db.CustomTypeConverters;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
-import eh.workout.journal.com.workoutjournal.util.ExerciseDataHelper;
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
 
 
 public class RoutineDayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -25,7 +25,7 @@ public class RoutineDayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
         this.showCheckBox = showCheckBox;
         if (!fromEdit) {
             if (showCheckBox) {
-                setItems(ExerciseDataHelper.getDays());
+                setItems(new DataHelper().getDays());
             }
         }
     }

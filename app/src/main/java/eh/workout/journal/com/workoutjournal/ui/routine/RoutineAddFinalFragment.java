@@ -57,6 +57,9 @@ public class RoutineAddFinalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 model.insertNewPlan(getPlanName());
+                if (binding.switchAddPlan.isChecked()) {
+                    model.insertPlan(getPlanName());
+                }
                 if (getActivity() != null) {
                     getActivity().finish();
                 }
