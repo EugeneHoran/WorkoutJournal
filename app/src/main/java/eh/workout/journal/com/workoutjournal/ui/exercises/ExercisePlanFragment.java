@@ -15,6 +15,7 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseSelectorBinding;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 
 public class ExercisePlanFragment extends Fragment {
@@ -45,7 +46,17 @@ public class ExercisePlanFragment extends Fragment {
         if (getParentFragment() != null) {
             model = ViewModelProviders.of(getParentFragment()).get(ExerciseRoutineViewModel.class);
         }
-        adapter = new ExercisePlanRecyclerAdapter();
+        adapter = new ExercisePlanRecyclerAdapter(new ExercisePlanRecyclerAdapter.ExercisePlanInterface() {
+            @Override
+            public void onDeletePlan(PlanEntity planEntity) {
+                model.deletePlan(planEntity);
+            }
+
+            @Override
+            public void onPlanClicked(PlanEntity planEntity) {
+
+            }
+        });
     }
 
     @Nullable

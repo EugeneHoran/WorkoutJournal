@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
     <!--Layouts-->
     <style name="MatchParentMatchParent">
         <item name="android:layout_width">match_parent</item>
@@ -58,5 +59,10 @@
         <item name="android:orientation">vertical</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
+    </style>
+
+    <style name="ExpandedAppBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">28sp</item>
     </style>
 </resources>

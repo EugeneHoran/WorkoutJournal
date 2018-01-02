@@ -13,6 +13,7 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.RecyclerPlanExerciseViewBinding;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 
@@ -21,14 +22,14 @@ public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePl
     ExercisePlanInterface listener;
 
     public interface ExercisePlanInterface {
-        void onPlanClicked(String planId);
+        void onDeletePlan(PlanEntity planEntity);
 
-        void onEditPlanClicked(String planId);
+        void onPlanClicked(PlanEntity planEntity);
     }
-//
-//    public ExercisePlanRecyclerAdapter(ExercisePlanInterface listener) {
-//        this.listener = listener;
-//    }
+
+    public ExercisePlanRecyclerAdapter(ExercisePlanInterface listener) {
+        this.listener = listener;
+    }
 
     public void setItems(List<PlanSetRelation> itemList) {
         this.itemList.clear();
@@ -81,14 +82,15 @@ public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePl
             public void onClick(View view) {
                 PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
                 popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
+                popup.getMenu().findItem(R.id.action_edit).setVisible(false);
                 popup.getMenu().findItem(R.id.action_move).setVisible(false);
-                popup.getMenu().findItem(R.id.action_delete).setVisible(false);
+                popup.getMenu().findItem(R.id.action_delete).setVisible(true);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-//                        if (id == R.id.action_edit) {
-//                            listener.onEditPlanClicked(routineSetRelation.getPlanEntity().getId());
-//                        }
+                        if (id == R.id.action_delete) {
+                            listener.onDeletePlan(routineSetRelation.getPlanEntity());
+                        }
                         return true;
                     }
                 });

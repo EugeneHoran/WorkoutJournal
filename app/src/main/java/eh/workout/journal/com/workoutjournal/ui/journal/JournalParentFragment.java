@@ -130,6 +130,8 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
     public void onClick(View view) {
         if (view == binding.bottom.addRoutine) {
             navToAddRoutineActivity(binding.pager.getCurrentItem(), Constants.ADD_EDIT_PLAN_JOURNAL);
+        } else if (view == binding.bottom.addPlan) {
+            navToAddPlanActivity(binding.pager.getCurrentItem(), Constants.ADD_EDIT_PLAN_JOURNAL);
         }
     }
 
@@ -160,6 +162,7 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
         }
         binding.bottom.recyclerPlan.setAdapter(planRecyclerAdapter);
         binding.bottom.addRoutine.setOnClickListener(this);
+        binding.bottom.addPlan.setOnClickListener(this);
         planBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {

@@ -2,6 +2,7 @@ package eh.workout.journal.com.workoutjournal.db.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Transaction;
@@ -31,6 +32,9 @@ public abstract class PlanDao {
 
     @Insert
     public abstract void insertPlanDaySetEntity(List<PlanDaySetEntity> planDaySetEntities);
+
+    @Delete
+    public abstract void deletePlanEntity(PlanEntity planEntity);
 
     @Transaction
     public void insertPlanSets(PlanEntity planEntity, List<PlanSetEntity> planSetEntities) {

@@ -10,7 +10,6 @@ import eh.workout.journal.com.workoutjournal.ui.entry.EntryHistoryViewModel;
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseRoutineViewModel;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalChildViewModel;
-import eh.workout.journal.com.workoutjournal.ui.plan.AddPlanViewModel;
 import eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineViewModel;
 
 
@@ -63,8 +62,6 @@ public class AppFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new EntryViewModelNew((JournalApplication) application, liftId, timestamp);
         } else if (modelClass.isAssignableFrom(EntryHistoryViewModel.class)) {
             return (T) new EntryHistoryViewModel((JournalApplication) application, liftId, timestamp);
-        } else if (modelClass.isAssignableFrom(AddPlanViewModel.class)) {
-            return (T) new AddPlanViewModel((JournalApplication) application);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

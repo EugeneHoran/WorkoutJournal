@@ -22,8 +22,9 @@ import eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
 import eh.workout.journal.com.workoutjournal.ui.orm.OneRepMaxFragment;
-import eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineActivity;
+import eh.workout.journal.com.workoutjournal.ui.plan.PlanAddActivity;
 import eh.workout.journal.com.workoutjournal.ui.routine.RoutineAddActivity;
+import eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
@@ -52,6 +53,14 @@ public class BaseFragment extends Fragment {
     public void navToAddRoutineActivity(int page, int requestCode) {
         if (getActivity() != null) {
             Intent intentPlan = new Intent(getActivity(), RoutineAddActivity.class);
+            intentPlan.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
+            getActivity().startActivityForResult(intentPlan, requestCode);
+        }
+    }
+
+    public void navToAddPlanActivity(int page, int requestCode) {
+        if (getActivity() != null) {
+            Intent intentPlan = new Intent(getActivity(), PlanAddActivity.class);
             intentPlan.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
             getActivity().startActivityForResult(intentPlan, requestCode);
         }

@@ -12,6 +12,7 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 
@@ -30,6 +31,10 @@ public class ExerciseRoutineViewModel extends AndroidViewModel {
         routineSetRelationList = new MutableLiveData<>();
         planSetRelationLive = repository.getPlanSetRelationListLive();
         new TaskRoutine().execute();
+    }
+
+    void deletePlan(PlanEntity planEntity) {
+        repository.deletePlanSets(planEntity);
     }
 
     void resetRoutine() {

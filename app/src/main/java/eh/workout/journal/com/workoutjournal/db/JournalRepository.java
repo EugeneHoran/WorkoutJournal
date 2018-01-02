@@ -53,6 +53,15 @@ public class JournalRepository {
         });
     }
 
+    public void deletePlanSets(final PlanEntity planEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().deletePlanEntity(planEntity);
+            }
+        });
+    }
+
     public LiveData<List<PlanSetRelation>> getPlanSetRelationListLive() {
         return database.getPlanDao().getPlanSetRelationListLive();
     }
