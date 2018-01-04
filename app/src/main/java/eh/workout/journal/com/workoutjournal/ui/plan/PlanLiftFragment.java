@@ -22,6 +22,7 @@ import java.util.List;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentPlanLiftBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
+import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
 import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
@@ -102,8 +103,14 @@ public class PlanLiftFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_exercise:
+                ExerciseSelectorAddExerciseDialogFragment addExerciseDialogFragment = ExerciseSelectorAddExerciseDialogFragment.newInstance();
+                addExerciseDialogFragment.show(getChildFragmentManager(), "TAG_ADD_LIFT_DIALOG_FRAGMENT");
                 return true;
             case R.id.action_search_exercise:
+                PlanAddActivity activity = (PlanAddActivity) getActivity();
+                if (activity != null) {
+                    activity.collapseAppBar();
+                }
                 return true;
             default:
                 break;

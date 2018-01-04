@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalChildBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
-import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.util.AppFactory;
 
@@ -42,7 +42,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     }
 
     private Long timestamp;
-    private MutableLiveData<List<RoutineSetRelation>> getPlanSetRelation;
+    private MutableLiveData<List<Object>> getRoutinePlanSetRelation;
     private FragmentJournalChildBinding binding;
     private JournalChildViewModel model;
     private JournalChildRecyclerAdapter adapterJournal;
@@ -68,16 +68,40 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setFragment(this);
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) binding.recyclerJournal.getLayoutManager();
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         binding.recyclerJournal.setNestedScrollingEnabled(false);
         binding.recyclerJournal.setAdapter(adapterJournal);
+
         observeSetsAndReps(model);
-        observePlans(model);
+        observeRoutinePlanList(model);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        resetTasks();
+    }
+
+    public void resetTasks() {
         model.resetTasks();
+    }
+
+    private void observeRoutinePlanList(JournalChildViewModel model) {
+        model.getRoutinePlanList().observe(this, new Observer<List<Object>>() {
+            @Override
+            public void onChanged(@Nullable List<Object> objectList) {
+                getRoutinePlanSetRelation().setValue(objectList);
+            }
+        });
+    }
+
+    public MutableLiveData<List<Object>> getRoutinePlanSetRelation() {
+        if (getRoutinePlanSetRelation == null) {
+            getRoutinePlanSetRelation = new MutableLiveData<>();
+        }
+        return getRoutinePlanSetRelation;
     }
 
     private void observeSetsAndReps(JournalChildViewModel model) {
@@ -90,22 +114,6 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
                 }
             }
         });
-    }
-
-    private void observePlans(JournalChildViewModel model) {
-        model.getRoutines().observe(this, new Observer<List<RoutineSetRelation>>() {
-            @Override
-            public void onChanged(@Nullable List<RoutineSetRelation> routineSetRelations) {
-                getPlanSetRelation().setValue(routineSetRelations);
-            }
-        });
-    }
-
-    public MutableLiveData<List<RoutineSetRelation>> getPlanSetRelation() {
-        if (getPlanSetRelation == null) {
-            getPlanSetRelation = new MutableLiveData<>();
-        }
-        return getPlanSetRelation;
     }
 
     @Override

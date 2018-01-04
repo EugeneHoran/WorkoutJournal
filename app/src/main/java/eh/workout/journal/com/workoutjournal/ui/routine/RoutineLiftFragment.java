@@ -81,7 +81,7 @@ public class RoutineLiftFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (adapter.getSelectedList().size() == 0) {
-                    Snackbar.make(binding.fab, "Select lifts to continue", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(binding.fab, "Select exercises to continue", Snackbar.LENGTH_SHORT).show();
                     return;
                 } else {
                     model.getLiftList().setValue(adapter.getAllCheckedList());

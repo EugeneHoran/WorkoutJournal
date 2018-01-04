@@ -1,9 +1,9 @@
 package eh.workout.journal.com.workoutjournal.ui.journal;
 
 
-import android.annotation.SuppressLint;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
@@ -31,26 +31,27 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalParentBinding;
-import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
 
-public class JournalParentFragment extends BaseFragment implements JournalPlanRecyclerAdapter.PlanChildInterface, View.OnClickListener {
+public class JournalParentFragment extends BaseFragment implements View.OnClickListener, JournalRoutinePlanRecyclerAdapter.PlanChildInterface {
     private static final String ARG_DATE_PAGE = "arg_date_page";
-
+    private static final String ARG_SHOW_ROUTINE_PLAN = "arg_show_routine_plan";
     public ObservableField<String> toolbarTitle = new ObservableField<>("Today");
     public ObservableField<String> toolbarSubTitle = new ObservableField<>();
 
     public JournalParentFragment() {
     }
 
-    public static JournalParentFragment newInstance(int page) {
+    public static JournalParentFragment newInstance(int page, boolean showRoutinePlan) {
         JournalParentFragment fragment = new JournalParentFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_DATE_PAGE, page);
+        args.putBoolean(ARG_SHOW_ROUTINE_PLAN, showRoutinePlan);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,11 +61,12 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
     private int intPeekingHeight = 0;
     private Integer initiatedPage = null;
 
+    private JournalParentViewModel model;
     private FragmentJournalParentBinding binding;
     private BottomSheetBehavior planBottomSheetBehavior;
     private JournalParentPagerAdapter dayPagerAdapter;
-    private JournalPlanRecyclerAdapter planRecyclerAdapter;
-    private MutableLiveData<List<RoutineSetRelation>> journalChildPlanLiveData;
+    private JournalRoutinePlanRecyclerAdapter routinePlanRecyclerAdapter;
+    private MutableLiveData<List<Object>> routinePlanObjectList;
     private CalendarBottomSheetFragment calendarBottomSheetFragment;
     private MenuItem todayToolbarMenuItem;
 
@@ -74,17 +76,10 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
         if (getArguments() != null) {
             datePage = getArguments().getInt(ARG_DATE_PAGE, Constants.JOURNAL_PAGE_TODAY);
         }
+        model = ViewModelProviders.of(this).get(JournalParentViewModel.class);
         dayPagerAdapter = new JournalParentPagerAdapter(getChildFragmentManager());
-        planRecyclerAdapter = new JournalPlanRecyclerAdapter(this);
+        routinePlanRecyclerAdapter = new JournalRoutinePlanRecyclerAdapter(this);
         intPeekingHeight = (int) getResources().getDimension(R.dimen.bottom_sheet_default_peeking_height);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (initiatedPage == null) {
-            initBottomSheet(datePage);
-        }
     }
 
     @Override
@@ -110,6 +105,14 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
         initBottomSheet();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (initiatedPage == null) {
+            initBottomSheet(datePage);
+        }
+    }
+
     ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
@@ -132,18 +135,11 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
             navToAddRoutineActivity(binding.pager.getCurrentItem(), Constants.ADD_EDIT_PLAN_JOURNAL);
         } else if (view == binding.bottom.addPlan) {
             navToAddPlanActivity(binding.pager.getCurrentItem(), Constants.ADD_EDIT_PLAN_JOURNAL);
+        } else if (view == binding.bottom.viewClicker2) {
+            planBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 
-    @Override
-    public void onExerciseClicked(String setId, int inputType) {
-        navToAddExerciseFragment(binding.viewToolbar.appBar, setId, inputType, dayPagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
-    }
-
-    @Override
-    public void onEditPlanClicked(String planId) {
-        navToEditPlanActivity(binding.pager.getCurrentItem(), planId, Constants.ADD_EDIT_PLAN_JOURNAL);
-    }
 
     @SuppressWarnings("unused")
     public void onAddNewLiftClicked(View view) {
@@ -160,60 +156,67 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
         if (getActivity() != null) {
             binding.bottom.recyclerPlan.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         }
-        binding.bottom.recyclerPlan.setAdapter(planRecyclerAdapter);
+        binding.bottom.recyclerPlan.setAdapter(routinePlanRecyclerAdapter);
         binding.bottom.addRoutine.setOnClickListener(this);
         binding.bottom.addPlan.setOnClickListener(this);
+        binding.bottom.viewClicker2.setOnClickListener(this);
         planBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     binding.bottom.viewClicker.setVisibility(View.GONE);
                 } else {
+                    binding.bottom.viewClicker.setOnTouchListener(touchListener);
                     binding.bottom.viewClicker.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                binding.bottom.rotateImage.setRotation(slideOffset * 180);
+                float animAppBar = slideOffset * binding.viewToolbar.appBar.getHeight();
+                binding.viewToolbar.appBar.setTranslationY(-animAppBar);
+                binding.pager.setTranslationY(-animAppBar);
                 binding.bottom.viewClicker.setAlpha(slideOffset);
-            }
-        });
-        binding.bottom.viewClicker.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                planBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                return true;
             }
         });
     }
 
+    View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            planBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            binding.bottom.viewClicker.setOnTouchListener(null);
+            return true;
+        }
+    };
+
     private void initBottomSheet(int position) {
-        if (journalChildPlanLiveData == null) {
-            journalChildPlanLiveData = dayPagerAdapter.getItem(position).getPlanSetRelation();
-            journalChildPlanLiveData.observe(this, planObserver);
+        if (routinePlanObjectList == null) {
+            routinePlanObjectList = dayPagerAdapter.getItem(position).getRoutinePlanSetRelation();
+            routinePlanObjectList.observe(this, routinePlanObserver);
         } else {
-            journalChildPlanLiveData = dayPagerAdapter.getItem(intPagerLastPage).getPlanSetRelation();
-            if (journalChildPlanLiveData.hasActiveObservers()) {
-                journalChildPlanLiveData.removeObserver(planObserver);
+            routinePlanObjectList = dayPagerAdapter.getItem(intPagerLastPage).getRoutinePlanSetRelation();
+            if (routinePlanObjectList.hasActiveObservers()) {
+                routinePlanObjectList.removeObserver(routinePlanObserver);
             }
-            journalChildPlanLiveData = dayPagerAdapter.getItem(position).getPlanSetRelation();
-            journalChildPlanLiveData.observe(this, planObserver);
+            routinePlanObjectList = dayPagerAdapter.getItem(position).getRoutinePlanSetRelation();
+            routinePlanObjectList.observe(this, routinePlanObserver);
         }
         initiatedPage = position;
         intPagerLastPage = position;
     }
 
-    private Observer<List<RoutineSetRelation>> planObserver = new Observer<List<RoutineSetRelation>>() {
+    private Observer<List<Object>> routinePlanObserver = new Observer<List<Object>>() {
         @Override
-        public void onChanged(@Nullable List<RoutineSetRelation> routineSetRelations) {
+        public void onChanged(@Nullable List<Object> routineSetRelations) {
             if (routineSetRelations != null) {
                 if (routineSetRelations.size() > 0) {
                     planBottomSheetBehavior.setPeekHeight(intPeekingHeight);
                     planBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    planRecyclerAdapter.setItems(routineSetRelations);
+                    routinePlanRecyclerAdapter.setItems(routineSetRelations);
                 } else {
-                    planRecyclerAdapter.setItems(null);
+                    routinePlanRecyclerAdapter.setItems(null);
                     planBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
             }
@@ -229,6 +232,22 @@ public class JournalParentFragment extends BaseFragment implements JournalPlanRe
         }
     };
 
+
+    @Override
+    public void onExerciseClicked(String setId, int inputType) {
+        navToAddExerciseFragment(binding.viewToolbar.appBar, setId, inputType, dayPagerAdapter.getTimestamp(binding.pager.getCurrentItem()));
+    }
+
+    @Override
+    public void onEditRoutineClicked(String planId) {
+        navToEditPlanActivity(binding.pager.getCurrentItem(), planId, Constants.ADD_EDIT_PLAN_JOURNAL);
+    }
+
+    @Override
+    public void onDeleteRoutine(PlanDayEntity planDayEntity) {
+        model.deletePlanDayEntity(planDayEntity);
+        dayPagerAdapter.getItem(binding.pager.getCurrentItem()).resetTasks();
+    }
     /*__________________Toolbar Menu Imp___________________________*/
 
     public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {

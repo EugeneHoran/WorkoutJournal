@@ -46,6 +46,7 @@ public class ExerciseSelectorFragment extends BaseFragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercise_selector, container, false);
+        binding.noItems.setVisibility(View.GONE);
         return binding.getRoot();
     }
 

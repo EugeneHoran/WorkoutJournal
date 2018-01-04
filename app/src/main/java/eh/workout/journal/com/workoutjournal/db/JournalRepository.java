@@ -12,11 +12,14 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.PlanDaySetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.PlanDaySetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 
@@ -53,6 +56,15 @@ public class JournalRepository {
         });
     }
 
+    public void insertPlanDaySets(final PlanDayEntity planDayEntity, final List<PlanDaySetEntity> planDaySetEntityList) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().insertPlanDaySets(planDayEntity, planDaySetEntityList);
+            }
+        });
+    }
+
     public void deletePlanSets(final PlanEntity planEntity) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
@@ -62,8 +74,25 @@ public class JournalRepository {
         });
     }
 
+    public void deletePlanDayEntity(final PlanDayEntity planDayEntity) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().deletePlanDayEntity(planDayEntity);
+            }
+        });
+    }
+
     public LiveData<List<PlanSetRelation>> getPlanSetRelationListLive() {
         return database.getPlanDao().getPlanSetRelationListLive();
+    }
+
+    public LiveData<List<PlanDaySetRelation>> getPlanSetDayRelationListLive(long timestamp) {
+        return database.getPlanDao().getPlanSetDayRelationListLive(timestamp);
+    }
+
+    public List<PlanDaySetRelation> getPlanSetDayRelationList(long timestamp) {
+        return database.getPlanDao().getPlanSetDayRelationList(timestamp);
     }
 
     /**

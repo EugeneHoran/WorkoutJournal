@@ -3,6 +3,7 @@ package eh.workout.journal.com.workoutjournal.db.entinty;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -12,7 +13,7 @@ import eh.workout.journal.com.workoutjournal.util.OrmHelper;
         foreignKeys = {@ForeignKey(entity = JournalSetEntity.class,
                 parentColumns = "id",
                 childColumns = "journalSetId",
-                onDelete = ForeignKey.CASCADE)})
+                onDelete = ForeignKey.CASCADE),})
 public class JournalRepEntity {
     @PrimaryKey
     @NonNull

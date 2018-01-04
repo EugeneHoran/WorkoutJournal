@@ -6,6 +6,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.UUID;
+
 @Entity(tableName = "plan_day_sets",
         foreignKeys = {@ForeignKey(entity = PlanDayEntity.class,
                 deferred = true,
@@ -22,6 +24,27 @@ public class PlanDaySetEntity {
     private String planTempId;
     @Ignore
     private boolean setCompleted = false;
+
+    public PlanDaySetEntity() {
+    }
+
+    @Ignore
+    public PlanDaySetEntity(String planId, ExerciseLiftEntity set) {
+        this.id = UUID.randomUUID().toString();
+        this.name = set.getName();
+        this.exerciseId = set.getId();
+        this.exerciseInputType = set.getExerciseInputType();
+        this.planTempId = planId;
+    }
+
+    @Ignore
+    public PlanDaySetEntity(String planId, PlanSetEntity set) {
+        this.id = UUID.randomUUID().toString();
+        this.name = set.getName();
+        this.exerciseId = set.getExerciseId();
+        this.exerciseInputType = set.getExerciseInputType();
+        this.planTempId = planId;
+    }
 
     @NonNull
     public String getId() {

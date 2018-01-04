@@ -23,6 +23,30 @@ public class DataHelper {
             "Friday",
             "Saturday"
     };
+
+    private static final String[] DAYS_SHORT = new String[]{
+            "Sun",
+            "Mon",
+            "Tues",
+            "Wed",
+            "Thurs",
+            "Fri",
+            "Sat"
+    };
+
+    public static String getDaysShort(String daysInt) {
+        StringBuilder daysFormatted = new StringBuilder();
+        String[] exercise = daysInt.split(",");
+        for (int i = 0; i < exercise.length; i++) {
+            if (i != exercise.length - 1) {
+                daysFormatted.append(DAYS_SHORT[Integer.valueOf(exercise[i]) - 1]).append(", ");
+            } else {
+                daysFormatted.append(DAYS_SHORT[Integer.valueOf(exercise[i]) - 1]);
+            }
+        }
+        return daysFormatted.toString();
+    }
+
     public static final String[] EXERCISE_TYPES = new String[]{
             "Weights or Machine",
             "Body Weight",

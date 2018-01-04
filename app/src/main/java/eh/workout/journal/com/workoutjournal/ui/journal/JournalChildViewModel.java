@@ -18,6 +18,7 @@ import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
+import eh.workout.journal.com.workoutjournal.db.relations.PlanDaySetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
 
@@ -25,7 +26,7 @@ import eh.workout.journal.com.workoutjournal.util.DateHelper;
 public class JournalChildViewModel extends AndroidViewModel {
     private JournalRepository repository;
     private MediatorLiveData<List<ExerciseSetRepRelation>> observeSetAndReps;
-    private MutableLiveData<List<RoutineSetRelation>> observeRoutines;
+    private MutableLiveData<List<Object>> routinePlanList;
     private Long timestamp;
 
     public JournalChildViewModel(@NonNull Application application, final Long timestamp) {
@@ -40,24 +41,26 @@ public class JournalChildViewModel extends AndroidViewModel {
                 if (deletingSet == null) {
                     observeSetAndReps.setValue(exerciseSetRepRelations);
                 }
-                new RoutineTask().execute(timestamp);
+                new RoutinePlanTask().execute(timestamp);
             }
         });
     }
 
+
+
     void resetTasks() {
-        new RoutineTask().execute(timestamp);
+        new RoutinePlanTask().execute(timestamp);
     }
 
     LiveData<List<ExerciseSetRepRelation>> getSetAndReps() {
         return observeSetAndReps;
     }
 
-    MutableLiveData<List<RoutineSetRelation>> getRoutines() {
-        if (observeRoutines == null) {
-            observeRoutines = new MutableLiveData<>();
+    MutableLiveData<List<Object>> getRoutinePlanList() {
+        if (routinePlanList == null) {
+            routinePlanList = new MutableLiveData<>();
         }
-        return observeRoutines;
+        return routinePlanList;
     }
 
     private JournalSetEntity deletingSet;
@@ -90,18 +93,21 @@ public class JournalChildViewModel extends AndroidViewModel {
         }
     };
 
+
     @SuppressLint("StaticFieldLeak")
-    class RoutineTask extends AsyncTask<Long, Void, List<RoutineSetRelation>> {
+    class RoutinePlanTask extends AsyncTask<Long, Void, List<Object>> {
         @Override
-        protected List<RoutineSetRelation> doInBackground(Long... integers) {
+        protected List<Object> doInBackground(Long... integers) {
             List<RoutineSetRelation> routineSetRelations = repository.getRoutineSetRelationList(DateHelper.getDayOfWeek(integers[0]));
-            return new JournalHelper().getPlanSetsCompleteList(getSetAndReps().getValue(), routineSetRelations);
+            List<PlanDaySetRelation> planDaySetRelations = repository.getPlanSetDayRelationList(integers[0]);
+            return new JournalHelper().getCompleteList(getSetAndReps().getValue(), routineSetRelations, planDaySetRelations);
         }
 
         @Override
-        protected void onPostExecute(List<RoutineSetRelation> routineSetRelations) {
-            super.onPostExecute(routineSetRelations);
-            getRoutines().setValue(routineSetRelations);
+        protected void onPostExecute(List<Object> objectList) {
+            super.onPostExecute(objectList);
+            getRoutinePlanList().setValue(objectList);
+//            getRoutines().setValue(routineSetRelations);
         }
     }
 }

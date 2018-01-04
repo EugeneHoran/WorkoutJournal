@@ -6,16 +6,19 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentExerciseSelectorBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
+import eh.workout.journal.com.workoutjournal.db.relations.PlanDaySetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 
 public class ExercisePlanFragment extends Fragment {
@@ -36,6 +39,7 @@ public class ExercisePlanFragment extends Fragment {
     private FragmentExerciseSelectorBinding binding;
     private ExerciseRoutineViewModel model;
     private ExercisePlanRecyclerAdapter adapter;
+    private List<PlanDaySetRelation> planDays = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +57,20 @@ public class ExercisePlanFragment extends Fragment {
             }
 
             @Override
-            public void onPlanClicked(PlanEntity planEntity) {
-
+            public void onPlanClicked(PlanSetRelation planSetRelation) {
+                if (planDays.size() > 0) {
+                    for (int i = 0; i < planDays.size(); i++) {
+                        PlanDaySetRelation planDaySetRelation = planDays.get(i);
+                        if (planDaySetRelation.getPlanDayEntity().getPlanEntityId().equalsIgnoreCase(planSetRelation.getPlanEntity().getId())) {
+                            Snackbar.make(binding.recycler, "Plan already set for this date", Snackbar.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                }
+                model.insertPlan(planSetRelation);
+                if (getActivity() != null) {
+                    getActivity().onBackPressed();
+                }
             }
         });
     }
@@ -71,12 +87,26 @@ public class ExercisePlanFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.recycler.setAdapter(adapter);
         observerPlanList(model);
+        observeDayPlanList(model);
+    }
+
+    public void observeDayPlanList(ExerciseRoutineViewModel model) {
+        model.getPlanSetRelationDayLive().observe(this, new Observer<List<PlanDaySetRelation>>() {
+            @Override
+            public void onChanged(@Nullable List<PlanDaySetRelation> planDaySetRelations) {
+                if (planDaySetRelations != null) {
+                    planDays.clear();
+                    planDays.addAll(planDaySetRelations);
+                }
+            }
+        });
     }
 
     public void observerPlanList(ExerciseRoutineViewModel model) {
         model.getPlanSets().observe(this, new Observer<List<PlanSetRelation>>() {
             @Override
             public void onChanged(@Nullable List<PlanSetRelation> planSetRelations) {
+                binding.noItems.setVisibility(planSetRelations != null && planSetRelations.size() > 0 ? View.GONE : View.VISIBLE);
                 adapter.setItems(planSetRelations);
             }
         });

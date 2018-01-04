@@ -9,11 +9,10 @@
     <color name="colorBackground">#EEEEEE</color>
     <color name="colorBackgroundSecondary">#FAFAFA</color>
 
-
     <color name="tealLight">#009688</color>
     <color name="tealNormal">#00796B</color>
     <color name="tealDark">#004D40</color>
-    <color name="colorBlackTransparent">#80000000</color>
+    <color name="colorBlackTransparent">#40000000</color>
     <color name="colorGrayTransparent">#809E9E9E</color>
     <color name="colorGrayIcon">#616161</color>
     <color name="colorGrayLight">#E0E0E0</color>

@@ -41,7 +41,7 @@ public class ExerciseSelectorAddExerciseDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        model = ViewModelProviders.of(getParentFragment()).get(ExerciseSelectorViewModel.class);
+        model = ViewModelProviders.of(this).get(ExerciseSelectorViewModel.class);
         observeExerciseList(model);
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_add_exercise, null, false);
         builder.setTitle("Add Exercise");

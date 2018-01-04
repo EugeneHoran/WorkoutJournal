@@ -9,8 +9,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="holder"
-            type="eh.workout.journal.com.workoutjournal.ui.journal.JournalPlanRecyclerAdapter.PlanParentViewHolder" />
+            name="listener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <LinearLayout
@@ -30,9 +30,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_list"
+                android:drawablePadding="12dp"
                 android:fontFamily="sans-serif-medium"
                 android:paddingBottom="16dp"
-                android:paddingLeft="16dp"
+                android:paddingLeft="12dp"
                 android:paddingRight="16dp"
                 android:paddingTop="16dp"
                 android:text="@string/workout_plan"
@@ -41,16 +43,14 @@
 
             <ImageView
                 android:id="@+id/menuMore"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:clickable="true"
                 android:contentDescription="@null"
                 android:focusable="true"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:onClickListener="@{holder::onMenuClicked}"
-                android:padding="8dp"
+                android:foreground="@drawable/background_image"
+                android:onClickListener="@{listener}"
+                android:padding="13dp"
                 android:tint="@color/black"
                 app:srcCompat="@drawable/ic_more_vert" />
         </LinearLayout>

@@ -1,6 +1,7 @@
 package eh.workout.journal.com.workoutjournal.ui.plan;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
@@ -12,31 +13,35 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ActivityAddPlanBinding;
+import eh.workout.journal.com.workoutjournal.ui.journal.JournalParentPagerAdapter;
+import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
 public class PlanAddActivity extends AppCompatActivity {
     private static final String TAG_FRAGMENT_LIFTS = "tag_fragment_lifts";
     private int appBarHeight;
     private int screenHeight;
-
+    private boolean searching = false;
     private ActivityAddPlanBinding binding;
+    private int page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        page = getIntent().getIntExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, 5000);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_plan);
         setSupportActionBar(binding.toolbar);
-        setTitle("Select exercises");
+        setTitle("Plan exercises");
         binding.toolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         binding.toolbar.setNavigationOnClickListener(navListener);
-        ViewModelProviders.of(this).get(PlanViewModel.class);
+        PlanViewModel model = ViewModelProviders.of(this).get(PlanViewModel.class);
         initContainerHeights();
         if (savedInstanceState == null) {
+            model.setTimestamp(JournalParentPagerAdapter.getTimestampStatic(page));
             PlanLiftFragment fragment = PlanLiftFragment.newInstance();
             initTransition(fragment);
             getSupportFragmentManager()
@@ -51,10 +56,11 @@ public class PlanAddActivity extends AppCompatActivity {
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
+                searching = false;
                 CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) binding.container.getLayoutParams();
                 AppBarLayout.ScrollingViewBehavior behavior = (AppBarLayout.ScrollingViewBehavior) params.getBehavior();
                 if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                    binding.toolbarLayout.setTitle("Select exercises");
+                    binding.toolbarLayout.setTitle("Plan exercises");
                     if (behavior != null) {
                         behavior.setOverlayTop(0);
                     }
@@ -68,12 +74,59 @@ public class PlanAddActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void finish() {
+        setResultFrom();
+        super.finish();
+    }
+
+    public void setResultFrom() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
+        setResult(RESULT_OK, returnIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searching) {
+            expandAppBar();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public void expandAppBar() {
-        binding.appBar.setExpanded(true);
+        if (!binding.appBar.isActivated()) {
+            unlockAppBarOpen();
+        } else {
+            binding.appBar.setExpanded(true);
+        }
     }
 
     public void collapseAppBar() {
-        binding.appBar.setExpanded(false);
+        lockAppBarClosed();
+    }
+
+    public void lockAppBarClosed() {
+        searching = true;
+        invalidateOptionsMenu();
+        binding.search.setVisibility(View.VISIBLE);
+        binding.appBar.setExpanded(false, true);
+        binding.appBar.setActivated(false);
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) binding.appBar.getLayoutParams();
+        lp.height = (int) getResources().getDimension(R.dimen.toolbar_height_collapsed);
+        initContainerHeights();
+    }
+
+    public void unlockAppBarOpen() {
+        searching = false;
+        binding.search.setVisibility(View.GONE);
+        binding.appBar.setExpanded(true, false);
+        binding.appBar.setActivated(true);
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) binding.appBar.getLayoutParams();
+        lp.height = (int) getResources().getDimension(R.dimen.toolbar_height_expanded);
+        initContainerHeights();
     }
 
     private View.OnClickListener navListener = new View.OnClickListener() {
@@ -98,6 +151,8 @@ public class PlanAddActivity extends AppCompatActivity {
     private void initContainerHeights() {
         appBarHeight = binding.appBar.getLayoutParams().height;
         screenHeight = screenHeight();
+        binding.container.requestLayout();
+        binding.container.getLayoutParams().height = screenHeight - (appBarHeight);
         binding.appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {

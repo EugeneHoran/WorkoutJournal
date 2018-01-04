@@ -18,7 +18,7 @@ public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
             "Exercises",
             "Groups",
             "Plans",
-            "Routine"};
+            "Routines"};
 
     ExerciseParentPagerAdapter(FragmentManager fm, Long timestamp) {
         super(fm);

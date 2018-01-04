@@ -57,7 +57,7 @@ public class ExerciseParentFragment extends BaseFragment {
     private ExerciseParentPagerAdapter adapter;
     private CustomSearchView customSearchView;
     private Long timestamp;
-    private int page;
+    public int page;
     private ExerciseRoutineViewModel planViewModel;
 
     @Override
@@ -145,7 +145,9 @@ public class ExerciseParentFragment extends BaseFragment {
             int id = item.getItemId();
             switch (id) {
                 case R.id.action_add_exercise:
-                    if (binding.pager.getCurrentItem() == 3) {
+                    if (binding.pager.getCurrentItem() == 2) {
+                        navToAddPlanActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE);
+                    } else if (binding.pager.getCurrentItem() == 3) {
                         navToAddRoutineActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE);
                     } else {
                         dialogNewExercise();

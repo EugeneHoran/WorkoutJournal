@@ -50,11 +50,6 @@ public class ExerciseRoutineFragment extends Fragment {
         }
         adapter = new ExerciseRoutineRecyclerAdapter(new ExerciseRoutineRecyclerAdapter.ExercisePlanInterface() {
             @Override
-            public void onPlanClicked(String planId) {
-
-            }
-
-            @Override
             public void onEditPlanClicked(String planId) {
                 ExerciseParentFragment parent = (ExerciseParentFragment) getParentFragment();
                 if (parent != null) {
@@ -82,6 +77,7 @@ public class ExerciseRoutineFragment extends Fragment {
         model.getRoutineSetRelationList().observe(this, new Observer<List<RoutineSetRelation>>() {
             @Override
             public void onChanged(@Nullable List<RoutineSetRelation> routineSetRelations) {
+                binding.noItems.setVisibility(routineSetRelations.size() > 0 ? View.GONE : View.VISIBLE);
                 adapter.setItems(routineSetRelations);
             }
         });

@@ -35,14 +35,14 @@ public class MainActivity extends AppCompatActivity {
         binding.setActivity(this);
         fm = getSupportFragmentManager();
         if (savedInstanceState == null) {
-            initJournalFragment(Constants.JOURNAL_PAGE_TODAY);
+            initJournalFragment(Constants.JOURNAL_PAGE_TODAY, false);
         }
         handleTimer();
     }
 
-    private void initJournalFragment(int page) {
+    private void initJournalFragment(int page, boolean showPlanRoutine) {
         fm.beginTransaction()
-                .replace(R.id.container, JournalParentFragment.newInstance(page), TAG_FRAG_JOURNAL)
+                .replace(R.id.container, JournalParentFragment.newInstance(page, showPlanRoutine), TAG_FRAG_JOURNAL)
                 .commit();
     }
 
@@ -50,20 +50,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE_SETTINGS) {
-            initJournalFragment(resultCode);
+            initJournalFragment(resultCode, false);
             handleTimer();
         } else if (requestCode == Constants.ADD_EDIT_PLAN_JOURNAL) {
             if (data != null) {
                 if (data.getExtras() != null) {
                     int page = data.getExtras().getInt(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, Constants.JOURNAL_PAGE_TODAY);
                     fm.popBackStack();
-                    initJournalFragment(page);
+                    initJournalFragment(page, true);
                 }
             }
         } else if (requestCode == Constants.ADD_EDIT_PLAN_EXERCISE) {
             ExerciseParentFragment exerciseParentFragment = (ExerciseParentFragment) fm.findFragmentByTag(TAG_FRAG_EXERCISE_SELECTOR);
             if (exerciseParentFragment != null) {
-                exerciseParentFragment.resetPlanFragment();
+                int page = exerciseParentFragment.page;
+                fm.popBackStack();
+                initJournalFragment(page, true);
             }
         }
     }
