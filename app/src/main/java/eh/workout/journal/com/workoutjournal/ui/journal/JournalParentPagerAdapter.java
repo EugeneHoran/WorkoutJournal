@@ -29,7 +29,7 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
         if (mFragments != null && mFragments.length > position && mFragments[position] != null) {
             return mFragments[position];
         }
-        JournalChildFragment journalFragment = JournalChildFragment.newInstance(DateHelper.getAdapterTimestamp(position));
+        JournalChildFragment journalFragment = JournalChildFragment.newInstance(DateHelper.getAdapterTimestamp(position), position);
         if (mFragments == null) {
             mFragments = new JournalChildFragment[getCount()];
         }

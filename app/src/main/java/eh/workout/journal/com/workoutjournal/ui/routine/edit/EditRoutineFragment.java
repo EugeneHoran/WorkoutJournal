@@ -98,6 +98,8 @@ public class EditRoutineFragment extends Fragment {
                 }
             }
         });
+
+
         observePlanData(model);
     }
 

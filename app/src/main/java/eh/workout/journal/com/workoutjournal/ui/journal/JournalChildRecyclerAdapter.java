@@ -31,10 +31,13 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
     interface JournalRecyclerInterface {
         void onWorkoutClicked(String setId, int inputType);
 
-        void onDeleteSetClicked(JournalSetEntity setEntity);
+        void onDeleteSetClicked(ExerciseSetRepRelation dateSetRepRelation);
     }
 
     void setItems(final List<ExerciseSetRepRelation> items) {
+        if (items == null) {
+            return;
+        }
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
@@ -57,10 +60,20 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                 ExerciseSetRepRelation old = itemList.get(oldItemPosition);
                 ExerciseSetRepRelation newItem = items.get(newItemPosition);
-                return old.getJournalSetEntity().getId().equals(newItem.getJournalSetEntity().getId())
-                        && old.getJournalRepEntityList().size() == newItem.getJournalRepEntityList().size() &&
-                        old.getJournalRepEntityList().equals(newItem.getJournalRepEntityList()) &&
-                        old.getExerciseOrmEntity().equals(newItem.getExerciseOrmEntity());
+                if (!old.getExerciseOrmEntity().get(0).equals(newItem.getExerciseOrmEntity())) {
+                    return false;
+                }
+                if (old.getJournalRepEntityList().size() != newItem.getJournalRepEntityList().size()) {
+                    return false;
+                }
+                for (int i = 0; i < old.getJournalRepEntityList().size(); i++) {
+                    if (!old.getJournalRepEntityList().get(i).getId().equals(newItem.getJournalRepEntityList().get(i).getId())
+                            && !old.getJournalRepEntityList().get(i).getWeight().equals(newItem.getJournalRepEntityList().get(i).getWeight())
+                            && !old.getJournalRepEntityList().get(i).getReps().equals(newItem.getJournalRepEntityList().get(i).getReps())) {
+                        return false;
+                    }
+                }
+                return true;
             }
         });
         this.itemList.clear();
@@ -88,6 +101,7 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
     public class JournalViewHolder extends RecyclerView.ViewHolder {
         private RecyclerSetItemWithRecyclerBinding binding;
         private RepChildRecyclerAdapter adapter;
+        private ExerciseSetRepRelation dateSetRepRelation;
         private JournalSetEntity setEntity;
 
         JournalViewHolder(RecyclerSetItemWithRecyclerBinding binding) {
@@ -97,7 +111,7 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         }
 
         void bindView() {
-            ExerciseSetRepRelation dateSetRepRelation = itemList.get(getAdapterPosition());
+            dateSetRepRelation = itemList.get(getAdapterPosition());
             setEntity = dateSetRepRelation.getJournalSetEntity();
             if (dateSetRepRelation.getExerciseOrmEntity().size() > 0) {
                 ExerciseOrmEntity ormEntity = dateSetRepRelation.getExerciseOrmEntity().get(0);
@@ -138,9 +152,7 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
                     int id = item.getItemId();
                     if (id == R.id.action_delete) {
                         if (listener != null) {
-                            itemList.remove(getAdapterPosition());
-                            notifyItemRemoved(getAdapterPosition());
-                            listener.onDeleteSetClicked(setEntity);
+                            listener.onDeleteSetClicked(dateSetRepRelation);
                         }
                     }
                     return true;

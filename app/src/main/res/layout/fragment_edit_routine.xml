@@ -6,7 +6,6 @@
     tools:ignore="RtlHardcoded">
 
     <data>
-
         <import type="android.view.View" />
 
         <variable
@@ -95,13 +94,13 @@
                         android:id="@+id/daysTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
                         android:drawableLeft="@drawable/ic_calendar_empty"
+                        android:clickable="true"
                         android:drawablePadding="16dp"
                         android:drawableRight="@drawable/ic_edit"
                         android:focusable="true"
-                        android:fontFamily="sans-serif-medium"
                         android:foreground="?attr/selectableItemBackground"
+                        android:fontFamily="sans-serif-medium"
                         android:paddingBottom="16dp"
                         android:paddingLeft="64dp"
                         android:paddingRight="56dp"

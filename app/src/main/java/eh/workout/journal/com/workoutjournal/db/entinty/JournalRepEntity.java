@@ -10,10 +10,14 @@ import android.support.annotation.NonNull;
 import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 
 @Entity(tableName = "journal_rep_entities",
-        foreignKeys = {@ForeignKey(entity = JournalSetEntity.class,
-                parentColumns = "id",
-                childColumns = "journalSetId",
-                onDelete = ForeignKey.CASCADE),})
+        foreignKeys = {
+                @ForeignKey(entity = JournalSetEntity.class,
+                        parentColumns = "id",
+                        childColumns = "journalSetId",
+                        onDelete = ForeignKey.CASCADE)},
+        indices = {@Index(value = "journalSetId")
+        }
+)
 public class JournalRepEntity {
     @PrimaryKey
     @NonNull

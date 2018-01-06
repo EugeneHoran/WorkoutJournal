@@ -10,6 +10,7 @@ import eh.workout.journal.com.workoutjournal.ui.entry.EntryHistoryViewModel;
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseRoutineViewModel;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalChildViewModel;
+import eh.workout.journal.com.workoutjournal.ui.plan.edit.PlanDayEditViewModel;
 import eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineViewModel;
 
 
@@ -54,10 +55,10 @@ public class AppFactory extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ExerciseRoutineViewModel.class)) {
             return (T) new ExerciseRoutineViewModel(application, timestamp);
-        } else if (modelClass.isAssignableFrom(JournalChildViewModel.class)) {
-            return (T) new JournalChildViewModel(application, timestamp);
         } else if (modelClass.isAssignableFrom(EditRoutineViewModel.class)) {
             return (T) new EditRoutineViewModel((JournalApplication) application, planId);
+        } else if (modelClass.isAssignableFrom(PlanDayEditViewModel.class)) {
+            return (T) new PlanDayEditViewModel(application, planId);
         } else if (modelClass.isAssignableFrom(EntryViewModelNew.class)) {
             return (T) new EntryViewModelNew((JournalApplication) application, liftId, timestamp);
         } else if (modelClass.isAssignableFrom(EntryHistoryViewModel.class)) {

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "96829dc1b205eadd0a96f2de3c9e434b",
+    "identityHash": "b763f3ed86002aaeb1f42930420a5063",
     "entities": [
       {
         "tableName": "journal_date_entities",
@@ -157,7 +157,16 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_journal_rep_entities_journalSetId",
+            "unique": false,
+            "columnNames": [
+              "journalSetId"
+            ],
+            "createSql": "CREATE  INDEX `index_journal_rep_entities_journalSetId` ON `${TABLE_NAME}` (`journalSetId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "journal_set_entities",
@@ -601,7 +610,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"96829dc1b205eadd0a96f2de3c9e434b\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b763f3ed86002aaeb1f42930420a5063\")"
     ]
   }
 }

@@ -47,6 +47,26 @@ public class JournalRepository {
     /**
      * Plans
      */
+
+    public PlanDaySetRelation getPlanDaySetRelation(String planId) {
+        return database.getPlanDao().getPlanDaySetRelation(planId);
+    }
+
+    public void updatePlanDaySetRelation(final PlanDayEntity planDayEntity, final List<PlanDaySetEntity> deleteSets, final List<PlanDaySetEntity> updateSets) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().deletePlanDaySetEntities(deleteSets);
+            }
+        });
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getPlanDao().updatePlanDaySets(planDayEntity, updateSets);
+            }
+        });
+    }
+
     public void insertPlanSets(final PlanEntity planEntity, final List<PlanSetEntity> planSetEntities) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override

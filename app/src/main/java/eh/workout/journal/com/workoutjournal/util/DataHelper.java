@@ -48,22 +48,28 @@ public class DataHelper {
     }
 
     public static final String[] EXERCISE_TYPES = new String[]{
-            "Weights or Machine",
-            "Body Weight",
-            "Cardio"
+            "Weights or Machine",//0
+            "Body Weight",//1
+            "Cardio"//2
+    };
+    public static final String[] EXERCISE_SECTION = new String[]{
+            "Upper",//0
+            "Lower",//1
+            "Other"//2
     };
 
     private static final String[] EXERCISE_BODY_PART = new String[]{
-            "Chest",
-            "Triceps",
-            "Biceps",
-            "Forearm",
-            "Shoulders",
-            "Back",
-            "Legs",
-            "Abs",
-            "Cardio",
-            "Other"};
+            "Chest",// 0
+            "Triceps",// 1
+            "Biceps",// 2
+            "Forearm",// 3
+            "Shoulders",// 4
+            "Back",// 5
+            "Legs",// 6
+            "Abs",// 7
+            "Cardio",// 8
+            "Other"
+    };
 
 
     private static final String[] EXERCISE_BODY_TYPE_ARRAY = new String[]{

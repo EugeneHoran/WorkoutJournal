@@ -34,6 +34,8 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
         void onEditRoutineClicked(String planId);
 
         void onDeleteRoutine(PlanDayEntity planDayEntity);
+
+        void onEditPlanClicked(String planId);
     }
 
     JournalRoutinePlanRecyclerAdapter(PlanChildInterface listener) {
@@ -105,7 +107,13 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
                 PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
                 popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
                 popup.getMenu().findItem(R.id.action_move).setVisible(false);
-                popup.getMenu().findItem(R.id.action_edit).setVisible(which == 0);
+                if (which == 0) {
+                    popup.getMenu().findItem(R.id.action_edit).setTitle("Edit Routine");
+                } else {
+                    popup.getMenu().findItem(R.id.action_edit).setTitle("Edit Plan");
+                    popup.getMenu().findItem(R.id.action_delete).setTitle("Delete Plan");
+                }
+                popup.getMenu().findItem(R.id.action_edit).setVisible(true);
                 popup.getMenu().findItem(R.id.action_delete).setVisible(which != 0);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
@@ -114,6 +122,8 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
                             if (listener != null) {
                                 if (which == 0) {
                                     listener.onEditRoutineClicked(routineSetRelation.getRoutineEntity().getId());
+                                } else {
+                                    listener.onEditPlanClicked(planDaySetRelation.getPlanDayEntity().getId());
                                 }
                             }
                         } else if (id == R.id.action_delete) {

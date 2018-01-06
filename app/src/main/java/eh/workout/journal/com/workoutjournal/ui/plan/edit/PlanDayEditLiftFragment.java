@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.plan;
+package eh.workout.journal.com.workoutjournal.ui.plan.edit;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -23,21 +23,21 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentPlanLiftBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
+import eh.workout.journal.com.workoutjournal.ui.plan.PlanAddActivity;
 import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
-public class PlanLiftFragment extends Fragment {
-    private static final String TAG_FRAGMENT_FINAL = "tag_fragment_final";
 
-    public PlanLiftFragment() {
+public class PlanDayEditLiftFragment extends Fragment {
+    public PlanDayEditLiftFragment() {
     }
 
-    public static PlanLiftFragment newInstance() {
-        return new PlanLiftFragment();
+    public static PlanDayEditLiftFragment newInstance() {
+        return new PlanDayEditLiftFragment();
     }
 
     private FragmentPlanLiftBinding binding;
-    private PlanViewModel model;
+    private PlanDayEditViewModel model;
     private RoutineLiftRecyclerAdapter adapter;
 
     @Override
@@ -45,7 +45,7 @@ public class PlanLiftFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(PlanViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(PlanDayEditViewModel.class);
         }
         adapter = new RoutineLiftRecyclerAdapter(true);
     }
@@ -69,23 +69,19 @@ public class PlanLiftFragment extends Fragment {
                     Snackbar.make(binding.fab, "Fab", Snackbar.LENGTH_SHORT).show();
                 } else {
                     if (getActivity() != null) {
-                        model.setSelectedList(adapter.getSelectedList());
-                        PlanAddActivity activity = (PlanAddActivity) getActivity();
+                        model.getExercises().setValue(adapter.getAllCheckedList());
+                        model.getExercisesSelected().setValue(adapter.getSelectedList());
+                        PlanDayEditActivity activity = (PlanDayEditActivity) getActivity();
                         activity.expandAppBar();
-                        PlanFinalFragment finalFragment = PlanFinalFragment.newInstance();
-                        initTransition(finalFragment);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addSharedElement(binding.fab, "fab")
-                                .replace(R.id.container, finalFragment, TAG_FRAGMENT_FINAL).addToBackStack(TAG_FRAGMENT_FINAL)
-                                .commit();
+                        activity.getSupportFragmentManager().popBackStack();
                     }
                 }
             }
         });
     }
 
-    private void observeExercises(PlanViewModel model) {
-        model.getExerciseLifts().observe(this, new Observer<List<ExerciseLiftEntity>>() {
+    private void observeExercises(PlanDayEditViewModel model) {
+        model.getExercises().observe(this, new Observer<List<ExerciseLiftEntity>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
                 adapter.setItems(exerciseLiftEntities);
@@ -108,7 +104,7 @@ public class PlanLiftFragment extends Fragment {
                 addExerciseDialogFragment.show(getChildFragmentManager(), "TAG_ADD_LIFT_DIALOG_FRAGMENT");
                 return true;
             case R.id.action_search_exercise:
-                PlanAddActivity activity = (PlanAddActivity) getActivity();
+                PlanDayEditActivity activity = (PlanDayEditActivity) getActivity();
                 if (activity != null) {
                     activity.collapseAppBar();
                 }
@@ -117,14 +113,5 @@ public class PlanLiftFragment extends Fragment {
                 break;
         }
         return false;
-    }
-
-    private void initTransition(Fragment fragment) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
-            fragment.setEnterTransition(new Slide());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
-            fragment.setExitTransition(new Slide());
-        }
     }
 }

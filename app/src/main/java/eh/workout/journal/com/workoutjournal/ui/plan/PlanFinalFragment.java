@@ -59,5 +59,13 @@ public class PlanFinalFragment extends Fragment {
                 }
             }
         });
+        binding.editLifts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getActivity() != null) {
+                    getActivity().onBackPressed();
+                }
+            }
+        });
     }
 }

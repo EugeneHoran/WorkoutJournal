@@ -17,13 +17,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="74dp"
                     android:layout_marginLeft="64dp"
-                    android:layout_marginRight="74dp">
+                    android:layout_marginRight="74dp"
+                    android:layout_marginStart="64dp">
 
                     <EditText
                         android:id="@+id/editPlanName"
@@ -37,22 +41,28 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginBottom="16dp"
                     android:layout_marginTop="12dp"
                     android:background="@color/colorGrayTransparent" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/editLifts"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginEnd="56dp"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginRight="56dp"
-                    android:layout_marginStart="64dp"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/ic_edit"
                     android:drawableLeft="@drawable/ic_weight_normal"
                     android:drawablePadding="16dp"
+                    android:drawableRight="@drawable/ic_edit"
                     android:drawableStart="@drawable/ic_weight_normal"
+                    android:focusable="true"
                     android:fontFamily="sans-serif-medium"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="56dp"
+                    android:paddingLeft="64dp"
+                    android:paddingRight="56dp"
+                    android:paddingStart="64dp"
+                    android:paddingTop="16dp"
                     android:text="@string/exercises"
                     android:textColor="@color/black"
                     android:textSize="18sp"

@@ -177,6 +177,6 @@ public class ExerciseParentFragment extends BaseFragment {
     };
 
     public void onEditPlanClicked(String planId) {
-        navToEditPlanActivity(page, planId, Constants.ADD_EDIT_PLAN_EXERCISE);
+        navToEditRoutineActivity(page, planId, Constants.ADD_EDIT_PLAN_EXERCISE);
     }
 }
