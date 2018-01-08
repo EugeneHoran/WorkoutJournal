@@ -3,12 +3,10 @@ package eh.workout.journal.com.workoutjournal.ui.plan.edit;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,9 +21,7 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentPlanLiftBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
-import eh.workout.journal.com.workoutjournal.ui.plan.PlanAddActivity;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapter;
-import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
+import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineLiftRecyclerAdapter;
 
 
 public class PlanDayEditLiftFragment extends Fragment {

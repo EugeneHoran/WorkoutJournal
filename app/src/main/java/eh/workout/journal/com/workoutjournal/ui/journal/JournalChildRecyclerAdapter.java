@@ -35,9 +35,6 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     void setItems(final List<ExerciseSetRepRelation> items) {
-        if (items == null) {
-            return;
-        }
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
@@ -60,7 +57,9 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                 ExerciseSetRepRelation old = itemList.get(oldItemPosition);
                 ExerciseSetRepRelation newItem = items.get(newItemPosition);
-                if (!old.getExerciseOrmEntity().get(0).equals(newItem.getExerciseOrmEntity())) {
+                if (old.getExerciseOrmEntity().get(0).getOneRepMax() != newItem.getExerciseOrmEntity().get(0).getOneRepMax() &&
+                        old.getExerciseOrmEntity().get(0).getReps().equals(newItem.getExerciseOrmEntity().get(0).getReps()) &&
+                        old.getExerciseOrmEntity().get(0).getWeight().equals(newItem.getExerciseOrmEntity().get(0).getWeight())) {
                     return false;
                 }
                 if (old.getJournalRepEntityList().size() != newItem.getJournalRepEntityList().size()) {

@@ -2,6 +2,7 @@ package eh.workout.journal.com.workoutjournal.ui.plan.edit;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,13 +13,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentPlanFinalBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineLiftRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
 
@@ -68,6 +70,10 @@ public class PlanDayEditFinalFragment extends Fragment implements View.OnClickLi
             model.getPlanName().setValue(binding.editPlanName.getText().toString());
             model.updatePlan();
             if (getActivity() != null) {
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
                 getActivity().finish();
             }
         } else if (view == binding.editLifts) {

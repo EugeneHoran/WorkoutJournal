@@ -33,6 +33,9 @@ public class JournalRepEntity {
     private int exerciseInputType;
 
     @Ignore
+    private boolean selected = false;
+
+    @Ignore
     private int tempPosition;
 
     public JournalRepEntity() {
@@ -144,5 +147,15 @@ public class JournalRepEntity {
 
     public void setExerciseInputType(int exerciseInputType) {
         this.exerciseInputType = exerciseInputType;
+    }
+
+    @Ignore
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Ignore
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

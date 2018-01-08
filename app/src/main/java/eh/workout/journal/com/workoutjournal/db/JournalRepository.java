@@ -2,7 +2,6 @@ package eh.workout.journal.com.workoutjournal.db;
 
 
 import android.arch.lifecycle.LiveData;
-import android.util.Log;
 
 import java.util.List;
 
@@ -254,8 +253,7 @@ public class JournalRepository {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                Log.e("Testing", "Deleted");
-                database.getJournalDao().deleteSets(journalSetEntity);
+                database.getJournalDao().deleteSet(journalSetEntity);
             }
         });
         appExecutors.diskIO().execute(new Runnable() {
@@ -265,7 +263,7 @@ public class JournalRepository {
                 final ExerciseOrmEntity ormEntity = database.getJournalDao().getOneRepMaxByExerciseId(journalSetEntity.getExerciseId());
                 if (journalRepEntity == null) {
                     if (ormEntity != null) {
-                        database.getJournalDao().deleteOrms(ormEntity);
+                        database.getJournalDao().updateDeleteOrm(false, ormEntity);
                     }
                 } else {
                     ormEntity.setRepId(journalRepEntity.getId());
@@ -273,7 +271,7 @@ public class JournalRepository {
                     ormEntity.setWeight(journalRepEntity.getWeight());
                     ormEntity.setReps(journalRepEntity.getReps());
                     ormEntity.setTimestamp(journalRepEntity.getTimestamp());
-                    database.getJournalDao().updateOrms(ormEntity);
+                    database.getJournalDao().updateDeleteOrm(true, ormEntity);
                 }
             }
         });
@@ -319,22 +317,16 @@ public class JournalRepository {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                database.getJournalDao().deleteRepAndUpdateListPositions(repEntity, repEntityList);
-            }
-        });
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
                 final JournalRepEntity journalRepEntity = database.getJournalDao().getRepWithLargestOrm(repEntity.getExerciseId());
                 if (journalRepEntity == null) {
-                    database.getJournalDao().deleteOrms(ormEntity);
+                    database.getJournalDao().deleteRepAndUpdateListPositionsNew(repEntity, repEntityList, false, ormEntity);
                 } else {
                     ormEntity.setRepId(journalRepEntity.getId());
                     ormEntity.setOneRepMax(journalRepEntity.getOneRepMax());
                     ormEntity.setWeight(journalRepEntity.getWeight());
                     ormEntity.setReps(journalRepEntity.getReps());
                     ormEntity.setTimestamp(journalRepEntity.getTimestamp());
-                    database.getJournalDao().updateOrms(ormEntity);
+                    database.getJournalDao().deleteRepAndUpdateListPositionsNew(repEntity, repEntityList, true, ormEntity);
                 }
             }
         });

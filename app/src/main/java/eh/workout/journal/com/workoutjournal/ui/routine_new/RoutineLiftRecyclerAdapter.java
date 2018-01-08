@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.routine;
+package eh.workout.journal.com.workoutjournal.ui.routine_new;
 
 
 import android.support.v7.widget.RecyclerView;

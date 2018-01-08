@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineViewModel" />
+            type="eh.workout.journal.com.workoutjournal.ui.routine_new.edit.EditRoutineViewModel" />
     </data>
 
     <RelativeLayout

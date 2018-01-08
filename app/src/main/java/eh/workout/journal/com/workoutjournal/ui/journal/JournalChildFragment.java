@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collections;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -41,6 +42,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     }
 
     private int journalPage;
+    private int parentPage;
     private FragmentJournalChildBinding binding;
     private JournalChildViewModel model;
     private JournalChildRecyclerAdapter adapterJournal;
@@ -70,11 +72,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setFragment(this);
-        if (binding.recyclerJournal.getLayoutManager() instanceof LinearLayoutManager) {
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) binding.recyclerJournal.getLayoutManager();
-            linearLayoutManager.setReverseLayout(true);
-            linearLayoutManager.setStackFromEnd(true);
-        } else {
+        if (binding.recyclerJournal.getLayoutManager() instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
             binding.recyclerJournal.setLayoutManager(gridLayoutManager);
         }
@@ -90,6 +88,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
                 @Override
                 public void onChanged(@Nullable Integer integer) {
                     if (integer != null) {
+                        parentPage = integer;
                         if (journalPage == integer) {
                             observeSetAndReps();
                         } else {
@@ -115,8 +114,12 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
         @Override
         public void onChanged(@Nullable List<ExerciseSetRepRelation> setRepRelations) {
             if (setRepRelations != null) {
-                adapterJournal.setItems(setRepRelations);
-                noItems.set(setRepRelations.size() == 0);
+                if (parentPage == journalPage) {
+                    Collections.reverse(setRepRelations);
+                    adapterJournal.setItems(setRepRelations);
+                    binding.recyclerJournal.scrollToPosition(0);
+                    noItems.set(setRepRelations.size() == 0);
+                }
             }
         }
     };
@@ -131,15 +134,6 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
 
     @Override
     public void onDeleteSetClicked(ExerciseSetRepRelation dateSetRepRelation) {
-        if (adapterJournal.getItemCount() == 0) {
-            noItems.set(true);
-        }
-        JournalParentFragment journalParentFragment = (JournalParentFragment) getParentFragment();
-        if (journalParentFragment != null) {
-            if (getParentFragment().getView() != null) {
-                Snackbar.make(getParentFragment().getView().findViewById(R.id.fab), "Deleted " + dateSetRepRelation.getJournalSetEntity().getName(), Snackbar.LENGTH_LONG).show();
-            }
-        }
         model.deleteSet(dateSetRepRelation);
     }
 }

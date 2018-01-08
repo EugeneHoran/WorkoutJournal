@@ -103,6 +103,17 @@ public abstract class JournalDao {
         updateRepList(repEntityList);
     }
 
+    @Transaction
+    public void deleteRepAndUpdateListPositionsNew(JournalRepEntity repEntity, List<JournalRepEntity> repEntityList, boolean update, ExerciseOrmEntity ormEntity) {
+        deleteReps(repEntity);
+        updateRepList(repEntityList);
+        if (update) {
+            updateOrms(ormEntity);
+        } else {
+            deleteOrms(ormEntity);
+        }
+    }
+
     /**
      * Handle Insert Update Delete
      * Date
@@ -122,6 +133,34 @@ public abstract class JournalDao {
 
     @Delete
     public abstract void deleteSets(JournalSetEntity... setEntity);
+
+    @Transaction
+    public void deleteSetsWithUpdate(JournalSetEntity setEntity, boolean update, ExerciseOrmEntity ormEntity) {
+        deleteSets(setEntity);
+        if (update) {
+            updateOrms(ormEntity);
+        } else {
+            if (ormEntity != null) {
+                deleteOrms(ormEntity);
+            }
+        }
+    }
+
+    @Transaction
+    public void deleteSet(JournalSetEntity setEntity) {
+        deleteSets(setEntity);
+    }
+
+    @Transaction
+    public void updateDeleteOrm(boolean update, ExerciseOrmEntity ormEntity) {
+        if (update) {
+            updateOrms(ormEntity);
+        } else {
+            if (ormEntity != null) {
+                deleteOrms(ormEntity);
+            }
+        }
+    }
 
     // Rep
     @Insert

@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.routine;
+package eh.workout.journal.com.workoutjournal.ui.routine_new;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,11 +17,11 @@ import eh.workout.journal.com.workoutjournal.model.DaySelector;
 import eh.workout.journal.com.workoutjournal.util.DataHelper;
 
 
-public class RoutineDayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RoutineRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<DaySelector> itemList = new ArrayList<>();
     private boolean showCheckBox;
 
-    public RoutineDayRecyclerAdapter(boolean showCheckBox, boolean fromEdit) {
+    public RoutineRecyclerAdapter(boolean showCheckBox, boolean fromEdit) {
         this.showCheckBox = showCheckBox;
         if (!fromEdit) {
             if (showCheckBox) {

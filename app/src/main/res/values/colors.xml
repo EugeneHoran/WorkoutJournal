@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--App-->
     <color name="colorPrimary">#F5F5F5</color>
     <color name="ColorPrimaryMedium">#9E9E9E</color>
     <color name="colorPrimaryDark">#757575</color>
@@ -9,9 +8,7 @@
     <color name="colorBackground">#EEEEEE</color>
     <color name="colorBackgroundSecondary">#FAFAFA</color>
 
-    <color name="tealLight">#009688</color>
-    <color name="tealNormal">#00796B</color>
-    <color name="tealDark">#004D40</color>
+
     <color name="colorBlackTransparent">#40000000</color>
     <color name="colorGrayTransparent">#809E9E9E</color>
     <color name="colorGrayIcon">#616161</color>

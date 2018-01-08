@@ -2,12 +2,10 @@ package eh.workout.journal.com.workoutjournal.ui.entry;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -19,8 +17,6 @@ import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentEntryParentBinding;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
-import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
-import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.AppFactory;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 
@@ -43,7 +39,7 @@ public class EntryParentFragment extends BaseFragment {
         return fragment;
     }
 
-    private EntryViewModelNew model;
+    private EntryViewModel model;
     private FragmentEntryParentBinding binding;
     private Long timestamp;
     private int inputType = 0;
@@ -60,7 +56,7 @@ public class EntryParentFragment extends BaseFragment {
         }
         if (getActivity() != null) {
             ViewModelProvider.Factory appFactory = new AppFactory((JournalApplication) getActivity().getApplicationContext(), liftId, timestamp);
-            model = ViewModelProviders.of(this, appFactory).get(EntryViewModelNew.class);
+            model = ViewModelProviders.of(this, appFactory).get(EntryViewModel.class);
             ViewModelProviders.of(this, appFactory).get(EntryHistoryViewModel.class);
         }
     }
@@ -84,6 +80,11 @@ public class EntryParentFragment extends BaseFragment {
         binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
         entryViewHeight = binding.entryHolder.getHeight();
         binding.pager.addOnPageChangeListener(pageChangeListener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {

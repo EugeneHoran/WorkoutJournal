@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentPlanFinalBinding;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineLiftRecyclerAdapter;
 
 
 public class PlanFinalFragment extends Fragment {

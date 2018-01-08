@@ -21,7 +21,9 @@
 
         <LinearLayout
             android:id="@+id/bottom_sheet"
-            style="@style/BottomSheet">
+            style="@style/BottomSheet"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="@dimen/bottom_sheet_default_peeking_height">
 
             <View
                 android:id="@+id/viewClicker2"
@@ -80,12 +82,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:animateLayoutChanges="true"
             android:background="@color/white"
             android:clickable="true"
+            android:elevation="24dp"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
             android:onClickListener="@{fragment.onBottomSheetHeaderListener}"
             android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/hasRoutinePlanIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@null"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/bottom_sheet_header"

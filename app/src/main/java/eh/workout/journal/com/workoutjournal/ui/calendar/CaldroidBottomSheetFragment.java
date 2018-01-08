@@ -90,8 +90,8 @@ public class CaldroidBottomSheetFragment extends BottomSheetDialogFragment {
     /**
      * Caldroid view components
      */
-    private Button leftArrowButton;
-    private Button rightArrowButton;
+    private View leftArrowButton;
+    private View rightArrowButton;
     private TextView monthTitleTextView;
     private GridView weekdayGridView;
     private InfiniteViewPager dateViewPager;
@@ -288,11 +288,11 @@ public class CaldroidBottomSheetFragment extends BottomSheetDialogFragment {
     /**
      * To let user customize the navigation buttons
      */
-    public Button getLeftArrowButton() {
+    public View getLeftArrowButton() {
         return leftArrowButton;
     }
 
-    public Button getRightArrowButton() {
+    public View getRightArrowButton() {
         return rightArrowButton;
     }
 
@@ -812,31 +812,6 @@ public class CaldroidBottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     /**
-     * Check if the navigation arrow is shown
-     *
-     * @return
-     */
-    public boolean isShowNavigationArrows() {
-        return showNavigationArrows;
-    }
-
-    /**
-     * Show or hide the navigation arrows
-     *
-     * @param showNavigationArrows
-     */
-    public void setShowNavigationArrows(boolean showNavigationArrows) {
-        this.showNavigationArrows = showNavigationArrows;
-        if (showNavigationArrows) {
-            leftArrowButton.setVisibility(View.VISIBLE);
-            rightArrowButton.setVisibility(View.VISIBLE);
-        } else {
-            leftArrowButton.setVisibility(View.INVISIBLE);
-            rightArrowButton.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    /**
      * Enable / Disable swipe to navigate different months
      *
      * @return
@@ -1235,11 +1210,8 @@ public class CaldroidBottomSheetFragment extends BottomSheetDialogFragment {
         monthTitleTextView = (TextView) view.findViewById(com.caldroid.R.id.calendar_month_year_textview);
 
         // For the left arrow button
-        leftArrowButton = (Button) view.findViewById(R.id.calendar_left_arrow);
-        rightArrowButton = (Button) view
-                .findViewById(com.caldroid.R.id.calendar_right_arrow);
-        leftArrowButton.setVisibility(View.GONE);
-        rightArrowButton.setVisibility(View.GONE);
+        leftArrowButton = view.findViewById(R.id.calendar_left_arrow);
+        rightArrowButton = view.findViewById(com.caldroid.R.id.calendar_right_arrow);
 
         // Navigate to previous month when user click
         leftArrowButton.setOnClickListener(new View.OnClickListener() {
@@ -1259,11 +1231,8 @@ public class CaldroidBottomSheetFragment extends BottomSheetDialogFragment {
             }
         });
 
-        // Show navigation arrows depend on initial arguments
-        setShowNavigationArrows(showNavigationArrows);
-
         // For the weekday gridview ("SUN, MON, TUE, WED, THU, FRI, SAT")
-        weekdayGridView = (GridView) view.findViewById(R.id.weekday_gridview);
+        weekdayGridView = view.findViewById(R.id.weekday_gridview);
         WeekdayArrayAdapter weekdaysAdapter = getNewWeekdayAdapter(themeResource);
         weekdayGridView.setAdapter(weekdaysAdapter);
 
@@ -1348,7 +1317,7 @@ public class CaldroidBottomSheetFragment extends BottomSheetDialogFragment {
         // Setup InfiniteViewPager and InfinitePagerAdapter. The
         // InfinitePagerAdapter is responsible
         // for reuse the fragments
-        dateViewPager = (InfiniteViewPager) view
+        dateViewPager = view
                 .findViewById(com.caldroid.R.id.months_infinite_pager);
 
         // Set enable swipe

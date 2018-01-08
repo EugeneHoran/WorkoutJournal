@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="48dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="74dp"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginRight="74dp"
+                    android:layout_marginStart="64dp">
+
+                    <EditText
+                        android:id="@+id/editPlanName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/workout_plan_name_optional"
+                        android:inputType="textCapWords"
+                        android:paddingTop="16dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/colorGrayTransparent" />
+
+                <Switch
+                    android:id="@+id/switchAddPlan"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:checked="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingEnd="56dp"
+                    android:paddingLeft="64dp"
+                    android:paddingRight="56dp"
+                    android:paddingStart="64dp"
+                    android:text="@string/add_to_workout_plans"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="visible" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:background="@color/colorGrayTransparent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="56dp"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginRight="56dp"
+                    android:layout_marginStart="64dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/ic_calendar_empty"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_calendar_empty"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="16sp"
+                    android:paddingTop="16dp"
+                    android:text="@string/days"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorGrayTransparent" />
+
+                <TextView
+                    android:id="@+id/editLifts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/ic_weight_normal"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_weight_normal"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="56dp"
+                    android:paddingLeft="64dp"
+                    android:paddingRight="56dp"
+                    android:paddingStart="64dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/exercises"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerLifts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height=".5dp"
+            android:layout_marginTop="34dp"
+            android:background="@color/colorGrayTransparent" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:tint="@color/white"
+            android:transitionName="fab"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_check"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+</layout>

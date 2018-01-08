@@ -8,7 +8,7 @@
 
         <variable
             name="model"
-            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew" />
+            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModel" />
 
         <variable
             name="fragment"
@@ -41,5 +41,17 @@
             android:layout_height="192dp"
             android:layout_marginTop="104dp"
             android:visibility="visible" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:onClickListener="@{fragment.navListener}"
+            android:tint="@color/white"
+            android:transitionName="fab"
+            app:srcCompat="@drawable/ic_save" />
+
     </android.support.design.widget.CoordinatorLayout>
 </layout>

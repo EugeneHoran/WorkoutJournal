@@ -48,6 +48,7 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
             notifyDataSetChanged();
             return;
         }
+
         this.itemList.clear();
         this.itemList.addAll(itemList);
         notifyDataSetChanged();

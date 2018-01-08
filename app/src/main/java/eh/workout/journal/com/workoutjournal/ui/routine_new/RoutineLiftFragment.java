@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.plan;
+package eh.workout.journal.com.workoutjournal.ui.routine_new;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -23,72 +23,74 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentPlanLiftBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
-import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineLiftRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.plan.PlanAddActivity;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
-public class PlanLiftFragment extends Fragment {
-    private static final String TAG_FRAGMENT_FINAL = "tag_fragment_final";
 
-    public PlanLiftFragment() {
+public class RoutineLiftFragment extends Fragment {
+
+    public RoutineLiftFragment() {
     }
 
-    public static PlanLiftFragment newInstance() {
-        return new PlanLiftFragment();
+    public static RoutineLiftFragment newInstance() {
+        return new RoutineLiftFragment();
     }
 
-    private FragmentPlanLiftBinding binding;
-    private PlanViewModel model;
+    private RoutineViewModel model;
     private RoutineLiftRecyclerAdapter adapter;
+    private FragmentPlanLiftBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(PlanViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(RoutineViewModel.class);
         }
         adapter = new RoutineLiftRecyclerAdapter(true);
     }
 
-    @Nullable
+    private void observeLiftList(RoutineViewModel model) {
+        model.getLiftList().observe(this, new Observer<List<ExerciseLiftEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
+                adapter.setItems(exerciseLiftEntities);
+            }
+        });
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_plan_lift, container, false);
         return binding.getRoot();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.recycler.setAdapter(adapter);
-        observeExercises(model);
+        observeLiftList(model);
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (adapter.getSelectedList().size() == 0) {
-                    Snackbar.make(binding.fab, "Fab", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(binding.fab, "Select exercises to continue", Snackbar.LENGTH_SHORT).show();
+                    return;
                 } else {
-                    if (getActivity() != null) {
-                        model.setSelectedList(adapter.getSelectedList());
-                        PlanAddActivity activity = (PlanAddActivity) getActivity();
-                        activity.expandAppBar();
-                        PlanFinalFragment finalFragment = PlanFinalFragment.newInstance();
-                        initTransition(finalFragment);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .addSharedElement(binding.fab, "fab")
-                                .replace(R.id.container, finalFragment, TAG_FRAGMENT_FINAL).addToBackStack(TAG_FRAGMENT_FINAL)
-                                .commit();
-                    }
+                    model.setSelectedList(adapter.getAllCheckedList());
+                    model.setLiftListSelected(adapter.getSelectedList());
                 }
-            }
-        });
-    }
-
-    private void observeExercises(PlanViewModel model) {
-        model.getExerciseLifts().observe(this, new Observer<List<ExerciseLiftEntity>>() {
-            @Override
-            public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
-                adapter.setItems(exerciseLiftEntities);
+                RoutineDaySelectorFragment fragment = RoutineDaySelectorFragment.newInstance();
+                initTransition(fragment);
+                if (getActivity() != null) {
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .addSharedElement(binding.fab, "fab")
+                            .replace(R.id.container, fragment, RoutineActivity.TAG_DAY_SELECTOR_FRAGMENT).addToBackStack(RoutineActivity.TAG_DAY_SELECTOR_FRAGMENT)
+                            .commit();
+                }
             }
         });
     }

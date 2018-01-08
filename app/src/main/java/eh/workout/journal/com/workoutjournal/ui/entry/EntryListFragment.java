@@ -31,14 +31,14 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
     }
 
     private FragmentEntryListBinding binding;
-    private EntryViewModelNew model;
+    private EntryViewModel model;
     private EntryListRecyclerAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getParentFragment() != null) {
-            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModelNew.class);
+            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModel.class);
         }
         adapter = new EntryListRecyclerAdapter();
     }
@@ -60,12 +60,14 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
         observeSetReps(model);
     }
 
-    private void observeSetReps(EntryViewModelNew model) {
+    private void observeSetReps(EntryViewModel model) {
         model.getSetRepsRelation().observe(this, new Observer<ExerciseSetRepRelation>() {
             @Override
             public void onChanged(@Nullable ExerciseSetRepRelation exerciseSetRepRelation) {
                 if (exerciseSetRepRelation != null) {
                     adapter.setItems(exerciseSetRepRelation.getJournalRepEntityList());
+                } else {
+                    adapter.setItems(null);
                 }
             }
         });
@@ -92,20 +94,12 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
     }
 
     @Override
-    public void moveRep(int oldPosition) {
-//        model.updateRepList(oldPosition, 0);
-    }
-
-    @Override
     public void onPause() {
-        model.onPauseDelete();
         super.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        model.onResume();
     }
-
 }

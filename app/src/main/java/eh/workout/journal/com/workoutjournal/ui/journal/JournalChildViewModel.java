@@ -23,5 +23,4 @@ public class JournalChildViewModel extends AndroidViewModel {
     void deleteSet(final ExerciseSetRepRelation dateSetRepRelation) {
         repository.deleteSet(dateSetRepRelation.getJournalSetEntity());
     }
-
 }

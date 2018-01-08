@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (data.getExtras() != null) {
                     int page = data.getExtras().getInt(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, Constants.JOURNAL_PAGE_TODAY);
                     fm.popBackStack();
-                    initJournalFragment(page, true);
+                    initJournalFragment(page, resultCode == RESULT_OK);
                 }
             }
         } else if (requestCode == Constants.ADD_EDIT_PLAN_EXERCISE) {
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             if (exerciseParentFragment != null) {
                 int page = exerciseParentFragment.page;
                 fm.popBackStack();
-                initJournalFragment(page, true);
+                initJournalFragment(page, resultCode == RESULT_OK);
             }
         }
     }

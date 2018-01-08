@@ -3,6 +3,7 @@ package eh.workout.journal.com.workoutjournal.ui.journal;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -26,6 +27,7 @@ public class JournalParentViewModel extends AndroidViewModel {
     private Long timestamp;
     private MediatorLiveData<List<ExerciseSetRepRelation>> observeSetAndReps;
     private MutableLiveData<List<Object>> routinePlanList;
+    private MutableLiveData<Boolean> routinePlanListComplete;
 
     public JournalParentViewModel(@NonNull Application application) {
         super(application);
@@ -46,10 +48,24 @@ public class JournalParentViewModel extends AndroidViewModel {
         return routinePlanList;
     }
 
+    MutableLiveData<Boolean> getRoutinePlanListComplete() {
+        if (routinePlanListComplete == null) {
+            routinePlanListComplete = new MutableLiveData<>();
+            routinePlanListComplete.setValue(false);
+        }
+        return routinePlanListComplete;
+    }
+
+    private LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationLive;
+
     void initJournalData(final Long timestamp) {
         this.timestamp = timestamp;
         getSetAndRepsList().setValue(null);
-        getSetAndRepsList().addSource(repository.getExerciseSetRepRelationLive(DateHelper.getStartAndEndTimestamp(timestamp)), new Observer<List<ExerciseSetRepRelation>>() {
+        if (getExerciseSetRepRelationLive != null) {
+            getSetAndRepsList().removeSource(getExerciseSetRepRelationLive);
+        }
+        getExerciseSetRepRelationLive = repository.getExerciseSetRepRelationLive(DateHelper.getStartAndEndTimestamp(timestamp));
+        getSetAndRepsList().addSource(getExerciseSetRepRelationLive, new Observer<List<ExerciseSetRepRelation>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseSetRepRelation> exerciseSetRepRelations) {
                 getSetAndRepsList().setValue(exerciseSetRepRelations);
@@ -58,7 +74,8 @@ public class JournalParentViewModel extends AndroidViewModel {
         });
     }
 
-    void resetRoutinePlanTasks() {
+
+    private void resetRoutinePlanTasks() {
         if (timestamp != null) {
             new RoutinePlanTask().execute(timestamp);
         }
@@ -66,6 +83,7 @@ public class JournalParentViewModel extends AndroidViewModel {
 
     void deletePlanDayEntity(PlanDayEntity planDayEntity) {
         repository.deletePlanDayEntity(planDayEntity);
+        resetRoutinePlanTasks();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -81,6 +99,28 @@ public class JournalParentViewModel extends AndroidViewModel {
         protected void onPostExecute(List<Object> objectList) {
             super.onPostExecute(objectList);
             getRoutinePlanList().setValue(objectList);
+            getRoutinePlanListComplete().setValue(initItems(objectList));
         }
+    }
+
+    private boolean initItems(List<Object> objectList) {
+        if (objectList.size() == 0) {
+            return false;
+        }
+        for (int i = 0; i < objectList.size(); i++) {
+            if (objectList.get(i) instanceof RoutineSetRelation) {
+                RoutineSetRelation routineSetRelation = (RoutineSetRelation) objectList.get(i);
+                if (!routineSetRelation.areAllSetsCompleted()) {
+                    return false;
+                }
+            }
+            if (objectList.get(i) instanceof PlanDaySetRelation) {
+                PlanDaySetRelation routineSetRelation = (PlanDaySetRelation) objectList.get(i);
+                if (!routineSetRelation.areAllSetsCompleted()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

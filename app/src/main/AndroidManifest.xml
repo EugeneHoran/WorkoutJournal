@@ -17,11 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.routine_new.RoutineActivity" />
         <activity
-            android:name=".ui.routine.edit.EditRoutineActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.routine.RoutineAddActivity"
+            android:name=".ui.routine_new.edit.EditRoutineActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.settings.SettingsActivity"
@@ -36,7 +34,8 @@
         <activity
             android:name=".ui.plan.PlanAddActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.plan.edit.PlanDayEditActivity"></activity>
+        <activity android:name=".ui.plan.edit.PlanDayEditActivity" />
+
     </application>
 
 </manifest>

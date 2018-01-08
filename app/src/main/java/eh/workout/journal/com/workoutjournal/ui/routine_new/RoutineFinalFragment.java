@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.routine;
+package eh.workout.journal.com.workoutjournal.ui.routine_new;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -12,36 +12,38 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.FragmentRoutineFinalBinding;
+import eh.workout.journal.com.workoutjournal.databinding.FragmentRoutineFinalNewBinding;
 
-public class RoutineAddFinalFragment extends Fragment {
-    public RoutineAddFinalFragment() {
+
+public class RoutineFinalFragment extends Fragment {
+    public RoutineFinalFragment() {
     }
 
-    public static RoutineAddFinalFragment newInstance() {
-        return new RoutineAddFinalFragment();
+    public static RoutineFinalFragment newInstance() {
+        return new RoutineFinalFragment();
     }
 
-    private FragmentRoutineFinalBinding binding;
-    private RoutineAddViewModel model;
-    private RoutineDayRecyclerAdapter adapterDay;
+    private RoutineViewModel model;
+    private RoutineRecyclerAdapter adapterDay;
     private RoutineLiftRecyclerAdapter adapterLift;
+    private FragmentRoutineFinalNewBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(RoutineAddViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(RoutineViewModel.class);
         }
-        adapterDay = new RoutineDayRecyclerAdapter(false, false);
+        adapterDay = new RoutineRecyclerAdapter(false, false);
         adapterLift = new RoutineLiftRecyclerAdapter(false);
         adapterDay.setItems(model.getDaySelectorList());
         adapterLift.setItems(model.getLiftListSelected());
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_routine_final, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_routine_final_new, container, false);
         binding.recyclerDays.setNestedScrollingEnabled(false);
         binding.recyclerLifts.setNestedScrollingEnabled(false);
         return binding.getRoot();
@@ -50,7 +52,6 @@ public class RoutineAddFinalFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.txtNoSelectedDays.setVisibility(adapterDay.getItemCount() == 0 ? View.VISIBLE : View.GONE);
         binding.recyclerDays.setAdapter(adapterDay);
         binding.recyclerLifts.setAdapter(adapterLift);
         binding.fab.setOnClickListener(new View.OnClickListener() {

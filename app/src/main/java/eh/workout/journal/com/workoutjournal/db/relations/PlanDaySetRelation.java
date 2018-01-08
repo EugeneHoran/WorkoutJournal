@@ -1,6 +1,7 @@
 package eh.workout.journal.com.workoutjournal.db.relations;
 
 import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Relation;
 
 import java.util.List;
@@ -19,6 +20,17 @@ public class PlanDaySetRelation {
 
     public PlanDayEntity getPlanDayEntity() {
         return planDayEntity;
+    }
+
+
+    @Ignore
+    public boolean areAllSetsCompleted() {
+        for (int i = 0; i < getPlanDaySetEntityList().size(); i++) {
+            if (!getPlanDaySetEntityList().get(i).isSetCompleted()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void setPlanDayEntity(PlanDayEntity planDayEntity) {

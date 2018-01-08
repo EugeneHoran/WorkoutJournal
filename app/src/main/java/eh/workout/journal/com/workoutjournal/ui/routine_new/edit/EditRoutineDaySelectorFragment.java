@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.routine.edit;
+package eh.workout.journal.com.workoutjournal.ui.routine_new.edit;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentEditRoutineDayBinding;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineDayRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineRecyclerAdapter;
 
 
 public class EditRoutineDaySelectorFragment extends Fragment {
@@ -24,7 +24,7 @@ public class EditRoutineDaySelectorFragment extends Fragment {
     }
 
     private EditRoutineViewModel model;
-    private RoutineDayRecyclerAdapter adapter;
+    private RoutineRecyclerAdapter adapter;
     private FragmentEditRoutineDayBinding binding;
 
     @Override
@@ -33,7 +33,7 @@ public class EditRoutineDaySelectorFragment extends Fragment {
         if (getActivity() != null) {
             model = ViewModelProviders.of(getActivity()).get(EditRoutineViewModel.class);
         }
-        adapter = new RoutineDayRecyclerAdapter(true, true);
+        adapter = new RoutineRecyclerAdapter(true, true);
     }
 
     @Override

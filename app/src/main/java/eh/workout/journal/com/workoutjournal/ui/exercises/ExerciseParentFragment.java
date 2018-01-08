@@ -99,7 +99,7 @@ public class ExerciseParentFragment extends BaseFragment {
             selectorFragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
                 @Override
                 public void liftSelected(String exerciseId, int inputType) {
-                    navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
+                    navToAddExerciseFragment(binding.viewToolbar.appBar, null, exerciseId, inputType, timestamp);
                 }
             });
         }
@@ -120,7 +120,7 @@ public class ExerciseParentFragment extends BaseFragment {
     private ExerciseGroupFragment.GroupInterface groupInterface = new ExerciseGroupFragment.GroupInterface() {
         @Override
         public void liftSelected(String exerciseId, int inputType) {
-            navToAddExerciseFragment(binding.viewToolbar.appBar, exerciseId, inputType, timestamp);
+            navToAddExerciseFragment(binding.viewToolbar.appBar, null, exerciseId, inputType, timestamp);
         }
     };
 

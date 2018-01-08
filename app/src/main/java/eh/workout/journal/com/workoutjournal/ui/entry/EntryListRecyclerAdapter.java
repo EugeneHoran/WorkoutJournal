@@ -18,6 +18,8 @@ import eh.workout.journal.com.workoutjournal.databinding.RecyclerAddExerciseEntr
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 
 public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecyclerAdapter.RepViewHolder> {
+
+
     private List<JournalRepEntity> itemList = new ArrayList<>();
 
     private EntryAdapterInterface listener;
@@ -26,8 +28,6 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecy
         void deleteRep(JournalRepEntity journalRepEntity, List<JournalRepEntity> repEntityList);
 
         void editRep(JournalRepEntity repEntity);
-
-        void moveRep(int oldPosition);
     }
 
     public void setListener(EntryAdapterInterface listener) {
@@ -36,6 +36,12 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecy
 
 
     void setItems(final List<JournalRepEntity> items) {
+        if (items == null) {
+            this.itemList.clear();
+            notifyDataSetChanged();
+            return;
+        }
+
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
@@ -120,10 +126,6 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<EntryListRecy
                             List<JournalRepEntity> newRepList = new ArrayList<>(itemList);
                             newRepList.remove(getAdapterPosition());
                             listener.deleteRep(repEntity, newRepList);
-                        }
-                    } else if (id == R.id.action_move) {
-                        if (listener != null) {
-                            listener.moveRep(getAdapterPosition());
                         }
                     } else if (id == R.id.action_edit) {
                         if (listener != null) {

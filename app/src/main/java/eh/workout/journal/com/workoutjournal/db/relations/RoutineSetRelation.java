@@ -2,6 +2,7 @@ package eh.workout.journal.com.workoutjournal.db.relations;
 
 
 import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Relation;
 
 import java.util.ArrayList;
@@ -16,6 +17,16 @@ public class RoutineSetRelation {
 
     @Relation(parentColumn = "id", entityColumn = "routineId", entity = RoutineSetEntity.class)
     private List<RoutineSetEntity> planSetEntityList;
+
+    @Ignore
+    public boolean areAllSetsCompleted() {
+        for (int i = 0; i < getPlanSetEntityList().size(); i++) {
+            if (!getPlanSetEntityList().get(i).isSetCompleted()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public RoutineEntity getRoutineEntity() {
         return routineEntity;

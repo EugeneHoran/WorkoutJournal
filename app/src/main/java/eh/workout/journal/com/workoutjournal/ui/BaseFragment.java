@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.roomorama.caldroid.CaldroidFragment;
@@ -24,8 +25,8 @@ import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExe
 import eh.workout.journal.com.workoutjournal.ui.orm.OneRepMaxFragment;
 import eh.workout.journal.com.workoutjournal.ui.plan.PlanAddActivity;
 import eh.workout.journal.com.workoutjournal.ui.plan.edit.PlanDayEditActivity;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineAddActivity;
-import eh.workout.journal.com.workoutjournal.ui.routine.edit.EditRoutineActivity;
+import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineActivity;
+import eh.workout.journal.com.workoutjournal.ui.routine_new.edit.EditRoutineActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
@@ -53,7 +54,7 @@ public class BaseFragment extends Fragment {
 
     public void navToAddRoutineActivity(int page, int requestCode) {
         if (getActivity() != null) {
-            Intent intentPlan = new Intent(getActivity(), RoutineAddActivity.class);
+            Intent intentPlan = new Intent(getActivity(), RoutineActivity.class);
             intentPlan.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
             getActivity().startActivityForResult(intentPlan, requestCode);
         }
@@ -95,7 +96,7 @@ public class BaseFragment extends Fragment {
         args.putInt(CaldroidBottomSheetFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidBottomSheetFragment.YEAR, cal.get(Calendar.YEAR));
         args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidCustom);
-        args.putBoolean(CaldroidFragment.SHOW_NAVIGATION_ARROWS, false);
+        args.putBoolean(CaldroidFragment.SHOW_NAVIGATION_ARROWS, true);
         args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
         caldroidFragment.setArguments(args);
         caldroidFragment.show(getChildFragmentManager(), TAG_FRAG_CALENDAR);
@@ -112,19 +113,20 @@ public class BaseFragment extends Fragment {
         }
     }
 
-
-    public void navToAddExerciseFragment(View view, String id, int inputType, Long timestamp) {
+    public void navToAddExerciseFragment(View view, View fab, String id, int inputType, Long timestamp) {
         EntryParentFragment fragment = EntryParentFragment.newInstance(id, inputType, timestamp);
         if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getActivity().getSupportFragmentManager().popBackStack();
         }
         initTransition(fragment);
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .addSharedElement(view, "app_bar")
-                .replace(R.id.container,
-                        fragment,
-                        MainActivity.TAG_FRAG_ADD_EXERCISE)
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.addSharedElement(view, "app_bar");
+        if (fab != null) {
+            transaction.addSharedElement(fab, "fab");
+        }
+        transaction.replace(R.id.container,
+                fragment,
+                MainActivity.TAG_FRAG_ADD_EXERCISE)
                 .addToBackStack(MainActivity.TAG_FRAG_ADD_EXERCISE)
                 .commit();
     }
@@ -145,6 +147,7 @@ public class BaseFragment extends Fragment {
             fragment.setSharedElementEnterTransition(new DetailsTransition());
             fragment.setEnterTransition(new Fade());
             fragment.setSharedElementReturnTransition(new DetailsTransition());
+            fragment.setExitTransition(new Fade());
         }
     }
 }

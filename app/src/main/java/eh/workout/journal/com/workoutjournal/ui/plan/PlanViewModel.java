@@ -22,6 +22,7 @@ public class PlanViewModel extends AndroidViewModel {
     private LiveData<List<ExerciseLiftEntity>> exerciseLifts;
     private List<ExerciseLiftEntity> exerciseLiftEntities;
     private Long timestamp;
+    public boolean planAdded = false;
 
     public PlanViewModel(@NonNull Application application) {
         super(application);
@@ -46,6 +47,7 @@ public class PlanViewModel extends AndroidViewModel {
     }
 
     void insertPlan(String planName) {
+        planAdded = true;
         String planId = UUID.randomUUID().toString();
         PlanEntity planEntity = new PlanEntity(planId, planName);
         PlanDayEntity planDayEntity = new PlanDayEntity(planName, timestamp, planId);

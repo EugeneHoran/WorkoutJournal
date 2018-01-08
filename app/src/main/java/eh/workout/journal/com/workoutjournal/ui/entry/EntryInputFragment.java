@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,14 +42,14 @@ public class EntryInputFragment extends Fragment implements
         return fragment;
     }
 
-    private EntryViewModelNew model;
+    private EntryViewModel model;
     private int inputType = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getParentFragment() != null) {
-            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModelNew.class);
+            model = ViewModelProviders.of(getParentFragment()).get(EntryViewModel.class);
         }
         if (getArguments() != null) {
             inputType = getArguments().getInt(EntryParentFragment.ARG_LIFT_INPUT_TYPE);
@@ -79,13 +80,14 @@ public class EntryInputFragment extends Fragment implements
         initPickers();
     }
 
-    private void observeOneRepMax(EntryViewModelNew model) {
+    private void observeOneRepMax(EntryViewModel model) {
         model.getOrmEntityLiveData().observe(this, new Observer<ExerciseOrmEntity>() {
             @Override
             public void onChanged(@Nullable ExerciseOrmEntity ormEntity) {
                 if (ormEntity == null) {
                     binding.ormHolder.setVisibility(View.GONE);
                 } else {
+                    Log.e("Testing", ormEntity.getExerciseId());
                     binding.ormHolder.setVisibility(View.VISIBLE);
                     if (ormEntity.getInputType() == Constants.EXERCISE_TYPE_WEIGHT) {
                         binding.txtOrm.setText(MyStringUtil.formatOneRepMaxWeight(ormEntity));

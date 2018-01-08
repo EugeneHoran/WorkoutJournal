@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.routine.edit;
+package eh.workout.journal.com.workoutjournal.ui.routine_new.edit;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -21,8 +21,8 @@ import eh.workout.journal.com.workoutjournal.databinding.FragmentEditRoutineBind
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineDayRecyclerAdapter;
-import eh.workout.journal.com.workoutjournal.ui.routine.RoutineLiftRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineLiftRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
 
@@ -36,7 +36,7 @@ public class EditRoutineFragment extends Fragment {
 
     private EditRoutineViewModel model;
     private FragmentEditRoutineBinding binding;
-    private RoutineDayRecyclerAdapter adapterDays;
+    private RoutineRecyclerAdapter adapterDays;
     private RoutineLiftRecyclerAdapter adapterLifts;
 
     @Override
@@ -45,7 +45,7 @@ public class EditRoutineFragment extends Fragment {
         if (getActivity() != null) {
             model = ViewModelProviders.of(getActivity()).get(EditRoutineViewModel.class);
         }
-        adapterDays = new RoutineDayRecyclerAdapter(false, true);
+        adapterDays = new RoutineRecyclerAdapter(false, true);
         adapterLifts = new RoutineLiftRecyclerAdapter(false);
     }
 
@@ -94,7 +94,8 @@ public class EditRoutineFragment extends Fragment {
             public void onClick(View view) {
                 if (getActivity() != null) {
                     model.updatePlan(getTitle());
-                    getActivity().onBackPressed();
+                    EditRoutineActivity activity = (EditRoutineActivity) getActivity();
+                    activity.setResultFrom(true);
                 }
             }
         });

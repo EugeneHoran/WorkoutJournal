@@ -33,9 +33,11 @@
             android:id="@+id/fab"
             style="@style/Fab"
             android:onClickListener="@{fragment::onAddNewLiftClicked}"
+            android:transitionName="fab"
             app:layout_anchor="@+id/bottom_sheet"
             app:layout_anchorGravity="top|end"
             app:srcCompat="@drawable/ic_add" />
+
 
         <include
             android:id="@+id/bottom"

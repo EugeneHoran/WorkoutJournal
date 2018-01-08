@@ -90,4 +90,7 @@
 
     <string name="exercises">Exercises</string>
     <string name="routine_days">Routine days</string>
+    <string name="days">Days</string>
+    <string name="add_to_workout_plans">Add to workout plans</string>
+    <string name="workout_plan_name_optional">Workout plan name (optional)</string>
 </resources>

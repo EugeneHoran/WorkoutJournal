@@ -10,7 +10,7 @@
 
         <variable
             name="model"
-            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModelNew" />
+            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryViewModel" />
     </data>
 
     <android.support.v7.widget.CardView

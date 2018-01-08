@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.routine.edit;
+package eh.workout.journal.com.workoutjournal.ui.routine_new.edit;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.AndroidViewModel;

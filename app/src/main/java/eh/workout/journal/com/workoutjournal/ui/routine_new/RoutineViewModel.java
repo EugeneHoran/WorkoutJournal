@@ -1,12 +1,9 @@
-package eh.workout.journal.com.workoutjournal.ui.routine;
+package eh.workout.journal.com.workoutjournal.ui.routine_new;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.MutableLiveData;
-import android.os.AsyncTask;
+import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +18,35 @@ import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
 
-public class RoutineAddViewModel extends AndroidViewModel {
+public class RoutineViewModel extends AndroidViewModel {
     private JournalRepository repository;
-    private MutableLiveData<List<ExerciseLiftEntity>> liftList;
+    private LiveData<List<ExerciseLiftEntity>> liftList;
+    private List<ExerciseLiftEntity> exerciseLiftEntities;
+    public boolean routineAdded = false;
+
     private List<ExerciseLiftEntity> liftListSelected = new ArrayList<>();
     private List<DaySelector> daySelectorList;
     private String daysString;
 
-    public RoutineAddViewModel(@NonNull Application application) {
+    public RoutineViewModel(@NonNull Application application) {
         super(application);
         repository = ((JournalApplication) application).getRepository();
-        new TaskLifts().execute();
+        liftList = repository.getAllExercisesLive();
+    }
+
+    public void setSelectedList(List<ExerciseLiftEntity> exerciseLiftEntities) {
+        this.exerciseLiftEntities = exerciseLiftEntities;
+    }
+
+    public List<ExerciseLiftEntity> getExerciseLiftEntities() {
+        return exerciseLiftEntities;
     }
 
     /**
      * Insert Routine
      */
-    void insertNewPlan(String planName) {
+    public void insertNewPlan(String planName) {
+        routineAdded = true;
         String planId = UUID.randomUUID().toString();
         RoutineEntity routineEntity = new RoutineEntity(planId, planName, daysString);
         List<RoutineSetEntity> planSetEntityList = new ArrayList<>();
@@ -58,7 +67,7 @@ public class RoutineAddViewModel extends AndroidViewModel {
     /**
      * Insert Plan
      */
-    void insertPlan(String planName) {
+    public void insertPlan(String planName) {
         String planId = UUID.randomUUID().toString();
         PlanEntity planEntity = new PlanEntity(planId, planName);
         List<PlanSetEntity> planSetEntityList = new ArrayList<>();
@@ -73,51 +82,31 @@ public class RoutineAddViewModel extends AndroidViewModel {
      * Days
      */
 
-    void setDaysString(String daysString) {
+    public void setDaysString(String daysString) {
         this.daysString = daysString;
     }
 
-    void setDaySelectorList(List<DaySelector> daySelectorList) {
+    public void setDaySelectorList(List<DaySelector> daySelectorList) {
         this.daySelectorList = daySelectorList;
     }
 
-    List<DaySelector> getDaySelectorList() {
+    public List<DaySelector> getDaySelectorList() {
         return daySelectorList;
     }
 
     /**
      * Lifts
      */
-    MutableLiveData<List<ExerciseLiftEntity>> getLiftList() {
-        if (liftList == null) {
-            liftList = new MutableLiveData<>();
-        }
+    public LiveData<List<ExerciseLiftEntity>> getLiftList() {
         return liftList;
     }
 
-    void setLiftListSelected(List<ExerciseLiftEntity> exerciseLiftEntities) {
+    public void setLiftListSelected(List<ExerciseLiftEntity> exerciseLiftEntities) {
         liftListSelected.clear();
         liftListSelected.addAll(exerciseLiftEntities);
     }
 
-    List<ExerciseLiftEntity> getLiftListSelected() {
+    public List<ExerciseLiftEntity> getLiftListSelected() {
         return liftListSelected;
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    class TaskLifts extends AsyncTask<Void, Void, List<ExerciseLiftEntity>> {
-        @Override
-        protected List<ExerciseLiftEntity> doInBackground(Void... voids) {
-            return repository.getAllExercisesList();
-        }
-
-        @Override
-        protected void onPostExecute(List<ExerciseLiftEntity> exerciseLiftEntities) {
-            super.onPostExecute(exerciseLiftEntities);
-            for (int i = 0; i < exerciseLiftEntities.size(); i++) {
-                Log.e("Testing", exerciseLiftEntities.get(i).getName());
-            }
-            getLiftList().setValue(exerciseLiftEntities);
-        }
     }
 }

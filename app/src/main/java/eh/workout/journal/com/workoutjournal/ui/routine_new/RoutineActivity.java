@@ -1,7 +1,6 @@
-package eh.workout.journal.com.workoutjournal.ui.plan;
+package eh.workout.journal.com.workoutjournal.ui.routine_new;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -15,63 +14,65 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ActivityAddPlanBinding;
-import eh.workout.journal.com.workoutjournal.ui.journal.JournalParentPagerAdapter;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
-public class PlanAddActivity extends AppCompatActivity {
-    private static final String TAG_FRAGMENT_LIFTS = "tag_fragment_lifts";
+public class RoutineActivity extends AppCompatActivity {
+    public static final String TAG_SELECT_LIFTS_FRAGMENT = "tag_lifts_fragment";
+    public static final String TAG_DAY_SELECTOR_FRAGMENT = "tag_day_fragment";
+    public static final String TAG_FINAL_FRAGMENT = "tag_final_fragment";
     private int appBarHeight;
     private int screenHeight;
     private boolean searching = false;
+
+    private int pageNumber;
     private ActivityAddPlanBinding binding;
-    private int page;
-    private PlanViewModel model;
+    private AppBarLayout.ScrollingViewBehavior behavior;
+    private RoutineViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = getIntent().getIntExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, 5000);
+        pageNumber = getIntent().getIntExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, 5000);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_plan);
         setSupportActionBar(binding.toolbar);
-        setTitle("Plan exercises");
-        binding.toolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+        setTitle("Routine exercises");
         binding.toolbar.setNavigationOnClickListener(navListener);
-        model = ViewModelProviders.of(this).get(PlanViewModel.class);
+        model = ViewModelProviders.of(this).get(RoutineViewModel.class);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) binding.container.getLayoutParams();
+        behavior = (AppBarLayout.ScrollingViewBehavior) params.getBehavior();
         initContainerHeights();
         if (savedInstanceState == null) {
-            model.setTimestamp(JournalParentPagerAdapter.getTimestampStatic(page));
-            PlanLiftFragment fragment = PlanLiftFragment.newInstance();
+            RoutineLiftFragment fragment = RoutineLiftFragment.newInstance();
             initTransition(fragment);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(
-                            R.id.container,
-                            fragment,
-                            TAG_FRAGMENT_LIFTS
-                    )
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, fragment, TAG_SELECT_LIFTS_FRAGMENT)
                     .commit();
         }
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
+                binding.appBar.setExpanded(true, true);
                 searching = false;
-                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) binding.container.getLayoutParams();
-                AppBarLayout.ScrollingViewBehavior behavior = (AppBarLayout.ScrollingViewBehavior) params.getBehavior();
-                if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                    binding.toolbarLayout.setTitle("Plan exercises");
-                    if (behavior != null) {
+                int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+                switch (backStackCount) {
+                    case 0:
+                        binding.toolbarLayout.setTitle("Routine exercises");
                         behavior.setOverlayTop(0);
-                    }
-                } else {
-                    if (behavior != null) {
+                        break;
+                    case 1:
+                        binding.toolbarLayout.setTitle("Routine days");
+                        behavior.setOverlayTop(0);
+                        break;
+                    case 2:
+                        binding.toolbarLayout.setTitle("Save routine");
                         behavior.setOverlayTop(158);
-                    }
-                    binding.toolbarLayout.setTitle("Add plan");
+                        break;
+                    default:
+                        break;
                 }
             }
         });
@@ -85,9 +86,27 @@ public class PlanAddActivity extends AppCompatActivity {
 
     public void setResultFrom() {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
-        setResult(model.planAdded ? RESULT_OK : RESULT_CANCELED, returnIntent);
+        returnIntent.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, pageNumber);
+        setResult(model.routineAdded ? RESULT_OK : RESULT_CANCELED, returnIntent);
     }
+
+    /**
+     * Calculate frame height
+     */
+    private void initContainerHeights() {
+        appBarHeight = binding.appBar.getLayoutParams().height;
+        screenHeight = screenHeight();
+        binding.container.requestLayout();
+        binding.container.getLayoutParams().height = screenHeight - (appBarHeight);
+        binding.appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                binding.container.requestLayout();
+                binding.container.getLayoutParams().height = screenHeight - (appBarHeight + verticalOffset);
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -131,39 +150,6 @@ public class PlanAddActivity extends AppCompatActivity {
         initContainerHeights();
     }
 
-    private View.OnClickListener navListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            onBackPressed();
-        }
-    };
-
-    private void initTransition(Fragment fragment) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
-            fragment.setEnterTransition(new Slide());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
-            fragment.setExitTransition(new Slide());
-        }
-    }
-
-    /**
-     * Calculate frame height
-     */
-    private void initContainerHeights() {
-        appBarHeight = binding.appBar.getLayoutParams().height;
-        screenHeight = screenHeight();
-        binding.container.requestLayout();
-        binding.container.getLayoutParams().height = screenHeight - (appBarHeight);
-        binding.appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                binding.container.requestLayout();
-                binding.container.getLayoutParams().height = screenHeight - (appBarHeight + verticalOffset);
-            }
-        });
-    }
-
     private int screenHeight() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -177,6 +163,27 @@ public class PlanAddActivity extends AppCompatActivity {
             return resources.getDimensionPixelSize(resourceId);
         } else {
             return (int) Math.ceil((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? 24 : 25) * resources.getDisplayMetrics().density);
+        }
+    }
+
+    private View.OnClickListener navListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onBackPressed();
+        }
+    };
+
+
+    /**
+     * Transition
+     */
+
+    private void initTransition(Fragment fragment) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setEnterTransition(new Slide());
+            fragment.setSharedElementReturnTransition(new DetailsTransition());
+            fragment.setExitTransition(new Slide());
         }
     }
 

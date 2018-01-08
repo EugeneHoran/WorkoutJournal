@@ -1,4 +1,4 @@
-package eh.workout.journal.com.workoutjournal.ui.routine.edit;
+package eh.workout.journal.com.workoutjournal.ui.routine_new.edit;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -47,7 +47,7 @@ public class EditRoutineActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 if (id == R.id.action_delete) {
                     model.deletePlan();
-                    onBackPressed();
+                    setResultFrom(false);
                 }
                 return false;
             }
@@ -56,20 +56,18 @@ public class EditRoutineActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        setResultFrom();
-        super.onBackPressed();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+            return;
+        }
+        setResultFrom(false);
     }
 
-    @Override
-    public void finish() {
-        setResultFrom();
-        super.finish();
-    }
-
-    public void setResultFrom() {
+    public void setResultFrom(boolean completed) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, pageNumber);
-        setResult(RESULT_OK, returnIntent);
+        setResult(completed ? RESULT_OK : RESULT_CANCELED, returnIntent);
+        finish();
     }
 
     public View.OnClickListener navListener = new View.OnClickListener() {
