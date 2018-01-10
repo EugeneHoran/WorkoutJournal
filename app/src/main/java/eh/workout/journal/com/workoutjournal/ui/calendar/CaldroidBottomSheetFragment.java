@@ -2,6 +2,7 @@ package eh.workout.journal.com.workoutjournal.ui.calendar;
 
 public class CaldroidBottomSheetFragment
 //        extends BottomSheetDialogFragment
+    
 {
 //    /**
 //     * Weekday conventions
