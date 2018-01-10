@@ -44,6 +44,41 @@ public class JournalRepository {
     }
 
     /**
+     * Return All Dates
+     */
+    public LiveData<List<JournalSetEntity>> getJournalSetEntityDates() {
+        return database.getJournalDao().getJournalSetEntityDates();
+    }
+
+    /**
+     * Return All One Rep Maxes
+     */
+
+    public JournalRepEntity getSetRepsByMaxDate(String exerciseId, String timestamp) {
+        return database.getJournalDao().getSetRepsByMaxDate(exerciseId, timestamp);
+    }
+
+    public JournalRepEntity getSetRepsByMax(String exerciseId) {
+        return database.getJournalDao().getSetRepsByMax(exerciseId);
+    }
+
+    public JournalRepEntity getSetRepsByMin(String exerciseId) {
+        return database.getJournalDao().getSetRepsByMin(exerciseId);
+    }
+
+    public List<JournalRepEntity> getSetRepsByMaxList(String exerciseId) {
+        return database.getJournalDao().getSetRepsByMaxList(exerciseId);
+    }
+
+    public List<ExerciseSetRepRelation> getExerciseSetRepRelationHistory(String exerciseId, long start) {
+        return database.getJournalDao().getExerciseSetRepRelationHistory(exerciseId, start);
+    }
+
+    public LiveData<List<JournalRepEntity>> getSetRepsByMax() {
+        return database.getJournalDao().getSetRepsByMax();
+    }
+
+    /**
      * Plans
      */
 
@@ -117,11 +152,6 @@ public class JournalRepository {
     /**
      * Routines
      */
-
-    public LiveData<List<RoutineSetRelation>> getPlanSetRelationListLive(Integer day) {
-        return database.getRoutineDao().getRoutineSetRelationListLive("%" + String.valueOf(day) + "%");
-    }
-
     public List<RoutineSetRelation> getAllRoutinesWithSets() {
         return database.getRoutineDao().getAllRoutinesWithSets();
     }
@@ -167,45 +197,8 @@ public class JournalRepository {
         });
     }
 
-
-    /**
-     * Journal Data
-     */
-    public LiveData<List<JournalDateEntity>> getDateListLimitLive(int limit) {
-        return database.getJournalDao().getDateListLimitLive(limit);
-    }
-
-    public List<JournalDateEntity> getDateList() {
-        return database.getJournalDao().getDateList();
-    }
-
     public LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationLive(Long... times) {
         return database.getJournalDao().getExerciseSetRepRelationLive(times[0], times[1]);
-    }
-
-    public LiveData<List<JournalSetEntity>> getSetListByIdLive(Long... times) {
-        return database.getJournalDao().getSetListByIdLive(times[0], times[1]);
-    }
-
-    private JournalDateEntity getDateById(Long dateId) {
-        return database.getJournalDao().getDateById(dateId);
-    }
-
-    private void deleteDate(JournalDateEntity dateEntity) {
-        database.getJournalDao().deleteDates(dateEntity);
-    }
-
-    public void deleteDateSetsNull(final Long dateId) {
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                JournalDateEntity dateEntity = getDateById(dateId);
-                if (dateEntity == null) {
-                    return;
-                }
-                deleteDate(dateEntity);
-            }
-        });
     }
 
     /**
@@ -216,37 +209,12 @@ public class JournalRepository {
         return database.getJournalDao().getExerciseById(id);
     }
 
-    public LiveData<ExerciseLiftEntity> getExerciseByIdLive(String id) {
-        return database.getJournalDao().getExerciseByIdLive(id);
-    }
-
-    public LiveData<JournalDateEntity> getDateByTimestampLive(final Long... times) {
-        return database.getJournalDao().getDateByTimestampLive(times[0], times[1]);
-    }
-
-    public LiveData<JournalSetEntity> getSetByExerciseIdAndDateId(String exerciseId, Long dateId) {
-        return database.getJournalDao().getSetByExerciseIdAndDateIdLive(exerciseId, dateId);
-    }
-
     public LiveData<ExerciseOrmEntity> getOneRepMaxByExerciseId(String exerciseId) {
         return database.getJournalDao().getOneRepMaxByExerciseIdLive(exerciseId);
     }
 
     public LiveData<ExerciseSetRepRelation> getEntrySetRepsAndOrm(String exerciseId, Long... times) {
         return database.getJournalDao().getEntrySetRepsAndOrmLive(exerciseId, times[0], times[1]);
-    }
-
-    public LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationHistoryLive(String exerciseId, Long... times) {
-        return database.getJournalDao().getExerciseSetRepRelationHistoryLive(exerciseId, times[0]);
-    }
-
-    public void insertDate(final JournalDateEntity journalDateEntity) {
-        appExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                database.getJournalDao().insertDates(journalDateEntity);
-            }
-        });
     }
 
     public void deleteSet(final JournalSetEntity journalSetEntity) {
@@ -313,20 +281,29 @@ public class JournalRepository {
         });
     }
 
-    public void deleteRepAndUpdateOrm(final JournalRepEntity repEntity, final List<JournalRepEntity> repEntityList, final ExerciseOrmEntity ormEntity) {
+    public void deleteRepAndUpdateOrm(final JournalRepEntity repEntity, final List<JournalRepEntity> repEntityList, final ExerciseOrmEntity ormEntitys) {
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                final JournalRepEntity journalRepEntity = database.getJournalDao().getRepWithLargestOrm(repEntity.getExerciseId());
+                database.getJournalDao().deleteRepAndUpdateListPositionsNew(repEntity, repEntityList);
+            }
+        });
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                final JournalRepEntity journalRepEntity = database.getJournalDao().getRepWithLargestOrm(ormEntitys.getExerciseId());
+                final ExerciseOrmEntity ormEntity = database.getJournalDao().getOneRepMaxByExerciseId(ormEntitys.getExerciseId());
                 if (journalRepEntity == null) {
-                    database.getJournalDao().deleteRepAndUpdateListPositionsNew(repEntity, repEntityList, false, ormEntity);
+                    if (ormEntity != null) {
+                        database.getJournalDao().updateDeleteOrm(false, ormEntity);
+                    }
                 } else {
                     ormEntity.setRepId(journalRepEntity.getId());
                     ormEntity.setOneRepMax(journalRepEntity.getOneRepMax());
                     ormEntity.setWeight(journalRepEntity.getWeight());
                     ormEntity.setReps(journalRepEntity.getReps());
                     ormEntity.setTimestamp(journalRepEntity.getTimestamp());
-                    database.getJournalDao().deleteRepAndUpdateListPositionsNew(repEntity, repEntityList, true, ormEntity);
+                    database.getJournalDao().updateDeleteOrm(true, ormEntity);
                 }
             }
         });
@@ -357,7 +334,6 @@ public class JournalRepository {
     /**
      * Exercises
      */
-
     public List<ExerciseLiftEntity> getAllExercisesList() {
         return database.getExerciseLiftDao().getAllExercisesList();
     }
@@ -368,10 +344,6 @@ public class JournalRepository {
 
     public List<ExerciseGroupEntity> getAllExercisesGroupsList() {
         return database.getExerciseLiftDao().getAllExercisesGroupsList();
-    }
-
-    public LiveData<List<ExerciseGroupEntity>> getAllExercisesGroupsLive() {
-        return database.getExerciseLiftDao().getAllExercisesGroupsLive();
     }
 
     public void insertExercises(final ExerciseLiftEntity... exerciseLiftEntities) {

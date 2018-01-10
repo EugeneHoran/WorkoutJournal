@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -22,6 +23,9 @@ import eh.workout.journal.com.workoutjournal.util.Constants;
 
 
 public class EntryParentFragment extends BaseFragment {
+    private static final String FRAGMENT_TAGS = "pager_fragment_tags";
+
+
     private static final String ARG_LIFT_ID = "param_lift_id";
     public static final String ARG_LIFT_INPUT_TYPE = "param_lift_input_type";
     private static final String ARG_LIFT_TIMESTAMP = "param_lift_timestamp";
@@ -40,11 +44,11 @@ public class EntryParentFragment extends BaseFragment {
     }
 
     private EntryViewModel model;
+    private EntryParentPagerAdapter adapter;
     private FragmentEntryParentBinding binding;
     private Long timestamp;
     private int inputType = 0;
     private String liftId;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,7 @@ public class EntryParentFragment extends BaseFragment {
             model = ViewModelProviders.of(this, appFactory).get(EntryViewModel.class);
             ViewModelProviders.of(this, appFactory).get(EntryHistoryViewModel.class);
         }
+        adapter = new EntryParentPagerAdapter(getChildFragmentManager());
     }
 
     @Override
@@ -76,10 +81,30 @@ public class EntryParentFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.pager.setAdapter(new EntryParentPagerAdapter(getChildFragmentManager()));
+        String[] pagerFragmentTags = null;
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(FRAGMENT_TAGS)) {
+                pagerFragmentTags = savedInstanceState.getStringArray(FRAGMENT_TAGS);
+            }
+        }
+        adapter.setRetainedFragmentsTags(pagerFragmentTags);
+        binding.pager.setAdapter(adapter);
         binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
         entryViewHeight = binding.entryHolder.getHeight();
         binding.pager.addOnPageChangeListener(pageChangeListener);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (adapter != null && adapter.getFragments() != null) {
+            Fragment[] singleDayFragments = adapter.getFragments();
+            String[] tags = new String[singleDayFragments.length];
+            for (int i = 0; i < tags.length; i++) {
+                tags[i] = singleDayFragments[i].getTag();
+            }
+            outState.putStringArray(FRAGMENT_TAGS, tags);
+        }
     }
 
     @Override
@@ -112,6 +137,16 @@ public class EntryParentFragment extends BaseFragment {
                 entryViewHeight = binding.entryHolder.getHeight();
             }
             binding.entryHolder.setTranslationY(-(entryViewHeight * (position + positionOffset)));
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            super.onPageSelected(position);
+            if (position == 1) {
+                if (adapter.getHistoryFragment() != null) {
+                    adapter.getHistoryFragment().initData();
+                }
+            }
         }
     };
 

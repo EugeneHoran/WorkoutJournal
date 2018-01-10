@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textHeader"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/colorAccent"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="History details"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/moreDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textHeader"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/pbHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Personal Best"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/pbDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pbHeader"
+                    android:text="Date" />
+
+                <TextView
+                    android:id="@+id/pbWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/pbHeader"
+                    android:text="Weight" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/moreDetails"
+                android:background="@color/colorGrayTransparent" />
+
+            <TextView
+                android:id="@+id/chartTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/moreDetails"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="One Rep Max History"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/lineHolders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/chartTitle"
+                android:orientation="vertical"
+                android:paddingRight="12dp">
+
+                <TextView
+                    android:id="@+id/textHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:drawableLeft="@drawable/line_blue"
+                    android:drawablePadding="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="ORM History"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textTodayBest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/line_red"
+                    android:drawablePadding="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Today's Best ORM"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_below="@+id/lineHolders"
+                android:layout_margin="12dp">
+
+                <TextView
+                    android:id="@+id/max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="12dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="mid"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="12dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <com.echo.holographlibrary.LineGraph
+                    android:id="@+id/lineGraph"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/max" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

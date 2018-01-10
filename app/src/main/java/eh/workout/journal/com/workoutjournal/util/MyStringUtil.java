@@ -5,6 +5,7 @@ import android.text.Html;
 import android.text.Spanned;
 
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
+import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 
 public class MyStringUtil {
 
@@ -24,6 +25,13 @@ public class MyStringUtil {
         String test = ormEntity.getWeight() + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small>" + " for " + ormEntity.getReps() + "<small> reps</small> = " + OrmHelper.getOneRepMaxInt(ormEntity.getOneRepMax()) + "<small> " + Constants.SETTINGS_UNIT_MEASURE + " (1RM)" + "</small>";
         return Html.fromHtml(test);
     }
+
+
+    public static Spanned formatOneRepMaxWeightFromRep(JournalRepEntity ormEntity) {
+        String test = ormEntity.getWeight() + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small>" + " for " + ormEntity.getReps() + "<small> reps</small> = " + OrmHelper.getOneRepMaxInt(ormEntity.getOneRepMax()) + "<small> " + Constants.SETTINGS_UNIT_MEASURE + " (1RM)" + "</small>";
+        return Html.fromHtml(test);
+    }
+
 
     public static Spanned formatOneRepMaxReps(ExerciseOrmEntity ormEntity) {
         String test = ormEntity.getReps() + "<small> reps</small>";

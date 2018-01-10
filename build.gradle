@@ -31,5 +31,4 @@ ext {
 
     supportLibVersion = "27.0.2"
     archLibVersion = "1.0.0"
-    caldroidVersion = "3.0.1"
 }

@@ -46,7 +46,7 @@ public class ExerciseGroupFragment extends Fragment {
 
             @Override
             public void onReturnToGroupClicked() {
-                model.returnToGroupList();
+                returnToGroup();
             }
 
             @Override
@@ -56,6 +56,10 @@ public class ExerciseGroupFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void returnToGroup() {
+        model.returnToGroupList();
     }
 
     @Nullable
@@ -78,6 +82,12 @@ public class ExerciseGroupFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Object> objectList) {
                 adapter.setItems(objectList);
+            }
+        });
+        model.getAllExercisesLive().observe(this, new Observer<List<ExerciseLiftEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
+
             }
         });
     }

@@ -3,9 +3,13 @@ package eh.workout.journal.com.workoutjournal.ui.exercises;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +25,20 @@ public class ExerciseGroupViewModel extends AndroidViewModel {
     private List<ExerciseGroupEntity> groupEntities;
     private List<ExerciseLiftEntity> liftEntities;
     private MutableLiveData<List<Object>> objectList;
+    private MediatorLiveData<List<ExerciseLiftEntity>> exerciseMediator;
 
     public ExerciseGroupViewModel(@NonNull Application application) {
         super(application);
         JournalApplication journalApplication = getApplication();
         repository = journalApplication.getRepository();
+        exerciseMediator = new MediatorLiveData<>();
+        exerciseMediator.addSource(repository.getAllExercisesLive(), new Observer<List<ExerciseLiftEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
+                liftEntities = exerciseLiftEntities;
+            }
+        });
         new ExerciseGroupListTask().execute();
-        new ExerciseLiftListTask().execute();
     }
 
     MutableLiveData<List<Object>> getGroupAndLiftObjectList() {
@@ -35,6 +46,10 @@ public class ExerciseGroupViewModel extends AndroidViewModel {
             objectList = new MutableLiveData<>();
         }
         return objectList;
+    }
+
+    MutableLiveData<List<ExerciseLiftEntity>> getAllExercisesLive() {
+        return exerciseMediator;
     }
 
     void groupItemClicked(ExerciseGroupEntity groupEntity) {
@@ -66,21 +81,6 @@ public class ExerciseGroupViewModel extends AndroidViewModel {
             super.onPostExecute(exerciseGroupEntities);
             groupEntities = exerciseGroupEntities;
             getGroupAndLiftObjectList().setValue(new ArrayList<Object>(groupEntities));
-        }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    class ExerciseLiftListTask extends AsyncTask<Void, Void, List<ExerciseLiftEntity>> {
-
-        @Override
-        protected List<ExerciseLiftEntity> doInBackground(Void... voids) {
-            return repository.getAllExercisesList();
-        }
-
-        @Override
-        protected void onPostExecute(List<ExerciseLiftEntity> exerciseLiftEntities) {
-            super.onPostExecute(exerciseLiftEntities);
-            liftEntities = exerciseLiftEntities;
         }
     }
 }

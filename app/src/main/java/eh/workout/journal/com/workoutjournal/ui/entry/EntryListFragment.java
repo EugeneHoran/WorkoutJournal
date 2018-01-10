@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,16 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
         binding.recycler.setAdapter(adapter);
         adapter.setListener(this);
         observeSetReps(model);
+        observeOrmList(model);
+    }
+
+    private void observeOrmList(EntryViewModel model) {
+//        model.getOrmList().observe(this, new Observer<List<JournalRepEntity>>() {
+//            @Override
+//            public void onChanged(@Nullable List<JournalRepEntity> repEntityList) {
+////                adapter.setRepEntityList(repEntityList);
+//            }
+//        });
     }
 
     private void observeSetReps(EntryViewModel model) {

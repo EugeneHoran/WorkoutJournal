@@ -15,6 +15,7 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
+import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanDaySetRelation;
@@ -29,10 +30,22 @@ public class JournalParentViewModel extends AndroidViewModel {
     private MutableLiveData<List<Object>> routinePlanList;
     private MutableLiveData<Boolean> routinePlanListComplete;
 
+
     public JournalParentViewModel(@NonNull Application application) {
         super(application);
         repository = ((JournalApplication) application).getRepository();
     }
+
+    // Returns All dates with sets
+//    private LiveData<List<JournalSetEntity>> setDates;
+//
+//    LiveData<List<JournalSetEntity>> getSetDates() {
+//        if (setDates == null) {
+//            setDates = repository.getJournalSetEntityDates();
+//        }
+//        return setDates;
+//    }
+
 
     MediatorLiveData<List<ExerciseSetRepRelation>> getSetAndRepsList() {
         if (observeSetAndReps == null) {

@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingTop="16dp"
+            android:paddingBottom="88dp"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="150dp"
+            android:gravity="center"
             android:text="No workouts have been added" />
     </RelativeLayout>
 </layout>

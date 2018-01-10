@@ -20,11 +20,29 @@ import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation
 
 @Dao
 public abstract class JournalDao {
+    @Query("SELECT *, MAX(oneRepMax) FROM journal_rep_entities WHERE exerciseId == :exerciseId AND timestamp == :timestamp LIMIT 1")
+    public abstract JournalRepEntity getSetRepsByMaxDate(String exerciseId, String timestamp);
+
+    @Query("SELECT *, MAX(oneRepMax) FROM journal_rep_entities WHERE exerciseId == :exerciseId LIMIT 1")
+    public abstract JournalRepEntity getSetRepsByMax(String exerciseId);
+
+    @Query("SELECT *, MIN(oneRepMax) FROM journal_rep_entities WHERE exerciseId == :exerciseId LIMIT 1")
+    public abstract JournalRepEntity getSetRepsByMin(String exerciseId);
+
+    @Query("SELECT *, MAX(oneRepMax) FROM journal_rep_entities WHERE exerciseId == :exerciseId GROUP BY timestamp ORDER BY timestamp")
+    public abstract List<JournalRepEntity> getSetRepsByMaxList(String exerciseId);
+
+    //
+
+    @Query("SELECT * FROM journal_set_entities GROUP BY timestamp ORDER BY timestamp")
+    public abstract LiveData<List<JournalSetEntity>> getJournalSetEntityDates();
 
     @Transaction
     @Query("SELECT * FROM journal_set_entities WHERE timestamp BETWEEN :start AND :end")
     public abstract LiveData<List<JournalSetEntity>> getSetListByIdLive(long start, long end);
 
+    @Query("SELECT *, MAX(oneRepMax) FROM journal_rep_entities GROUP BY timestamp ORDER BY timestamp")
+    public abstract LiveData<List<JournalRepEntity>> getSetRepsByMax();
 
     @Transaction
     @Query("SELECT * FROM journal_set_entities WHERE timestamp BETWEEN :start AND :end")
@@ -82,9 +100,10 @@ public abstract class JournalDao {
     @Query("SELECT * FROM journal_set_entities WHERE exerciseId == :exerciseId AND timestamp < :start")
     public abstract LiveData<List<ExerciseSetRepRelation>> getExerciseSetRepRelationHistoryLive(String exerciseId, long start);
 
-    /**
-     * Called when Rep and Orm are both newO
-     */
+    @Transaction
+    @Query("SELECT * FROM journal_set_entities WHERE exerciseId == :exerciseId AND timestamp < :start  ORDER BY timestamp DESC")
+    public abstract List<ExerciseSetRepRelation> getExerciseSetRepRelationHistory(String exerciseId, long start);
+
     @Transaction
     public void insertSetAndOrmTransaction(JournalRepEntity repEntity, ExerciseOrmEntity ormEntity) {
         insertReps(repEntity);
@@ -104,22 +123,11 @@ public abstract class JournalDao {
     }
 
     @Transaction
-    public void deleteRepAndUpdateListPositionsNew(JournalRepEntity repEntity, List<JournalRepEntity> repEntityList, boolean update, ExerciseOrmEntity ormEntity) {
+    public void deleteRepAndUpdateListPositionsNew(JournalRepEntity repEntity, List<JournalRepEntity> repEntityList) {
         deleteReps(repEntity);
         updateRepList(repEntityList);
-        if (update) {
-            updateOrms(ormEntity);
-        } else {
-            deleteOrms(ormEntity);
-        }
     }
 
-    /**
-     * Handle Insert Update Delete
-     * Date
-     * Reps
-     * Orm
-     */
     // Date
     @Insert
     public abstract void insertDates(JournalDateEntity... dateEntity);

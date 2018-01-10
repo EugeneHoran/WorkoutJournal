@@ -27,7 +27,6 @@ public class EntryHistoryFragment extends Fragment {
         return new EntryHistoryFragment();
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,19 +50,22 @@ public class EntryHistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.recycler.setAdapter(adapter);
-        observeSetReps(model);
+        observeHistory(model);
+        if (savedInstanceState != null) {
+            initData();
+        }
     }
 
-    private void observeSetReps(EntryHistoryViewModel model) {
-        model.getHistory().observe(this, new Observer<List<ExerciseSetRepRelation>>() {
+    public void initData() {
+        model.initData();
+    }
+
+    private void observeHistory(EntryHistoryViewModel model) {
+        model.getObjectList().observe(this, new Observer<List<Object>>() {
             @Override
-            public void onChanged(@Nullable List<ExerciseSetRepRelation> exerciseSetRepRelations) {
-                if (exerciseSetRepRelations != null) {
-                    binding.noItems.setVisibility(exerciseSetRepRelations.size() == 0 ? View.VISIBLE : View.GONE);
-                    adapter.setItems(exerciseSetRepRelations);
-                } else {
-                    binding.noItems.setVisibility(View.GONE);
-                }
+            public void onChanged(@Nullable List<Object> objects) {
+                adapter.setItems(objects);
+                binding.noItems.setVisibility(objects != null && objects.size() > 0 ? View.GONE : View.VISIBLE);
             }
         });
     }

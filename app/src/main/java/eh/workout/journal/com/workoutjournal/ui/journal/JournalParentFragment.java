@@ -13,10 +13,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,20 +26,16 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.roomorama.caldroid.CaldroidListener;
-
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalParentBinding;
+import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
-import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
-import eh.workout.journal.com.workoutjournal.util.DateHelper;
 import eh.workout.journal.com.workoutjournal.util.views.LayoutUtil;
 
 public class JournalParentFragment extends BaseFragment implements View.OnClickListener, JournalRoutinePlanRecyclerAdapter.PlanChildInterface {
@@ -68,7 +64,6 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     private BottomSheetBehavior planBottomSheetBehavior;
     private JournalParentPagerAdapter dayPagerAdapter;
     private JournalRoutinePlanRecyclerAdapter routinePlanRecyclerAdapter;
-    private CalendarBottomSheetFragment calendarFragment;
     private MenuItem todayToolbarMenuItem;
 
     @Override
@@ -252,15 +247,7 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
                     binding.pager.setCurrentItem(Constants.JOURNAL_PAGE_TODAY, false);
                     break;
                 case R.id.action_calendar:
-                    calendarFragment = new CalendarBottomSheetFragment();
-                    calendarFragment.setCaldroidListener(new CaldroidListener() {
-                        @Override
-                        public void onSelectDate(Date date, View view) {
-                            calendarFragment.dismiss();
-                            binding.pager.setCurrentItem((Constants.JOURNAL_PAGE_TODAY - DateHelper.findDaysDiff(date.getTime(), new Date().getTime())), true);
-                        }
-                    });
-                    showCalendarBottomSheet(calendarFragment, dayPagerAdapter.getAdapterDate(getPage()), null);
+
                     break;
                 case R.id.action_orm:
                     navToOneRepMaxFragment(getAppBar(), Constants.ORM_ONE_REP_MAX);

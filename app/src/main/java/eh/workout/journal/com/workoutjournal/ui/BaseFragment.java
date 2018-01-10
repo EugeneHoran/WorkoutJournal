@@ -3,21 +3,16 @@ package eh.workout.journal.com.workoutjournal.ui;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
-import com.roomorama.caldroid.CaldroidFragment;
-
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.ui.calendar.CaldroidBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
@@ -90,16 +85,16 @@ public class BaseFragment extends Fragment {
      * Navigation
      */
     public void showCalendarBottomSheet(CalendarBottomSheetFragment caldroidFragment, Date date, HashMap<String, Object> dateList) {
-        Bundle args = new Bundle();
-        Calendar cal = Calendar.getInstance();
-        caldroidFragment.setSelectedDate(date);
-        args.putInt(CaldroidBottomSheetFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-        args.putInt(CaldroidBottomSheetFragment.YEAR, cal.get(Calendar.YEAR));
-        args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidCustom);
-        args.putBoolean(CaldroidFragment.SHOW_NAVIGATION_ARROWS, true);
-        args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
-        caldroidFragment.setArguments(args);
-        caldroidFragment.show(getChildFragmentManager(), TAG_FRAG_CALENDAR);
+//        Bundle args = new Bundle();
+//        Calendar cal = Calendar.getInstance();
+//        caldroidFragment.setSelectedDate(date);
+//        args.putInt(CaldroidBottomSheetFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+//        args.putInt(CaldroidBottomSheetFragment.YEAR, cal.get(Calendar.YEAR));
+//        args.putInt(CaldroidFragment.THEME_RESOURCE, R.style.CaldroidCustom);
+//        args.putBoolean(CaldroidFragment.SHOW_NAVIGATION_ARROWS, true);
+//        args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
+//        caldroidFragment.setArguments(args);
+//        caldroidFragment.show(getChildFragmentManager(), TAG_FRAG_CALENDAR);
     }
 
     public void navToSelectExerciseFragment(View view, Long timestamp, int page) {

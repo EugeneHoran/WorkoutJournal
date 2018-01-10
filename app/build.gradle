@@ -39,8 +39,6 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    // Caldroid
-    implementation "com.roomorama:caldroid:${rootProject.ext.caldroidVersion}"
     // Architecture Components
     implementation "android.arch.lifecycle:extensions:${rootProject.ext.archLibVersion}"
     implementation "android.arch.persistence.room:runtime:${rootProject.ext.archLibVersion}"
@@ -49,6 +47,10 @@ dependencies {
     //Keyboard
     compile 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
 
+    // Testing Libraries
+    compile 'org.quanqi:android-holo-graph:0.1.0'
+
+    // Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

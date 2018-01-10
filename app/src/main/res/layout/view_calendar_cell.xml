@@ -3,7 +3,6 @@
     android:id="@+id/custom_cell"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/cell_bg"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingBottom="4dp"
@@ -17,7 +16,6 @@
         android:layout_height="21dp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
-        android:textColor="@color/caldroid_black"
         android:textSize="12sp" />
 
     <View

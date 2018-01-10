@@ -87,7 +87,6 @@ public class EntryInputFragment extends Fragment implements
                 if (ormEntity == null) {
                     binding.ormHolder.setVisibility(View.GONE);
                 } else {
-                    Log.e("Testing", ormEntity.getExerciseId());
                     binding.ormHolder.setVisibility(View.VISIBLE);
                     if (ormEntity.getInputType() == Constants.EXERCISE_TYPE_WEIGHT) {
                         binding.txtOrm.setText(MyStringUtil.formatOneRepMaxWeight(ormEntity));

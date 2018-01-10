@@ -9,6 +9,7 @@ import android.databinding.ObservableField;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +37,7 @@ public class EntryViewModel extends AndroidViewModel {
     private final MediatorLiveData<ExerciseOrmEntity> observableOrm;
     private LiveData<ExerciseSetRepRelation> exerciseSetRepRelationLiveData;
     private ExerciseSetRepRelation setRepRelation;
+
 
     public EntryViewModel(@NonNull JournalApplication application, String exerciseId, Long timestamp) {
         super(application);

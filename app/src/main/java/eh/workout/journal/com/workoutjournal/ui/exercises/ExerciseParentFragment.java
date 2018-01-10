@@ -135,10 +135,6 @@ public class ExerciseParentFragment extends BaseFragment {
         binding.viewToolbar.tabs.setVisibility(View.VISIBLE);
     }
 
-    public void resetPlanFragment() {
-        planViewModel.resetRoutine();
-    }
-
     public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -150,6 +146,10 @@ public class ExerciseParentFragment extends BaseFragment {
                     } else if (binding.pager.getCurrentItem() == 3) {
                         navToAddRoutineActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE);
                     } else {
+                        binding.pager.setCurrentItem(0);
+                        if (adapter.getGroupFragment() != null) {
+                            adapter.getGroupFragment().returnToGroup();
+                        }
                         dialogNewExercise();
                     }
                     break;

@@ -6,11 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class EntryParentPagerAdapter extends FragmentPagerAdapter {
+    private FragmentManager fm;
     private String[] titleList = {"Add Set", "History"};
     private Fragment[] fragments;
 
     EntryParentPagerAdapter(FragmentManager fm) {
         super(fm);
+        this.fm = fm;
     }
 
     @Override
@@ -30,6 +32,30 @@ public class EntryParentPagerAdapter extends FragmentPagerAdapter {
         return fragments[position];
     }
 
+    Fragment[] getFragments() {
+        if (fragments == null) {
+            // Force creating the fragments
+            int count = getCount();
+            for (int i = 0; i < count; i++) {
+                getItem(i);
+            }
+        }
+        return fragments;
+    }
+
+    void setRetainedFragmentsTags(String[] tags) {
+        if (tags != null && tags.length > 0) {
+            fragments = new Fragment[tags.length];
+            for (int i = 0; i < tags.length; i++) {
+                Fragment fragment = fm.findFragmentByTag(tags[i]);
+                this.fragments[i] = fragment;
+                if (fragment == null) {
+                    getItem(i);
+                }
+            }
+        }
+    }
+
     @Override
     public int getCount() {
         return titleList.length;
@@ -41,4 +67,13 @@ public class EntryParentPagerAdapter extends FragmentPagerAdapter {
         return titleList[position];
     }
 
+
+    EntryHistoryFragment getHistoryFragment() {
+        if (getFragments() != null) {
+            if (getFragments()[1] != null) {
+                return (EntryHistoryFragment) getFragments()[1];
+            }
+        }
+        return null;
+    }
 }
