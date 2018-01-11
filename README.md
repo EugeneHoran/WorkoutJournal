@@ -1,7 +1,7 @@
 # WorkoutJournal
 Track your exercises with the Workout Journal.
 
-[Download link for stable alpba build](https://rink.hockeyapp.net/apps/2d9b423d8e47445a8334994e9c935167/app_versions/4)
+[Download link for stable alpba build](https://rink.hockeyapp.net/apps/2d9b423d8e47445a8334994e9c935167/app_versions/5)
 
 
 Readme coming soon...
