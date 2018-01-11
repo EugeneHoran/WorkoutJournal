@@ -38,8 +38,7 @@ public class EditRoutineActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(navListener);
         binding.toolbar.inflateMenu(R.menu.menu_edit_move_delete);
         Menu menu = binding.toolbar.getMenu();
-        menu.findItem(R.id.action_move).setVisible(false);
-        menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_delete).setVisible(true);
         menu.findItem(R.id.action_delete).setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

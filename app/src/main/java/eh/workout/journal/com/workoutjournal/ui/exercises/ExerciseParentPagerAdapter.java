@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import eh.workout.journal.com.workoutjournal.util.Constants;
+
 public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
 
     private static final int FRAG_EXERCISES = 0;
@@ -33,22 +35,34 @@ public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
         if (fragments == null) {
             fragments = new Fragment[getCount()];
         }
-        switch (position) {
-            case FRAG_EXERCISES:
-                fragments[FRAG_EXERCISES] = ExerciseSelectorFragment.newInstance();
-            case FRAG_GROUPS:
-                fragments[FRAG_GROUPS] = ExerciseGroupFragment.newInstance();
-            case FRAG_PLAN:
-                fragments[FRAG_PLAN] = ExercisePlanFragment.newInstance(timestamp);
-            case FRAG_ROUTINE:
-                fragments[FRAG_ROUTINE] = ExerciseRoutineFragment.newInstance(timestamp);
+        if (Constants.SETTINGS_SHOW_ROUTINE_PLAN) {
+            switch (position) {
+                case FRAG_EXERCISES:
+                    fragments[FRAG_EXERCISES] = ExerciseSelectorFragment.newInstance();
+                case FRAG_GROUPS:
+                    fragments[FRAG_GROUPS] = ExerciseGroupFragment.newInstance();
+                case FRAG_PLAN:
+                    fragments[FRAG_PLAN] = ExercisePlanFragment.newInstance(timestamp);
+                case FRAG_ROUTINE:
+                    fragments[FRAG_ROUTINE] = ExerciseRoutineFragment.newInstance(timestamp);
+            }
+        } else {
+            switch (position) {
+                case FRAG_EXERCISES:
+                    fragments[FRAG_EXERCISES] = ExerciseSelectorFragment.newInstance();
+                case FRAG_GROUPS:
+                    fragments[FRAG_GROUPS] = ExerciseGroupFragment.newInstance();
+            }
         }
         return fragments[position];
     }
 
     @Override
     public int getCount() {
-        return titleList.length;
+        if (Constants.SETTINGS_SHOW_ROUTINE_PLAN) {
+            return titleList.length;
+        }
+        return 2;
     }
 
     ExerciseGroupFragment getGroupFragment() {

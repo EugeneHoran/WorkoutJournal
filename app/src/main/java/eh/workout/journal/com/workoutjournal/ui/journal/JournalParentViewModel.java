@@ -20,6 +20,7 @@ import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanDaySetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
+import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
 
 
@@ -87,10 +88,11 @@ public class JournalParentViewModel extends AndroidViewModel {
         });
     }
 
-
     private void resetRoutinePlanTasks() {
-        if (timestamp != null) {
-            new RoutinePlanTask().execute(timestamp);
+        if (Constants.SETTINGS_SHOW_ROUTINE_PLAN) {
+            if (timestamp != null) {
+                new RoutinePlanTask().execute(timestamp);
+            }
         }
     }
 

@@ -85,7 +85,6 @@ public class EntryHistoryViewModel extends AndroidViewModel {
             return objectList;
         }
 
-
         @Override
         @SuppressWarnings("ConstantConditions")
         protected void onPostExecute(List<Object> objectList) {
@@ -96,13 +95,14 @@ public class EntryHistoryViewModel extends AndroidViewModel {
                 if (objectList.size() != getObjectList().getValue().size()) {
                     getObjectList().setValue(objectList);
                 } else {
-                    OrmHistory ormOld = (OrmHistory) getObjectList().getValue().get(0);
-                    OrmHistory ormNew = (OrmHistory) objectList.get(0);
-                    if (!ormOld.toString().equals(ormNew.toString())) {
-                        getObjectList().setValue(objectList);
-                        Log.e("Testing", "NOT");
+                    if (getObjectList().getValue() != null && getObjectList().getValue().size() > 0) {
+                        OrmHistory ormOld = (OrmHistory) getObjectList().getValue().get(0);
+                        OrmHistory ormNew = (OrmHistory) objectList.get(0);
+                        if (!ormOld.toString().equals(ormNew.toString())) {
+                            getObjectList().setValue(objectList);
+                        }
                     } else {
-                        Log.e("Testing", "EQUAL");
+                        getObjectList().setValue(objectList);
                     }
                 }
             }

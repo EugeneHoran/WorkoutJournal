@@ -64,7 +64,6 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     private JournalParentPagerAdapter journalPagerAdapter;
     private JournalRoutinePlanRecyclerAdapter routinePlanRecyclerAdapter;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +81,6 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_journal_parent, container, false);
-        bsSheetBehavior = BottomSheetBehavior.from(binding.bottom.bsHolder);
         return binding.getRoot();
     }
 
@@ -91,17 +89,12 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         super.onViewCreated(view, savedInstanceState);
         binding.viewToolbar.toolbar.inflateMenu(R.menu.menu_journal_parent);
         initMenu(binding.viewToolbar.toolbar.getMenu());
-        binding.bottom.bsRecyclerRoutinePlan.setNestedScrollingEnabled(false);
-        if (getActivity() != null) {
-            binding.bottom.bsRecyclerRoutinePlan.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        }
+        initBottomSheet(Constants.SETTINGS_SHOW_ROUTINE_PLAN);
         binding.pager.setAdapter(journalPagerAdapter);
         binding.pager.setCurrentItem(datePage, false);
         binding.pager.addOnPageChangeListener(pageChangeListener);
         updateToolbarDateChange(datePage);
         binding.setFragment(this);
-        binding.bottom.bsRecyclerRoutinePlan.setAdapter(routinePlanRecyclerAdapter);
-        bsSheetBehavior.setBottomSheetCallback(bottomSheetCallback);
         binding.bottom.bsBtnAddRoutine.setOnClickListener(this);
         binding.bottom.bsBtnAddPlan.setOnClickListener(this);
         binding.bottom.bsFabSeparator.setOnClickListener(this);
@@ -111,8 +104,25 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         if (savedInstanceState == null) {
             model.initJournalData(journalPagerAdapter.getTimestamp(datePage));
         }
-        observeRoutinePlan(model);
-        observeRoutinePlansComplete(model);
+    }
+
+    private void initBottomSheet(boolean init) {
+        bsSheetBehavior = BottomSheetBehavior.from(binding.bottom.bsHolder);
+        if (init) {
+            binding.bottom.bsRecyclerRoutinePlan.setNestedScrollingEnabled(false);
+            if (getActivity() != null) {
+                binding.bottom.bsRecyclerRoutinePlan.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+            }
+            binding.bottom.bsRecyclerRoutinePlan.setAdapter(routinePlanRecyclerAdapter);
+            bsSheetBehavior.setBottomSheetCallback(bottomSheetCallback);
+            observeRoutinePlan(model);
+            observeRoutinePlansComplete(model);
+        } else {
+            binding.bottom.bsOpenClose.setVisibility(View.GONE);
+            bsSheetBehavior.setPeekHeight(0);
+            bsSheetBehavior.setHideable(true);
+            bsSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
     }
 
     public MutableLiveData<Integer> getJournalPage() {
@@ -172,31 +182,35 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     };
 
     private void observeRoutinePlansComplete(JournalParentViewModel model) {
-        model.getRoutinePlanListComplete().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                if (aBoolean != null) {
-                    if (aBoolean) {
-                        binding.bottom.bsRoutinePlanIndicator.setImageDrawable(new LayoutUtil().getDrawableMutate(getActivity(), R.drawable.ic_check_circle, R.color.colorAccent));
-                    } else {
-                        binding.bottom.bsRoutinePlanIndicator.setImageResource(R.drawable.circle_blue);
+        if (Constants.SETTINGS_SHOW_ROUTINE_PLAN) {
+            model.getRoutinePlanListComplete().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(@Nullable Boolean aBoolean) {
+                    if (aBoolean != null) {
+                        if (aBoolean) {
+                            binding.bottom.bsRoutinePlanIndicator.setImageDrawable(new LayoutUtil().getDrawableMutate(getActivity(), R.drawable.ic_check_circle, R.color.colorAccent));
+                        } else {
+                            binding.bottom.bsRoutinePlanIndicator.setImageResource(R.drawable.circle_blue);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void observeRoutinePlan(JournalParentViewModel model) {
-        model.getRoutinePlanList().observe(this, new Observer<List<Object>>() {
-            @Override
-            public void onChanged(@Nullable List<Object> routineSetRelations) {
-                binding.bottom.bsRoutinePlanIndicator.setVisibility(routineSetRelations != null && routineSetRelations.size() > 0 ? View.VISIBLE : View.GONE);
-                routinePlanRecyclerAdapter.setItems(routineSetRelations);
-                showRoutinePlan = routineSetRelations != null && showRoutinePlan && routineSetRelations.size() > 0;
-                bsSheetBehavior.setState(showRoutinePlan ? BottomSheetBehavior.STATE_EXPANDED : BottomSheetBehavior.STATE_COLLAPSED);
-                showRoutinePlan = false;
-            }
-        });
+        if (Constants.SETTINGS_SHOW_ROUTINE_PLAN) {
+            model.getRoutinePlanList().observe(this, new Observer<List<Object>>() {
+                @Override
+                public void onChanged(@Nullable List<Object> routineSetRelations) {
+                    binding.bottom.bsRoutinePlanIndicator.setVisibility(routineSetRelations != null && routineSetRelations.size() > 0 ? View.VISIBLE : View.GONE);
+                    routinePlanRecyclerAdapter.setItems(routineSetRelations);
+                    showRoutinePlan = routineSetRelations != null && showRoutinePlan && routineSetRelations.size() > 0;
+                    bsSheetBehavior.setState(showRoutinePlan ? BottomSheetBehavior.STATE_EXPANDED : BottomSheetBehavior.STATE_COLLAPSED);
+                    showRoutinePlan = false;
+                }
+            });
+        }
     }
 
     private View.OnTouchListener getTouchListener() {

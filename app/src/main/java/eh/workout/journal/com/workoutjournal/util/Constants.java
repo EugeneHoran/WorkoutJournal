@@ -12,6 +12,9 @@ public class Constants {
     public static String SETTINGS_UNIT_MEASURE = "lbs";
     // Timer visibility
     public static final String KEY_ENABLED_TIMER = "key_enable_timer";
+    //Routine plan
+    public static final String KEY_ROUTINE_PLAN = "key_enable_routine_plan";
+    public static boolean SETTINGS_SHOW_ROUTINE_PLAN = true;
 
 
     /**

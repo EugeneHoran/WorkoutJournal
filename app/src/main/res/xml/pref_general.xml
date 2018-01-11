@@ -9,13 +9,23 @@
             android:key="key_unit_measure"
             android:title="@string/pref_title_unit_system" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="Routine and Plans">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="key_enable_routine_plan"
+            android:summary="Routine and Plan will be on the bottom of the journal screen"
+            android:title="Display Routine and Plan" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="Timer">
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="key_enable_timer"
             android:summary="Countdown timer will be on the bottom of the screen"
-            android:title="Display countdown timer" />
+            android:title="Display Countdown Timer" />
 
         <SwitchPreference
             android:defaultValue="false"

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         Constants.SETTINGS_UNIT_MEASURE = sp.getString(Constants.KEY_UNIT_MEASURES, null);
+        Constants.SETTINGS_SHOW_ROUTINE_PLAN = sp.getBoolean(Constants.KEY_ROUTINE_PLAN, true);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setActivity(this);
         fm = getSupportFragmentManager();
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE_SETTINGS) {
+            Constants.SETTINGS_SHOW_ROUTINE_PLAN = sp.getBoolean(Constants.KEY_ROUTINE_PLAN, true);
             initJournalFragment(resultCode, false);
             handleTimer();
         } else if (requestCode == Constants.ADD_EDIT_PLAN_JOURNAL) {

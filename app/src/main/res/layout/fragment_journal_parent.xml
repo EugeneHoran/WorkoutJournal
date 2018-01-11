@@ -28,6 +28,7 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             style="@style/Fab"
+            android:layout_margin="16dp"
             android:transitionName="fab"
             android:visibility="visible"
             app:layout_anchor="@+id/bsHolder"
