@@ -9,7 +9,6 @@ import android.databinding.ObservableField;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
@@ -66,7 +65,12 @@ public class EntryViewModel extends AndroidViewModel {
                     showNoItems.set(exerciseSetRepRelation.getJournalRepEntityList().size() == 0);
                     for (int i = 0; i < exerciseSetRepRelation.getJournalRepEntityList().size(); i++) {
                         exerciseSetRepRelation.getJournalRepEntityList().get(i).setTempPosition(i + 1);
+                        if (OrmHelper.getOneRepMaxInt(exerciseSetRepRelation.getJournalRepEntityList().get(i).getOneRepMax()) == OrmHelper.getOneRepMaxInt(exerciseSetRepRelation.getExerciseOrmEntity().get(0).getOneRepMax())) {
+                            exerciseSetRepRelation.getJournalRepEntityList().get(i).setORM();
+                        }
                     }
+                    exerciseSetRepRelation.getJournalRepEntityList().get(0).setShowTopLine();
+                    exerciseSetRepRelation.getJournalRepEntityList().get(exerciseSetRepRelation.getJournalRepEntityList().size() - 1).setShowBottomLine();
                     observableSetReps.setValue(exerciseSetRepRelation);
                 } else {
                     showNoItems.set(true);

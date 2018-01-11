@@ -7,6 +7,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.echo.holographlibrary.Line;
 import com.echo.holographlibrary.LinePoint;
@@ -84,10 +85,27 @@ public class EntryHistoryViewModel extends AndroidViewModel {
             return objectList;
         }
 
+
         @Override
+        @SuppressWarnings("ConstantConditions")
         protected void onPostExecute(List<Object> objectList) {
             super.onPostExecute(objectList);
-            getObjectList().setValue(objectList);
+            if (getObjectList().getValue() == null) {
+                getObjectList().setValue(objectList);
+            } else {
+                if (objectList.size() != getObjectList().getValue().size()) {
+                    getObjectList().setValue(objectList);
+                } else {
+                    OrmHistory ormOld = (OrmHistory) getObjectList().getValue().get(0);
+                    OrmHistory ormNew = (OrmHistory) objectList.get(0);
+                    if (!ormOld.toString().equals(ormNew.toString())) {
+                        getObjectList().setValue(objectList);
+                        Log.e("Testing", "NOT");
+                    } else {
+                        Log.e("Testing", "EQUAL");
+                    }
+                }
+            }
         }
     }
 }

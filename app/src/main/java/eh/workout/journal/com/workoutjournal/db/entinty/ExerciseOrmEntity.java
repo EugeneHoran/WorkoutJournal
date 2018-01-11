@@ -58,6 +58,9 @@ public class ExerciseOrmEntity {
     }
 
     public String getWeight() {
+        if (weight == null) {
+            weight = "";
+        }
         return weight;
     }
 

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="eh.workout.journal.com.workoutjournal.util.MyStringUtil" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="showTopLine"
+            type="Boolean" />
+
+        <variable
+            name="showBottomLine"
+            type="Boolean" />
+
+        <variable
+            name="holder"
+            type="eh.workout.journal.com.workoutjournal.ui.entry.EntryListRecyclerAdapter.RepViewHolder" />
+
+        <variable
+            name="repEntity"
+            type="eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity" />
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="27.5dp"
+            android:layout_marginStart="27.5dp"
+            android:background="@color/colorGrayTransparent"
+            android:visibility="@{showTopLine? View.VISIBLE:View.GONE, default = visible}" />
+
+        <TextView
+            android:id="@+id/set"
+            android:layout_width="24sp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/circle_blue_text"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@{repEntity.positionString}"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="27.5dp"
+            android:layout_marginStart="27.5dp"
+            android:layout_marginTop="44dp"
+            android:background="@color/colorGrayTransparent"
+            android:visibility="@{showBottomLine? View.VISIBLE:View.GONE, default = visible}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="48dp"
+            android:layout_marginLeft="72dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginStart="72dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/weight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="@{MyStringUtil.formatRepWeightBlack(repEntity.weight)}"
+                android:textSize="15sp"
+                android:visibility="@{holder.showWeight? View.VISIBLE:View.GONE, default = visible}" />
+
+            <TextView
+                android:id="@+id/reps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="@{MyStringUtil.formatRepRepsBlack(repEntity.reps)}"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/orm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="@{MyStringUtil.formatOneRepMaxBlack(repEntity)}"
+                android:textSize="15sp"
+                tools:ignore="RelativeOverlap" />
+
+            <ImageView
+                android:id="@+id/imageTrophy"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/menuMore"
+            style="@style/ImageMore"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@null"
+            android:onClickListener="@{holder::onRepClicked}"
+            android:padding="14dp" />
+    </RelativeLayout>
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/parentView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:clickable="true"-->
+    <!--android:focusable="true"-->
+    <!--android:foreground="?attr/selectableItemBackground"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingBottom="2dp"-->
+    <!--android:paddingTop="2dp"-->
+    <!--android:weightSum="@{holder.showWeight? 3:2, default = 3}">-->
+
+
+    <!--<android.support.v4.widget.Space-->
+    <!--android:layout_width="16dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:visibility="@{holder.showWeight? View.VISIBLE:View.GONE, default = visible}" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/weight"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:fontFamily="sans-serif-medium"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@{MyStringUtil.formatRepWeight(repEntity.weight)}"-->
+    <!--android:textSize="16sp"-->
+    <!--android:visibility="@{holder.showWeight? View.VISIBLE:View.GONE, default = visible}" />-->
+
+    <!--<android.support.v4.widget.Space-->
+    <!--android:layout_width="16dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:visibility="@{holder.showWeight? View.VISIBLE:View.GONE, default = visible}" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/reps"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:fontFamily="sans-serif-medium"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@{MyStringUtil.formatRepReps(repEntity.reps)}"-->
+    <!--android:textSize="16sp" />-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/menuMore"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginRight="6dp"-->
+    <!--android:background="?selectableItemBackgroundBorderless"-->
+    <!--android:clickable="true"-->
+    <!--android:contentDescription="@null"-->
+    <!--android:onClickListener="@{holder::onRepClicked}"-->
+    <!--android:padding="6dp"-->
+    <!--android:tint="@color/colorPrimaryDark"-->
+    <!--app:srcCompat="@drawable/ic_more_vert" />-->
+    <!--</LinearLayout>-->
+
+</layout>

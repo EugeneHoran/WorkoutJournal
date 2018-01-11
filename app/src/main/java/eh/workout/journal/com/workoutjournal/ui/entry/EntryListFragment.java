@@ -41,7 +41,7 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
         if (getParentFragment() != null) {
             model = ViewModelProviders.of(getParentFragment()).get(EntryViewModel.class);
         }
-        adapter = new EntryListRecyclerAdapter();
+        adapter = new EntryListRecyclerAdapter(getContext());
     }
 
     @Override
@@ -54,21 +54,12 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setModel(model);
-        if (getActivity() != null)
-            binding.recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        if (getActivity() != null) {
+//            binding.recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        }
         binding.recycler.setAdapter(adapter);
         adapter.setListener(this);
         observeSetReps(model);
-        observeOrmList(model);
-    }
-
-    private void observeOrmList(EntryViewModel model) {
-//        model.getOrmList().observe(this, new Observer<List<JournalRepEntity>>() {
-//            @Override
-//            public void onChanged(@Nullable List<JournalRepEntity> repEntityList) {
-////                adapter.setRepEntityList(repEntityList);
-//            }
-//        });
     }
 
     private void observeSetReps(EntryViewModel model) {

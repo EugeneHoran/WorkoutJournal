@@ -13,12 +13,22 @@ public class MyStringUtil {
         return Html.fromHtml(String.valueOf(pos) + "<small> set</small>");
     }
 
+
+    //    "<font color='black'>" + OrmHelper.getOneRepMaxInt(ormEntity.getOneRepMax()) + "</font>"
     public static Spanned formatRepWeight(String weight) {
         return Html.fromHtml(weight + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small>");
     }
 
+    public static Spanned formatRepWeightBlack(String weight) {
+        return Html.fromHtml("<font color='black'>" + weight + "</font>" + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small>");
+    }
+
     public static Spanned formatRepReps(String reps) {
         return Html.fromHtml(reps + "<small> reps</small>");
+    }
+
+    public static Spanned formatRepRepsBlack(String reps) {
+        return Html.fromHtml("<font color='black'>" + reps + "</font>" + "<small> reps</small>");
     }
 
     public static Spanned formatOneRepMaxWeight(ExerciseOrmEntity ormEntity) {
@@ -32,6 +42,10 @@ public class MyStringUtil {
         return Html.fromHtml(test);
     }
 
+    public static Spanned formatOneRepMaxBlack(JournalRepEntity ormEntity) {
+        String test = "<font color='black'>" + OrmHelper.getOneRepMaxInt(ormEntity.getOneRepMax()) + "</font>" + "<small>" + " 1RM" + "</small>";
+        return Html.fromHtml(test);
+    }
 
     public static Spanned formatOneRepMaxReps(ExerciseOrmEntity ormEntity) {
         String test = ormEntity.getReps() + "<small> reps</small>";

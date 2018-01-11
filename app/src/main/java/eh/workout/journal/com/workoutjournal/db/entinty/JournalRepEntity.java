@@ -33,6 +33,44 @@ public class JournalRepEntity {
     private int exerciseInputType;
 
     @Ignore
+    private boolean isORM = false;
+
+    @Ignore
+    public boolean isORM() {
+        return isORM;
+    }
+
+    @Ignore
+    public void setORM() {
+        isORM = true;
+    }
+
+    @Ignore
+    private boolean showTopLine = true;
+    @Ignore
+    private boolean showBottomLine = true;
+
+    @Ignore
+    public boolean isShowTopLine() {
+        return showTopLine;
+    }
+
+    @Ignore
+    public void setShowTopLine() {
+        this.showTopLine = false;
+    }
+
+    @Ignore
+    public boolean isShowBottomLine() {
+        return showBottomLine;
+    }
+
+    @Ignore
+    public void setShowBottomLine() {
+        this.showBottomLine = false;
+    }
+
+    @Ignore
     private boolean selected = false;
 
     @Ignore
@@ -53,6 +91,12 @@ public class JournalRepEntity {
         this.oneRepMax = repEntity.getOneRepMax();
         this.tempPosition = repEntity.getTempPosition();
         this.exerciseInputType = repEntity.getExerciseInputType();
+    }
+
+
+    @Ignore
+    public String getPositionString() {
+        return String.valueOf(position);
     }
 
     @NonNull
@@ -97,6 +141,9 @@ public class JournalRepEntity {
     }
 
     public String getWeight() {
+        if (weight == null) {
+            weight = "";
+        }
         return weight;
     }
 

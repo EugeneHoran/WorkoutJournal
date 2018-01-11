@@ -1,6 +1,8 @@
 package eh.workout.journal.com.workoutjournal.ui.entry;
 
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -14,17 +16,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
-import eh.workout.journal.com.workoutjournal.databinding.RecyclerAddExerciseEntryBinding;
-import eh.workout.journal.com.workoutjournal.databinding.RecyclerAddExerciseExpandedBinding;
+import eh.workout.journal.com.workoutjournal.databinding.RecyclerEntryItemBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
+import eh.workout.journal.com.workoutjournal.util.views.LayoutUtil;
 
 public class EntryListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int TYPE_NORMAL = 0;
-    private static final int TYPE_EXPANDED = 1;
-
     private List<JournalRepEntity> itemList = new ArrayList<>();
 
     private EntryAdapterInterface listener;
+    private Drawable trophyGray, trophyBlue;
+
+    public EntryListRecyclerAdapter(Context context) {
+        LayoutUtil layoutUtil = new LayoutUtil();
+        this.trophyGray = layoutUtil.getDrawableMutate(context, R.drawable.ic_trophy, R.color.colorGrayTransparent);
+        this.trophyBlue = layoutUtil.getDrawableMutate(context, R.drawable.ic_trophy, R.color.colorAccent);
+    }
 
     public interface EntryAdapterInterface {
         void deleteRep(JournalRepEntity journalRepEntity, List<JournalRepEntity> repEntityList);
@@ -34,15 +40,6 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public void setListener(EntryAdapterInterface listener) {
         this.listener = listener;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (itemList.get(position).isSelected()) {
-            return TYPE_EXPANDED;
-        } else {
-            return TYPE_NORMAL;
-        }
     }
 
     void setItems(final List<JournalRepEntity> items) {
@@ -72,7 +69,12 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                 JournalRepEntity oldRep = itemList.get(oldItemPosition);
                 JournalRepEntity newRep = items.get(newItemPosition);
-
+                if (oldRep.isShowTopLine() != newRep.isShowTopLine() || oldRep.isShowBottomLine() != newRep.isShowBottomLine()) {
+                    return false;
+                }
+                if (oldRep.isORM() != newRep.isORM()) {
+                    return false;
+                }
                 if (oldRep.getWeight() == null || newRep.getWeight() == null) {
                     return oldRep.isSelected() == newRep.isSelected() &&
                             oldRep.getId().equals(newRep.getId()) &&
@@ -96,24 +98,13 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_NORMAL) {
-            return new RepViewHolder(RecyclerAddExerciseEntryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-        } else if (viewType == TYPE_EXPANDED) {
-            return new RepExpandedViewHolder(RecyclerAddExerciseExpandedBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-        } else {
-            return null;
-        }
+        return new RepViewHolder(RecyclerEntryItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == TYPE_NORMAL) {
-            RepViewHolder repViewHolder = (RepViewHolder) holder;
-            repViewHolder.bindView();
-        } else {
-            RepExpandedViewHolder repViewHolder = (RepExpandedViewHolder) holder;
-            repViewHolder.bindView();
-        }
+        RepViewHolder repViewHolder = (RepViewHolder) holder;
+        repViewHolder.bindView();
         holder.itemView.setTag(this);
     }
 
@@ -122,76 +113,12 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         return itemList.size();
     }
 
-    public class RepExpandedViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerAddExerciseExpandedBinding binding;
-        private JournalRepEntity repEntity;
-        public boolean showWeight = true;
-
-        RepExpandedViewHolder(RecyclerAddExerciseExpandedBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-        void bindView() {
-            repEntity = itemList.get(getAdapterPosition());
-            showWeight = repEntity.getExerciseInputType() == 0;
-            binding.setRepEntity(repEntity);
-            binding.setHolder(this);
-            binding.cardHolder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                    expand(getAdapterPosition());
-                }
-            });
-        }
-
-        public void onRepClicked(View view) {
-            PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
-            popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
-            popup.getMenu().findItem(R.id.action_move).setVisible(false);
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                public boolean onMenuItemClick(MenuItem item) {
-                    int id = item.getItemId();
-                    if (id == R.id.action_delete) {
-                        if (listener != null) {
-                            List<JournalRepEntity> newRepList = new ArrayList<>(itemList);
-                            newRepList.remove(getAdapterPosition());
-                            listener.deleteRep(repEntity, newRepList);
-                        }
-                    } else if (id == R.id.action_edit) {
-                        if (listener != null) {
-                            listener.editRep(new JournalRepEntity(repEntity));
-                        }
-                    }
-                    return true;
-                }
-            });
-            popup.show();
-        }
-    }
-
-    private void expand(int pos) {
-        if (itemList.get(pos).isSelected()) {
-            itemList.get(pos).setSelected(false);
-            notifyItemChanged(pos);
-            return;
-        }
-        for (int i = 0; i < itemList.size(); i++) {
-            if (itemList.get(i).isSelected()) {
-                itemList.get(i).setSelected(false);
-                notifyItemChanged(i);
-            }
-        }
-        itemList.get(pos).setSelected(!itemList.get(pos).isSelected());
-        notifyItemChanged(pos);
-    }
-
     public class RepViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerAddExerciseEntryBinding binding;
+        private RecyclerEntryItemBinding binding;
         private JournalRepEntity repEntity;
         public boolean showWeight = true;
 
-        RepViewHolder(RecyclerAddExerciseEntryBinding binding) {
+        RepViewHolder(RecyclerEntryItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
@@ -199,18 +126,15 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         void bindView() {
             repEntity = itemList.get(getAdapterPosition());
             showWeight = repEntity.getExerciseInputType() == 0;
+            binding.setShowTopLine(repEntity.isShowTopLine());
+            binding.setShowBottomLine(repEntity.isShowBottomLine());
             binding.setRepEntity(repEntity);
+            binding.imageTrophy.setImageDrawable(repEntity.isORM() ? trophyBlue : trophyGray);
             binding.setHolder(this);
-            binding.parentView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                    expand(getAdapterPosition());
-                }
-            });
         }
 
         public void onRepClicked(View view) {
-            PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
+            PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END, R.attr.actionOverflowMenuStyle, 0);
             popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
             popup.getMenu().findItem(R.id.action_delete).setVisible(true);
             popup.getMenu().findItem(R.id.action_edit).setVisible(true);

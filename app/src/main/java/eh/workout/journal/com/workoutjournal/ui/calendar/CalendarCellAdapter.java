@@ -36,7 +36,7 @@ public class CalendarCellAdapter
 //        }
 //        if (dateTimeCell.equals(getToday())) {
 //            if (isDateInMonth) {
-//                tv1.setBackgroundResource(R.drawable.circle_gray);
+//                tv1.setBackgroundResource(R.drawable.circle_blue_text);
 //                tv1.setTextColor(resources.getColor(R.color.white));
 //            }
 //        } else {

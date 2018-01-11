@@ -87,7 +87,7 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter {
                             setRepRelation.getJournalSetEntity().getExerciseInputType());
                 }
             } else if (view == binding.imgMore) {
-                PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
+                PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END, R.attr.actionOverflowMenuStyle, 0);
                 popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
                 popup.getMenu().findItem(R.id.action_delete).setVisible(true);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
