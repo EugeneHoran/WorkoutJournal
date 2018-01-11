@@ -4,29 +4,14 @@
     tools:ignore="ContentDescription">
 
     <data>
-
-        <import type="android.view.View" />
-
         <variable
             name="title"
             type="String" />
-
-        <variable
-            name="hideMenu"
-            type="Boolean" />
-
-        <variable
-            name="listener"
-            type="android.view.View.OnClickListener" />
-
-        <variable
-            name="menuListener"
-            type="android.view.View.OnClickListener" />
     </data>
 
     <android.support.v7.widget.CardView
-        style="@style/CardViewClickable"
-        android:onClickListener="@{listener}">
+        android:id="@+id/cardHolder"
+        style="@style/CardViewClickable">
 
         <RelativeLayout style="@style/WrapContentWrapContent">
 
@@ -35,9 +20,8 @@
                 android:text="@{title}" />
 
             <ImageView
-                style="@style/ImageMore.Dark"
-                android:onClickListener="@{menuListener}"
-                android:visibility="@{hideMenu?View.GONE:View.VISIBLE, default = visible}" />
+                android:id="@+id/imgMore"
+                style="@style/ImageMore.Dark" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler"

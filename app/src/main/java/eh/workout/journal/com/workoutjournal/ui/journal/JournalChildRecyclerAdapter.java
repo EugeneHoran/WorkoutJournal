@@ -15,68 +15,29 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.RecyclerSetItemWithRecyclerBinding;
-import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
-import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.ui.shared.RepChildRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.util.OrmHelper;
+import eh.workout.journal.com.workoutjournal.util.diff.JournalChildDiffUtil;
 
-public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<ExerciseSetRepRelation> itemList = new ArrayList<>();
-    private JournalRecyclerInterface listener;
+public class JournalChildRecyclerAdapter extends RecyclerView.Adapter {
+    private ArrayList<ExerciseSetRepRelation> setList = new ArrayList<>();
+    private JournalRecyclerCallbacks listener;
 
-    JournalChildRecyclerAdapter(JournalRecyclerInterface listener) {
-        this.listener = listener;
-    }
-
-    interface JournalRecyclerInterface {
-        void onWorkoutClicked(String setId, int inputType);
+    interface JournalRecyclerCallbacks {
+        void onSetClicked(String setId, int inputType);
 
         void onDeleteSetClicked(ExerciseSetRepRelation dateSetRepRelation);
     }
 
-    void setItems(final List<ExerciseSetRepRelation> items) {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-            @Override
-            public int getOldListSize() {
-                return itemList.size();
-            }
+    JournalChildRecyclerAdapter(JournalRecyclerCallbacks listener) {
+        this.listener = listener;
+    }
 
-            @Override
-            public int getNewListSize() {
-                return items.size();
-            }
-
-            @Override
-            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                ExerciseSetRepRelation newItem = items.get(newItemPosition);
-                ExerciseSetRepRelation old = itemList.get(oldItemPosition);
-                return old.getJournalSetEntity().getId().equals(newItem.getJournalSetEntity().getId());
-            }
-
-            @Override
-            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                ExerciseSetRepRelation old = itemList.get(oldItemPosition);
-                ExerciseSetRepRelation newItem = items.get(newItemPosition);
-                if (old.getExerciseOrmEntity().get(0).getOneRepMax() != newItem.getExerciseOrmEntity().get(0).getOneRepMax() &&
-                        old.getExerciseOrmEntity().get(0).getReps().equals(newItem.getExerciseOrmEntity().get(0).getReps()) &&
-                        old.getExerciseOrmEntity().get(0).getWeight().equals(newItem.getExerciseOrmEntity().get(0).getWeight())) {
-                    return false;
-                }
-                if (old.getJournalRepEntityList().size() != newItem.getJournalRepEntityList().size()) {
-                    return false;
-                }
-                for (int i = 0; i < old.getJournalRepEntityList().size(); i++) {
-                    if (!old.getJournalRepEntityList().get(i).getId().equals(newItem.getJournalRepEntityList().get(i).getId())
-                            && !old.getJournalRepEntityList().get(i).getWeight().equals(newItem.getJournalRepEntityList().get(i).getWeight())
-                            && !old.getJournalRepEntityList().get(i).getReps().equals(newItem.getJournalRepEntityList().get(i).getReps())) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        });
-        this.itemList.clear();
-        this.itemList.addAll(items);
+    void setItems(final List<ExerciseSetRepRelation> setItems) {
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new JournalChildDiffUtil(setList, setItems));
+        this.setList.clear();
+        this.setList.addAll(setItems);
         diffResult.dispatchUpdatesTo(this);
     }
 
@@ -87,77 +48,60 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        JournalViewHolder holder = (JournalViewHolder) viewHolder;
-        holder.bindView();
-        viewHolder.itemView.setTag(this);
+        ((JournalViewHolder) viewHolder).bindView(setList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return setList.size();
     }
 
-    public class JournalViewHolder extends RecyclerView.ViewHolder {
+    public class JournalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RecyclerSetItemWithRecyclerBinding binding;
         private RepChildRecyclerAdapter adapter;
-        private ExerciseSetRepRelation dateSetRepRelation;
-        private JournalSetEntity setEntity;
+        private ExerciseSetRepRelation setRepRelation;
 
         JournalViewHolder(RecyclerSetItemWithRecyclerBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            adapter = new RepChildRecyclerAdapter();
+            this.adapter = new RepChildRecyclerAdapter(itemView.getContext());
+            this.binding.recycler.setAdapter(adapter);
+            this.binding.cardHolder.setOnClickListener(this);
+            this.binding.imgMore.setOnClickListener(this);
         }
 
-        void bindView() {
-            dateSetRepRelation = itemList.get(getAdapterPosition());
-            setEntity = dateSetRepRelation.getJournalSetEntity();
-            if (dateSetRepRelation.getExerciseOrmEntity().size() > 0) {
-                ExerciseOrmEntity ormEntity = dateSetRepRelation.getExerciseOrmEntity().get(0);
-                adapter.setOneRepMax(ormEntity);
-            }
-            binding.setHideMenu(false);
-            binding.setTitle(setEntity.getName());
-            binding.setListener(workoutClickListener);
-            binding.setMenuListener(menuClickListener);
-            binding.recycler.setAdapter(adapter);
-            adapter.setItems(dateSetRepRelation.getJournalRepEntityList());
+        void bindView(ExerciseSetRepRelation setRepRelation) {
+            this.setRepRelation = setRepRelation;
+            binding.setTitle(setRepRelation.getJournalSetEntity().getName());
+            adapter.setOneRepMax(OrmHelper.getOneRepMaxInt(setRepRelation.getExerciseOrmEntity().get(0).getOneRepMax()));
+            adapter.setItems(setRepRelation.getJournalRepEntityList());
             binding.recycler.setLayoutFrozen(true);
         }
 
-        View.OnClickListener menuClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showMenu(view);
-            }
-        };
-
-        View.OnClickListener workoutClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        @Override
+        public void onClick(View view) {
+            if (view == binding.cardHolder) {
                 if (listener != null) {
-                    listener.onWorkoutClicked(setEntity.getExerciseId(), setEntity.getExerciseInputType());
+                    listener.onSetClicked(
+                            setRepRelation.getJournalSetEntity().getExerciseId(),
+                            setRepRelation.getJournalSetEntity().getExerciseInputType());
                 }
-            }
-        };
-
-        private void showMenu(View view) {
-            PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
-            popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
-            popup.getMenu().findItem(R.id.action_edit).setVisible(false);
-            popup.getMenu().findItem(R.id.action_move).setVisible(false);
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                public boolean onMenuItemClick(MenuItem item) {
-                    int id = item.getItemId();
-                    if (id == R.id.action_delete) {
-                        if (listener != null) {
-                            listener.onDeleteSetClicked(dateSetRepRelation);
+            } else if (view == binding.imgMore) {
+                PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
+                popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
+                popup.getMenu().findItem(R.id.action_delete).setVisible(true);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.action_delete) {
+                            if (listener != null) {
+                                listener.onDeleteSetClicked(setRepRelation);
+                            }
                         }
+                        return true;
                     }
-                    return true;
-                }
-            });
-            popup.show();
+                });
+                popup.show();
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ViewEntryPickersBinding;
@@ -73,7 +74,11 @@ public class EntryEditDialogFragment extends DialogFragment {
         binding.pickerReps.setValue(Integer.valueOf(repEntity.getReps()));
         binding.pickerWeight.setMaxValue(999);
         binding.pickerWeight.setMinValue(1);
-        binding.pickerWeight.setValue(Integer.valueOf(repEntity.getWeight()));
+        if (repEntity.getWeight() != null) {
+            binding.pickerWeight.setValue(Integer.valueOf(repEntity.getWeight()));
+        } else {
+            binding.pickerWeight.setVisibility(View.GONE);
+        }
     }
 
 }

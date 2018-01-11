@@ -117,7 +117,7 @@ public class EntryViewModel extends AndroidViewModel {
         }
     }
 
-    void saveRep(String weight, String reps, double oneRepMax) {
+    synchronized void saveRep(String weight, String reps, double oneRepMax) {
         String setId;
         if (setRepRelation == null) {
             setId = UUID.randomUUID().toString();

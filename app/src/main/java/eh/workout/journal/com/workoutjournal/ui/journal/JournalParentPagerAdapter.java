@@ -6,11 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.ViewGroup;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import eh.workout.journal.com.workoutjournal.util.Constants;
@@ -37,15 +37,9 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
         return journalFragment;
     }
 
-    Date getAdapterDate(int dayPosition) {
-        int dayDiff = dayPosition - Constants.JOURNAL_PAGE_TODAY;
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        Calendar mCalendar = new GregorianCalendar(year, month, day);
-        mCalendar.add(Calendar.DATE, dayDiff);
-        return mCalendar.getTime();
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
     }
 
     @Override

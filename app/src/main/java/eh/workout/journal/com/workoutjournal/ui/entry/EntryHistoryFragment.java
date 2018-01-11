@@ -64,6 +64,7 @@ public class EntryHistoryFragment extends Fragment {
         model.getObjectList().observe(this, new Observer<List<Object>>() {
             @Override
             public void onChanged(@Nullable List<Object> objects) {
+
                 adapter.setItems(objects);
                 binding.noItems.setVisibility(objects != null && objects.size() > 0 ? View.GONE : View.VISIBLE);
             }

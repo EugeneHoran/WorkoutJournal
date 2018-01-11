@@ -204,7 +204,7 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             binding.parentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    expand(getAdapterPosition());
+//                    expand(getAdapterPosition());
                 }
             });
         }
@@ -212,7 +212,8 @@ public class EntryListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         public void onRepClicked(View view) {
             PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
             popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
-            popup.getMenu().findItem(R.id.action_move).setVisible(false);
+            popup.getMenu().findItem(R.id.action_delete).setVisible(true);
+            popup.getMenu().findItem(R.id.action_edit).setVisible(true);
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
                     int id = item.getItemId();

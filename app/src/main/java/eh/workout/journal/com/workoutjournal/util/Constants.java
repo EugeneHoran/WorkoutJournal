@@ -22,8 +22,8 @@ public class Constants {
      * reps
      * cardio
      */
-    public static final int EXERCISE_TYPE_WEIGHT = 0;
-    public static final int EXERCISE_TYPE_BODY = 1;
+    public static final int EXERCISE_TYPE_WEIGHT_REPS = 0;
+    public static final int EXERCISE_TYPE_REPS = 1;
     public static final int EXERCISE_TYPE_CARDIO = 2;
 
     //

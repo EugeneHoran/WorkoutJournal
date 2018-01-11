@@ -2,6 +2,7 @@ package eh.workout.journal.com.workoutjournal.ui.routine_new;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,15 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<ExerciseLiftEntity> itemList = new ArrayList<>();
     private List<ExerciseLiftEntity> itemListFiltered = new ArrayList<>();
     private boolean showCheckBox;
+    private LiftCallback listener;
+
+    public interface LiftCallback {
+        void onItemClicked(List<ExerciseLiftEntity> selectedList);
+    }
+
+    public void setListener(LiftCallback listener) {
+        this.listener = listener;
+    }
 
     public RoutineLiftRecyclerAdapter(boolean showCheckBox) {
         this.showCheckBox = showCheckBox;
@@ -46,6 +56,15 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             }
         }
         return selectedList;
+    }
+
+    public void unselectedExercise(ExerciseLiftEntity exerciseLiftEntity) {
+        for (int i = 0; i < itemList.size(); i++) {
+            if (itemList.get(i).getId().equals(exerciseLiftEntity.getId())) {
+                itemList.get(i).setSelected(false);
+                notifyItemChanged(i);
+            }
+        }
     }
 
     @Override
@@ -123,7 +142,11 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     itemList.get(i).setSelected(checkBox.isChecked());
                 }
             }
+
             exerciseLiftEntity.setSelected(checkBox.isChecked());
+            if (listener != null) {
+                listener.onItemClicked(getSelectedList());
+            }
         }
 
         @Override

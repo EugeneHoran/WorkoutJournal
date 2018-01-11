@@ -1,7 +1,6 @@
 package eh.workout.journal.com.workoutjournal.ui.journal;
 
 
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -26,19 +25,19 @@ import eh.workout.journal.com.workoutjournal.util.views.LayoutUtil;
 public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Object> itemList = new ArrayList<>();
 
-    private PlanChildInterface listener;
+    private RoutinePlanCallbacks listener;
 
-    public interface PlanChildInterface {
+    public interface RoutinePlanCallbacks {
         void onExerciseClicked(String setId, int inputType);
 
-        void onEditRoutineClicked(String planId);
+        void editRoutine(String planId);
 
-        void onDeleteRoutine(PlanDayEntity planDayEntity);
+        void deletePlan(PlanDayEntity planDayEntity);
 
-        void onEditPlanClicked(String planId);
+        void editPlan(String planId);
     }
 
-    JournalRoutinePlanRecyclerAdapter(PlanChildInterface listener) {
+    JournalRoutinePlanRecyclerAdapter(RoutinePlanCallbacks listener) {
         this.listener = listener;
     }
 
@@ -48,7 +47,6 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
             notifyDataSetChanged();
             return;
         }
-
         this.itemList.clear();
         this.itemList.addAll(itemList);
         notifyDataSetChanged();
@@ -122,14 +120,14 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
                         if (id == R.id.action_edit) {
                             if (listener != null) {
                                 if (which == 0) {
-                                    listener.onEditRoutineClicked(routineSetRelation.getRoutineEntity().getId());
+                                    listener.editRoutine(routineSetRelation.getRoutineEntity().getId());
                                 } else {
-                                    listener.onEditPlanClicked(planDaySetRelation.getPlanDayEntity().getId());
+                                    listener.editPlan(planDaySetRelation.getPlanDayEntity().getId());
                                 }
                             }
                         } else if (id == R.id.action_delete) {
                             if (listener != null) {
-                                listener.onDeleteRoutine(planDaySetRelation.getPlanDayEntity());
+                                listener.deletePlan(planDaySetRelation.getPlanDayEntity());
                             }
                         }
                         return true;

@@ -8,10 +8,6 @@ import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +20,7 @@ import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalChildBin
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 
-public class JournalChildFragment extends BaseFragment implements JournalChildRecyclerAdapter.JournalRecyclerInterface {
+public class JournalChildFragment extends BaseFragment {
     private static final String ARG_DATE_TIMESTAMP = "arg_date_timestamp";
     private static final String ARG_JOURNAL_PAGE = "arg_journal_page";
     public ObservableField<Boolean> noItems = new ObservableField<>(false);
@@ -58,7 +54,7 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
             modelParent = ViewModelProviders.of(getParentFragment()).get(JournalParentViewModel.class);
         }
         model = ViewModelProviders.of(this).get(JournalChildViewModel.class);
-        adapterJournal = new JournalChildRecyclerAdapter(this);
+        adapterJournal = new JournalChildRecyclerAdapter(journalRecyclerInterface);
     }
 
     @Override
@@ -67,15 +63,10 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
         return binding.getRoot();
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setFragment(this);
-        if (binding.recyclerJournal.getLayoutManager() instanceof GridLayoutManager) {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-            binding.recyclerJournal.setLayoutManager(gridLayoutManager);
-        }
         binding.recyclerJournal.setNestedScrollingEnabled(false);
         binding.recyclerJournal.setAdapter(adapterJournal);
         observeJournalPage();
@@ -90,23 +81,15 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
                     if (integer != null) {
                         parentPage = integer;
                         if (journalPage == integer) {
-                            observeSetAndReps();
+                            modelParent.getSetAndRepsList().observe(JournalChildFragment.this, observer);
                         } else {
-                            removeObserver();
+                            if (modelParent.getSetAndRepsList().hasActiveObservers()) {
+                                modelParent.getSetAndRepsList().removeObserver(observer);
+                            }
                         }
                     }
                 }
             });
-        }
-    }
-
-    private void observeSetAndReps() {
-        modelParent.getSetAndRepsList().observe(this, observer);
-    }
-
-    private void removeObserver() {
-        if (modelParent.getSetAndRepsList().hasActiveObservers()) {
-            modelParent.getSetAndRepsList().removeObserver(observer);
         }
     }
 
@@ -124,16 +107,18 @@ public class JournalChildFragment extends BaseFragment implements JournalChildRe
         }
     };
 
-    @Override
-    public void onWorkoutClicked(String setId, int inputType) {
-        if (getParentFragment() != null) {
-            JournalParentFragment journalParentFragment = (JournalParentFragment) getParentFragment();
-            journalParentFragment.onExerciseClicked(setId, inputType);
+    private JournalChildRecyclerAdapter.JournalRecyclerCallbacks journalRecyclerInterface = new JournalChildRecyclerAdapter.JournalRecyclerCallbacks() {
+        @Override
+        public void onSetClicked(String setId, int inputType) {
+            if (getParentFragment() != null) {
+                JournalParentFragment journalParentFragment = (JournalParentFragment) getParentFragment();
+                journalParentFragment.routineInterface.onExerciseClicked(setId, inputType);
+            }
         }
-    }
 
-    @Override
-    public void onDeleteSetClicked(ExerciseSetRepRelation dateSetRepRelation) {
-        model.deleteSet(dateSetRepRelation);
-    }
+        @Override
+        public void onDeleteSetClicked(ExerciseSetRepRelation dateSetRepRelation) {
+            model.deleteSet(dateSetRepRelation);
+        }
+    };
 }

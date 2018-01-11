@@ -7,6 +7,7 @@ import android.text.Html;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.echo.holographlibrary.Line;
@@ -27,6 +28,7 @@ import eh.workout.journal.com.workoutjournal.model.OrmHistory;
 import eh.workout.journal.com.workoutjournal.ui.shared.RepChildRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.MyStringUtil;
+import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 
 public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
@@ -42,6 +44,10 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         this.itemList.clear();
         this.itemList.addAll(items);
         notifyDataSetChanged();
+    }
+
+    public List<Object> getItemList() {
+        return itemList;
     }
 
     @Override
@@ -108,11 +114,16 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             if (ormHistory.getDateLine() != null) {
                 binding.lineGraph.addLine(ormHistory.getDateLine());
             }
-            binding.max.setText(String.format("%s %s", Math.round(ormHistory.getMax().getOneRepMax() + 20), Constants.SETTINGS_UNIT_MEASURE));
-            binding.min.setText(String.format("%s %s", Math.round(ormHistory.getMin() - 20), Constants.SETTINGS_UNIT_MEASURE));
-            binding.mid.setText(String.format("%s %s", Math.round((ormHistory.getMax().getOneRepMax() + ormHistory.getMin()) / 2), Constants.SETTINGS_UNIT_MEASURE));
+            float min = (float) ormHistory.getMin() - 20;
+            if (min < 1) {
+                min = (float) 1;
+            }
+            binding.max.setText(String.format("%s %s - ", Math.round(ormHistory.getMax().getOneRepMax() + 20), Constants.SETTINGS_UNIT_MEASURE));
+            binding.min.setText(String.format("%s %s - ", Math.round(min), Constants.SETTINGS_UNIT_MEASURE));
+            binding.mid.setText(String.format("%s %s - ", Math.round((ormHistory.getMax().getOneRepMax() + ormHistory.getMin()) / 2), Constants.SETTINGS_UNIT_MEASURE));
 
-            binding.lineGraph.setRangeY((float) ormHistory.getMin() - 20, (float) ormHistory.getMax().getOneRepMax() + 20);
+
+            binding.lineGraph.setRangeY(min, (float) ormHistory.getMax().getOneRepMax() + 20);
             binding.lineGraph.setLineToFill(0);
         }
     }
@@ -125,7 +136,7 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         EntryHistoryViewHolder(RecyclerSetItemWithRecyclerBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            adapter = new RepChildRecyclerAdapter();
+            adapter = new RepChildRecyclerAdapter(itemView.getContext());
         }
 
         void bindView() {
@@ -134,7 +145,7 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             setEntity = dateSetRepRelation.getJournalSetEntity();
             String title = String.valueOf(DateUtils.getRelativeTimeSpanString(setEntity.getTimestamp()));
             binding.setTitle(title);
-            adapter.setOneRepMax(ormEntity);
+            adapter.setOneRepMax(OrmHelper.getOneRepMaxInt(ormEntity.getOneRepMax()));
             binding.recycler.setAdapter(adapter);
             if (dateSetRepRelation.getJournalRepEntityList() != null) {
                 if (dateSetRepRelation.getJournalRepEntityList().size() > 0) {
@@ -142,7 +153,7 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
                 }
             }
             binding.recycler.setLayoutFrozen(true);
-            binding.setHideMenu(true);
+            binding.imgMore.setVisibility(View.GONE);
         }
     }
 }

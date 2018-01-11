@@ -48,6 +48,7 @@ public class PlanLiftFragment extends Fragment {
             model = ViewModelProviders.of(getActivity()).get(PlanViewModel.class);
         }
         adapter = new RoutineLiftRecyclerAdapter(true);
+
     }
 
     @Nullable
@@ -66,7 +67,7 @@ public class PlanLiftFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (adapter.getSelectedList().size() == 0) {
-                    Snackbar.make(binding.fab, "Fab", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(binding.fab, "Please select exercises to move on", Snackbar.LENGTH_SHORT).show();
                 } else {
                     if (getActivity() != null) {
                         model.setSelectedList(adapter.getSelectedList());

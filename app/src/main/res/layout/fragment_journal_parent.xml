@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="fragment"
             type="eh.workout.journal.com.workoutjournal.ui.journal.JournalParentFragment" />
-
-        <variable
-            name="navigation"
-            type="Boolean" />
 
     </data>
 
@@ -20,7 +17,6 @@
             android:id="@+id/viewToolbar"
             layout="@layout/view_toolbar"
             app:menuListener="@{fragment.menuItemClickListener}"
-            app:navigation="@{navigation}"
             app:subTitle="@{fragment.toolbarSubTitle}"
             app:title="@{fragment.toolbarTitle}" />
 
@@ -32,19 +28,18 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             style="@style/Fab"
-            android:onClickListener="@{fragment::onAddNewLiftClicked}"
             android:transitionName="fab"
-            app:layout_anchor="@+id/bottom_sheet"
+            android:visibility="visible"
+            app:layout_anchor="@+id/bsHolder"
             app:layout_anchorGravity="top|end"
-            app:srcCompat="@drawable/ic_add" />
-
+            app:srcCompat="@drawable/ic_add"
+            tools:ignore="UnusedAttribute" />
 
         <include
             android:id="@+id/bottom"
             layout="@layout/view_journal_bottom_sheet"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:fragment="@{fragment}" />
+            android:layout_height="match_parent" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

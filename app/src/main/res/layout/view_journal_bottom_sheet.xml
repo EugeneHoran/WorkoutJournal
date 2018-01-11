@@ -3,30 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="fragment"
-            type="eh.workout.journal.com.workoutjournal.ui.journal.JournalParentFragment" />
-    </data>
-
     <merge>
 
         <View
-            android:id="@+id/viewClicker"
+            android:id="@+id/bsTransDismissView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorBlackTransparent"
             android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/bottom_sheet"
+            android:id="@+id/bsHolder"
             style="@style/BottomSheet"
             app:behavior_hideable="false"
             app:behavior_peekHeight="@dimen/bottom_sheet_default_peeking_height">
 
             <View
-                android:id="@+id/viewClicker2"
+                android:id="@+id/bsFabSeparator"
                 style="@style/MatchParent48"
                 android:clickable="true"
                 android:focusable="true" />
@@ -39,20 +32,20 @@
                 android:paddingRight="12dp">
 
                 <Button
-                    android:id="@+id/addPlan"
+                    android:id="@+id/bsBtnAddPlan"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginBottom="1dp"
-                    android:layout_toLeftOf="@+id/addRoutine"
-                    android:layout_toStartOf="@+id/addRoutine"
+                    android:layout_toLeftOf="@+id/bsBtnAddRoutine"
+                    android:layout_toStartOf="@+id/bsBtnAddRoutine"
                     android:text="@string/add_plan"
                     android:textColor="@color/colorAccent"
                     tools:ignore="RelativeOverlap" />
 
                 <Button
-                    android:id="@+id/addRoutine"
+                    android:id="@+id/bsBtnAddRoutine"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,14 +64,14 @@
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerPlan"
+                android:id="@+id/bsRecyclerRoutinePlan"
                 style="@style/RecyclerChildVertical"
                 android:background="@color/colorBackground"
                 android:paddingBottom="48dp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/bottomOpenClose"
+            android:id="@+id/bsOpenClose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -88,11 +81,11 @@
             android:elevation="24dp"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:onClickListener="@{fragment.onBottomSheetHeaderListener}"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UnusedAttribute">
 
             <ImageView
-                android:id="@+id/hasRoutinePlanIndicator"
+                android:id="@+id/bsRoutinePlanIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -102,7 +95,6 @@
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/bottom_sheet_header"
                 style="@style/TextHeader.Small"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -110,7 +102,7 @@
                 android:textColor="@color/black" />
 
             <ImageView
-                android:id="@+id/rotateImage"
+                android:id="@+id/bsOpenCloseIndicator"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"

@@ -48,8 +48,8 @@ dependencies {
     compile 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
 
     // Testing Libraries
-    compile 'org.quanqi:android-holo-graph:0.1.0'
-
+    implementation 'org.quanqi:android-holo-graph:0.1.0'
+    implementation 'com.xiaofeng.android:flowlayoutmanager:1.2.3.2'
     // Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

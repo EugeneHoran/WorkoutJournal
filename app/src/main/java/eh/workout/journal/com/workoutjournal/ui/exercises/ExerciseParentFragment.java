@@ -144,7 +144,7 @@ public class ExerciseParentFragment extends BaseFragment {
                     if (binding.pager.getCurrentItem() == 2) {
                         navToAddPlanActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE);
                     } else if (binding.pager.getCurrentItem() == 3) {
-                        navToAddRoutineActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE);
+                        navToAddRoutineActivity(page, Constants.ADD_EDIT_PLAN_EXERCISE, null);
                     } else {
                         binding.pager.setCurrentItem(0);
                         if (adapter.getGroupFragment() != null) {

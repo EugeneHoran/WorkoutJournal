@@ -35,6 +35,10 @@ public class PlanAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(new android.transition.Fade());
+            getWindow().setExitTransition(new android.transition.Fade());
+        }
         page = getIntent().getIntExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, 5000);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_plan);
         setSupportActionBar(binding.toolbar);
@@ -46,7 +50,7 @@ public class PlanAddActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             model.setTimestamp(JournalParentPagerAdapter.getTimestampStatic(page));
             PlanLiftFragment fragment = PlanLiftFragment.newInstance();
-            initTransition(fragment);
+//            initTransition(fragment);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(

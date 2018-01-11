@@ -47,7 +47,7 @@ public class BaseFragment extends Fragment {
         addExerciseDialogFragment.show(getChildFragmentManager(), TAG_ADD_LIFT_DIALOG_FRAGMENT);
     }
 
-    public void navToAddRoutineActivity(int page, int requestCode) {
+    public void navToAddRoutineActivity(int page, int requestCode, View view) {
         if (getActivity() != null) {
             Intent intentPlan = new Intent(getActivity(), RoutineActivity.class);
             intentPlan.putExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, page);
