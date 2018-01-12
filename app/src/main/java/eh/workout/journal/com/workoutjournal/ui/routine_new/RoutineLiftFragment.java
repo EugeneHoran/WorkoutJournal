@@ -24,7 +24,7 @@ import eh.workout.journal.com.workoutjournal.databinding.FragmentPlanLiftBinding
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseSelectorAddExerciseDialogFragment;
 import eh.workout.journal.com.workoutjournal.ui.plan.PlanAddActivity;
-import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
+import eh.workout.journal.com.workoutjournal.util.AnimationTransition;
 
 
 public class RoutineLiftFragment extends Fragment {
@@ -123,9 +123,9 @@ public class RoutineLiftFragment extends Fragment {
 
     private void initTransition(Fragment fragment) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setSharedElementEnterTransition(new AnimationTransition());
             fragment.setEnterTransition(new Slide());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
+            fragment.setSharedElementReturnTransition(new AnimationTransition());
             fragment.setExitTransition(new Slide());
         }
     }

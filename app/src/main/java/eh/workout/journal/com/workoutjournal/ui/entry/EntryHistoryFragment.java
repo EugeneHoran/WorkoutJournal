@@ -54,6 +54,15 @@ public class EntryHistoryFragment extends Fragment {
         if (savedInstanceState != null) {
             initData();
         }
+        adapter.setListener(new EntryHistoryRecyclerAdapter.HistoryCallbacks() {
+            @Override
+            public void onExerciseClicked(String setId, int inputType, long timestamp) {
+                EntryParentFragment parentFragment = (EntryParentFragment) getParentFragment();
+                if (parentFragment != null) {
+                    parentFragment.onExerciseClicked(setId, inputType, timestamp);
+                }
+            }
+        });
     }
 
     public void initData() {
@@ -64,7 +73,6 @@ public class EntryHistoryFragment extends Fragment {
         model.getObjectList().observe(this, new Observer<List<Object>>() {
             @Override
             public void onChanged(@Nullable List<Object> objects) {
-
                 adapter.setItems(objects);
                 binding.noItems.setVisibility(objects != null && objects.size() > 0 ? View.GONE : View.VISIBLE);
             }

@@ -88,7 +88,7 @@ public class JournalParentViewModel extends AndroidViewModel {
         });
     }
 
-    private void resetRoutinePlanTasks() {
+    void resetRoutinePlanTasks() {
         if (Constants.SETTINGS_SHOW_ROUTINE_PLAN) {
             if (timestamp != null) {
                 new RoutinePlanTask().execute(timestamp);

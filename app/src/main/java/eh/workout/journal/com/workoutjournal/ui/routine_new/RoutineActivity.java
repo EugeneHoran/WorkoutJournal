@@ -18,7 +18,7 @@ import android.view.View;
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ActivityAddPlanBinding;
 import eh.workout.journal.com.workoutjournal.util.Constants;
-import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
+import eh.workout.journal.com.workoutjournal.util.AnimationTransition;
 
 public class RoutineActivity extends AppCompatActivity {
     public static final String TAG_SELECT_LIFTS_FRAGMENT = "tag_lifts_fragment";
@@ -180,9 +180,9 @@ public class RoutineActivity extends AppCompatActivity {
 
     private void initTransition(Fragment fragment) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setSharedElementEnterTransition(new AnimationTransition());
             fragment.setEnterTransition(new Slide());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
+            fragment.setSharedElementReturnTransition(new AnimationTransition());
             fragment.setExitTransition(new Slide());
         }
     }

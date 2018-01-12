@@ -16,6 +16,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,6 +105,12 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         if (savedInstanceState == null) {
             model.initJournalData(journalPagerAdapter.getTimestamp(datePage));
         }
+    }
+
+
+    public void initJournalData() {
+        showRoutinePlan = true;
+        model.resetRoutinePlanTasks();
     }
 
     private void initBottomSheet(boolean init) {
@@ -228,7 +235,7 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     public JournalRoutinePlanRecyclerAdapter.RoutinePlanCallbacks routineInterface = new JournalRoutinePlanRecyclerAdapter.RoutinePlanCallbacks() {
         @Override
         public void onExerciseClicked(String setId, int inputType) {
-            navToAddExerciseFragment(getAppBar(), binding.fab, setId, inputType, journalPagerAdapter.getTimestamp(getPage()));
+            navToAddEntryFragment(getAppBar(), binding.fab, setId, inputType, journalPagerAdapter.getTimestamp(getPage()));
         }
 
         @Override

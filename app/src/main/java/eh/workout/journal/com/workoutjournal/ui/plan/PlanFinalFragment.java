@@ -54,8 +54,9 @@ public class PlanFinalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 model.insertPlan(TextUtils.isEmpty(binding.editPlanName.getText()) ? null : binding.editPlanName.getText().toString());
+                PlanAddActivity planAddActivity = (PlanAddActivity) getActivity();
                 if (getActivity() != null) {
-                    getActivity().finish();
+                    planAddActivity.finish(true);
                 }
             }
         });

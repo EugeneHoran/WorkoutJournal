@@ -9,6 +9,7 @@ import android.databinding.ObservableField;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.format.DateUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +26,7 @@ import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 
 public class EntryViewModel extends AndroidViewModel {
     public ObservableField<String> toolbarTitle = new ObservableField<>("Workout");
+    public ObservableField<String> toolbarSubTitle = new ObservableField<>("Today");
     public ObservableField<Boolean> showNoItems = new ObservableField<>(false);
     public ObservableField<Boolean> dataLoaded = new ObservableField<>(false);
 
@@ -41,6 +43,7 @@ public class EntryViewModel extends AndroidViewModel {
     public EntryViewModel(@NonNull JournalApplication application, String exerciseId, Long timestamp) {
         super(application);
         Long[] startEndTime = DateHelper.getStartAndEndTimestamp(timestamp);
+        toolbarSubTitle.set(DateHelper.getDateFormatted(startEndTime[0]));
         this.repository = application.getRepository();
         this.exerciseId = exerciseId;
         this.dateId = startEndTime[0];

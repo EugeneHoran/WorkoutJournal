@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,8 +72,9 @@ public class EntryParentFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entry_parent, container, false);
         binding.viewToolbar.toolbar.inflateMenu(R.menu.menu_entry);
-        getChildFragmentManager().beginTransaction().replace(R.id.entryHolder, EntryInputFragment.newInstance(inputType)).commit();
         binding.setModel(model);
+        binding.pager.setAdapter(adapter);
+        getChildFragmentManager().beginTransaction().replace(R.id.entryHolder, EntryInputFragment.newInstance(inputType)).commit();
         binding.setFragment(this);
         return binding.getRoot();
     }
@@ -88,10 +91,15 @@ public class EntryParentFragment extends BaseFragment {
             }
         }
         adapter.setRetainedFragmentsTags(pagerFragmentTags);
-        binding.pager.setAdapter(adapter);
-        binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
         entryViewHeight = binding.entryHolder.getHeight();
+        binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
         binding.pager.addOnPageChangeListener(pageChangeListener);
+    }
+
+    @Override
+    public void onResume() {
+        binding.pager.setCurrentItem(0, false);
+        super.onResume();
     }
 
     @Override
@@ -107,9 +115,8 @@ public class EntryParentFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void onExerciseClicked(String setId, int inputType, long itemTimestamp) {
+        navToAddEntryFragment(binding.viewToolbar.appBar, binding.fab, setId, inputType, itemTimestamp);
     }
 
     public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {

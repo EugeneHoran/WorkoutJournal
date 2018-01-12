@@ -17,6 +17,8 @@ public class SelectedListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
 
     public interface SelectListCallback {
         void onRemoveItem(ExerciseLiftEntity exerciseLiftEntity);
+
+        void itemChanged();
     }
 
     public void setListener(SelectListCallback listener) {
@@ -54,6 +56,9 @@ public class SelectedListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         this.itemList.clear();
         this.itemList.addAll(items);
         diffResult.dispatchUpdatesTo(this);
+        if (listener != null) {
+            listener.itemChanged();
+        }
     }
 
     @Override
@@ -90,8 +95,6 @@ public class SelectedListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
                 public void onClick(View view) {
                     if (listener != null) {
                         listener.onRemoveItem(exerciseLiftEntity);
-//                        itemList.remove(getAdapterPosition());
-//                        notifyItemChanged(getAdapterPosition());
                     }
                 }
             });

@@ -25,7 +25,9 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private LiftCallback listener;
 
     public interface LiftCallback {
-        void onItemClicked(List<ExerciseLiftEntity> selectedList);
+        void removeSelectedLift(ExerciseLiftEntity exerciseLiftEntity);
+
+        void addSelectedLift(ExerciseLiftEntity exerciseLiftEntity);
     }
 
     public void setListener(LiftCallback listener) {
@@ -131,8 +133,8 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         private void bindView() {
             exerciseLiftEntity = itemListFiltered.get(getAdapterPosition());
             liftName.setText(exerciseLiftEntity.getName());
-            checkBox.setChecked(exerciseLiftEntity.isSelected());
             checkBox.setOnCheckedChangeListener(this);
+            checkBox.setChecked(exerciseLiftEntity.isSelected());
         }
 
         @Override
@@ -142,10 +144,13 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     itemList.get(i).setSelected(checkBox.isChecked());
                 }
             }
-
             exerciseLiftEntity.setSelected(checkBox.isChecked());
             if (listener != null) {
-                listener.onItemClicked(getSelectedList());
+                if (exerciseLiftEntity.isSelected()) {
+                    listener.addSelectedLift(exerciseLiftEntity);
+                } else {
+                    listener.removeSelectedLift(exerciseLiftEntity);
+                }
             }
         }
 

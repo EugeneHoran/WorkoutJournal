@@ -72,6 +72,13 @@ public class JournalChildFragment extends BaseFragment {
         observeJournalPage();
     }
 
+    public void resetData() {
+        if (modelParent.getSetAndRepsList().hasActiveObservers()) {
+            modelParent.getSetAndRepsList().removeObserver(observer);
+        }
+        modelParent.getSetAndRepsList().observe(JournalChildFragment.this, observer);
+    }
+
     public void observeJournalPage() {
         JournalParentFragment fragment = (JournalParentFragment) getParentFragment();
         if (fragment != null) {

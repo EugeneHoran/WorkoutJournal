@@ -1,5 +1,7 @@
 package eh.workout.journal.com.workoutjournal.util;
 
+import android.text.format.DateUtils;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,6 +22,15 @@ public class DateHelper {
         calendar2.set(Calendar.SECOND, 0);
         calendar2.set(Calendar.MILLISECOND, 0);
         return (int) ((calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) / (24 * 60 * 60 * 1000));
+    }
+
+
+    public static String getDateFormatted(Long timestamp) {
+        if (DateUtils.isToday(timestamp)) {
+            return "Today";
+        } else {
+            return DateUtils.getRelativeTimeSpanString(timestamp).toString();
+        }
     }
 
     public static int getDayOfWeek(long timestamp) {

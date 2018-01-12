@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +44,8 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
             model = ViewModelProviders.of(getParentFragment()).get(EntryViewModel.class);
         }
         adapter = new EntryListRecyclerAdapter(getContext());
+        adapter.setListener(this);
+        observeSetReps(model);
     }
 
     @Override
@@ -54,12 +58,8 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setModel(model);
-        if (getActivity() != null) {
-//            binding.recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        }
+        binding.recycler.setItemAnimator(defaultItemAnimator);
         binding.recycler.setAdapter(adapter);
-        adapter.setListener(this);
-        observeSetReps(model);
     }
 
     private void observeSetReps(EntryViewModel model) {
@@ -95,13 +95,10 @@ public class EntryListFragment extends Fragment implements EntryListRecyclerAdap
         model.updateRep(repEntity);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+    private DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator() {
+        @Override
+        public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder) {
+            return true;
+        }
+    };
 }

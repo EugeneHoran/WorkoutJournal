@@ -20,8 +20,8 @@ import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 
 public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePlanRecyclerAdapter.PlanViewHolder> {
-    List<PlanSetRelation> itemList = new ArrayList<>();
-    ExercisePlanInterface listener;
+    private List<PlanSetRelation> itemList = new ArrayList<>();
+    private ExercisePlanInterface listener;
 
     public interface ExercisePlanInterface {
         void onDeletePlan(PlanEntity planEntity);
@@ -124,10 +124,8 @@ public class ExercisePlanRecyclerAdapter extends RecyclerView.Adapter<ExercisePl
         public View.OnClickListener menuListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
+                PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END, R.attr.actionOverflowMenuStyle, 0);
                 popup.getMenuInflater().inflate(R.menu.menu_edit_move_delete, popup.getMenu());
-                popup.getMenu().findItem(R.id.action_edit).setVisible(false);
-                popup.getMenu().findItem(R.id.action_move).setVisible(false);
                 popup.getMenu().findItem(R.id.action_delete).setVisible(true);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {

@@ -7,6 +7,10 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.transition.ChangeTransform;
+import android.support.transition.Fade;
+import android.support.transition.Transition;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -84,7 +88,9 @@ public class EntryInputFragment extends Fragment implements
             @Override
             public void onChanged(@Nullable ExerciseOrmEntity ormEntity) {
                 if (ormEntity == null) {
-                    binding.ormHolder.setVisibility(View.GONE);
+                    if (binding.ormHolder.getVisibility() == View.VISIBLE) {
+                        binding.ormHolder.setVisibility(View.GONE);
+                    }
                 } else {
                     binding.ormHolder.setVisibility(View.VISIBLE);
                     if (ormEntity.getInputType() == Constants.EXERCISE_TYPE_WEIGHT_REPS) {
@@ -113,6 +119,7 @@ public class EntryInputFragment extends Fragment implements
         binding.viewInput.pickerReps.setMaxValue(100);
         binding.viewInput.pickerReps.setMinValue(1);
         binding.viewInput.pickerReps.setValue(10);
+
         binding.viewInput.pickerWeight.setMaxValue(999);
         binding.viewInput.pickerWeight.setMinValue(1);
         binding.viewInput.pickerWeight.setValue(185);
@@ -143,9 +150,9 @@ public class EntryInputFragment extends Fragment implements
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
+        super.onPause();
         binding.cardHolder.setVisibility(View.INVISIBLE);
-        super.onStop();
     }
 
     @Override

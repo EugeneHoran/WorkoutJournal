@@ -23,7 +23,7 @@ import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
 import eh.workout.journal.com.workoutjournal.model.DaySelector;
 import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineRecyclerAdapter;
 import eh.workout.journal.com.workoutjournal.ui.routine_new.RoutineLiftRecyclerAdapter;
-import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
+import eh.workout.journal.com.workoutjournal.util.AnimationTransition;
 
 
 public class EditRoutineFragment extends Fragment {
@@ -143,9 +143,9 @@ public class EditRoutineFragment extends Fragment {
 
     private void initTransition(Fragment fragment) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setSharedElementEnterTransition(new AnimationTransition());
             fragment.setEnterTransition(new Slide());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
+            fragment.setSharedElementReturnTransition(new AnimationTransition());
             fragment.setExitTransition(new Slide());
         }
     }

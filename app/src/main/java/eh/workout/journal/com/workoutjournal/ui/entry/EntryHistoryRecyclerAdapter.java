@@ -35,6 +35,16 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
     private static final int TYPE_SET = 1;
     private List<Object> itemList = new ArrayList<>();
 
+    private HistoryCallbacks listener;
+
+    public void setListener(HistoryCallbacks listener) {
+        this.listener = listener;
+    }
+
+    public interface HistoryCallbacks {
+        void onExerciseClicked(String setId, int inputType, long timestamp);
+    }
+
     void setItems(final List<Object> items) {
         if (items == null) {
             this.itemList.clear();
@@ -140,7 +150,7 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         }
 
         void bindView() {
-            ExerciseSetRepRelation dateSetRepRelation = (ExerciseSetRepRelation) itemList.get(getAdapterPosition());
+            final ExerciseSetRepRelation dateSetRepRelation = (ExerciseSetRepRelation) itemList.get(getAdapterPosition());
             ExerciseOrmEntity ormEntity = dateSetRepRelation.getExerciseOrmEntity().get(0);
             setEntity = dateSetRepRelation.getJournalSetEntity();
             String title = String.valueOf(DateUtils.getRelativeTimeSpanString(setEntity.getTimestamp()));
@@ -154,6 +164,16 @@ public class EntryHistoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             }
             binding.recycler.setLayoutFrozen(true);
             binding.imgMore.setVisibility(View.GONE);
+            binding.cardHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onExerciseClicked(dateSetRepRelation.getJournalSetEntity().getExerciseId(),
+                                dateSetRepRelation.getJournalSetEntity().getExerciseInputType(),
+                                dateSetRepRelation.getJournalSetEntity().getTimestamp());
+                    }
+                }
+            });
         }
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="name"
+            type="String" />
+    </data>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_chevron_right"
+        android:drawableRight="@drawable/ic_chevron_right"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:onClickListener="@{listener}"
+        android:paddingLeft="64dp"
+        android:paddingRight="56dp"
+        android:text="@{name}"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:ignore="UnusedAttribute" />
+</layout>

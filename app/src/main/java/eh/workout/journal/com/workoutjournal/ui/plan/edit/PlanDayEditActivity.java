@@ -19,7 +19,7 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ActivityPlanEditBinding;
 import eh.workout.journal.com.workoutjournal.util.AppFactory;
 import eh.workout.journal.com.workoutjournal.util.Constants;
-import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
+import eh.workout.journal.com.workoutjournal.util.AnimationTransition;
 
 public class PlanDayEditActivity extends AppCompatActivity {
     private static final String TAG_FRAGMENT_FINAL = "tag_frag_final";
@@ -145,9 +145,9 @@ public class PlanDayEditActivity extends AppCompatActivity {
 
     private void initTransition(Fragment fragment) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setSharedElementEnterTransition(new AnimationTransition());
             fragment.setEnterTransition(new Slide());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
+            fragment.setSharedElementReturnTransition(new AnimationTransition());
             fragment.setExitTransition(new Slide());
         }
     }

@@ -28,10 +28,12 @@
             android:drawablePadding="12dp"
             android:drawableRight="@drawable/ic_cancel"
             android:elevation="1dp"
+            android:ellipsize="end"
             android:focusable="true"
             android:fontFamily="sans-serif"
             android:gravity="center_vertical"
             android:maxLines="1"
+            android:maxWidth="200dp"
             android:text="@{object.name}"
             android:textColor="@color/white"
             android:textSize="13sp" />

@@ -27,6 +27,7 @@
             app:navListener="@{fragment.navListener}"
             app:navigation="@{true}"
             app:showTabs="@{true}"
+            app:subTitle="@{model.toolbarSubTitle}"
             app:title="@{model.toolbarTitle}" />
 
         <android.support.v4.view.ViewPager

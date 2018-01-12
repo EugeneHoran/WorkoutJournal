@@ -1,7 +1,6 @@
 package eh.workout.journal.com.workoutjournal.ui.plan;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -15,13 +14,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ActivityAddPlanBinding;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalParentPagerAdapter;
+import eh.workout.journal.com.workoutjournal.util.AnimationTransition;
 import eh.workout.journal.com.workoutjournal.util.Constants;
-import eh.workout.journal.com.workoutjournal.util.DetailsTransition;
 
 public class PlanAddActivity extends AppCompatActivity {
     private static final String TAG_FRAGMENT_LIFTS = "tag_fragment_lifts";
@@ -31,14 +29,11 @@ public class PlanAddActivity extends AppCompatActivity {
     private ActivityAddPlanBinding binding;
     private int page;
     private PlanViewModel model;
+    PlanLiftFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setEnterTransition(new android.transition.Fade());
-            getWindow().setExitTransition(new android.transition.Fade());
-        }
         page = getIntent().getIntExtra(Constants.JOURNAL_PAGE_RESULT_CODE_PLAN, 5000);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_plan);
         setSupportActionBar(binding.toolbar);
@@ -49,8 +44,8 @@ public class PlanAddActivity extends AppCompatActivity {
         initContainerHeights();
         if (savedInstanceState == null) {
             model.setTimestamp(JournalParentPagerAdapter.getTimestampStatic(page));
-            PlanLiftFragment fragment = PlanLiftFragment.newInstance();
-//            initTransition(fragment);
+            fragment = PlanLiftFragment.newInstance();
+            initTransition(fragment);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(
@@ -81,9 +76,10 @@ public class PlanAddActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void finish() {
-        setResultFrom();
+    public void finish(boolean passData) {
+        if (passData) {
+            setResultFrom();
+        }
         super.finish();
     }
 
@@ -98,8 +94,8 @@ public class PlanAddActivity extends AppCompatActivity {
         if (searching) {
             expandAppBar();
         } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
+    }
     }
 
     public void expandAppBar() {
@@ -111,7 +107,7 @@ public class PlanAddActivity extends AppCompatActivity {
     }
 
     public void collapseAppBar() {
-        lockAppBarClosed();
+        binding.appBar.setExpanded(false, true);
     }
 
     public void lockAppBarClosed() {
@@ -144,9 +140,9 @@ public class PlanAddActivity extends AppCompatActivity {
 
     private void initTransition(Fragment fragment) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailsTransition());
+            fragment.setSharedElementEnterTransition(new AnimationTransition());
             fragment.setEnterTransition(new Slide());
-            fragment.setSharedElementReturnTransition(new DetailsTransition());
+            fragment.setSharedElementReturnTransition(new AnimationTransition());
             fragment.setExitTransition(new Slide());
         }
     }

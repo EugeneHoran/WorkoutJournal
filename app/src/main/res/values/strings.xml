@@ -93,4 +93,5 @@
     <string name="days">Days</string>
     <string name="add_to_workout_plans">Add to workout plans</string>
     <string name="workout_plan_name_optional">Workout plan name (optional)</string>
+    <string name="save_set">Save Set</string>
 </resources>

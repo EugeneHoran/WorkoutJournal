@@ -4,15 +4,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableBoolean;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.transition.Explode;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ActivityMainBinding;
+import eh.workout.journal.com.workoutjournal.ui.entry.EntryParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseParentFragment;
 import eh.workout.journal.com.workoutjournal.ui.journal.JournalParentFragment;
+import eh.workout.journal.com.workoutjournal.util.AnimationTransition;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,8 +48,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initJournalFragment(int page, boolean showPlanRoutine) {
+        if (fm.findFragmentByTag(TAG_FRAG_JOURNAL) != null) {
+            ((JournalParentFragment) fm.findFragmentByTag(TAG_FRAG_JOURNAL)).initJournalData();
+            return;
+        }
+        JournalParentFragment journalParentFragment = JournalParentFragment.newInstance(page, false);
+        initTransitionN(journalParentFragment);
         fm.beginTransaction()
-                .replace(R.id.container, JournalParentFragment.newInstance(page, showPlanRoutine), TAG_FRAG_JOURNAL)
+                .replace(R.id.container, journalParentFragment, TAG_FRAG_JOURNAL)
                 .commit();
     }
 
@@ -74,9 +86,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getExerciseFragment() != null) {
-            if (getExerciseFragment().searchVisible()) {
-                getExerciseFragment().hideSearch();
+        if (fm.findFragmentById(R.id.container) instanceof ExerciseParentFragment) {
+            if (getExerciseFragment() != null) {
+                if (getExerciseFragment().searchVisible()) {
+                    getExerciseFragment().hideSearch();
+                    return;
+                }
+            }
+        }
+        if (fm.findFragmentById(R.id.container) instanceof EntryParentFragment) {
+            if (fm.getBackStackEntryCount() == 2 && getExerciseFragment() != null) {
+                fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 return;
             }
         }
@@ -91,5 +111,12 @@ public class MainActivity extends AppCompatActivity {
         return fm.findFragmentByTag(TAG_FRAG_EXERCISE_SELECTOR) != null ?
                 (ExerciseParentFragment) fm.findFragmentByTag(TAG_FRAG_EXERCISE_SELECTOR) :
                 null;
+    }
+
+    private void initTransitionN(Fragment fragment) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragment.setSharedElementReturnTransition(new AnimationTransition());
+            fragment.setExitTransition(new Explode());
+        }
     }
 }
