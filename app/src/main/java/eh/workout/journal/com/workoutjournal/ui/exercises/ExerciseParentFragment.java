@@ -97,6 +97,7 @@ public class ExerciseParentFragment extends BaseFragment {
         ExerciseSelectorFragment selectorFragment = (ExerciseSelectorFragment) adapter.getItem(0);
         if (selectorFragment != null) {
             selectorFragment.setListener(new ExerciseSelectorFragment.ExerciseSelectorInterface() {
+
                 @Override
                 public void liftSelected(String exerciseId, int inputType) {
                     navToAddEntryFragment(binding.viewToolbar.appBar, null, exerciseId, inputType, timestamp);

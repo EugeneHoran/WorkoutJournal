@@ -37,17 +37,6 @@ public class JournalParentViewModel extends AndroidViewModel {
         repository = ((JournalApplication) application).getRepository();
     }
 
-    // Returns All dates with sets
-//    private LiveData<List<JournalSetEntity>> setDates;
-//
-//    LiveData<List<JournalSetEntity>> getSetDates() {
-//        if (setDates == null) {
-//            setDates = repository.getJournalSetEntityDates();
-//        }
-//        return setDates;
-//    }
-
-
     MediatorLiveData<List<ExerciseSetRepRelation>> getSetAndRepsList() {
         if (observeSetAndReps == null) {
             observeSetAndReps = new MediatorLiveData<>();

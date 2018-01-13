@@ -16,7 +16,6 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,12 +26,14 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalParentBinding;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
+import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.views.LayoutUtil;
@@ -107,7 +108,6 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         }
     }
 
-
     public void initJournalData() {
         showRoutinePlan = true;
         model.resetRoutinePlanTasks();
@@ -142,6 +142,8 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
+            Date date = new Date();
+            date.setTime(journalPagerAdapter.getTimestamp(position));
             observeRoutinePlan(model);
             model.initJournalData(journalPagerAdapter.getTimestamp(position));
             getJournalPage().setValue(position);
@@ -239,6 +241,11 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         }
 
         @Override
+        public void onExerciseClicked(String setId, int inputType, View view) {
+            navToAddEntryFragment(getAppBar(), view, setId, inputType, journalPagerAdapter.getTimestamp(getPage()));
+        }
+
+        @Override
         public void editRoutine(String planId) {
             navToEditRoutineActivity(getPage(), planId, Constants.ADD_EDIT_PLAN_JOURNAL);
         }
@@ -256,7 +263,6 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     };
 
     /*__________________Toolbar Menu Imp___________________________*/
-
     public Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -266,7 +272,14 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
                     binding.pager.setCurrentItem(Constants.JOURNAL_PAGE_TODAY, false);
                     break;
                 case R.id.action_calendar:
-
+                    CalendarBottomSheetFragment calendarBottomSheetFragment = CalendarBottomSheetFragment.newInstance(journalPagerAdapter.getTimestamp(getPage()));
+                    calendarBottomSheetFragment.setListener(new CalendarBottomSheetFragment.CalendarCallbacks() {
+                        @Override
+                        public void onDateSelected(int page) {
+                            binding.pager.setCurrentItem(page, true);
+                        }
+                    });
+                    calendarBottomSheetFragment.show(getChildFragmentManager(), "Test");
                     break;
                 case R.id.action_orm:
                     navToOneRepMaxFragment(getAppBar(), Constants.ORM_ONE_REP_MAX);

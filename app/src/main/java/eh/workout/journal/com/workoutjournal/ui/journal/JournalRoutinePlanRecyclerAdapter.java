@@ -30,6 +30,8 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
     public interface RoutinePlanCallbacks {
         void onExerciseClicked(String setId, int inputType);
 
+        void onExerciseClicked(String setId, int inputType, View view);
+
         void editRoutine(String planId);
 
         void deletePlan(PlanDayEntity planDayEntity);

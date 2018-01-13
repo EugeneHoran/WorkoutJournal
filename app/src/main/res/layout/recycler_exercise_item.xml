@@ -24,7 +24,8 @@
         android:elevation=".5dp"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        android:onClickListener="@{holder::onExerciseClicked}">
+        android:onClickListener="@{holder::onExerciseClicked}"
+        android:transitionName="card">
 
         <TextView
             android:id="@+id/lift"

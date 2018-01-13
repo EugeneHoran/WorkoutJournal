@@ -83,6 +83,7 @@
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_clear" />
             </LinearLayout>
+
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout

@@ -6,6 +6,7 @@ import android.support.transition.Explode;
 import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -43,7 +44,7 @@ public class BaseFragment extends Fragment {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.addSharedElement(view, "app_bar");
         if (fab != null) {
-            transaction.addSharedElement(fab, "fab");
+            transaction.addSharedElement(fab, ViewCompat.getTransitionName(fab));
         }
         initTransitionN(fragment);
         transaction.replace(R.id.container,

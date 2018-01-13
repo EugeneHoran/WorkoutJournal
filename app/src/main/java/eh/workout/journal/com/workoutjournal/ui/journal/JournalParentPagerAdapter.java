@@ -56,6 +56,12 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
         return DateHelper.getAdapterTimestamp(page);
     }
 
+    Date getJournalDate(int page) {
+        Date date = new Date();
+        date.setTime(getTimestamp(page));
+        return date;
+    }
+
     Long getTimestamp(int page) {
         return DateHelper.getAdapterTimestamp(page);
     }

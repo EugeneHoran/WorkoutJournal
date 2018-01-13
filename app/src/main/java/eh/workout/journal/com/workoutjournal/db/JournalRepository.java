@@ -50,6 +50,10 @@ public class JournalRepository {
         return database.getJournalDao().getJournalSetEntityDates();
     }
 
+    public List<JournalSetEntity> getJournalSetEntityDatesList() {
+        return database.getJournalDao().getJournalSetEntityDatesList();
+    }
+
     /**
      * Return All One Rep Maxes
      */

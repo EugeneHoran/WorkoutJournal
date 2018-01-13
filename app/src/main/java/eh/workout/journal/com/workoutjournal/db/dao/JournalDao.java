@@ -33,6 +33,8 @@ public abstract class JournalDao {
     public abstract List<JournalRepEntity> getSetRepsByMaxList(String exerciseId);
 
     //
+    @Query("SELECT * FROM journal_set_entities GROUP BY timestamp ORDER BY timestamp")
+    public abstract List<JournalSetEntity> getJournalSetEntityDatesList();
 
     @Query("SELECT * FROM journal_set_entities GROUP BY timestamp ORDER BY timestamp")
     public abstract LiveData<List<JournalSetEntity>> getJournalSetEntityDates();

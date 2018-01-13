@@ -78,10 +78,10 @@ public class ExerciseSelectorFragment extends BaseFragment implements
     };
 
     @Override
-    public void exerciseSelected(ExerciseLiftEntity exerciseLiftEntity) {
-        model.addExerciseToRecent(exerciseLiftEntity);
+    public void exerciseSelected(ExerciseLiftEntity exerciseLift) {
+        model.addExerciseToRecent(exerciseLift);
         if (listener != null) {
-            listener.liftSelected(exerciseLiftEntity.getId(), exerciseLiftEntity.getExerciseInputType());
+            listener.liftSelected(exerciseLift.getId(), exerciseLift.getExerciseInputType());
         }
     }
 

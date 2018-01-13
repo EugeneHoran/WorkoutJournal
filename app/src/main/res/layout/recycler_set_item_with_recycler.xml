@@ -4,6 +4,7 @@
     tools:ignore="ContentDescription">
 
     <data>
+
         <variable
             name="title"
             type="String" />
@@ -11,7 +12,8 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardHolder"
-        style="@style/CardViewClickable">
+        style="@style/CardViewClickable"
+        android:transitionName="card">
 
         <RelativeLayout style="@style/WrapContentWrapContent">
 

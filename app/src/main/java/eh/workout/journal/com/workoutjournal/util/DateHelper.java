@@ -15,15 +15,41 @@ public class DateHelper {
         calendar1.set(Calendar.MINUTE, 0);
         calendar1.set(Calendar.SECOND, 0);
         calendar1.set(Calendar.MILLISECOND, 0);
+
         Calendar calendar2 = Calendar.getInstance();
         calendar2.setTimeInMillis(unixEndTime);
         calendar2.set(Calendar.HOUR_OF_DAY, 0);
         calendar2.set(Calendar.MINUTE, 0);
         calendar2.set(Calendar.SECOND, 0);
         calendar2.set(Calendar.MILLISECOND, 0);
+
         return (int) ((calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) / (24 * 60 * 60 * 1000));
+
     }
 
+    public static int getTimeRemaining(long unixStartTime, long unixEndTime) {
+        Calendar sDate = toCalendar(unixStartTime);
+        Calendar eDate = toCalendar(unixEndTime);
+
+        // Get the represented date in milliseconds
+        long milis1 = sDate.getTimeInMillis();
+        long milis2 = eDate.getTimeInMillis();
+
+        // Calculate difference in milliseconds
+        long diff = milis2 - milis1;
+
+        return (int) (diff / (24 * 60 * 60 * 1000));
+    }
+
+    private static Calendar toCalendar(long timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
+    }
 
     public static String getDateFormatted(Long timestamp) {
         if (DateUtils.isToday(timestamp)) {
