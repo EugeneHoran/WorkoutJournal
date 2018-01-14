@@ -50,14 +50,15 @@ public class ExerciseSelectorAddExerciseDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (!TextUtils.isEmpty(binding.exercise.getText().toString().trim())) {
-                    if (!duplicates(binding.exercise.getText().toString().trim())) {
+                    if (!duplicates(binding.exercise.getText().toString().trim(), binding.spinnerEquipmentType.getSelectedItemPosition())) {
                         ExerciseLiftEntity liftEntity = new ExerciseLiftEntity();
                         liftEntity.setId(UUID.randomUUID().toString());
                         liftEntity.setName(binding.exercise.getText().toString().trim());
                         liftEntity.setRecent(true);
                         liftEntity.setTimestampRecent(new Date().getTime());
+                        liftEntity.setExerciseEquipmentId(binding.spinnerEquipmentType.getSelectedItemPosition());
                         liftEntity.setExerciseGroupId(binding.spinnerExerciseBody.getSelectedItemPosition());
-                        liftEntity.setExerciseInputType(binding.spinnerExerciseType.getSelectedItemPosition());
+                        liftEntity.setExerciseInputType(getInputType(binding.spinnerEquipmentType.getSelectedItemPosition()));
                         if (dataLoaded) {
                             model.addExercise(liftEntity);
                         }
@@ -73,10 +74,21 @@ public class ExerciseSelectorAddExerciseDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    boolean duplicates(String exerciseName) {
+
+    private int getInputType(int pos) {
+        if (pos <= 3) {
+            return 0;
+        } else if (pos == 4) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    boolean duplicates(String exerciseName, int equipmentPos) {
         boolean duplicate = false;
         for (int i = 0; i < lifts.size(); i++) {
-            if (lifts.get(i).getName().equalsIgnoreCase(exerciseName)) {
+            if (lifts.get(i).getName().equalsIgnoreCase(exerciseName) && lifts.get(i).getExerciseEquipmentId() == equipmentPos) {
                 duplicate = true;
             }
         }

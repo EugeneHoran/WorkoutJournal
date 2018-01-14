@@ -48,7 +48,14 @@
         <item>Weights and reps</item>
         <item>Other</item>
     </string-array>
-
+    <string-array name="equipment_type">
+        <item>Barbell</item>
+        <item>Dumbbell</item>
+        <item>Machine</item>
+        <item>Cable</item>
+        <item>Body Weight</item>
+        <item>Cardio</item>
+    </string-array>
     <string-array name="exercise_type">
         <item>Weights and reps</item>
         <item>Reps only</item>
@@ -94,4 +101,5 @@
     <string name="add_to_workout_plans">Add to workout plans</string>
     <string name="workout_plan_name_optional">Workout plan name (optional)</string>
     <string name="save_set">Save Set</string>
+    <string name="info">Info</string>
 </resources>

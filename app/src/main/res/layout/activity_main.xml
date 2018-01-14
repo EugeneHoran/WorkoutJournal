@@ -22,10 +22,10 @@
             android:id="@+id/container"
             style="@style/FrameLayoutWeight" />
 
-        <!--TODO make visible and add timer-->
         <View
             android:id="@+id/containerTimer"
             style="@style/MatchParent48"
+            android:layout_height="38dp"
             android:background="@color/colorGrayNormal"
             android:visibility="@{activity.showTimer? View.VISIBLE : View.GONE, default= gone}"
             app:elevation="12dp" />

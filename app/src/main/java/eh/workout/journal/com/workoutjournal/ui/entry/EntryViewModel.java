@@ -21,12 +21,13 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
 import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 
 public class EntryViewModel extends AndroidViewModel {
     public ObservableField<String> toolbarTitle = new ObservableField<>("Workout");
-    public ObservableField<String> toolbarSubTitle = new ObservableField<>("Today");
+    public ObservableField<String> toolbarSubTitle = new ObservableField<>("");
     public ObservableField<Boolean> showNoItems = new ObservableField<>(false);
     public ObservableField<Boolean> dataLoaded = new ObservableField<>(false);
 
@@ -43,7 +44,6 @@ public class EntryViewModel extends AndroidViewModel {
     public EntryViewModel(@NonNull JournalApplication application, String exerciseId, Long timestamp) {
         super(application);
         Long[] startEndTime = DateHelper.getStartAndEndTimestamp(timestamp);
-        toolbarSubTitle.set(DateHelper.getDateFormatted(startEndTime[0]));
         this.repository = application.getRepository();
         this.exerciseId = exerciseId;
         this.dateId = startEndTime[0];
@@ -119,6 +119,7 @@ public class EntryViewModel extends AndroidViewModel {
             super.onPostExecute(exerciseLiftEntity);
             liftEntity = exerciseLiftEntity;
             toolbarTitle.set(liftEntity.getName());
+            toolbarSubTitle.set(DataHelper.EXERCISE_EQUIPMENT[liftEntity.getExerciseEquipmentId()]);
             initPrimaryObserver();
             dataLoaded.set(true);
         }
@@ -134,6 +135,7 @@ public class EntryViewModel extends AndroidViewModel {
             newSetEntity.setTimestamp(dateId);
             newSetEntity.setExerciseId(liftEntity.getId());
             newSetEntity.setDateId(dateId);
+            newSetEntity.setExerciseEquipmentId(liftEntity.getExerciseEquipmentId());
             newSetEntity.setExerciseInputType(liftEntity.getExerciseInputType());
             repository.insertSet(newSetEntity);
         } else {
@@ -149,6 +151,7 @@ public class EntryViewModel extends AndroidViewModel {
         journalRepEntity.setWeight(weight);
         journalRepEntity.setJournalSetId(setId);
         journalRepEntity.setExerciseId(liftEntity.getId());
+        journalRepEntity.setExerciseEquipmentId(liftEntity.getExerciseEquipmentId());
         journalRepEntity.setExerciseInputType(liftEntity.getExerciseInputType());
         journalRepEntity.setOneRepMax(oneRepMax);
         if (getOrmEntityLiveData().getValue() == null) {

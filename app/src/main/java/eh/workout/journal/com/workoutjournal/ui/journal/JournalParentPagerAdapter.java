@@ -71,6 +71,12 @@ public class JournalParentPagerAdapter extends FragmentPagerAdapter {
         if (page == Constants.JOURNAL_PAGE_TODAY) {
             titleSubTitle[0] = "Today";
             titleSubTitle[1] = String.valueOf(new SimpleDateFormat("MMM dd", Locale.getDefault()).format(new Date()));
+        } else if (page == Constants.JOURNAL_PAGE_TODAY - 1) {
+            titleSubTitle[0] = "Yesterday";
+            titleSubTitle[1] = String.valueOf(new SimpleDateFormat("MMM dd", Locale.getDefault()).format(new Date()));
+        } else if (page == Constants.JOURNAL_PAGE_TODAY + 1) {
+            titleSubTitle[0] = "Tomorrow";
+            titleSubTitle[1] = String.valueOf(new SimpleDateFormat("MMM dd", Locale.getDefault()).format(new Date()));
         } else {
             titleSubTitle[0] = String.valueOf(DateUtils.getRelativeTimeSpanString(context, DateHelper.getAdapterTimestamp(page)));
             titleSubTitle[1] = null;

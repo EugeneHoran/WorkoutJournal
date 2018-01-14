@@ -18,40 +18,75 @@
     <RelativeLayout
         android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:clickable="true"
         android:elevation=".5dp"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        android:onClickListener="@{holder::onExerciseClicked}"
-        android:transitionName="card">
+        android:onClickListener="@{holder::onExerciseClicked}">
 
-        <TextView
-            android:id="@+id/lift"
+        <LinearLayout
+            android:id="@+id/textHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="72dp"
+            android:orientation="vertical"
+            android:paddingBottom="12dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="@{exercise.name}"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:paddingTop="12dp">
+
+            <TextView
+                android:id="@+id/lift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@{exercise.name}"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/equipment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha=".7"
+                android:fontFamily="sans-serif"
+                android:text="@{exercise.equipmentName}"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/exercise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha=".7"
+                android:fontFamily="sans-serif"
+                android:text="@{exercise.exerciseName}"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/remove"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/imgMore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="12dp"
-            android:background="?selectableItemBackgroundBorderless"
+            android:background="@drawable/background_image"
             android:clickable="true"
             android:contentDescription="@null"
             android:focusable="true"
-            android:onClickListener="@{holder::onRemoveFromRecents}"
-            android:tint="@color/colorPrimaryDark"
-            android:visibility="@{exercise.isShownInRecent? View.VISIBLE:View.GONE, default = gone}"
-            app:srcCompat="@drawable/ic_remove" />
+            android:onClickListener="@{holder::onMenuMoreClicked}"
+            android:padding="9dp"
+            android:tint="@color/black"
+            app:srcCompat="@drawable/ic_more_vert" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/textHolder"
+            android:background="@color/colorGrayTransparent" />
     </RelativeLayout>
 </layout>

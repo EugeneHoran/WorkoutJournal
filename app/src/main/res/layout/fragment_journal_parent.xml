@@ -16,6 +16,7 @@
         <include
             android:id="@+id/viewToolbar"
             layout="@layout/view_toolbar"
+            app:date="@{fragment.toolbarDate}"
             app:menuListener="@{fragment.menuItemClickListener}"
             app:subTitle="@{fragment.toolbarSubTitle}"
             app:title="@{fragment.toolbarTitle}" />

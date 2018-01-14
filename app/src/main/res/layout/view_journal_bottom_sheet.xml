@@ -73,7 +73,7 @@
         <LinearLayout
             android:id="@+id/bsOpenClose"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_gravity="bottom"
             android:animateLayoutChanges="true"
             android:background="@color/white"
@@ -97,9 +97,11 @@
             <TextView
                 style="@style/TextHeader.Small"
                 android:layout_width="0dp"
+                android:layout_height="38dp"
                 android:layout_weight="1"
                 android:text="@string/today_s_plan"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/bsOpenCloseIndicator"

@@ -2,8 +2,11 @@ package eh.workout.journal.com.workoutjournal.db.entinty;
 
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
 
 @Entity(tableName = "journal_set_entities")
 public class JournalSetEntity {
@@ -15,6 +18,7 @@ public class JournalSetEntity {
     private long timestamp;
     private String exerciseId;
     private Long dateId;
+    private int exerciseEquipmentId;
     private int exerciseInputType;
 
     public JournalSetEntity() {
@@ -31,6 +35,11 @@ public class JournalSetEntity {
 
     public String getName() {
         return name;
+    }
+
+    @Ignore
+    public String getNameWithEquipment() {
+        return name + " (" + DataHelper.EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
     }
 
     public void setName(String name) {
@@ -67,6 +76,14 @@ public class JournalSetEntity {
 
     public void setDateId(Long dateId) {
         this.dateId = dateId;
+    }
+
+    public int getExerciseEquipmentId() {
+        return exerciseEquipmentId;
+    }
+
+    public void setExerciseEquipmentId(int exerciseEquipmentId) {
+        this.exerciseEquipmentId = exerciseEquipmentId;
     }
 
     public int getExerciseInputType() {

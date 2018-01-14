@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b763f3ed86002aaeb1f42930420a5063",
+    "identityHash": "0d9bd05b499e0233853290d9b7401ebd",
     "entities": [
       {
         "tableName": "journal_date_entities",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "journal_set_entities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `exerciseType` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `dateId` INTEGER, `exerciseInputType` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `exerciseType` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `exerciseId` TEXT, `dateId` INTEGER, `exerciseEquipmentId` INTEGER NOT NULL, `exerciseInputType` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -71,6 +71,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "exerciseEquipmentId",
+            "columnName": "exerciseEquipmentId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "exerciseInputType",
             "columnName": "exerciseInputType",
             "affinity": "INTEGER",
@@ -88,7 +94,7 @@
       },
       {
         "tableName": "journal_rep_entities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `position` INTEGER NOT NULL, `liftName` TEXT, `reps` TEXT, `weight` TEXT, `oneRepMax` REAL NOT NULL, `journalSetId` TEXT, `exerciseId` TEXT, `exerciseInputType` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`journalSetId`) REFERENCES `journal_set_entities`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, `position` INTEGER NOT NULL, `liftName` TEXT, `reps` TEXT, `weight` TEXT, `oneRepMax` REAL NOT NULL, `journalSetId` TEXT, `exerciseId` TEXT, `exerciseEquipmentId` INTEGER NOT NULL, `exerciseInputType` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`journalSetId`) REFERENCES `journal_set_entities`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -143,6 +149,12 @@
             "columnName": "exerciseId",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "exerciseEquipmentId",
+            "columnName": "exerciseEquipmentId",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "exerciseInputType",
@@ -209,7 +221,7 @@
       },
       {
         "tableName": "exercise_lift_entities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `recent` INTEGER NOT NULL, `timestampRecent` INTEGER, `exerciseGroupId` INTEGER NOT NULL, `exerciseInputType` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`exerciseGroupId`) REFERENCES `exercise_group_entities`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `recent` INTEGER NOT NULL, `timestampRecent` INTEGER, `exerciseEquipmentId` INTEGER NOT NULL, `exerciseGroupId` INTEGER NOT NULL, `exerciseInputType` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`exerciseGroupId`) REFERENCES `exercise_group_entities`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED)",
         "fields": [
           {
             "fieldPath": "id",
@@ -234,6 +246,12 @@
             "columnName": "timestampRecent",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "exerciseEquipmentId",
+            "columnName": "exerciseEquipmentId",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "exerciseGroupId",
@@ -610,7 +628,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b763f3ed86002aaeb1f42930420a5063\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0d9bd05b499e0233853290d9b7401ebd\")"
     ]
   }
 }

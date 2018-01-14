@@ -59,12 +59,20 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    private void resetJournal(int page) {
+        JournalParentFragment journalParentFragment = JournalParentFragment.newInstance(page, false);
+        initTransitionN(journalParentFragment);
+        fm.beginTransaction()
+                .replace(R.id.container, journalParentFragment, TAG_FRAG_JOURNAL)
+                .commit();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE_SETTINGS) {
             Constants.SETTINGS_SHOW_ROUTINE_PLAN = sp.getBoolean(Constants.KEY_ROUTINE_PLAN, true);
-            initJournalFragment(resultCode, false);
+            resetJournal(resultCode);
             handleTimer();
         } else if (requestCode == Constants.ADD_EDIT_PLAN_JOURNAL) {
             if (data != null) {

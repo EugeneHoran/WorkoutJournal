@@ -84,6 +84,26 @@ public class DataHelper {
             "Cardio,8",
             "Other,9"};
 
+    public static final String[] EXERCISE_EQUIPMENT = new String[]{
+            "Barbell",//0
+            "Dumbbell",//1
+            "Machine",//2
+            "Cables",//3
+            "Weight"//4
+    };
+
+    private static final String[] EXERCISE_LIFT_ARRAY_NEW = new String[]{
+            "Bench Press,0,0,0",
+            "Bench Press,1,0,0",
+            "Bench Press Incline,0,0,0",
+            "Bench Press Incline,1,0,0",
+            "Bench Press Decline,0,0,0",
+            "Bench Press Decline,1,0,0",
+            "Push Ups,4,0,1",
+            "Hang Clean,0,4,0",
+            "Power Clean,0,4,0",
+            "Squat,0,6,0"};
+
     private static final String[] EXERCISE_LIFT_ARRAY = new String[]{
             "Bench Press,0,0",
             "Bench Press Incline,0,0",
@@ -95,6 +115,28 @@ public class DataHelper {
             "Hang Clean,4,0",
             "Power Clean,4,0",
             "Squat,6,0"};
+
+
+    public static List<ExerciseLiftEntity> generateExerciseLifts() {
+        List<ExerciseLiftEntity> exerciseLiftEntityList = new ArrayList<>();
+        for (String liftArray : EXERCISE_LIFT_ARRAY_NEW) {
+            String[] exercise = liftArray.split(",");
+            String name = exercise[0];
+            int equipmentId = Integer.valueOf(exercise[1]);
+            int groupId = Integer.valueOf(exercise[2]);
+            int exerciseTypeId = Integer.valueOf(exercise[3]);
+
+            ExerciseLiftEntity exerciseLiftEntity = new ExerciseLiftEntity();
+            exerciseLiftEntity.setId(UUID.randomUUID().toString());
+            exerciseLiftEntity.setName(name);
+            exerciseLiftEntity.setExerciseEquipmentId(equipmentId);
+            exerciseLiftEntity.setExerciseGroupId(groupId);
+            exerciseLiftEntity.setExerciseInputType(exerciseTypeId);
+            exerciseLiftEntity.setRecent(false);
+            exerciseLiftEntityList.add(exerciseLiftEntity);
+        }
+        return exerciseLiftEntityList;
+    }
 
     public List<DaySelector> getDays() {
         List<DaySelector> daySelectorList = new ArrayList<>();
@@ -113,25 +155,6 @@ public class DataHelper {
             groupEntityList.add(new ExerciseGroupEntity(id, name));
         }
         return groupEntityList;
-    }
-
-    public static List<ExerciseLiftEntity> generateExerciseLifts() {
-        List<ExerciseLiftEntity> exerciseLiftEntityList = new ArrayList<>();
-        for (String liftArray : EXERCISE_LIFT_ARRAY) {
-            String[] exercise = liftArray.split(",");
-            String name = exercise[0];
-            int groupId = Integer.valueOf(exercise[1]);
-            int exerciseTypeId = Integer.valueOf(exercise[2]);
-
-            ExerciseLiftEntity exerciseLiftEntity = new ExerciseLiftEntity();
-            exerciseLiftEntity.setId(UUID.randomUUID().toString());
-            exerciseLiftEntity.setName(name);
-            exerciseLiftEntity.setExerciseGroupId(groupId);
-            exerciseLiftEntity.setExerciseInputType(exerciseTypeId);
-            exerciseLiftEntity.setRecent(false);
-            exerciseLiftEntityList.add(exerciseLiftEntity);
-        }
-        return exerciseLiftEntityList;
     }
 
 

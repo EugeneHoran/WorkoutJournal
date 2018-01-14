@@ -30,6 +30,7 @@ public class JournalRepEntity {
     private double oneRepMax;
     private String journalSetId;
     private String exerciseId;
+    private int exerciseEquipmentId;
     private int exerciseInputType;
 
     @Ignore
@@ -90,6 +91,7 @@ public class JournalRepEntity {
         this.exerciseId = repEntity.getExerciseId();
         this.oneRepMax = repEntity.getOneRepMax();
         this.tempPosition = repEntity.getTempPosition();
+        this.exerciseEquipmentId = repEntity.getExerciseEquipmentId();
         this.exerciseInputType = repEntity.getExerciseInputType();
     }
 
@@ -186,6 +188,15 @@ public class JournalRepEntity {
 
     public void setExerciseId(String exerciseId) {
         this.exerciseId = exerciseId;
+    }
+
+
+    public int getExerciseEquipmentId() {
+        return exerciseEquipmentId;
+    }
+
+    public void setExerciseEquipmentId(int exerciseEquipmentId) {
+        this.exerciseEquipmentId = exerciseEquipmentId;
     }
 
     public int getExerciseInputType() {

@@ -34,15 +34,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:text="Record type"
+            android:text="Equipment type"
             android:textSize="12sp" />
 
         <Spinner
-            android:id="@+id/spinnerExerciseType"
+            android:id="@+id/spinnerEquipmentType"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/exercise_type" />
+            android:entries="@array/equipment_type" />
 
 
         <android.support.design.widget.TextInputLayout

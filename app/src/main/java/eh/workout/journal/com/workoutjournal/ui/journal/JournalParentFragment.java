@@ -16,14 +16,18 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,7 +46,8 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     private static final String ARG_DATE_PAGE = "arg_date_page";
     private static final String ARG_SHOW_ROUTINE_PLAN = "arg_show_routine_plan";
 
-    public ObservableField<String> toolbarTitle = new ObservableField<>("Today");
+    public ObservableField<String> toolbarTitle = new ObservableField<>("Workout Journal");
+    public ObservableField<String> toolbarDate = new ObservableField<>("Today");
     public ObservableField<String> toolbarSubTitle = new ObservableField<>();
     private MutableLiveData<Integer> journalPage;
     private int datePage;
@@ -83,6 +88,7 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_journal_parent, container, false);
+        binding.viewToolbar.dateHolder.setVisibility(View.VISIBLE);
         return binding.getRoot();
     }
 
@@ -90,7 +96,6 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.viewToolbar.toolbar.inflateMenu(R.menu.menu_journal_parent);
-        initMenu(binding.viewToolbar.toolbar.getMenu());
         initBottomSheet(Constants.SETTINGS_SHOW_ROUTINE_PLAN);
         binding.pager.setAdapter(journalPagerAdapter);
         binding.pager.setCurrentItem(datePage, false);
@@ -101,6 +106,9 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         binding.bottom.bsBtnAddPlan.setOnClickListener(this);
         binding.bottom.bsFabSeparator.setOnClickListener(this);
         binding.bottom.bsOpenClose.setOnClickListener(this);
+        binding.viewToolbar.imgPrev.setOnClickListener(this);
+        binding.viewToolbar.imgNext.setOnClickListener(this);
+        binding.viewToolbar.dateSelector.setOnClickListener(this);
         binding.fab.setOnClickListener(this);
         getJournalPage().setValue(datePage);
         if (savedInstanceState == null) {
@@ -165,6 +173,19 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
             navToAddRoutineActivity(getPage(), Constants.ADD_EDIT_PLAN_JOURNAL, binding.fab);
         } else if (view == binding.bottom.bsBtnAddPlan) {
             navToAddPlanActivity(getPage(), Constants.ADD_EDIT_PLAN_JOURNAL);
+        } else if (view == binding.viewToolbar.dateSelector) {
+            CalendarBottomSheetFragment calendarBottomSheetFragment = CalendarBottomSheetFragment.newInstance(journalPagerAdapter.getTimestamp(getPage()));
+            calendarBottomSheetFragment.setListener(new CalendarBottomSheetFragment.CalendarCallbacks() {
+                @Override
+                public void onDateSelected(int page) {
+                    binding.pager.setCurrentItem(page, true);
+                }
+            });
+            calendarBottomSheetFragment.show(getChildFragmentManager(), "Test");
+        } else if (view == binding.viewToolbar.imgPrev) {
+            binding.pager.setCurrentItem(getPage() - 1);
+        } else if (view == binding.viewToolbar.imgNext) {
+            binding.pager.setCurrentItem(getPage() + 1);
         }
     }
 
@@ -269,17 +290,7 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
             int id = item.getItemId();
             switch (id) {
                 case R.id.action_today:
-                    binding.pager.setCurrentItem(Constants.JOURNAL_PAGE_TODAY, false);
-                    break;
-                case R.id.action_calendar:
-                    CalendarBottomSheetFragment calendarBottomSheetFragment = CalendarBottomSheetFragment.newInstance(journalPagerAdapter.getTimestamp(getPage()));
-                    calendarBottomSheetFragment.setListener(new CalendarBottomSheetFragment.CalendarCallbacks() {
-                        @Override
-                        public void onDateSelected(int page) {
-                            binding.pager.setCurrentItem(page, true);
-                        }
-                    });
-                    calendarBottomSheetFragment.show(getChildFragmentManager(), "Test");
+                    binding.pager.setCurrentItem(Constants.JOURNAL_PAGE_TODAY, true);
                     break;
                 case R.id.action_orm:
                     navToOneRepMaxFragment(getAppBar(), Constants.ORM_ONE_REP_MAX);
@@ -303,23 +314,10 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
 
     private void updateToolbarDateChange(int position) {
         String[] titleSub = journalPagerAdapter.getTitleAndSubTitle(getActivity(), position);
-        toolbarTitle.set(titleSub[0]);
-        toolbarSubTitle.set(titleSub[1]);
+        toolbarDate.set(titleSub[0]);
         binding.viewToolbar.toolbar.getMenu().findItem(R.id.action_today).setVisible(position != Constants.JOURNAL_PAGE_TODAY);
     }
 
-    private void initMenu(final Menu menu) {
-        final MenuItem itemCal = menu.findItem(R.id.action_calendar);
-        FrameLayout rootView = (FrameLayout) itemCal.getActionView();
-        TextView dayOfMonth = rootView.findViewById(R.id.dayOfMonth);
-        dayOfMonth.setText(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)));
-        itemCal.getActionView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menu.performIdentifierAction(itemCal.getItemId(), 0);
-            }
-        });
-    }
 
     private int getPage() {
         return binding.pager.getCurrentItem();

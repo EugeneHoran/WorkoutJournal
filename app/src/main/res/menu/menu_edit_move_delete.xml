@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
+
         <item
-            android:id="@+id/action_edit"
-            android:title="@string/edit"
+            android:id="@+id/action_info"
+            android:icon="@drawable/ic_remove"
+            android:title="@string/info"
             android:visible="false" />
         <item
             android:id="@+id/action_move"
+            android:icon="@drawable/ic_remove"
             android:title="@string/move_rep_position"
             android:visible="false" />
         <item
+            android:id="@+id/action_edit"
+            android:icon="@drawable/ic_edit"
+            android:title="@string/edit"
+            android:visible="false" />
+        <item
             android:id="@+id/action_delete"
+            android:icon="@drawable/ic_delete"
             android:title="@string/delete"
             android:visible="false" />
     </group>

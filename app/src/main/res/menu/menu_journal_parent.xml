@@ -10,12 +10,12 @@
         android:visible="false"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_calendar"
-        android:orderInCategory="200"
-        android:title="@string/calendar"
-        app:actionLayout="@layout/view_calendar_icon"
-        app:showAsAction="always" />
+    <!--<item-->
+        <!--android:id="@+id/action_calendar"-->
+        <!--android:orderInCategory="200"-->
+        <!--android:title="@string/calendar"-->
+        <!--app:actionLayout="@layout/view_calendar_icon"-->
+        <!--app:showAsAction="always" />-->
 
     <item
         android:id="@+id/action_orm"

@@ -17,6 +17,7 @@ import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.RecyclerSetItemWithRecyclerBinding;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.ui.shared.RepChildRecyclerAdapter;
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
 import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 import eh.workout.journal.com.workoutjournal.util.diff.JournalChildDiffUtil;
 
@@ -72,7 +73,7 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter {
 
         void bindView(ExerciseSetRepRelation setRepRelation) {
             this.setRepRelation = setRepRelation;
-            binding.setTitle(setRepRelation.getJournalSetEntity().getName());
+            binding.setTitle(setRepRelation.getJournalSetEntity().getNameWithEquipment());
             adapter.setOneRepMax(OrmHelper.getOneRepMaxInt(setRepRelation.getExerciseOrmEntity().get(0).getOneRepMax()));
             adapter.setItems(setRepRelation.getJournalRepEntityList());
             binding.recycler.setLayoutFrozen(true);
