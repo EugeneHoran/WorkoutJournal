@@ -138,6 +138,11 @@ public class JournalRepEntity {
         return reps;
     }
 
+    @Ignore
+    public int getRepsInt() {
+        return Integer.valueOf(reps);
+    }
+
     public void setReps(String reps) {
         this.reps = reps;
     }

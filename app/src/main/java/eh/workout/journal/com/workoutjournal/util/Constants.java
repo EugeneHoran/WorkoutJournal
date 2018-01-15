@@ -12,10 +12,13 @@ public class Constants {
     public static String SETTINGS_UNIT_MEASURE = "lbs";
     // Timer visibility
     public static final String KEY_ENABLED_TIMER = "key_enable_timer";
+    public static boolean SETTINGS_SHOW_TIMER = false;
     //Routine plan
     public static final String KEY_ROUTINE_PLAN = "key_enable_routine_plan";
     public static boolean SETTINGS_SHOW_ROUTINE_PLAN = true;
-
+    // Suggestions
+    public static final String KEY_SHOW_SUGGESTIONS = "switch_suggestion";
+    public static boolean SETTINGS_SHOW_SUGGESTIONS = true;
 
     /**
      * Exercise Input Type

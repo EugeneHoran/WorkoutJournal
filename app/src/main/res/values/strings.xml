@@ -103,4 +103,6 @@
     <string name="save_set">Save Set</string>
     <string name="info">Info</string>
     <string name="suggestion">Suggestion</string>
+    <string name="suggestion_calc">Suggestion Calculator</string>
+    <string name="suggestion_for_next_rep">Suggestion weight for next set based on selected reps</string>
 </resources>

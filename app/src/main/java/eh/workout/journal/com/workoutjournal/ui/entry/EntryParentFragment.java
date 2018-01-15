@@ -9,14 +9,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.R;
@@ -25,6 +29,8 @@ import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.util.AppFactory;
 import eh.workout.journal.com.workoutjournal.util.Constants;
+import eh.workout.journal.com.workoutjournal.util.MyStringUtil;
+import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 
 
 public class EntryParentFragment extends BaseFragment {
@@ -49,11 +55,13 @@ public class EntryParentFragment extends BaseFragment {
     }
 
     private EntryViewModel model;
+    private BottomSheetBehavior bsSheetBehavior;
     private EntryParentPagerAdapter adapter;
     private FragmentEntryParentBinding binding;
     private Long timestamp;
     private int inputType = 0;
     private String liftId;
+    boolean showSuggestion = false;
     private JournalRepEntity suggestionRepEntity;
 
     @Override
@@ -71,8 +79,6 @@ public class EntryParentFragment extends BaseFragment {
         }
         adapter = new EntryParentPagerAdapter(getChildFragmentManager());
     }
-
-    private BottomSheetBehavior bsSheetBehavior;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,8 +110,6 @@ public class EntryParentFragment extends BaseFragment {
         observeHasData(model);
     }
 
-    boolean showSuggestion = false;
-
     private void observeHasData(EntryViewModel model) {
         model.getShowFab().observe(this, new Observer<Boolean>() {
             @Override
@@ -119,27 +123,73 @@ public class EntryParentFragment extends BaseFragment {
                 }
             }
         });
-        model.getLastRep().observe(this, new Observer<JournalRepEntity>() {
-            @Override
-            public void onChanged(@Nullable JournalRepEntity repEntity) {
-                suggestionRepEntity = repEntity;
-                if (repEntity == null) {
-                    bsSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    showSuggestion = false;
-                    showSuggestion(false);
-
-                } else {
-                    showSuggestion = true;
-                    showSuggestion(true);
+        if (Constants.SETTINGS_SHOW_SUGGESTIONS) {
+            model.getLastRep().observe(this, new Observer<JournalRepEntity>() {
+                @Override
+                public void onChanged(@Nullable JournalRepEntity repEntity) {
+                    suggestionRepEntity = repEntity;
+                    if (repEntity == null) {
+                        bsSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        showSuggestion = false;
+                        showSuggestion(false);
+                    } else {
+                        showSuggestion = true;
+                        showSuggestion(true);
+                    }
+                    initSuggestionViews();
                 }
+            });
+        }
+    }
+
+    private void initSuggestionViews() {
+        if (suggestionRepEntity == null) {
+            return;
+        }
+        binding.set.setText(String.valueOf(suggestionRepEntity.getTempPosition() + 1));
+        binding.spinnerReps.setPrompt("Next Set Reps");
+        if (binding.spinnerReps.getAdapter() == null) {
+            if (getActivity() != null) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getReps());
+                adapter.setDropDownViewResource(R.layout.spinner_dropdown);
+                binding.spinnerReps.setAdapter(adapter);
             }
-        });
+            binding.spinnerReps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (suggestionRepEntity == null) {
+                        return;
+                    }
+                    binding.txtSuggestedWeight.setText(
+                            MyStringUtil.formatOrmSuggestion(
+                                    OrmHelper.getOneRepMaxFromRep(
+                                            String.valueOf(suggestionRepEntity.getOneRepMax()),
+                                            String.valueOf(position + 1))));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+        if (suggestionRepEntity.getRepsInt() > 3) {
+            binding.spinnerReps.setSelection(suggestionRepEntity.getRepsInt() - 3);
+        }
+    }
+
+    private List<String> getReps() {
+        List<String> repList = new ArrayList<>();
+        for (int i = 1; i < 41; i++) {
+            String rep = i == 1 ? " Rep" : " Reps";
+            repList.add(i + rep);
+        }
+        return repList;
     }
 
     private void showSuggestion(boolean show) {
         binding.viewToolbar.toolbar.getMenu().findItem(R.id.action_suggestion).setVisible(show);
     }
-
 
     @Override
     public void onResume() {
@@ -176,9 +226,7 @@ public class EntryParentFragment extends BaseFragment {
                     navToOneRepMaxFragment(binding.viewToolbar.appBar, Constants.ORM_PERCENTAGES);
                     break;
                 case R.id.action_suggestion:
-                    bsSheetBehavior.setState(
-                            bsSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED ?
-                                    BottomSheetBehavior.STATE_COLLAPSED : BottomSheetBehavior.STATE_EXPANDED);
+                    hideShowBottomSheet(null);
                     break;
                 default:
                     return false;
@@ -187,11 +235,18 @@ public class EntryParentFragment extends BaseFragment {
         }
     };
 
+    @SuppressWarnings("unused")
+    public void hideShowBottomSheet(View view) {
+        bsSheetBehavior.setState(
+                bsSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED ?
+                        BottomSheetBehavior.STATE_COLLAPSED : BottomSheetBehavior.STATE_EXPANDED);
+    }
+
     ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             if (bsSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                bsSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                hideShowBottomSheet(null);
             }
             if (entryViewHeight == null || entryViewHeight == 0) {
                 entryViewHeight = binding.entryHolder.getHeight();
@@ -202,7 +257,6 @@ public class EntryParentFragment extends BaseFragment {
         @Override
         public void onPageSelected(int position) {
             super.onPageSelected(position);
-
             if (position == 1) {
                 if (showSuggestion) {
                     showSuggestion(false);
@@ -215,7 +269,6 @@ public class EntryParentFragment extends BaseFragment {
             }
         }
     };
-
 
     public View.OnClickListener navListener = new View.OnClickListener() {
         @Override

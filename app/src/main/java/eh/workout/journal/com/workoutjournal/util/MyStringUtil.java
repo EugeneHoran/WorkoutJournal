@@ -8,6 +8,9 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 
 public class MyStringUtil {
+    public static Spanned formatOrmSuggestion(String weight) {
+        return Html.fromHtml("<small>suggested weight   </small><font face='sans-serif-medium'>" + weight + "<small> " + Constants.SETTINGS_UNIT_MEASURE + "</small></font>");
+    }
 
     public static Spanned formatRepSet(Integer pos) {
         return Html.fromHtml(String.valueOf(pos) + "<small> set</small>");

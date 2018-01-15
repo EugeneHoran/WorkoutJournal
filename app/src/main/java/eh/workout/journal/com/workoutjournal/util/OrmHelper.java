@@ -14,6 +14,12 @@ public class OrmHelper {
         return weight / (1.0278 - (0.0278 * reps));
     }
 
+    public static String getOneRepMaxFromRep(String ormWeight, String r) {
+        double weight = Double.valueOf(ormWeight);
+        double reps = Double.valueOf(r);
+        return String.valueOf(getOneRepMaxInt(weight * (1.0278 - (0.0278 * reps))));
+    }
+
     public static int getOneRepMaxInt(double orm) {
         return (int) Math.rint(orm);
     }

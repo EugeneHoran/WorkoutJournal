@@ -10,15 +10,18 @@
             android:title="@string/pref_title_unit_system" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Routine and Plans">
-
+    <PreferenceCategory android:title="Journal">
         <SwitchPreference
             android:defaultValue="true"
             android:key="key_enable_routine_plan"
             android:summary="Routine and Plan will be on the bottom of the journal screen"
             android:title="Display Routine and Plan" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="switch_suggestion"
+            android:summary="Show rep suggestions based on previous set"
+            android:title="Show Suggestions" />
     </PreferenceCategory>
-
     <PreferenceCategory android:title="Timer">
 
         <SwitchPreference
