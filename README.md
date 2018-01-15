@@ -13,7 +13,7 @@ MVVM, Room Database, LiveData
 ### Some images of the app
 
 <p float="top">
-<img src="https://github.com/EugeneHoran/WorkoutJournal/blob/master/images/device-2018-01-10-134234.png" width="300" />
+<img src="https://github.com/EugeneHoran/WorkoutJournal/blob/master/images/device-2018-01-14-204240.png" width="300" />
 <img src="https://github.com/EugeneHoran/WorkoutJournal/blob/master/images/device-2018-01-10-133658.png" width="300" />
 <img src="https://github.com/EugeneHoran/WorkoutJournal/blob/master/images/device-2018-01-13-125800.png" width="300" />
 <img src="https://github.com/EugeneHoran/WorkoutJournal/blob/master/images/device-2018-01-10-133741.png" width="300" />
