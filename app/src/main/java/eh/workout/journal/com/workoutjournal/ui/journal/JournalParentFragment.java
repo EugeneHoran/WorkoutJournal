@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
@@ -40,6 +41,7 @@ import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
+import eh.workout.journal.com.workoutjournal.util.views.CustomSnackbar;
 import eh.workout.journal.com.workoutjournal.util.views.LayoutUtil;
 
 public class JournalParentFragment extends BaseFragment implements View.OnClickListener {
@@ -88,7 +90,6 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_journal_parent, container, false);
-        binding.viewToolbar.dateHolder.setVisibility(View.VISIBLE);
         return binding.getRoot();
     }
 
@@ -96,6 +97,7 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.viewToolbar.toolbar.inflateMenu(R.menu.menu_journal_parent);
+        binding.viewToolbar.dateHolder.setVisibility(View.VISIBLE);
         initBottomSheet(Constants.SETTINGS_SHOW_ROUTINE_PLAN);
         binding.pager.setAdapter(journalPagerAdapter);
         binding.pager.setCurrentItem(datePage, false);
@@ -189,6 +191,9 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         }
     }
 
+    public void setCurrentItem() {
+        binding.pager.setCurrentItem(5000);
+    }
 /*__________________Bottom Sheet Imp___________________________*/
 
     /**
@@ -255,10 +260,14 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         };
     }
 
+    public void onExerciseClicked(String setId, int inputType) {
+        navToAddEntryFragment(getAppBar(), binding.fab, setId, inputType, journalPagerAdapter.getTimestamp(getPage()));
+    }
+
     public JournalRoutinePlanRecyclerAdapter.RoutinePlanCallbacks routineInterface = new JournalRoutinePlanRecyclerAdapter.RoutinePlanCallbacks() {
         @Override
         public void onExerciseClicked(String setId, int inputType) {
-            navToAddEntryFragment(getAppBar(), binding.fab, setId, inputType, journalPagerAdapter.getTimestamp(getPage()));
+            JournalParentFragment.this.onExerciseClicked(setId, inputType);
         }
 
         @Override
@@ -319,7 +328,7 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
     }
 
 
-    private int getPage() {
+    public int getPage() {
         return binding.pager.getCurrentItem();
     }
 

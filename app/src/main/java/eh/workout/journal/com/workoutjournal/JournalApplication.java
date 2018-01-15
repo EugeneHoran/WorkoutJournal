@@ -1,6 +1,7 @@
 package eh.workout.journal.com.workoutjournal;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import eh.workout.journal.com.workoutjournal.db.JournalDatabase;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;

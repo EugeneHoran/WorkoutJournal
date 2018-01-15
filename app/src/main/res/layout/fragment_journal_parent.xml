@@ -11,7 +11,8 @@
 
     </data>
 
-    <android.support.design.widget.CoordinatorLayout style="@style/MatchParentMatchParent">
+    <android.support.design.widget.CoordinatorLayout
+        style="@style/MatchParentMatchParent">
 
         <include
             android:id="@+id/viewToolbar"
@@ -20,7 +21,6 @@
             app:menuListener="@{fragment.menuItemClickListener}"
             app:subTitle="@{fragment.toolbarSubTitle}"
             app:title="@{fragment.toolbarTitle}" />
-
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"

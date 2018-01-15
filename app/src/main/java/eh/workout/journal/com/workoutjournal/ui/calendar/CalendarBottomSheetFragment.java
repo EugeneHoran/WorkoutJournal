@@ -88,6 +88,7 @@ public class CalendarBottomSheetFragment extends BottomSheetDialogFragment {
                 if (listener != null) {
                     listener.onDateSelected(5000 - DateHelper.findDaysDiff(dateClicked.getTime(), JournalParentPagerAdapter.getTimestampStatic(5000)));
                 }
+                listener = null;
                 getDialog().dismiss();
             }
 

@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "eh.workout.journal.com.workoutjournal"
         minSdkVersion 16
         targetSdkVersion 27
@@ -15,7 +16,6 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
-        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

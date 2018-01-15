@@ -48,12 +48,21 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:onClickListener="@{fragment.navListener}"
             android:tint="@color/white"
             android:transitionName="fab"
-            app:srcCompat="@drawable/ic_save" />
+            app:layout_anchor="@+id/bottom"
+            app:layout_anchorGravity="top|end"
+            app:srcCompat="@drawable/ic_check" />
 
+        <View
+            android:id="@+id/bottom"
+            style="@style/BottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@color/white"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="0dp" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -89,7 +89,7 @@ public class DataHelper {
             "Dumbbell",//1
             "Machine",//2
             "Cables",//3
-            "Weight"//4
+            "Body Weight"//4
     };
 
     private static final String[] EXERCISE_LIFT_ARRAY_NEW = new String[]{

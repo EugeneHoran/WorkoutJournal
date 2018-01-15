@@ -102,4 +102,5 @@
     <string name="workout_plan_name_optional">Workout plan name (optional)</string>
     <string name="save_set">Save Set</string>
     <string name="info">Info</string>
+    <string name="suggestion">Suggestion</string>
 </resources>

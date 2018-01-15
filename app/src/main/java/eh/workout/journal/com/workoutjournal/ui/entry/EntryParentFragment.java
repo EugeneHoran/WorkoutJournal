@@ -1,11 +1,13 @@
 package eh.workout.journal.com.workoutjournal.ui.entry;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -68,10 +70,13 @@ public class EntryParentFragment extends BaseFragment {
         adapter = new EntryParentPagerAdapter(getChildFragmentManager());
     }
 
+    private BottomSheetBehavior bsSheetBehavior;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_entry_parent, container, false);
         binding.viewToolbar.toolbar.inflateMenu(R.menu.menu_entry);
+        bsSheetBehavior = BottomSheetBehavior.from(binding.bottom);
         binding.setModel(model);
         binding.pager.setAdapter(adapter);
         getChildFragmentManager().beginTransaction().replace(R.id.entryHolder, EntryInputFragment.newInstance(inputType)).commit();
@@ -94,7 +99,36 @@ public class EntryParentFragment extends BaseFragment {
         entryViewHeight = binding.entryHolder.getHeight();
         binding.viewToolbar.tabs.setupWithViewPager(binding.pager);
         binding.pager.addOnPageChangeListener(pageChangeListener);
+        observeHasData(model);
     }
+
+    private void observeHasData(EntryViewModel model) {
+        model.getShowFab().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (aBoolean != null) {
+                    if (aBoolean) {
+                        binding.fab.show();
+                    } else {
+                        binding.fab.hide();
+                    }
+                }
+            }
+        });
+        model.getShowSuggestion().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (aBoolean != null) {
+                    showSuggestion(aBoolean);
+                }
+            }
+        });
+    }
+
+    private void showSuggestion(boolean show) {
+        binding.viewToolbar.toolbar.getMenu().findItem(R.id.action_suggestion).setVisible(show);
+    }
+
 
     @Override
     public void onResume() {
@@ -129,6 +163,9 @@ public class EntryParentFragment extends BaseFragment {
                     break;
                 case R.id.action_percentage:
                     navToOneRepMaxFragment(binding.viewToolbar.appBar, Constants.ORM_PERCENTAGES);
+                    break;
+                case R.id.action_suggestion:
+                    bsSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     break;
                 default:
                     return false;

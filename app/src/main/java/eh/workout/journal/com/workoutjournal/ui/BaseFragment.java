@@ -7,6 +7,7 @@ import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
@@ -42,11 +43,17 @@ public class BaseFragment extends Fragment {
     public void navToAddEntryFragment(View view, View fab, String id, int inputType, Long timestamp) {
         EntryParentFragment fragment = EntryParentFragment.newInstance(id, inputType, timestamp);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.addSharedElement(view, "app_bar");
-        if (fab != null) {
-            transaction.addSharedElement(fab, ViewCompat.getTransitionName(fab));
-        }
         initTransitionN(fragment);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            transaction.addSharedElement(view, "app_bar");
+            if (fab != null) {
+                try {
+                    transaction.addSharedElement(fab, ViewCompat.getTransitionName(fab));
+                } catch (Exception e) {
+                    Log.e("Testing", e.toString());
+                }
+            }
+        }
         transaction.replace(R.id.container,
                 fragment,
                 MainActivity.TAG_FRAG_ADD_EXERCISE)
@@ -58,22 +65,36 @@ public class BaseFragment extends Fragment {
         ExerciseParentFragment exerciseSelectorFragment = ExerciseParentFragment.newInstance(timestamp, page);
         initTransitionN(exerciseSelectorFragment);
         if (getActivity() != null) {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .addSharedElement(view, "app_bar")
-                    .replace(R.id.container, exerciseSelectorFragment, MainActivity.TAG_FRAG_EXERCISE_SELECTOR)
-                    .addToBackStack(MainActivity.TAG_FRAG_EXERCISE_SELECTOR).commit();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .addSharedElement(view, "app_bar")
+                        .replace(R.id.container, exerciseSelectorFragment, MainActivity.TAG_FRAG_EXERCISE_SELECTOR)
+                        .addToBackStack(MainActivity.TAG_FRAG_EXERCISE_SELECTOR).commit();
+            } else {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, exerciseSelectorFragment, MainActivity.TAG_FRAG_EXERCISE_SELECTOR)
+                        .addToBackStack(MainActivity.TAG_FRAG_EXERCISE_SELECTOR).commit();
+            }
         }
     }
 
     public void navToOneRepMaxFragment(View view, int which) {
         OneRepMaxFragment oneRepMaxFragment = OneRepMaxFragment.newInstance(which);
         initTransitionN(oneRepMaxFragment);
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .addSharedElement(view, "app_bar")
-                .replace(R.id.container, oneRepMaxFragment, MainActivity.TAG_FRAG_ORM)
-                .addToBackStack(MainActivity.TAG_FRAG_ORM)
-                .commit();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .addSharedElement(view, "app_bar")
+                    .replace(R.id.container, oneRepMaxFragment, MainActivity.TAG_FRAG_ORM)
+                    .addToBackStack(MainActivity.TAG_FRAG_ORM)
+                    .commit();
+        } else {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, oneRepMaxFragment, MainActivity.TAG_FRAG_ORM)
+                    .addToBackStack(MainActivity.TAG_FRAG_ORM)
+                    .commit();
+        }
     }
 
 

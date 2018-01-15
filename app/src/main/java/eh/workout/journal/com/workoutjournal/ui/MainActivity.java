@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         Constants.SETTINGS_UNIT_MEASURE = sp.getString(Constants.KEY_UNIT_MEASURES, null);
@@ -105,6 +106,13 @@ public class MainActivity extends AppCompatActivity {
         if (fm.findFragmentById(R.id.container) instanceof EntryParentFragment) {
             if (fm.getBackStackEntryCount() == 2 && getExerciseFragment() != null) {
                 fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                return;
+            }
+        }
+        if (fm.findFragmentById(R.id.container) instanceof JournalParentFragment) {
+            JournalParentFragment joanJournalParentFragment = (JournalParentFragment) fm.findFragmentById(R.id.container);
+            if (joanJournalParentFragment.getPage() != 5000) {
+                joanJournalParentFragment.setCurrentItem();
                 return;
             }
         }

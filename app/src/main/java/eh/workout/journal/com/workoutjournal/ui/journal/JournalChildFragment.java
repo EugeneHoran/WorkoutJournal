@@ -119,7 +119,7 @@ public class JournalChildFragment extends BaseFragment {
         public void onSetClicked(String setId, int inputType) {
             if (getParentFragment() != null) {
                 JournalParentFragment journalParentFragment = (JournalParentFragment) getParentFragment();
-                journalParentFragment.routineInterface.onExerciseClicked(setId, inputType);
+                journalParentFragment.onExerciseClicked(setId, inputType);
             }
         }
 

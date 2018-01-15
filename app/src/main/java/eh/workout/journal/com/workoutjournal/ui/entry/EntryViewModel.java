@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.databinding.ObservableField;
 import android.os.AsyncTask;
@@ -31,21 +32,21 @@ public class EntryViewModel extends AndroidViewModel {
     public ObservableField<Boolean> showNoItems = new ObservableField<>(false);
     public ObservableField<Boolean> dataLoaded = new ObservableField<>(false);
 
+
     private JournalRepository repository;
-    private String exerciseId;
     private Long dateId;
     private ExerciseLiftEntity liftEntity;
     private final MediatorLiveData<ExerciseSetRepRelation> observableSetReps;
     private final MediatorLiveData<ExerciseOrmEntity> observableOrm;
     private LiveData<ExerciseSetRepRelation> exerciseSetRepRelationLiveData;
     private ExerciseSetRepRelation setRepRelation;
-
+    private MutableLiveData<Boolean> showFab;
+    private MutableLiveData<Boolean> showSuggestion;
 
     public EntryViewModel(@NonNull JournalApplication application, String exerciseId, Long timestamp) {
         super(application);
         Long[] startEndTime = DateHelper.getStartAndEndTimestamp(timestamp);
         this.repository = application.getRepository();
-        this.exerciseId = exerciseId;
         this.dateId = startEndTime[0];
         observableSetReps = new MediatorLiveData<>();
         observableOrm = new MediatorLiveData<>();
@@ -57,6 +58,23 @@ public class EntryViewModel extends AndroidViewModel {
             }
         });
         new LiftTask().execute(exerciseId);
+    }
+
+    MutableLiveData<Boolean> getShowFab() {
+        if (showFab == null) {
+            showFab = new MutableLiveData<>();
+            showFab.setValue(false);
+        }
+        return showFab;
+    }
+
+
+    MutableLiveData<Boolean> getShowSuggestion() {
+        if (showSuggestion == null) {
+            showSuggestion = new MutableLiveData<>();
+            showSuggestion.setValue(false);
+        }
+        return showSuggestion;
     }
 
     private void initPrimaryObserver() {
@@ -75,7 +93,11 @@ public class EntryViewModel extends AndroidViewModel {
                     exerciseSetRepRelation.getJournalRepEntityList().get(0).setShowTopLine();
                     exerciseSetRepRelation.getJournalRepEntityList().get(exerciseSetRepRelation.getJournalRepEntityList().size() - 1).setShowBottomLine();
                     observableSetReps.setValue(exerciseSetRepRelation);
+                    getShowSuggestion().setValue(exerciseSetRepRelation.getJournalSetEntity().getExerciseEquipmentId() < 4);
+                    getShowFab().setValue(true);
                 } else {
+                    getShowSuggestion().setValue(false);
+                    getShowFab().setValue(false);
                     showNoItems.set(true);
                     observableSetReps.setValue(null);
                 }
