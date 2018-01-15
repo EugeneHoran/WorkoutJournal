@@ -42,6 +42,7 @@ public class EntryViewModel extends AndroidViewModel {
     private ExerciseSetRepRelation setRepRelation;
     private MutableLiveData<Boolean> showFab;
     private MutableLiveData<Boolean> showSuggestion;
+    private MutableLiveData<JournalRepEntity> lastRep;
 
     public EntryViewModel(@NonNull JournalApplication application, String exerciseId, Long timestamp) {
         super(application);
@@ -68,13 +69,11 @@ public class EntryViewModel extends AndroidViewModel {
         return showFab;
     }
 
-
-    MutableLiveData<Boolean> getShowSuggestion() {
-        if (showSuggestion == null) {
-            showSuggestion = new MutableLiveData<>();
-            showSuggestion.setValue(false);
+    MutableLiveData<JournalRepEntity> getLastRep() {
+        if (lastRep == null) {
+            lastRep = new MutableLiveData<>();
         }
-        return showSuggestion;
+        return lastRep;
     }
 
     private void initPrimaryObserver() {
@@ -93,12 +92,12 @@ public class EntryViewModel extends AndroidViewModel {
                     exerciseSetRepRelation.getJournalRepEntityList().get(0).setShowTopLine();
                     exerciseSetRepRelation.getJournalRepEntityList().get(exerciseSetRepRelation.getJournalRepEntityList().size() - 1).setShowBottomLine();
                     observableSetReps.setValue(exerciseSetRepRelation);
-                    getShowSuggestion().setValue(exerciseSetRepRelation.getJournalSetEntity().getExerciseEquipmentId() < 4);
                     getShowFab().setValue(true);
+                    getLastRep().setValue(exerciseSetRepRelation.getJournalRepEntityList().get(exerciseSetRepRelation.getJournalRepEntityList().size() - 1));
                 } else {
-                    getShowSuggestion().setValue(false);
                     getShowFab().setValue(false);
                     showNoItems.set(true);
+                    getLastRep().setValue(null);
                     observableSetReps.setValue(null);
                 }
             }

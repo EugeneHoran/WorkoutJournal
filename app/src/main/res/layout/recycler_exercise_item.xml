@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:alpha=".7"
                 android:fontFamily="sans-serif"
-                android:text="@{exercise.equipmentName}"
+                android:text="@{exercise.equipmentNameFormatted}"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:alpha=".7"
                 android:fontFamily="sans-serif"
-                android:text="@{exercise.exerciseName}"
+                android:text="@{exercise.groupPartNameFormatted}"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>

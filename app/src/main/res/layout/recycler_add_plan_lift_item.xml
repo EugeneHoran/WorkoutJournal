@@ -9,7 +9,7 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/liftParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,18 +25,30 @@
 
         <TextView
             android:id="@+id/liftName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="2"
-            android:text="Testing SDfdfsf SDEFDSF SDFdsf sdfsdf s"
+            android:text="Testing"
             android:textColor="@color/black"
             android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/liftInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/liftName"
+            android:alpha=".6"
+            android:text="Testing"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
 
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="end|center_vertical" />
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

@@ -22,17 +22,6 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<ExerciseLiftEntity> itemList = new ArrayList<>();
     private List<ExerciseLiftEntity> itemListFiltered = new ArrayList<>();
     private boolean showCheckBox;
-    private LiftCallback listener;
-
-    public interface LiftCallback {
-        void removeSelectedLift(ExerciseLiftEntity exerciseLiftEntity);
-
-        void addSelectedLift(ExerciseLiftEntity exerciseLiftEntity);
-    }
-
-    public void setListener(LiftCallback listener) {
-        this.listener = listener;
-    }
 
     public RoutineLiftRecyclerAdapter(boolean showCheckBox) {
         this.showCheckBox = showCheckBox;
@@ -60,15 +49,6 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         return selectedList;
     }
 
-    public void unselectedExercise(ExerciseLiftEntity exerciseLiftEntity) {
-        for (int i = 0; i < itemList.size(); i++) {
-            if (itemList.get(i).getId().equals(exerciseLiftEntity.getId())) {
-                itemList.get(i).setSelected(false);
-                notifyItemChanged(i);
-            }
-        }
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolderLifts(LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_add_plan_lift_item, parent, false));
@@ -85,6 +65,48 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemCount() {
         return itemListFiltered.size();
+    }
+
+    public class ViewHolderLifts extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+        TextView liftName, liftInfo;
+        CheckBox checkBox;
+        private ExerciseLiftEntity exerciseLiftEntity;
+
+        ViewHolderLifts(View itemView) {
+            super(itemView);
+            liftName = itemView.findViewById(R.id.liftName);
+            liftInfo = itemView.findViewById(R.id.liftInfo);
+            checkBox = itemView.findViewById(R.id.checkbox);
+            checkBox.setVisibility(showCheckBox ? View.VISIBLE : View.GONE);
+            itemView.setOnClickListener(this);
+        }
+
+        private void bindView() {
+            exerciseLiftEntity = itemListFiltered.get(getAdapterPosition());
+            liftName.setText(exerciseLiftEntity.getNameWithEquipment());
+            liftInfo.setText(exerciseLiftEntity.getGroupPartNameFormatted());
+            checkBox.setOnCheckedChangeListener(this);
+            checkBox.setChecked(exerciseLiftEntity.isSelected());
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            for (int i = 0; i < itemList.size(); i++) {
+                if (itemList.get(i).getId().equalsIgnoreCase(exerciseLiftEntity.getId())) {
+                    itemList.get(i).setSelected(checkBox.isChecked());
+                }
+            }
+            exerciseLiftEntity.setSelected(checkBox.isChecked());
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (checkBox.isChecked()) {
+                checkBox.setChecked(false);
+            } else {
+                checkBox.setChecked(true);
+            }
+        }
     }
 
     @Override
@@ -115,52 +137,5 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                 notifyDataSetChanged();
             }
         };
-    }
-
-    public class ViewHolderLifts extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
-        TextView liftName;
-        CheckBox checkBox;
-        private ExerciseLiftEntity exerciseLiftEntity;
-
-        ViewHolderLifts(View itemView) {
-            super(itemView);
-            liftName = itemView.findViewById(R.id.liftName);
-            checkBox = itemView.findViewById(R.id.checkbox);
-            checkBox.setVisibility(showCheckBox ? View.VISIBLE : View.GONE);
-            itemView.findViewById(R.id.liftParent).setOnClickListener(this);
-        }
-
-        private void bindView() {
-            exerciseLiftEntity = itemListFiltered.get(getAdapterPosition());
-            liftName.setText(exerciseLiftEntity.getName());
-            checkBox.setOnCheckedChangeListener(this);
-            checkBox.setChecked(exerciseLiftEntity.isSelected());
-        }
-
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            for (int i = 0; i < itemList.size(); i++) {
-                if (itemList.get(i).getId().equalsIgnoreCase(exerciseLiftEntity.getId())) {
-                    itemList.get(i).setSelected(checkBox.isChecked());
-                }
-            }
-            exerciseLiftEntity.setSelected(checkBox.isChecked());
-            if (listener != null) {
-                if (exerciseLiftEntity.isSelected()) {
-                    listener.addSelectedLift(exerciseLiftEntity);
-                } else {
-                    listener.removeSelectedLift(exerciseLiftEntity);
-                }
-            }
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (checkBox.isChecked()) {
-                checkBox.setChecked(false);
-            } else {
-                checkBox.setChecked(true);
-            }
-        }
     }
 }

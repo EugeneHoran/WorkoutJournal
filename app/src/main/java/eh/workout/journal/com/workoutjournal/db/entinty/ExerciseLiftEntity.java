@@ -31,7 +31,6 @@ public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
     public ExerciseLiftEntity() {
     }
 
-
     @Ignore
     public ExerciseLiftEntity(ExerciseLiftEntity entity) {
         this.id = entity.getId();
@@ -129,10 +128,36 @@ public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
         this.selected = selected;
     }
 
+    @Ignore
+    public String getEquipmentName() {
+        return EXERCISE_EQUIPMENT[exerciseEquipmentId];
+    }
+
+    @Ignore
+    public String getGroupPartName() {
+        return EXERCISE_BODY_PART[exerciseGroupId];
+    }
+
 
     /**
      * Formatted Info
      */
+
+    @Ignore
+    public String getNameWithEquipment() {
+        return name + " (" + EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
+    }
+
+    @Ignore
+    public Spanned getEquipmentNameFormatted() {
+        return Html.fromHtml("Equipment: " + EXERCISE_EQUIPMENT[exerciseEquipmentId]);
+    }
+
+    @Ignore
+    public Spanned getGroupPartNameFormatted() {
+        return Html.fromHtml("Group: " + EXERCISE_BODY_PART[exerciseGroupId]);
+    }
+
     @Ignore
     private final String[] EXERCISE_EQUIPMENT = new String[]{
             "Barbell",//0
@@ -142,17 +167,6 @@ public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
             "Body Weight",//4
             "Cardio"
     };
-
-    @Ignore
-    public Spanned getEquipmentName() {
-        return Html.fromHtml("Equipment: " + EXERCISE_EQUIPMENT[getExerciseEquipmentId()]);
-    }
-
-
-    @Ignore
-    public Spanned getExerciseName() {
-        return Html.fromHtml("Group: " + EXERCISE_BODY_PART[getExerciseGroupId()]);
-    }
 
     @Ignore
     private final String[] EXERCISE_BODY_PART = new String[]{

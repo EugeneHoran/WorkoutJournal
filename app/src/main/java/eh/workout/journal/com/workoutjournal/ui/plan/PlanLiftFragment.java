@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
@@ -17,8 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
 import java.util.List;
 
@@ -42,7 +39,6 @@ public class PlanLiftFragment extends Fragment implements View.OnClickListener {
     private FragmentPlanLiftBinding binding;
     private PlanViewModel model;
     private RoutineLiftRecyclerAdapter adapter;
-    private SelectedListRecyclerAdapter adapterSelected;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,16 +48,12 @@ public class PlanLiftFragment extends Fragment implements View.OnClickListener {
             model = ViewModelProviders.of(getActivity()).get(PlanViewModel.class);
         }
         adapter = new RoutineLiftRecyclerAdapter(true);
-        adapterSelected = new SelectedListRecyclerAdapter();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_plan_lift, container, false);
-        FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
-        flowLayoutManager.setAutoMeasureEnabled(true);
-        binding.recyclerSelected.setLayoutManager(flowLayoutManager);
         return binding.getRoot();
     }
 
@@ -70,11 +62,7 @@ public class PlanLiftFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         binding.recycler.setAdapter(adapter);
         binding.fab.setOnClickListener(this);
-        adapter.setListener(liftCallback);
-        binding.recyclerSelected.setAdapter(adapterSelected);
-        adapterSelected.setListener(selectListCallback);
         observeExercises(model);
-        observeSelectedExercises(model);
     }
 
     private void observeExercises(PlanViewModel model) {
@@ -86,57 +74,11 @@ public class PlanLiftFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void observeSelectedExercises(PlanViewModel model) {
-        model.getSelectedExercises().observe(this, new Observer<List<ExerciseLiftEntity>>() {
-            @Override
-            public void onChanged(@Nullable List<ExerciseLiftEntity> exerciseLiftEntities) {
-                adapterSelected.setItems(exerciseLiftEntities);
-                binding.recyclerSelected.setVisibility(exerciseLiftEntities.size() > 0 ? View.VISIBLE : View.GONE);
-            }
-        });
-    }
-
-    RoutineLiftRecyclerAdapter.LiftCallback liftCallback = new RoutineLiftRecyclerAdapter.LiftCallback() {
-        @Override
-        public void removeSelectedLift(ExerciseLiftEntity exerciseLiftEntity) {
-            model.removeSelectedExercise(exerciseLiftEntity);
-        }
-
-        @Override
-        public void addSelectedLift(ExerciseLiftEntity exerciseLiftEntity) {
-            PlanAddActivity planAddActivity = (PlanAddActivity) getActivity();
-            planAddActivity.collapseAppBar();
-            model.addSelectedExercise(exerciseLiftEntity);
-        }
-    };
-    SelectedListRecyclerAdapter.SelectListCallback selectListCallback = new SelectedListRecyclerAdapter.SelectListCallback() {
-        @Override
-        public void onRemoveItem(ExerciseLiftEntity exerciseLiftEntity) {
-            adapter.unselectedExercise(exerciseLiftEntity);
-            model.removeSelectedExercise(exerciseLiftEntity);
-        }
-
-        @Override
-        public void itemChanged() {
-            binding.recyclerSelected.requestLayout();
-            int selectedHolderHeight;
-            if (adapterSelected.getItemCount() == 0) {
-                selectedHolderHeight = 0;
-            } else {
-                selectedHolderHeight = binding.recyclerSelected.getHeight();
-            }
-            binding.recycler.requestLayout();
-            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) binding.recycler.getLayoutParams();
-            params.setMargins(0, 0, 0, selectedHolderHeight);
-            binding.recycler.setLayoutParams(params);
-        }
-    };
-
     @Override
     public void onClick(View v) {
         if (v == binding.fab) {
             if (adapter.getSelectedList().size() == 0) {
-                Snackbar.make(binding.bottom, "Please select exercises to move on", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(binding.fab, "Please select exercises to move on", Snackbar.LENGTH_SHORT).show();
             } else {
                 if (getActivity() != null) {
                     model.setSelectedList(adapter.getSelectedList());

@@ -17,8 +17,8 @@ import android.view.View;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.ActivityAddPlanBinding;
-import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.AnimationTransition;
+import eh.workout.journal.com.workoutjournal.util.Constants;
 
 public class RoutineActivity extends AppCompatActivity {
     public static final String TAG_SELECT_LIFTS_FRAGMENT = "tag_lifts_fragment";
@@ -32,6 +32,7 @@ public class RoutineActivity extends AppCompatActivity {
     private ActivityAddPlanBinding binding;
     private AppBarLayout.ScrollingViewBehavior behavior;
     private RoutineViewModel model;
+    private int fragPos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +58,24 @@ public class RoutineActivity extends AppCompatActivity {
             public void onBackStackChanged() {
                 binding.appBar.setExpanded(true, true);
                 searching = false;
-                int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
-                switch (backStackCount) {
+                fragPos = getSupportFragmentManager().getBackStackEntryCount();
+                switch (fragPos) {
                     case 0:
                         binding.toolbarLayout.setTitle("Routine exercises");
                         behavior.setOverlayTop(0);
+                        binding.container.requestLayout();
+                        binding.container.getLayoutParams().height = screenHeight - (appBarHeight);
                         break;
                     case 1:
                         binding.toolbarLayout.setTitle("Routine days");
                         behavior.setOverlayTop(0);
+                        binding.container.requestLayout();
+                        binding.container.getLayoutParams().height = screenHeight - (appBarHeight);
                         break;
                     case 2:
                         binding.toolbarLayout.setTitle("Save routine");
                         behavior.setOverlayTop(158);
+                        binding.container.getLayoutParams().height = screenHeight - binding.toolbar.getHeight();
                         break;
                     default:
                         break;
@@ -102,7 +108,11 @@ public class RoutineActivity extends AppCompatActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 binding.container.requestLayout();
-                binding.container.getLayoutParams().height = screenHeight - (appBarHeight + verticalOffset);
+                if (fragPos < 2) {
+                    binding.container.getLayoutParams().height = screenHeight - (appBarHeight + verticalOffset);
+                } else {
+                    binding.container.getLayoutParams().height = screenHeight - binding.toolbar.getHeight();
+                }
             }
         });
     }
@@ -110,45 +120,9 @@ public class RoutineActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (searching) {
-            expandAppBar();
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 
-    public void expandAppBar() {
-        if (!binding.appBar.isActivated()) {
-            unlockAppBarOpen();
-        } else {
-            binding.appBar.setExpanded(true);
-        }
-    }
-
-    public void collapseAppBar() {
-        lockAppBarClosed();
-    }
-
-    public void lockAppBarClosed() {
-        searching = true;
-        invalidateOptionsMenu();
-        binding.search.setVisibility(View.VISIBLE);
-        binding.appBar.setExpanded(false, true);
-        binding.appBar.setActivated(false);
-        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) binding.appBar.getLayoutParams();
-        lp.height = (int) getResources().getDimension(R.dimen.toolbar_height_collapsed);
-        initContainerHeights();
-    }
-
-    public void unlockAppBarOpen() {
-        searching = false;
-        binding.search.setVisibility(View.GONE);
-        binding.appBar.setExpanded(true, false);
-        binding.appBar.setActivated(true);
-        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) binding.appBar.getLayoutParams();
-        lp.height = (int) getResources().getDimension(R.dimen.toolbar_height_expanded);
-        initContainerHeights();
-    }
 
     private int screenHeight() {
         DisplayMetrics displayMetrics = new DisplayMetrics();

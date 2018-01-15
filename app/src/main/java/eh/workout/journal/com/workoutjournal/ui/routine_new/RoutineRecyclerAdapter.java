@@ -93,6 +93,7 @@ public class RoutineRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             liftName = itemView.findViewById(R.id.liftName);
             checkBox = itemView.findViewById(R.id.checkbox);
             checkBox.setVisibility(showCheckBox ? View.VISIBLE : View.GONE);
+            itemView.findViewById(R.id.liftInfo).setVisibility(View.GONE);
             itemView.findViewById(R.id.liftParent).setOnClickListener(this);
         }
 
