@@ -12,26 +12,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +34,6 @@ import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
 import eh.workout.journal.com.workoutjournal.ui.settings.SettingsActivity;
 import eh.workout.journal.com.workoutjournal.util.Constants;
-import eh.workout.journal.com.workoutjournal.util.views.CustomSnackbar;
 import eh.workout.journal.com.workoutjournal.util.views.LayoutUtil;
 
 public class JournalParentFragment extends BaseFragment implements View.OnClickListener {
@@ -119,13 +109,6 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         if (savedInstanceState == null) {
             model.initJournalData(journalPagerAdapter.getTimestamp(datePage));
         }
-//        model.getExercises().observe(this, new Observer<List<Exercise>>() {
-//            @Override
-//            public void onChanged(@Nullable List<Exercise> exercises) {
-//                if (exercises != null)
-//                    Log.e("Testing", exercises.size() + "");
-//            }
-//        });
     }
 
     public void initJournalData() {

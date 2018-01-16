@@ -1,36 +1,78 @@
-
 package eh.workout.journal.com.workoutjournal.db.entinty;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Exercise {
-    @SerializedName("id")
+@Entity(tableName = "exercise",
+        foreignKeys = {@ForeignKey(entity = ExerciseCategory.class,
+                parentColumns = "id",
+                childColumns = "category")}
+)
+public class Exercise implements Comparable<Exercise> {
+    @Override
+    public int compareTo(@NonNull Exercise o) {
+        return this.getName().compareTo(o.getName());
+    }
+
+    @PrimaryKey
+    @NonNull
     private String id;
-    @SerializedName("description")
+    @SerializedName("exercise_equipment_id")
+    private int exerciseEquipmentId;
     private String description;
-    @SerializedName("name")
     private String name;
     @SerializedName("name_original")
     private String nameOriginal;
-    @SerializedName("uuid")
     private String uuid;
-    @SerializedName("category")
     private String category;
-    @SerializedName("muscles")
-    private List<String> muscles ;
+    private String categoryName;
+    private List<String> muscles;
     @SerializedName("muscles_secondary")
-    private List<String> musclesSecondary ;
-    @SerializedName("equipment")
-    private List<String> equipment ;
+    private List<String> musclesSecondary;
+    private List<String> equipment;
+    private Long timestampRecent;
+    @Ignore
+    private boolean isShownInRecent = false;
+    @Ignore
+    private boolean selected = false;
+    private boolean recent;
 
+
+    @Ignore
+    public String getEquipmentString() {
+        StringBuilder item = new StringBuilder();
+        for (String s : equipment) {
+            item.append(s).append(",");
+        }
+        return item.toString();
+    }
+
+    public Exercise() {
+    }
+
+    @NonNull
     public String getId() {
         return id;
     }
 
+    @NonNull
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getExerciseEquipmentId() {
+        return exerciseEquipmentId;
+    }
+
+    public void setExerciseEquipmentId(int exerciseEquipmentId) {
+        this.exerciseEquipmentId = exerciseEquipmentId;
     }
 
     public String getDescription() {
@@ -65,6 +107,15 @@ public class Exercise {
         this.uuid = uuid;
     }
 
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -95,6 +146,42 @@ public class Exercise {
 
     public void setEquipment(List<String> equipment) {
         this.equipment = equipment;
+    }
+
+    public Long getTimestampRecent() {
+        return timestampRecent;
+    }
+
+    public void setTimestampRecent(Long timestampRecent) {
+        this.timestampRecent = timestampRecent;
+    }
+
+    public boolean isRecent() {
+        return recent;
+    }
+
+    public void setRecent(boolean recent) {
+        this.recent = recent;
+    }
+
+    @Ignore
+    public boolean getIsShownInRecent() {
+        return isShownInRecent;
+    }
+
+    @Ignore
+    public void setShownInRecent(boolean shownInRecent) {
+        isShownInRecent = shownInRecent;
+    }
+
+    @Ignore
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Ignore
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
 }

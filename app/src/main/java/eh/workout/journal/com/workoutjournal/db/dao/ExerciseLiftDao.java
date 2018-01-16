@@ -16,12 +16,6 @@ import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 
 @Dao
 public abstract class ExerciseLiftDao {
-//    @Insert
-//    public abstract void insertExercises(List<Exercise> exercises);
-
-//    @Query("SELECT * FROM exercises")
-//    public abstract LiveData<List<Exercise>> getExercises();
-
     /**
      * Groups
      */

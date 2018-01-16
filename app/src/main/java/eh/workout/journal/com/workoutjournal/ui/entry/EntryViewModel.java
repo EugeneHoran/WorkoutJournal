@@ -28,7 +28,7 @@ import eh.workout.journal.com.workoutjournal.util.OrmHelper;
 
 public class EntryViewModel extends AndroidViewModel {
     public ObservableField<String> toolbarTitle = new ObservableField<>("Workout");
-    public ObservableField<String> toolbarSubTitle = new ObservableField<>("");
+    public ObservableField<String> toolbarSubTitle = new ObservableField<>(null);
     public ObservableField<Boolean> showNoItems = new ObservableField<>(false);
     public ObservableField<Boolean> dataLoaded = new ObservableField<>(false);
 
@@ -140,7 +140,7 @@ public class EntryViewModel extends AndroidViewModel {
             super.onPostExecute(exerciseLiftEntity);
             liftEntity = exerciseLiftEntity;
             toolbarTitle.set(liftEntity.getName());
-            toolbarSubTitle.set(DataHelper.EXERCISE_EQUIPMENT[liftEntity.getExerciseEquipmentId()]);
+//            toolbarSubTitle.set(DataHelper.EXERCISE_EQUIPMENT[liftEntity.getExerciseEquipmentId()]);
             initPrimaryObserver();
             dataLoaded.set(true);
         }

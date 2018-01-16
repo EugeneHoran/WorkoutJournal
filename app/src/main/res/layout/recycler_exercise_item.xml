@@ -47,16 +47,6 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/equipment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha=".7"
-                android:fontFamily="sans-serif"
-                android:text="@{exercise.equipmentNameFormatted}"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
                 android:id="@+id/exercise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

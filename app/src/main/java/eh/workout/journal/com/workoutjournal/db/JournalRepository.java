@@ -9,7 +9,6 @@ import eh.workout.journal.com.workoutjournal.db.entinty.Exercise;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseGroupEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
-import eh.workout.journal.com.workoutjournal.db.entinty.JournalDateEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalRepEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
@@ -18,6 +17,7 @@ import eh.workout.journal.com.workoutjournal.db.entinty.PlanEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
+import eh.workout.journal.com.workoutjournal.db.relations.ExerciseCategoryRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanDaySetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanSetRelation;
@@ -44,18 +44,35 @@ public class JournalRepository {
         return instance;
     }
 
-//    public void insertAllExercises(final List<Exercise> exercises) {
+    public LiveData<List<ExerciseCategoryRelation>> getExerciseCategoryRelations() {
+        return database.getExerciseDao().getExerciseCategoryRelations();
+    }
+
+//    public void insertExerciseCategories(final List<ExerciseCategory> exercises) {
 //        appExecutors.diskIO().execute(new Runnable() {
 //            @Override
 //            public void run() {
-//                database.getExerciseLiftDao().insertExercises(exercises);
+//                database.getExerciseDao().insertExerciseCategories(exercises);
 //            }
 //        });
 //    }
-
-//    public LiveData<List<Exercise>> getExercises() {
-//        return database.getExerciseLiftDao().getExercises();
+//
+//    public LiveData<List<ExerciseCategory>> getExerciseCategories() {
+//        return database.getExerciseDao().getExerciseCategories();
 //    }
+
+    public void insertAllExercises(final List<Exercise> exercises) {
+        appExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.getExerciseDao().insertExercises(exercises);
+            }
+        });
+    }
+
+    public LiveData<List<Exercise>> getExercises() {
+        return database.getExerciseDao().getExercises();
+    }
 
     /**
      * Return All Dates

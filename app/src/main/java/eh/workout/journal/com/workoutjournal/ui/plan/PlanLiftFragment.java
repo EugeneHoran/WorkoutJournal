@@ -98,7 +98,7 @@ public class PlanLiftFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_exercise_selector, menu);
-        menu.findItem(R.id.action_search_exercise).setVisible(false);
+//        menu.findItem(R.id.action_search_exercise).setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -109,12 +109,12 @@ public class PlanLiftFragment extends Fragment implements View.OnClickListener {
                 ExerciseSelectorAddExerciseDialogFragment addExerciseDialogFragment = ExerciseSelectorAddExerciseDialogFragment.newInstance();
                 addExerciseDialogFragment.show(getChildFragmentManager(), "TAG_ADD_LIFT_DIALOG_FRAGMENT");
                 return true;
-            case R.id.action_search_exercise:
-                PlanAddActivity activity = (PlanAddActivity) getActivity();
-                if (activity != null) {
-                    activity.collapseAppBar();
-                }
-                return true;
+//            case R.id.action_search_exercise:
+//                PlanAddActivity activity = (PlanAddActivity) getActivity();
+//                if (activity != null) {
+//                    activity.collapseAppBar();
+//                }
+//                return true;
             default:
                 break;
         }

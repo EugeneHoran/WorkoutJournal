@@ -8,12 +8,16 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 import eh.workout.journal.com.workoutjournal.BuildConfig;
+import eh.workout.journal.com.workoutjournal.db.dao.ExerciseDao;
 import eh.workout.journal.com.workoutjournal.db.dao.ExerciseLiftDao;
 import eh.workout.journal.com.workoutjournal.db.dao.JournalDao;
 import eh.workout.journal.com.workoutjournal.db.dao.PlanDao;
 import eh.workout.journal.com.workoutjournal.db.dao.RoutineDao;
 import eh.workout.journal.com.workoutjournal.db.entinty.Exercise;
+import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseCategory;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseGroupEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
@@ -42,9 +46,9 @@ import eh.workout.journal.com.workoutjournal.util.loaders.ExerciseLoaders;
         PlanEntity.class,
         PlanSetEntity.class,
         PlanDayEntity.class,
-        PlanDaySetEntity.class
-//        Exercise.class
-},
+        PlanDaySetEntity.class,
+        ExerciseCategory.class,
+        Exercise.class},
         version = 1)
 @TypeConverters({JournalTypeConverter.class})
 public abstract class JournalDatabase extends RoomDatabase {
@@ -52,6 +56,8 @@ public abstract class JournalDatabase extends RoomDatabase {
     private static JournalDatabase instance;
 
     public abstract JournalDao getJournalDao();
+
+    public abstract ExerciseDao getExerciseDao();
 
     public abstract ExerciseLiftDao getExerciseLiftDao();
 
@@ -75,12 +81,12 @@ public abstract class JournalDatabase extends RoomDatabase {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
+                final JournalDatabase database = JournalDatabase.getInstance(context, executors);
                 executors.diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-                        JournalDatabase database = JournalDatabase.getInstance(context, executors);
-//                        database.getExerciseLiftDao().insertExercises(ExerciseLoaders.get().getExercises(context));
-                        database.getExerciseLiftDao().insertGroupAndExercises(new DataHelper().generateExerciseGroups(), DataHelper.generateExerciseLifts());
+                        List<ExerciseLiftEntity> liftEntities = ExerciseLoaders.get().getExerciseLifts(context);
+                        database.getExerciseLiftDao().insertGroupAndExercises(new DataHelper().generateExerciseGroups(), liftEntities);
                     }
                 });
             }

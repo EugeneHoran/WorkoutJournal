@@ -73,7 +73,7 @@ public class JournalChildRecyclerAdapter extends RecyclerView.Adapter {
 
         void bindView(ExerciseSetRepRelation setRepRelation) {
             this.setRepRelation = setRepRelation;
-            binding.setTitle(setRepRelation.getJournalSetEntity().getNameWithEquipment());
+            binding.setTitle(setRepRelation.getJournalSetEntity().getName());
             adapter.setOneRepMax(OrmHelper.getOneRepMaxInt(setRepRelation.getExerciseOrmEntity().get(0).getOneRepMax()));
             adapter.setItems(setRepRelation.getJournalRepEntityList());
             binding.recycler.setLayoutFrozen(true);

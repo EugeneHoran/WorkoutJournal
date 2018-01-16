@@ -10,11 +10,4 @@
         android:title="@string/add_exercise"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_search_exercise"
-        android:icon="@drawable/ic_search"
-        android:orderInCategory="400"
-        android:title="@string/search"
-        app:showAsAction="always" />
-
 </menu>

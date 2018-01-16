@@ -25,7 +25,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/no_items"
-            android:visibility="visible" />
+            android:visibility="gone" />
     </RelativeLayout>
 
 </layout>

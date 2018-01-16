@@ -15,11 +15,6 @@ public class JournalDateEntity {
     public JournalDateEntity() {
     }
 
-    public JournalDateEntity(@NonNull Long id, long timestamp) {
-        this.id = id;
-        this.timestamp = timestamp;
-    }
-
     @NonNull
     public Long getId() {
         return id;

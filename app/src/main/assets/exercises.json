@@ -1,6 +1,7 @@
 {
   "exercises": [
     {
+      "exercise_equipment_id": 0,
       "id": 345,
       "license_author": "deusinvictus",
       "status": "2",
@@ -12,17 +13,20 @@
       "license": 2,
       "category": 10,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         10
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 227,
       "license_author": "trzr23",
       "status": "2",
-      "description": "<p>Very common shoulder exercise.</p>\n<p> </p>\n<p>As shown here: https://www.youtube.com/watch?v=vj2w851ZHRM</p>",
+      "description": "<p>Very common shoulder exercise.</p>\n<p> </p>\n<p>As shown here: https://www.youtube.com/watch?v=vj2w851ZHRM</p>",
       "name": "Arnold Shoulder Press",
       "name_original": "Arnold Shoulder Press",
       "creation_date": "2014-03-09",
@@ -30,36 +34,16 @@
       "license": 1,
       "category": 13,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": [
-        3
-      ]
-    },
-    {
-      "id": 289,
-      "license_author": "GrosseHund",
-      "status": "2",
-      "description": "<p>Grab dumbbells and extend arms to side and hold as long as you can</p>",
-      "name": "Axe Hold",
-      "name_original": "axe hold",
-      "creation_date": "2014-11-02",
-      "uuid": "6add5973-86d0-4543-928a-6bb8b3f34efc",
-      "license": 1,
-      "category": 8,
-      "language": 2,
       "muscles": [
-        2,
-        9
       ],
       "muscles_secondary": [
-        9
       ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 1,
       "id": 343,
       "license_author": "sevae",
       "status": "2",
@@ -84,28 +68,7 @@
       ]
     },
     {
-      "id": 407,
-      "license_author": "BePieToday",
-      "status": "2",
-      "description": "<p>Perform leg squats with barbell behind your legs</p>",
-      "name": "Barbell Hack Squats",
-      "name_original": "Barbell Hack Squats",
-      "creation_date": "2016-07-30",
-      "uuid": "1215dad0-b7e0-42c6-80d4-112f69acb68a",
-      "license": 2,
-      "category": 9,
-      "language": 2,
-      "muscles": [
-        10
-      ],
-      "muscles_secondary": [
-        8
-      ],
-      "equipment": [
-        1
-      ]
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 405,
       "license_author": "Mikko Ruohola",
       "status": "2",
@@ -128,6 +91,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 344,
       "license_author": "sevae",
       "status": "2",
@@ -151,54 +115,7 @@
       ]
     },
     {
-      "id": 388,
-      "license_author": "47db224935ff41e6ad927cedea87e1",
-      "status": "2",
-      "description": "<p>-Rest your weight on your palms and the balls of your feet, not dissimilar to normal pushup position</p>\n<p>-Move by stepping with your R palm and L foot, then your L palm and R foot.  Basically, walk like a lumbering bear.</p>\n<p>-Move as fast as you can.  Measure your reps/sets in either distance (i.e. 40 yards) or time (i.e. 45 seconds)</p>\n<p>-Works your Pecs, Deltoids, Triceps, Traps, Lats, Abs and Lower Back, Hip Flexors, Quads, Glutes and Calves</p>",
-      "name": "Bear Walk",
-      "name_original": "Bear Walk",
-      "creation_date": "2016-02-29",
-      "uuid": "79181b05-1429-45be-bc8a-5bf0913d22b9",
-      "license": 2,
-      "category": 11,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 307,
-      "license_author": "nate303303",
-      "status": "2",
-      "description": "<p>-Rest your weight on your palms and the balls of your feet, not dissimilar to normal pushup position</p>\n<p>-Move by stepping with your R palm and L foot, then your L palm and R foot.  Basically, walk like a lumbering bear.</p>\n<p>-Move as fast as you can.  Measure your reps/sets in either distance (i.e. 40 yards) or time (i.e. 45 seconds)</p>\n<p>-Works your Pecs, Deltoids, Triceps, Traps, Lats, Abs and Lower Back, Hip Flexors, Quads, Glutes and Calves</p>",
-      "name": "Bear Walk",
-      "name_original": "Bear Walk",
-      "creation_date": "2015-02-06",
-      "uuid": "1b8b1657-40fd-4e3b-97b7-1c79b1079f8e",
-      "license": 2,
-      "category": 11,
-      "language": 2,
-      "muscles": [
-        2,
-        7,
-        4,
-        6,
-        3,
-        15,
-        5
-      ],
-      "muscles_secondary": [
-        8,
-        12,
-        14,
-        10,
-        9
-      ],
-      "equipment": [
-        7
-      ]
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 192,
       "license_author": "sistab2",
       "status": "2",
@@ -222,6 +139,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 97,
       "license_author": "wger.de",
       "status": "2",
@@ -246,6 +164,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 88,
       "license_author": "wger.de",
       "status": "2",
@@ -270,10 +189,11 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 268,
       "license_author": "lakerbeezel",
       "status": "2",
-      "description": "<p>Bend over slightly while holding two dumbbells.  Pull the dumbbells up to your chest, keeping your elbows as high as you can.</p>",
+      "description": "<p>Bend over slightly while holding two dumbbells.  Pull the dumbbells up to your chest, keeping your elbows as high as you can.</p>",
       "name": "Bent High Pulls",
       "name_original": "Bent High Pulls",
       "creation_date": "2014-09-01",
@@ -284,12 +204,14 @@
       "muscles": [
         9
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 412,
       "license_author": "warchildmd",
       "status": "2",
@@ -301,13 +223,16 @@
       "license": 2,
       "category": 12,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         1
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 362,
       "license_author": "sebk",
       "status": "2",
@@ -332,6 +257,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 421,
       "license_author": "apeschel",
       "status": "2",
@@ -343,14 +269,17 @@
       "license": 2,
       "category": 13,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         8,
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 109,
       "license_author": "wger.de",
       "status": "2",
@@ -374,6 +303,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 110,
       "license_author": "wger.de",
       "status": "2",
@@ -397,6 +327,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 74,
       "license_author": "wger.de",
       "status": "2",
@@ -419,6 +350,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 81,
       "license_author": "wger.de",
       "status": "2",
@@ -441,6 +373,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 80,
       "license_author": "wger.de",
       "status": "2",
@@ -463,6 +396,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 129,
       "license_author": "wger.de",
       "status": "2",
@@ -477,10 +411,14 @@
       "muscles": [
         1
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 341,
       "license_author": "cal.zabel",
       "status": "2",
@@ -495,12 +433,14 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         7
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 342,
       "license_author": "sevae",
       "status": "2",
@@ -518,9 +458,12 @@
       "muscles_secondary": [
         8
       ],
-      "equipment": []
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 346,
       "license_author": "OM6oxA3bCOvamJntbRi5S0RCDrQ",
       "status": "2",
@@ -532,11 +475,16 @@
       "license": 2,
       "category": 9,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 354,
       "license_author": "er0355",
       "status": "2",
@@ -548,11 +496,16 @@
       "license": 2,
       "category": 11,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 98,
       "license_author": "wger.de",
       "status": "2",
@@ -570,9 +523,12 @@
       "muscles_secondary": [
         2
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 99,
       "license_author": "wger.de",
       "status": "2",
@@ -587,10 +543,14 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 124,
       "license_author": "wger.de",
       "status": "2",
@@ -605,10 +565,14 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 207,
       "license_author": "tuckerm",
       "status": "2",
@@ -623,10 +587,14 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 265,
       "license_author": "lauroernesto",
       "status": "2",
@@ -641,14 +609,18 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 167,
       "license_author": "robhoyt",
       "status": "2",
-      "description": "<p>Set cable pulley slightly lower than chest height. Keep body facing forward with hips stable.  Grab the pulley handle, fully extend your arms and bring your arms forward and across your body. Hold for 1 second at the end of the movement and slowly return to starting position.</p>",
+      "description": "<p>Set cable pulley slightly lower than chest height. Keep body facing forward with hips stable.  Grab the pulley handle, fully extend your arms and bring your arms forward and across your body. Hold for 1 second at the end of the movement and slowly return to starting position.</p>",
       "name": "Cable Woodchoppers",
       "name_original": "Cable Woodchoppers",
       "creation_date": "2013-06-23",
@@ -659,14 +631,18 @@
       "muscles": [
         14
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 308,
       "license_author": "nate303303",
       "status": "2",
-      "description": "<p>Put  the balls of your feet on an extended leg press pad.  Use your calves to press the weight by flexing your feet/toes into a pointed position, and releasing back into a relaxed position.</p>\n<p>This exercise builds mass and strength in the Gastrocnemius and Soleus muscles as well, if not better, than any calf exercise.</p>",
+      "description": "<p>Put  the balls of your feet on an extended leg press pad.  Use your calves to press the weight by flexing your feet/toes into a pointed position, and releasing back into a relaxed position.</p>\n<p>This exercise builds mass and strength in the Gastrocnemius and Soleus muscles as well, if not better, than any calf exercise.</p>",
       "name": "Calf Press Using Leg Press Machine",
       "name_original": "Calf Press using Leg Press Machine",
       "creation_date": "2015-02-06",
@@ -678,10 +654,14 @@
         7,
         15
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 104,
       "license_author": "wger.de",
       "status": "2",
@@ -699,9 +679,12 @@
       "muscles_secondary": [
         15
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 181,
       "license_author": "oliser67",
       "status": "2",
@@ -717,12 +700,14 @@
         1,
         12
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         6
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 217,
       "license_author": "tuckerm",
       "status": "2",
@@ -746,6 +731,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 213,
       "license_author": "tuckerm",
       "status": "2",
@@ -760,10 +746,14 @@
       "muscles": [
         12
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 194,
       "license_author": "powerade69",
       "status": "2",
@@ -780,10 +770,14 @@
         4,
         3
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        3
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 91,
       "license_author": "wger.de",
       "status": "2",
@@ -807,6 +801,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 94,
       "license_author": "wger.de",
       "status": "2",
@@ -821,10 +816,14 @@
       "muscles": [
         6
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 92,
       "license_author": "wger.de",
       "status": "2",
@@ -839,10 +838,14 @@
       "muscles": [
         6
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 416,
       "license_author": "krisbbb",
       "status": "2",
@@ -860,25 +863,12 @@
       "muscles_secondary": [
         14
       ],
-      "equipment": []
+      "equipment": [
+        7
+      ]
     },
     {
-      "id": 347,
-      "license_author": "2dPREtEZP221u68Akf0JImv5L48",
-      "status": "2",
-      "description": "<p>Deadhang performed on an edge either with or without added weight (adujst edge or weight to adjust difficulty)</p>",
-      "name": "Deadhang",
-      "name_original": "Deadhang",
-      "creation_date": "2015-08-27",
-      "uuid": "8976d255-d7e4-46c7-8079-ca525f0a7d0d",
-      "license": 2,
-      "category": 8,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 105,
       "license_author": "wger.de",
       "status": "2",
@@ -902,6 +892,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 100,
       "license_author": "wger.de",
       "status": "2",
@@ -916,12 +907,14 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         1
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 101,
       "license_author": "wger.de",
       "status": "2",
@@ -936,12 +929,14 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 260,
       "license_author": "aszc",
       "status": "2",
@@ -965,10 +960,11 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 381,
       "license_author": "bobbyprince89",
       "status": "2",
-      "description": "<p>Preparation</p>\n<p>Stand on weight plate, bumper plate, or shallow elevated platform with loaded bar above feet. Squat down and grasp bar with shoulder width or slightly wider overhand or mixed grip.</p>\n<p> </p>\n<p>Execution</p>\n<p>Lift bar by extending hips and knees to full extension. Pull shoulders back at top of lift if rounded. Return weights to floor by bending hips back while allowing knees to bend forward, keeping back straight and knees pointed same direction as feet. Repeat.</p>\n<p> </p>\n<p>Comments</p>\n<p>Throughout lift, keep hips low, shoulders high, arms and back straight. Knees should point same direction as feet throughout movement. Keep bar close to body to improve mechanical leverage. Grip strength and strength endurance often limit ability to perform multiple reps at heavy resistances. Gym chalk, wrist straps, grip work, and mixed grip can be used to enhance grip. Mixed grip indicates one hand holding with overhand grip and other hand holding with underhand grip. Lever barbell jack can be used to lift barbell from floor for easier loading and unloading of weight plates.</p>\n<p>Barbell Deficit Deadlift emphasizes building strength through lowest portion of Deadlift. Target muscle is exercised isometrically. Heavy barbell deadlifts significantly engages Latissmus Dorsi. See Barbell Deficit Deadlift under Gluteus Maximus. Also see Deadlift Analysis.</p>",
+      "description": "<p>Preparation</p>\n<p>Stand on weight plate, bumper plate, or shallow elevated platform with loaded bar above feet. Squat down and grasp bar with shoulder width or slightly wider overhand or mixed grip.</p>\n<p> </p>\n<p>Execution</p>\n<p>Lift bar by extending hips and knees to full extension. Pull shoulders back at top of lift if rounded. Return weights to floor by bending hips back while allowing knees to bend forward, keeping back straight and knees pointed same direction as feet. Repeat.</p>\n<p> </p>\n<p>Comments</p>\n<p>Throughout lift, keep hips low, shoulders high, arms and back straight. Knees should point same direction as feet throughout movement. Keep bar close to body to improve mechanical leverage. Grip strength and strength endurance often limit ability to perform multiple reps at heavy resistances. Gym chalk, wrist straps, grip work, and mixed grip can be used to enhance grip. Mixed grip indicates one hand holding with overhand grip and other hand holding with underhand grip. Lever barbell jack can be used to lift barbell from floor for easier loading and unloading of weight plates.</p>\n<p>Barbell Deficit Deadlift emphasizes building strength through lowest portion of Deadlift. Target muscle is exercised isometrically. Heavy barbell deadlifts significantly engages Latissmus Dorsi. See Barbell Deficit Deadlift under Gluteus Maximus. Also see Deadlift Analysis.</p>",
       "name": "Deficit Deadlift",
       "name_original": "Deficit Deadlift",
       "creation_date": "2016-02-09",
@@ -976,7 +972,8 @@
       "license": 2,
       "category": 12,
       "language": 2,
-      "muscles": [],
+      "muscles": [
+      ],
       "muscles_secondary": [
         11,
         8,
@@ -989,6 +986,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 329,
       "license_author": "oboema",
       "status": "2",
@@ -1000,13 +998,16 @@
       "license": 2,
       "category": 13,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         8
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 82,
       "license_author": "wger.de",
       "status": "2",
@@ -1025,9 +1026,12 @@
         4,
         6
       ],
-      "equipment": []
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 83,
       "license_author": "wger.de",
       "status": "2",
@@ -1042,12 +1046,14 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         8
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 275,
       "license_author": "http://www.exrx.net/WeightExercises/Brachialis/DBC",
       "status": "2",
@@ -1070,6 +1076,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 300,
       "license_author": "ataraxie67",
       "status": "2",
@@ -1084,12 +1091,14 @@
       "muscles": [
         10
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 298,
       "license_author": "ExRx",
       "status": "2",
@@ -1112,6 +1121,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 112,
       "license_author": "wger.de",
       "status": "2",
@@ -1134,6 +1144,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 113,
       "license_author": "wger.de",
       "status": "2",
@@ -1156,24 +1167,7 @@
       ]
     },
     {
-      "id": 87,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "",
-      "name": "Dumbbells on Scott Machine",
-      "name_original": "Dumbbells on scott machine",
-      "creation_date": null,
-      "uuid": "d147a6c2-ce64-424b-baf3-4ca841a51512",
-      "license": 1,
-      "category": 8,
-      "language": 2,
-      "muscles": [
-        1
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 274,
       "license_author": "tuninx",
       "status": "2",
@@ -1197,44 +1191,11 @@
       ]
     },
     {
-      "id": 414,
-      "license_author": "geantvert",
-      "status": "2",
-      "description": "<p>En face</p>\n<ol>\n<li>Tirer</li>\n<li>relacher doucement</li>\n</ol>",
-      "name": "Extenseurs - Face",
-      "name_original": "Extenseurs - Face",
-      "creation_date": "2016-09-05",
-      "uuid": "6ec02111-96f7-4e66-ad1f-82d102580ed6",
-      "license": 2,
-      "category": 11,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 394,
-      "license_author": "abeworld",
-      "status": "2",
-      "description": "<p>Attach a rope to a pulley station set at about chest level.</p>\n<p>Step back so you're supporting the weight with arms completely outstretched and assume a staggered (one foot forward) stance. Bend the knees slightly for a stable base.</p>\n<p>Retract the scapulae (squeeze your partner's finger with your shoulder blades) and pull the center of the rope slightly up towards the face. A good cue is to think about pulling the ends of the rope apart, not just pulling back.</p>\n<p>As you near your face, externally rotate so your knuckles are facing the ceiling.</p>\n<p>Hold for one second at the top position and slowly lower.</p>",
-      "name": "Facepull",
-      "name_original": "Facepull",
-      "creation_date": "2016-04-20",
-      "uuid": "659f3fb9-2370-42fb-9c29-9aaf65c7a7de",
-      "license": 2,
-      "category": 13,
-      "language": 2,
-      "muscles": [
-        9
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 303,
       "license_author": "nate303303",
       "status": "2",
-      "description": "<p>-Laying on the back, lift your straightened legs from the ground at a 45 degree angle. </p>\n<p>-As your Left foot travels downward and nearly touches the floor, your Right foot should seek to reach a 90 degree angle, or as close to one as possible.</p>\n<p>-Bring your R foot down until it nearly touches the floor, and bring your L foot upwards.  Maintain leg rigidity throughout the exercise.  Your head should stay off the ground, supported by tightened upper abdominals.</p>\n<p>-(L up R down, L down R up, x2)  ^v, v^, ^v, v^ = 1 rep</p>\n<p>-Primarily works the Rectus Abdominus, the hip flexors and the lower back. Secondarily works the Obliques.  Emphasis placed on the lower quadrant of the abs.</p>\n<p> </p>",
+      "description": "<p>-Laying on the back, lift your straightened legs from the ground at a 45 degree angle. </p>\n<p>-As your Left foot travels downward and nearly touches the floor, your Right foot should seek to reach a 90 degree angle, or as close to one as possible.</p>\n<p>-Bring your R foot down until it nearly touches the floor, and bring your L foot upwards.  Maintain leg rigidity throughout the exercise.  Your head should stay off the ground, supported by tightened upper abdominals.</p>\n<p>-(L up R down, L down R up, x2)  ^v, v^, ^v, v^ = 1 rep</p>\n<p>-Primarily works the Rectus Abdominus, the hip flexors and the lower back. Secondarily works the Obliques.  Emphasis placed on the lower quadrant of the abs.</p>\n<p> </p>",
       "name": "Flutter Kicks",
       "name_original": "Flutter Kicks",
       "creation_date": "2015-02-06",
@@ -1246,10 +1207,14 @@
         14,
         6
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 122,
       "license_author": "wger.de",
       "status": "2",
@@ -1264,10 +1229,14 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 145,
       "license_author": "wger.de",
       "status": "2",
@@ -1282,12 +1251,14 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 146,
       "license_author": "wger.de",
       "status": "2",
@@ -1302,12 +1273,14 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 85,
       "license_author": "wger.de",
       "status": "2",
@@ -1322,13 +1295,15 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         8,
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 84,
       "license_author": "wger.de",
       "status": "2",
@@ -1343,13 +1318,15 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         8,
         2
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 233,
       "license_author": "Manu, wikipedia",
       "status": "2",
@@ -1374,6 +1351,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 191,
       "license_author": "sistab2",
       "status": "2",
@@ -1396,10 +1374,11 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 326,
       "license_author": "http://www.realsimple.com/health/fitness-exercise/",
       "status": "2",
-      "description": "<p>(A) Get in high plank position on your hands and toes.(B) Shift your weight to your left hand as you turn your body to the right; bend your right leg behind you and extend your right arm up. Return to the center and repeat on the opposite side. Continue, alternating sides.<strong>Make it easier:</strong> Don’t raise your arm after you bend your leg behind you.<strong>Make it harder:</strong> Balance with your arm and leg extended for two counts.</p>",
+      "description": "<p>(A) Get in high plank position on your hands and toes.(B) Shift your weight to your left hand as you turn your body to the right; bend your right leg behind you and extend your right arm up. Return to the center and repeat on the opposite side. Continue, alternating sides.<strong>Make it easier:</strong> Don’t raise your arm after you bend your leg behind you.<strong>Make it harder:</strong> Balance with your arm and leg extended for two counts.</p>",
       "name": "Full Sit Outs",
       "name_original": "Full Sit Outs",
       "creation_date": "2015-06-02",
@@ -1412,50 +1391,14 @@
         14,
         6
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         7
       ]
     },
     {
-      "id": 408,
-      "license_author": "tdprice12",
-      "status": "2",
-      "description": "<p>Lie on you back with your hips and knees flexed, feet on the ground. From this position, raise your butt off of the ground to a height where your body makes a straight line from your knees to your shoulders. To make the exercise more intense, you can add weight by letting a barbell rest on your hips as you complete the motion, or you can put your feet on a slightly higher surface such as a step or a bench.</p>",
-      "name": "Glute Bridge",
-      "name_original": "Glute Bridge",
-      "creation_date": "2016-07-31",
-      "uuid": "97ae7d90-a4b2-472c-bf7b-826df674622c",
-      "license": 2,
-      "category": 9,
-      "language": 2,
-      "muscles": [
-        8
-      ],
-      "muscles_secondary": [
-        11
-      ],
-      "equipment": []
-    },
-    {
-      "id": 116,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "",
-      "name": "Good Mornings",
-      "name_original": "Good mornings",
-      "creation_date": null,
-      "uuid": "6e862700-3d63-486c-99ae-744c68d2f753",
-      "license": 1,
-      "category": 9,
-      "language": 2,
-      "muscles": [
-        11
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 86,
       "license_author": "wger.de",
       "status": "2",
@@ -1470,12 +1413,14 @@
       "muscles": [
         1
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 138,
       "license_author": "wger.de",
       "status": "2",
@@ -1493,25 +1438,12 @@
       "muscles_secondary": [
         13
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
-      "id": 317,
-      "license_author": "vince63",
-      "status": "2",
-      "description": "<p>chrome Hand Flex Grip to build up forearms muscles</p>",
-      "name": "Hand Grip",
-      "name_original": "Hand Grip",
-      "creation_date": "2015-03-07",
-      "uuid": "1ec5352f-41da-408b-8e6c-3fef79475847",
-      "license": 2,
-      "category": 8,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 166,
       "license_author": "robhoyt",
       "status": "2",
@@ -1526,36 +1458,18 @@
       "muscles": [
         6
       ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 291,
-      "license_author": "GrosseHund",
-      "status": "2",
-      "description": "<p>Grab two cables stand in the middle so both have tension and hold</p>",
-      "name": "Hercules Pillars",
-      "name_original": "Hercules pillars",
-      "creation_date": "2014-11-02",
-      "uuid": "3329b890-685a-475d-b8e5-42362711b445",
-      "license": 1,
-      "category": 8,
-      "language": 2,
-      "muscles": [
-        1,
-        13,
-        5
-      ],
       "muscles_secondary": [
-        2
       ],
-      "equipment": []
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 304,
       "license_author": "nate303303",
       "status": "2",
-      "description": "<p>-Start with legs slightly wider than shoulder width</p>\n<p>-Drop into a bodyweight squat</p>\n<p>-As you hit the bottom of the squat, explode upwards into a jump while simultaneously tucking your knees into your chest midflight.  Remain tucked until the apex of your jump.</p>\n<p>-Land on both feet, making sure your knees are not locked so as to avoid excessive strain upon your joints.  Collect yourself into the next rep as quickly but under control as possible.</p>",
+      "description": "<p>-Start with legs slightly wider than shoulder width</p>\n<p>-Drop into a bodyweight squat</p>\n<p>-As you hit the bottom of the squat, explode upwards into a jump while simultaneously tucking your knees into your chest midflight.  Remain tucked until the apex of your jump.</p>\n<p>-Land on both feet, making sure your knees are not locked so as to avoid excessive strain upon your joints.  Collect yourself into the next rep as quickly but under control as possible.</p>",
       "name": "High Knee Jumps",
       "name_original": "High Knee Jumps",
       "creation_date": "2015-02-06",
@@ -1574,51 +1488,12 @@
         6,
         3
       ],
-      "equipment": []
+      "equipment": [
+        7
+      ]
     },
     {
-      "id": 432,
-      "license_author": "BNolet",
-      "status": "2",
-      "description": "<p>-Start with legs at a comfortable standing width</p>\n<p>-Run in place, bringing knees to or above waist level</p>",
-      "name": "High Knees",
-      "name_original": "High Knees",
-      "creation_date": "2016-11-02",
-      "uuid": "e5b6bf59-d933-416e-8228-75c0e7de5dd9",
-      "license": 3,
-      "category": 9,
-      "language": 2,
-      "muscles": [
-        7,
-        10,
-        15
-      ],
-      "muscles_secondary": [
-        6
-      ],
-      "equipment": []
-    },
-    {
-      "id": 164,
-      "license_author": "Mahoney",
-      "status": "2",
-      "description": "<p>Use a light barbell, perform explosive lift up starting from underneath knee cap level. Lift/raise explosively using hips, at shoulder level. Tempo: 2111</p>",
-      "name": "High Pull",
-      "name_original": "High pull",
-      "creation_date": "2013-06-21",
-      "uuid": "a0d1e216-4517-46db-ac4c-fa11686fd513",
-      "license": 1,
-      "category": 13,
-      "language": 2,
-      "muscles": [
-        2
-      ],
-      "muscles_secondary": [
-        8
-      ],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 376,
       "license_author": "James Mackay",
       "status": "2",
@@ -1645,6 +1520,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 383,
       "license_author": "Behrooz",
       "status": "2",
@@ -1660,31 +1536,15 @@
         14,
         6
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         4,
         7
       ]
     },
     {
-      "id": 128,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "<p>Lay on the hyperextension pad with the belly button just at the leading edge, the upper body can hang freely. Tense your whole back's muscles and bring your upper body up till it is horizontal, but not more. Go slowly down and don't relax your muscles.</p>",
-      "name": "Hyperextensions",
-      "name_original": "Hyperextensions",
-      "creation_date": null,
-      "uuid": "f57a0c60-7d37-4eb3-a94e-1a90292e8c02",
-      "license": 1,
-      "category": 12,
-      "language": 2,
-      "muscles": [
-        9
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 163,
       "license_author": "Mahoney",
       "status": "2",
@@ -1708,6 +1568,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 206,
       "license_author": "tuckerm",
       "status": "2",
@@ -1722,13 +1583,15 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3,
         9
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 210,
       "license_author": "tuckerm",
       "status": "2",
@@ -1743,13 +1606,15 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3,
         9
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 340,
       "license_author": "cal.zabel",
       "status": "2",
@@ -1761,7 +1626,8 @@
       "license": 2,
       "category": 12,
       "language": 2,
-      "muscles": [],
+      "muscles": [
+      ],
       "muscles_secondary": [
         12
       ],
@@ -1771,50 +1637,11 @@
       ]
     },
     {
-      "id": 165,
-      "license_author": "Mahoney",
-      "status": "2",
-      "description": "<p>Perform the plank with legs elevated, feet on a gymball. Once stabilised, slowly move one foot sideways off the ball, then make it touch the floor, then come back to starting position. Alternate with the other foot.</p>\n<p>This is a core exercise.</p>",
-      "name": "Incline Plank With Alternate Floor Touch",
-      "name_original": "Incline Plank with alternate floor touch",
-      "creation_date": "2013-06-21",
-      "uuid": "39c416c8-64db-4330-9d37-c41ec70048fb",
-      "license": 1,
-      "category": 10,
-      "language": 2,
-      "muscles": [
-        6
-      ],
-      "muscles_secondary": [
-        14
-      ],
-      "equipment": []
-    },
-    {
-      "id": 168,
-      "license_author": "kwrindy",
-      "status": "2",
-      "description": "<p>Regular push with a 30 degree incline.</p>",
-      "name": "Incline Pushups",
-      "name_original": "Incline Pushups",
-      "creation_date": "2013-07-01",
-      "uuid": "2d728ea9-9e80-4d16-9d6c-801e1e4b4d0b",
-      "license": 1,
-      "category": 11,
-      "language": 2,
-      "muscles": [
-        4
-      ],
-      "muscles_secondary": [
-        11
-      ],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 338,
       "license_author": "cal.zabel",
       "status": "2",
-      "description": "<p>Assume push-up position, with hands slightly wider than shoulder width.</p>\n<p>Shift body weight as far as possible to one side, allowing the elbow on that side to flex. </p>\n<p>Reverse the motion, moving completely over to the other side.</p>\n<p>Return to the starting position, and repeat for the desired number of repetitions.</p>",
+      "description": "<p>Assume push-up position, with hands slightly wider than shoulder width.</p>\n<p>Shift body weight as far as possible to one side, allowing the elbow on that side to flex. </p>\n<p>Reverse the motion, moving completely over to the other side.</p>\n<p>Return to the starting position, and repeat for the desired number of repetitions.</p>",
       "name": "Isometric Wipers",
       "name_original": "Isometric Wipers",
       "creation_date": "2015-07-21",
@@ -1833,22 +1660,7 @@
       ]
     },
     {
-      "id": 423,
-      "license_author": "Papazit",
-      "status": "2",
-      "description": "<p>Get your shoes on, go outside and start running at a moderate pace.</p>",
-      "name": "Jogging",
-      "name_original": "Jogging",
-      "creation_date": "2016-10-01",
-      "uuid": "7277d3bb-e68b-48fb-829e-37e13268f124",
-      "license": 2,
-      "category": 9,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 249,
       "license_author": "J120290,cerin",
       "status": "2",
@@ -1866,9 +1678,12 @@
       "muscles_secondary": [
         11
       ],
-      "equipment": []
+      "equipment": [
+        10
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 148,
       "license_author": "wger.de",
       "status": "2",
@@ -1883,12 +1698,14 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 149,
       "license_author": "wger.de",
       "status": "2",
@@ -1903,14 +1720,18 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 306,
       "license_author": "nate303303",
       "status": "2",
-      "description": "<p>-(1) Perform a lateral raise, pausing at the top of the lift (2).</p>\n<p>-Instead of lowering the weight, bring it to the front of your body so that you appear to be at the top position of a front raise.  You will do this by using a Pec Fly motion, maintaining straight arms. (3)</p>\n<p>-Now lower the weight to your quadriceps, or, in other words, lower the dumbbells as though you are completing a Front Raise repetition. (4)</p>\n<p>-Reverse the motion:  Perform a front raise (5), at the apex of the lift use a Reverse Fly motion to position the weights at the top of a Lateral Raise (6), and finally, lower the weights until your palms are essentially touching the sides of your thighs (7).  THIS IS ONE REP.</p>\n<p>(1) l  <em>front view  </em>(2) -l- <em> FV  </em>  (3) l-  <em>side view</em>   (4) l  <em>SV/FV</em>   (5) l-  <em>SV  </em> (6) -l-  <em>FV  </em>  (7)  l  <em>FV/SV</em></p>",
+      "description": "<p>-(1) Perform a lateral raise, pausing at the top of the lift (2).</p>\n<p>-Instead of lowering the weight, bring it to the front of your body so that you appear to be at the top position of a front raise.  You will do this by using a Pec Fly motion, maintaining straight arms. (3)</p>\n<p>-Now lower the weight to your quadriceps, or, in other words, lower the dumbbells as though you are completing a Front Raise repetition. (4)</p>\n<p>-Reverse the motion:  Perform a front raise (5), at the apex of the lift use a Reverse Fly motion to position the weights at the top of a Lateral Raise (6), and finally, lower the weights until your palms are essentially touching the sides of your thighs (7).  THIS IS ONE REP.</p>\n<p>(1) l  <em>front view  </em>(2) -l- <em> FV  </em>  (3) l-  <em>side view</em>   (4) l  <em>SV/FV</em>   (5) l-  <em>SV  </em> (6) -l-  <em>FV  </em>  (7)  l  <em>FV/SV</em></p>",
       "name": "Lateral-to-Front Raises",
       "name_original": "Lateral-to-Front Raises",
       "creation_date": "2015-02-06",
@@ -1922,30 +1743,14 @@
         2,
         9
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
-      "id": 188,
-      "license_author": "drthurlow",
-      "status": "2",
-      "description": "<p>Lean Back, Pull into chest</p>",
-      "name": "Lat Pull Down (Leaning Back)",
-      "name_original": "Lat Pull Down (Leaning back)",
-      "creation_date": "2013-08-04",
-      "uuid": "dbe77958-51a8-4412-9927-4b24d80ed44f",
-      "license": 1,
-      "category": 12,
-      "language": 2,
-      "muscles": [
-        12
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 187,
       "license_author": "drthurlow",
       "status": "2",
@@ -1960,10 +1765,14 @@
       "muscles": [
         12
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 154,
       "license_author": "wger.de",
       "status": "2",
@@ -1978,10 +1787,14 @@
       "muscles": [
         11
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 117,
       "license_author": "wger.de",
       "status": "2",
@@ -1996,10 +1809,14 @@
       "muscles": [
         11
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 118,
       "license_author": "wger.de",
       "status": "2",
@@ -2014,10 +1831,14 @@
       "muscles": [
         11
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 177,
       "license_author": "kwrindy",
       "status": "2",
@@ -2032,14 +1853,18 @@
       "muscles": [
         10
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 115,
       "license_author": "wger.de",
       "status": "2",
-      "description": "<p>The exercise is very similar to the wide leg press:</p>\n<p>Sit on the machine and put your feet on the platform so far apart  that you could just put another foot in between them. The feet are parallel and point up.</p>\n<p>Lower the weight so much, that the knees form a right angle. Push immediately the platform up again, without any pause. When in the lower position, the knees point a bit outwards and the movement should be always fluid.</p>",
+      "description": "<p>The exercise is very similar to the wide leg press:</p>\n<p>Sit on the machine and put your feet on the platform so far apart  that you could just put another foot in between them. The feet are parallel and point up.</p>\n<p>Lower the weight so much, that the knees form a right angle. Push immediately the platform up again, without any pause. When in the lower position, the knees point a bit outwards and the movement should be always fluid.</p>",
       "name": "Leg Presses (narrow)",
       "name_original": "Leg presses (narrow)",
       "creation_date": null,
@@ -2053,9 +1878,12 @@
       "muscles_secondary": [
         8
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 114,
       "license_author": "wger.de",
       "status": "2",
@@ -2073,9 +1901,12 @@
       "muscles_secondary": [
         8
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 130,
       "license_author": "wger.de",
       "status": "2",
@@ -2090,10 +1921,14 @@
       "muscles": [
         10
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 125,
       "license_author": "wger.de",
       "status": "2",
@@ -2116,6 +1951,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 126,
       "license_author": "wger.de",
       "status": "2",
@@ -2133,9 +1969,12 @@
       "muscles_secondary": [
         3
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 211,
       "license_author": "tuckerm",
       "status": "2",
@@ -2150,10 +1989,14 @@
       "muscles": [
         4
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 214,
       "license_author": "tuckerm",
       "status": "2",
@@ -2168,72 +2011,18 @@
       "muscles": [
         12
       ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 281,
-      "license_author": "bizyguy",
-      "status": "2",
-      "description": "<p>Hold the L position for as long as possible</p>",
-      "name": "L Hold",
-      "name_original": "L hold",
-      "creation_date": "2014-10-30",
-      "uuid": "e1881607-9418-4bcc-8c69-2301a579637e",
-      "license": 1,
-      "category": 10,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 143,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "<p>Sit down, put your feet on the supporting points and grab the bar with a wide grip. Pull the weight with a rapid movement towards your belly button, not upper. Keep your arms and elbows during the movement close to your body. Your shoulders are pulled together. Let the weight slowly down till your arms are completely stretched.</p>",
-      "name": "Long-Pulley (low Row)",
-      "name_original": "Long-Pulley (low row)",
-      "creation_date": "2013-05-05",
-      "uuid": "b192c4eb-31c6-458e-b566-d3f38b5aa30c",
-      "license": 1,
-      "category": 12,
-      "language": 2,
-      "muscles": [
-        12
-      ],
       "muscles_secondary": [
-        1,
-        13
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
-      "id": 144,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "<p>The exercise is the same as the regular long pulley, but with a narrow grip:</p>\n<p>Sit down, put your feet on the supporting points and grab the bar with a wide grip. Pull the weight with a rapid movement towards your belly button, not upper. Keep your arms and elbows during the movement close to your body. Your shoulders are pulled together. Let the weight slowly down till your arms are completely stretched.</p>",
-      "name": "Long-Pulley, Narrow",
-      "name_original": "Long-Pulley, narrow",
-      "creation_date": "2013-05-05",
-      "uuid": "bcabc8cf-c005-4630-8853-ef4922e7fd91",
-      "license": 1,
-      "category": 12,
-      "language": 2,
-      "muscles": [
-        12
-      ],
-      "muscles_secondary": [
-        1,
-        13
-      ],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 389,
       "license_author": "taylorbarbell",
       "status": "2",
-      "description": "<p>Unrack the bar and set your stance wide, beyond your hips.  Push your hips back and sit down to a box that takes you below parallel.  Sit completely down, do not touch and go.  Then explosively stand up.  Stay tight in your upper back and torso throughout the movement.</p>",
+      "description": "<p>Unrack the bar and set your stance wide, beyond your hips.  Push your hips back and sit down to a box that takes you below parallel.  Sit completely down, do not touch and go.  Then explosively stand up.  Stay tight in your upper back and torso throughout the movement.</p>",
       "name": "Low Box Squat - Wide Stance",
       "name_original": "Low Box Squat - Wide Stance",
       "creation_date": "2016-03-11",
@@ -2245,16 +2034,18 @@
         8,
         10
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         1
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 312,
       "license_author": "Trix",
       "status": "2",
-      "description": "<p>This is an excercise for problems with the levator muscles. Primary  Infraspinatus, secondary Teres Minor.</p>\n<p>Lying on side. Keep elbow on waist and in 90 dgr angle. Rotate towards stomach. Add weight as fit.</p>",
+      "description": "<p>This is an excercise for problems with the levator muscles. Primary  Infraspinatus, secondary Teres Minor.</p>\n<p>Lying on side. Keep elbow on waist and in 90 dgr angle. Rotate towards stomach. Add weight as fit.</p>",
       "name": "Lying Rotator Cuff Exercise",
       "name_original": "Lying rotator cuff exercise",
       "creation_date": "2015-02-22",
@@ -2262,13 +2053,16 @@
       "license": 2,
       "category": 13,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 141,
       "license_author": "wger.de",
       "status": "2",
@@ -2283,10 +2077,14 @@
       "muscles": [
         12
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 229,
       "license_author": "Wikipedia",
       "status": "2",
@@ -2310,10 +2108,11 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 256,
       "license_author": "mbozi1",
       "status": "2",
-      "description": "<p>On an SZ-bar grip your hands on the outside of each bend and stand with your arms straight down, palms facing your legs. Pull the bar (bending your arms at the elbow) to your chest, and the push the bar above your head (arms as straight as possible). Return the bar to your chest by dropping your arms at the elbows. Return the bar to it's origional position (stand with your arms straight down, palms facing your legs.)</p>",
+      "description": "<p>On an SZ-bar grip your hands on the outside of each bend and stand with your arms straight down, palms facing your legs. Pull the bar (bending your arms at the elbow) to your chest, and the push the bar above your head (arms as straight as possible). Return the bar to your chest by dropping your arms at the elbows. Return the bar to it's origional position (stand with your arms straight down, palms facing your legs.)</p>",
       "name": "Military Press",
       "name_original": "Military Press",
       "creation_date": "2014-06-12",
@@ -2321,13 +2120,16 @@
       "license": 1,
       "category": 8,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         2
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 93,
       "license_author": "wger.de",
       "status": "2",
@@ -2342,10 +2144,14 @@
       "muscles": [
         6
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 197,
       "license_author": "ThisGirl0819",
       "status": "2",
@@ -2360,14 +2166,17 @@
       "muscles": [
         1
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 355,
       "license_author": "geraldbaeck",
       "status": "2",
-      "description": "<p>The barbell is held overhead in a wide-arm snatch grip; however, it is also possible to use a closer grip if balance allows.</p>",
+      "description": "<p>The barbell is held overhead in a wide-arm snatch grip; however, it is also possible to use a closer grip if balance allows.</p>",
       "name": "Overhead Squat",
       "name_original": "Overhead Squat",
       "creation_date": "2015-11-22",
@@ -2375,11 +2184,16 @@
       "license": 2,
       "category": 9,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        1
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 270,
       "license_author": "Mens Fitness",
       "status": "2",
@@ -2403,6 +2217,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 202,
       "license_author": "Nallitnas",
       "status": "2",
@@ -2427,24 +2242,7 @@
       ]
     },
     {
-      "id": 182,
-      "license_author": "OGhTebfCxhexZXuf35mUxV9C--A",
-      "status": "2",
-      "description": "<p>Push up with perfect push up</p>",
-      "name": "Perfect Push Up",
-      "name_original": "Perfect Push Up",
-      "creation_date": "2013-07-30",
-      "uuid": "53b6a314-df50-4ef8-9b3d-ce290562df5b",
-      "license": 1,
-      "category": 11,
-      "language": 2,
-      "muscles": [
-        4
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 361,
       "license_author": "Nash",
       "status": "2",
@@ -2467,49 +2265,7 @@
       ]
     },
     {
-      "id": 160,
-      "license_author": "minifigmaster125",
-      "status": "2",
-      "description": "<p>One legged squat</p>",
-      "name": "Pistol Squat",
-      "name_original": "Pistol Squat",
-      "creation_date": "2013-05-28",
-      "uuid": "b1d6d536-7f4a-4dd3-8b76-62d7a984e115",
-      "license": 1,
-      "category": 9,
-      "language": 2,
-      "muscles": [
-        11,
-        8
-      ],
-      "muscles_secondary": [
-        2,
-        1,
-        13
-      ],
-      "equipment": []
-    },
-    {
-      "id": 238,
-      "license_author": "YYCfit",
-      "status": "2",
-      "description": "<p>Get into a position on the floor supporting your weight on your forearms and toes. Arms are bent and directly below the shoulder. </p>\n<p>Keep your body straight at all times and hold this position as long as possible. To increase difficulty an arm or leg can be raised while performing this exercise.  </p>",
-      "name": "Plank",
-      "name_original": "Plank",
-      "creation_date": "2014-03-31",
-      "uuid": "7729ffe5-a896-4deb-80e0-f4e6163c0c09",
-      "license": 1,
-      "category": 10,
-      "language": 2,
-      "muscles": [
-        6
-      ],
-      "muscles_secondary": [],
-      "equipment": [
-        7
-      ]
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 189,
       "license_author": "sistab2",
       "status": "2",
@@ -2527,13 +2283,16 @@
       "muscles_secondary": [
         10
       ],
-      "equipment": []
+      "equipment": [
+        1
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 193,
       "license_author": "cgoob883",
       "status": "2",
-      "description": "<p> Place the EZ curl bar on the rest handles in front of the preacher bench. Lean over the bench and grab the EZ curl bar with palms up. Sit down on the preacher bench seat so your upper arms rest on top of the pad and your chest is pressed against the pad. Lower the weight until your elbows are extended and arms are straight. Bring the weights back up to the starting point by contracting biceps. Repeat</p>",
+      "description": "<p> Place the EZ curl bar on the rest handles in front of the preacher bench. Lean over the bench and grab the EZ curl bar with palms up. Sit down on the preacher bench seat so your upper arms rest on top of the pad and your chest is pressed against the pad. Lower the weight until your elbows are extended and arms are straight. Bring the weights back up to the starting point by contracting biceps. Repeat</p>",
       "name": "Preacher Curls",
       "name_original": "Preacher Curls",
       "creation_date": "2013-08-12",
@@ -2547,27 +2306,12 @@
       "muscles_secondary": [
         13
       ],
-      "equipment": []
+      "equipment": [
+        2
+      ]
     },
     {
-      "id": 429,
-      "license_author": "donaddon",
-      "status": "2",
-      "description": "<p>Lying on stomach with head on towel.</p>\n<p>Stretch arms straight out to your sides.</p>\n<p>Slowly lift your arms, pulling your shoulderblades together, hold for 3 seconds.</p>\n<p> </p>",
-      "name": "Prone Scapular Retraction - Arms at Side",
-      "name_original": "Prone Scapular Retraction - Arms at side",
-      "creation_date": "2016-10-26",
-      "uuid": "82a0a7e2-2d4d-4336-9412-f9878575f709",
-      "license": 2,
-      "category": 12,
-      "language": 2,
-      "muscles": [
-        9
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 107,
       "license_author": "wger.de",
       "status": "2",
@@ -2592,6 +2336,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 140,
       "license_author": "wger.de",
       "status": "2",
@@ -2611,9 +2356,12 @@
         1,
         9
       ],
-      "equipment": []
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 190,
       "license_author": "sistab2",
       "status": "2",
@@ -2631,9 +2379,12 @@
       "muscles_secondary": [
         8
       ],
-      "equipment": []
+      "equipment": [
+        1
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 195,
       "license_author": "maxamillion1414",
       "status": "2",
@@ -2658,6 +2409,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 161,
       "license_author": "Mahoney",
       "status": "2",
@@ -2675,13 +2427,16 @@
       "muscles_secondary": [
         1
       ],
-      "equipment": []
+      "equipment": [
+        1
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 237,
       "license_author": "YYCfit",
       "status": "2",
-      "description": "<p>Seated on a bench bWith the dumbbells on the floor bend over at 45 Degrees and then slowly raise each dumbbell to shoulder height and hold for a couple seconds before lowering to the starting position. </p>\n<p> </p>",
+      "description": "<p>Seated on a bench bWith the dumbbells on the floor bend over at 45 Degrees and then slowly raise each dumbbell to shoulder height and hold for a couple seconds before lowering to the starting position. </p>\n<p> </p>",
       "name": "Rear Delt Raises",
       "name_original": "Rear Delt Raises",
       "creation_date": "2014-03-30",
@@ -2689,13 +2444,16 @@
       "license": 1,
       "category": 13,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 208,
       "license_author": "tuckerm",
       "status": "2",
@@ -2710,12 +2468,14 @@
       "muscles": [
         1
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         2
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 399,
       "license_author": "bl0sh",
       "status": "2",
@@ -2740,184 +2500,11 @@
       ]
     },
     {
-      "id": 409,
-      "license_author": "spacetowaste",
-      "status": "2",
-      "description": "<p>Plank with stomach towards ceiling</p>",
-      "name": "Reverse Plank",
-      "name_original": "Reverse Plank",
-      "creation_date": "2016-07-31",
-      "uuid": "75ec610d-216a-49fe-b395-c5fd8ee14b53",
-      "license": 2,
-      "category": 10,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 360,
-      "license_author": "Nash",
-      "status": "2",
-      "description": "<p>Dips peformed on gymnastic rings.</p>",
-      "name": "Ring Dips",
-      "name_original": "Ring Dips",
-      "creation_date": "2016-01-04",
-      "uuid": "f7b6a6b0-6dd8-4648-9a32-83039f5e28e1",
-      "license": 2,
-      "category": 8,
-      "language": 2,
-      "muscles": [
-        5
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 263,
-      "license_author": "MaddieBeasley",
-      "status": "2",
-      "description": "<p>Crunches on roman chair</p>",
-      "name": "Roman Chair",
-      "name_original": "Roman Chair",
-      "creation_date": "2014-07-22",
-      "uuid": "9f622058-85a4-4272-ad99-e5696e772137",
-      "license": 1,
-      "category": 10,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 351,
-      "license_author": "pjwirth",
-      "status": "2",
-      "description": "<p>DL from top to pos 2: https://www.youtube.com/watch?v=WtWtjViRsKo</p>",
-      "name": "Romanian Deadlift",
-      "name_original": "Romanian Deadlift",
-      "creation_date": "2015-10-19",
-      "uuid": "e35528f9-1785-41b5-860a-3408a6c02b2d",
-      "license": 2,
-      "category": 9,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": [
-        1
-      ]
-    },
-    {
-      "id": 142,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "",
-      "name": "Rowing, Lying on Bench",
-      "name_original": "Rowing, lying on bench",
-      "creation_date": "2013-05-05",
-      "uuid": "1ad8e721-9297-46c2-a983-7297ca4dfa52",
-      "license": 1,
-      "category": 12,
-      "language": 2,
-      "muscles": [
-        12
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 108,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "",
-      "name": "Rowing, Seated",
-      "name_original": "Rowing, seated",
-      "creation_date": null,
-      "uuid": "57747eb3-411a-4efd-8842-a45e562320ee",
-      "license": 1,
-      "category": 12,
-      "language": 2,
-      "muscles": [
-        12
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 106,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "<p>The execution of this exercise is very similar to the regular bent over rowing, only that the bar is fixed here.</p>\n<p>Grab the barbell with a wide grip (slightly more than shoulder wide) and lean forward. Your upper body is not quite parallel to the floor, but forms a slight angle. The chest's out during the whole exercise. Pull now the barbell with a fast movement towards your belly button, not further up. Go slowly down to the initial position. Don't swing with your body and keep your arms next to your body.</p>",
-      "name": "Rowing, T-bar",
-      "name_original": "Rowing, T-bar",
-      "creation_date": null,
-      "uuid": "3c3f23b5-b523-4a69-8c79-1106a4ce9b6d",
-      "license": 1,
-      "category": 12,
-      "language": 2,
-      "muscles": [
-        12
-      ],
-      "muscles_secondary": [
-        2,
-        1,
-        13
-      ],
-      "equipment": []
-    },
-    {
-      "id": 397,
-      "license_author": "BeLikeWater",
-      "status": "2",
-      "description": "<p>Running or jogging outside in a park, on the tracks,...</p>",
-      "name": "Run",
-      "name_original": "Run",
-      "creation_date": "2016-05-11",
-      "uuid": "bbee856a-abe0-4a5f-a622-d5f85ee1d1f1",
-      "license": 2,
-      "category": 9,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 398,
-      "license_author": "BeLikeWater",
-      "status": "2",
-      "description": "<p>Run and do some interval trainings such as hill repat, fartlek,..</p>",
-      "name": "Run - Interval Training ",
-      "name_original": "Run - Interval Training ",
-      "creation_date": "2016-05-11",
-      "uuid": "2359347e-0561-4d03-b050-b3c18f9d7b37",
-      "license": 2,
-      "category": 9,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 269,
-      "license_author": "foguinho.peruca",
-      "status": "2",
-      "description": "<p>Run on a treadmill</p>",
-      "name": "Run - Treadmill",
-      "name_original": "Run - treadmill",
-      "creation_date": "2014-09-03",
-      "uuid": "51d56238-31a1-4e5a-b747-da30eece4871",
-      "license": 1,
-      "category": 9,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 386,
       "license_author": "richmr2174@gmail.com",
       "status": "2",
-      "description": "<p>Sit down on a back (better with back support). Take a dumbbell firmly with both hands and hold it with extended arms over your head. With your palms facing upward and holding the weight of the dumbbell, slowly lower the weight behind your head.</p>\n<p> </p>",
+      "description": "<p>Sit down on a back (better with back support). Take a dumbbell firmly with both hands and hold it with extended arms over your head. With your palms facing upward and holding the weight of the dumbbell, slowly lower the weight behind your head.</p>\n<p> </p>",
       "name": "Seated Triceps Press",
       "name_original": "Seated Triceps Press",
       "creation_date": "2016-02-26",
@@ -2928,13 +2515,15 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         8,
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 339,
       "license_author": "cal.zabel",
       "status": "2",
@@ -2949,10 +2538,14 @@
       "muscles": [
         12
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 119,
       "license_author": "wger.de",
       "status": "2",
@@ -2967,12 +2560,14 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         1
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 123,
       "license_author": "wger.de",
       "status": "2",
@@ -2987,12 +2582,14 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 152,
       "license_author": "wger.de",
       "status": "2",
@@ -3007,28 +2604,14 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 155,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "<p>The exercise is basically the same as with a free barbell:</p>\n<p>Sit on a bench, the back rest should be almost vertical. Take a bar with a shoulder wide grip and bring it down to chest height. Press the weight up, but don't stretch the arms completely. Go slowly down and repeat.</p>",
-      "name": "Shoulder Press, on Multi Press",
-      "name_original": "Shoulder press, on multi press",
-      "creation_date": "2013-05-08",
-      "uuid": "68d505ec-5416-4153-b228-eb1545d5c89f",
-      "license": 1,
-      "category": 13,
-      "language": 2,
-      "muscles": [
-        2
+      "muscles_secondary": [
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 150,
       "license_author": "wger.de",
       "status": "2",
@@ -3043,12 +2626,14 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         1
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 151,
       "license_author": "wger.de",
       "status": "2",
@@ -3063,12 +2648,14 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 176,
       "license_author": "kwrindy",
       "status": "2",
@@ -3091,10 +2678,11 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 278,
       "license_author": "GiglioRosso",
       "status": "2",
-      "description": "<p>AKA dumbbell side bends. Stand in line with the hips with slightly bent knees, maintain the natural curvature of the spine, hand stretched by the body, grip the barbell with one hand. <em> </em>Make slow and controlled torso side flexions till you reach the angle of approximately 45°.</p>",
+      "description": "<p>AKA dumbbell side bends. Stand in line with the hips with slightly bent knees, maintain the natural curvature of the spine, hand stretched by the body, grip the barbell with one hand. <em> </em>Make slow and controlled torso side flexions till you reach the angle of approximately 45°.</p>",
       "name": "Side Dumbbell Trunk Flexion",
       "name_original": "Side dumbbell trunk flexion",
       "creation_date": "2014-10-22",
@@ -3113,44 +2701,7 @@
       ]
     },
     {
-      "id": 422,
-      "license_author": "apeschel",
-      "status": "2",
-      "description": "<p>With a weight in one hand, lie on your side opposite the weight. Keep your knees slightly bent. Hold your elbow against your side, and extend your upper arm straight ahead of you. While continuing to hold your elbow against your side, rotate your upper arm 90 degrees upwards.</p>\n<p>It is helpful to place a towel under your armpit to help with the form on this exercise. Placing a support under your head for the duration of the exercise is also a good idea.</p>",
-      "name": "Side-lying External Rotation",
-      "name_original": "Side-lying External Rotation",
-      "creation_date": "2016-09-29",
-      "uuid": "9f705970-cba3-4cef-a582-c2cc69ae9b5f",
-      "license": 2,
-      "category": 13,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 325,
-      "license_author": "http://www.bodybuilding.com/",
-      "status": "2",
-      "description": "<p>Works your obliques and helps stabilize your spine. Lie on your side and support your body between your forearm and knee to your feet.</p>",
-      "name": "Side Plank",
-      "name_original": "Side Plank",
-      "creation_date": "2015-05-21",
-      "uuid": "a36f852f-a29f-4f93-81b6-1012047ac1ee",
-      "license": 2,
-      "category": 10,
-      "language": 2,
-      "muscles": [
-        6
-      ],
-      "muscles_secondary": [
-        14
-      ],
-      "equipment": [
-        7
-      ]
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 319,
       "license_author": "tobahl",
       "status": "2",
@@ -3162,34 +2713,16 @@
       "license": 3,
       "category": 13,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         1
       ]
     },
     {
-      "id": 302,
-      "license_author": "nate303303",
-      "status": "2",
-      "description": "<p>-start in push up position</p>\n<p>-lean the body weight to the right side, and complete a push up with the chest over the right hand</p>\n<p>-come back to the centered position</p>\n<p>-on rep 2, lean to the left side</p>",
-      "name": "Side to Side Push Ups",
-      "name_original": "Side to Side Push Ups",
-      "creation_date": "2015-02-06",
-      "uuid": "fc63159a-3939-426c-b236-d4b39adbf28c",
-      "license": 2,
-      "category": 11,
-      "language": 2,
-      "muscles": [
-        2,
-        14,
-        4,
-        5
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 205,
       "license_author": "tuckerm",
       "status": "2",
@@ -3204,12 +2737,14 @@
       "muscles": [
         1
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 103,
       "license_author": "wger.de",
       "status": "2",
@@ -3227,45 +2762,12 @@
       "muscles_secondary": [
         7
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
-      "id": 95,
-      "license_author": "wger.de",
-      "status": "2",
-      "description": "<p>Sit on a mat, your calves are resting on a bench, the knees make a right angle. Hold your hands behind your neck. Go now up with a rolling movement of your back, you should feel how the individual vertebrae lose contact with the mat. At the highest point, contract your abs as much as you can and hold there for 2 sec. Go now down, unrolling your back.</p>\n<p> </p>",
-      "name": "Sit-ups",
-      "name_original": "Sit-ups",
-      "creation_date": null,
-      "uuid": "fb750082-7034-4c51-b1e4-dfa0fe2dac8e",
-      "license": 1,
-      "category": 10,
-      "language": 2,
-      "muscles": [
-        6
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 411,
-      "license_author": "Cerin",
-      "status": "2",
-      "description": "<p>Do a single, double footed jump for each swing of the rope.</p>\n<p>Work on a smooth, rhythmical movement, bouncing lightly on the balls of your feet.</p>",
-      "name": "Skipping - Standard",
-      "name_original": "Skipping - Standard",
-      "creation_date": "2016-08-15",
-      "uuid": "2c864448-288d-4e79-9da6-a3c99af3c1fb",
-      "license": 2,
-      "category": 14,
-      "language": 2,
-      "muscles": [
-        7
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 218,
       "license_author": "tuckerm",
       "status": "2",
@@ -3283,9 +2785,12 @@
       "muscles_secondary": [
         4
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 271,
       "license_author": "Mens Fitness",
       "status": "2",
@@ -3300,46 +2805,14 @@
       "muscles": [
         2
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         1
       ]
     },
     {
-      "id": 328,
-      "license_author": "MrSteele",
-      "status": "2",
-      "description": "<p>Deadlift with short (&lt;1min) rest between sets.</p>",
-      "name": "Speed Deadlift",
-      "name_original": "Speed Deadlift",
-      "creation_date": "2015-06-11",
-      "uuid": "273f9563-948a-44c8-9353-b7213703f502",
-      "license": 2,
-      "category": 9,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 170,
-      "license_author": "djblitzd",
-      "status": "2",
-      "description": "<p>Lie on your back with your legs straight and arms at your sides, keeping your elbows bent at 90 degrees. As you sit up, twist your upper body to the left and bring your left knee toward your right elbow while you swing your left arm back. Lower your body to the starting position, and repeat to your right. That's 1 rep.</p>",
-      "name": "Splinter Sit-ups",
-      "name_original": "Splinter Sit-ups",
-      "creation_date": "2013-07-06",
-      "uuid": "ec706f20-6ea7-40f9-96f4-994c66554e17",
-      "license": 1,
-      "category": 10,
-      "language": 2,
-      "muscles": [
-        14
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 185,
       "license_author": "OGhTebfCxhexZXuf35mUxV9C--A",
       "status": "2",
@@ -3354,10 +2827,14 @@
       "muscles": [
         10
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        7
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 111,
       "license_author": "wger.de",
       "status": "2",
@@ -3380,6 +2857,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 102,
       "license_author": "wger.de",
       "status": "2",
@@ -3397,41 +2875,12 @@
       "muscles_secondary": [
         15
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
-      "id": 382,
-      "license_author": "pwiltrout",
-      "status": "2",
-      "description": "<p>Grab a wrist roller tool with both hands while standing with your feet about shoulder width apart. If your gym does not have a wrist roller tool, you can easily put one together. All you need is a 5 or 10 pound weight plate, a strong thin rope about 3 feet long and a 6-8 inch stick or bar. Securely fasten the rope to the middle of the bar/stick and tie the other end of the rope to the weight plate. To begin this exercise, grab the bar/stick with both hands using an overhand grip. Extend both arms straight out in front of you, parallel to the floor. Next, roll the weight up from the floor by rapidly twisting the bar/stick with your hands and wrists. Once the weight reaches the top, slowly lower the plate back to the floor by reversing the motion of your hands and wrists. Repeat (if you can!).</p>",
-      "name": "Standing Rope Forearm",
-      "name_original": "Standing Rope Forearm",
-      "creation_date": "2016-02-15",
-      "uuid": "22eb7cf6-bf6c-42c3-a1c8-85c2fc2ed931",
-      "license": 2,
-      "category": 8,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
-      "id": 293,
-      "license_author": "intelman",
-      "status": "2",
-      "description": "<p>Ride a Stationary Bike with various tensions.</p>",
-      "name": "Stationary Bike",
-      "name_original": "Stationary Bike",
-      "creation_date": "2014-12-17",
-      "uuid": "a35655c8-6b2a-4606-b1d6-b57425986e2e",
-      "license": 2,
-      "category": 9,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 209,
       "license_author": "tuckerm",
       "status": "2",
@@ -3454,6 +2903,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 216,
       "license_author": "tuckerm",
       "status": "2",
@@ -3471,9 +2921,12 @@
       "muscles_secondary": [
         5
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 215,
       "license_author": "tuckerm",
       "status": "2",
@@ -3491,9 +2944,12 @@
       "muscles_secondary": [
         5
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 330,
       "license_author": "baldurmen",
       "status": "2",
@@ -3509,12 +2965,14 @@
         8,
         12
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         4
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 396,
       "license_author": "BeLikeWater",
       "status": "2",
@@ -3541,6 +2999,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 279,
       "license_author": "http://www.bodybuilding.com/",
       "status": "2",
@@ -3555,50 +3014,14 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         3
       ]
     },
     {
-      "id": 186,
-      "license_author": "Horal_cz",
-      "status": "2",
-      "description": "<p>Činka v jedné ruce v úrovni ramene. Zvedat do výšky napnuté paže a zpět. Provádět pomalu.</p>",
-      "name": "Triceps Bench Press One Barbell",
-      "name_original": "Triceps bench press one barbell",
-      "creation_date": "2013-07-31",
-      "uuid": "1855c71b-b005-4615-b90c-b2fed8e10342",
-      "license": 1,
-      "category": 8,
-      "language": 2,
-      "muscles": [
-        5
-      ],
-      "muscles_secondary": [
-        2
-      ],
-      "equipment": []
-    },
-    {
-      "id": 162,
-      "license_author": "Mahoney",
-      "status": "2",
-      "description": "<p>lift on parallel bars hold for 1 second, and lower slowly and control for 4 seconds, then come back with no rest (tempo: 4010)</p>",
-      "name": "Triceps Dips",
-      "name_original": "Triceps dips",
-      "creation_date": "2013-06-21",
-      "uuid": "5a29197f-e159-4a98-9b40-534c41ab34a1",
-      "license": 1,
-      "category": 8,
-      "language": 2,
-      "muscles": [
-        5
-      ],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 89,
       "license_author": "wger.de",
       "status": "2",
@@ -3613,10 +3036,14 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 90,
       "license_author": "wger.de",
       "status": "2",
@@ -3631,10 +3058,14 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 139,
       "license_author": "wger.de",
       "status": "2",
@@ -3649,10 +3080,14 @@
       "muscles": [
         5
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 310,
       "license_author": "Robertcoop",
       "status": "2",
@@ -3670,13 +3105,16 @@
       "muscles_secondary": [
         12
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 318,
       "license_author": "dookie1481",
       "status": "2",
-      "description": "<p>Starting on back, move to the standing position with dumbbell in one hand.  Switch hands between reps.</p>",
+      "description": "<p>Starting on back, move to the standing position with dumbbell in one hand.  Switch hands between reps.</p>",
       "name": "Turkish Get-Up",
       "name_original": "Turkish Get-Up",
       "creation_date": "2015-03-09",
@@ -3701,6 +3139,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 212,
       "license_author": "tuckerm",
       "status": "2",
@@ -3718,9 +3157,12 @@
       "muscles_secondary": [
         1
       ],
-      "equipment": []
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 393,
       "license_author": "Vazco",
       "status": "2",
@@ -3772,6 +3214,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 258,
       "license_author": "http://www.carinatum.com/",
       "status": "2",
@@ -3786,12 +3229,14 @@
       "muscles": [
         14
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         6
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 147,
       "license_author": "wger.de",
       "status": "2",
@@ -3810,9 +3255,12 @@
       "muscles_secondary": [
         1
       ],
-      "equipment": []
+      "equipment": [
+        2
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 127,
       "license_author": "wger.de",
       "status": "2",
@@ -3836,6 +3284,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 311,
       "license_author": "koreyhinton",
       "status": "2",
@@ -3859,6 +3308,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 424,
       "license_author": "apeschel",
       "status": "2",
@@ -3870,11 +3320,16 @@
       "license": 2,
       "category": 12,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 359,
       "license_author": "Nash",
       "status": "2",
@@ -3886,13 +3341,16 @@
       "license": 2,
       "category": 13,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         7
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 203,
       "license_author": "Dexter",
       "status": "2",
@@ -3920,6 +3378,7 @@
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 387,
       "license_author": "Blablabla",
       "status": "2",
@@ -3935,12 +3394,14 @@
         11,
         10
       ],
-      "muscles_secondary": [],
+      "muscles_secondary": [
+      ],
       "equipment": [
         7
       ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 320,
       "license_author": "jigglychipmunk",
       "status": "2",
@@ -3952,29 +3413,16 @@
       "license": 2,
       "category": 9,
       "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
+      "muscles": [
+      ],
+      "muscles_secondary": [
+      ],
       "equipment": [
         1
       ]
     },
     {
-      "id": 321,
-      "license_author": "jigglychipmunk",
-      "status": "2",
-      "description": "<p>box step ups w/ barbell and 45's on each side</p>",
-      "name": "Weighted Step-ups",
-      "name_original": "weighted step-ups",
-      "creation_date": "2015-04-07",
-      "uuid": "1076ed41-6f7c-46c9-a28f-ab13fc1ab92c",
-      "license": 3,
-      "category": 9,
-      "language": 2,
-      "muscles": [],
-      "muscles_secondary": [],
-      "equipment": []
-    },
-    {
+      "exercise_equipment_id": 0,
       "id": 204,
       "license_author": "tuckerm",
       "status": "2",
@@ -3989,14 +3437,18 @@
       "muscles": [
         12
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     },
     {
+      "exercise_equipment_id": 0,
       "id": 305,
       "license_author": "nate303303",
       "status": "2",
-      "description": "<p>-Perform a traditional dumbbell biceps curl, pausing at the top of the motion.</p>\n<p>-Twist your hands until your palms are facing away from your shoulders (in reverse curl position).  Basically, twist your right wrist inwards to the left, and vice versa.</p>\n<p>-In a slow, controlled movement, lower the Dbells with your palms facing the ground.  At the bottom of the motion, twist your wrists back into the traditional curl grip (palms facing up, towards shoulder).</p>\n<p>-That is 1 rep</p>\n<p> </p>",
+      "description": "<p>-Perform a traditional dumbbell biceps curl, pausing at the top of the motion.</p>\n<p>-Twist your hands until your palms are facing away from your shoulders (in reverse curl position).  Basically, twist your right wrist inwards to the left, and vice versa.</p>\n<p>-In a slow, controlled movement, lower the Dbells with your palms facing the ground.  At the bottom of the motion, twist your wrists back into the traditional curl grip (palms facing up, towards shoulder).</p>\n<p>-That is 1 rep</p>\n<p> </p>",
       "name": "Z Curls",
       "name_original": "Z Curls",
       "creation_date": "2015-02-06",
@@ -4008,8 +3460,11 @@
         1,
         13
       ],
-      "muscles_secondary": [],
-      "equipment": []
+      "muscles_secondary": [
+      ],
+      "equipment": [
+        11
+      ]
     }
   ]
 }

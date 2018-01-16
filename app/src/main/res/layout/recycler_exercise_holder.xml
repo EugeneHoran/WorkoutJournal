@@ -8,11 +8,11 @@
 
         <variable
             name="exercise"
-            type="eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity" />
+            type="eh.workout.journal.com.workoutjournal.db.entinty.Exercise" />
 
         <variable
             name="holder"
-            type="eh.workout.journal.com.workoutjournal.ui.exercises.ExerciseGroupRecyclerAdapter.ExerciseViewHolder" />
+            type="eh.workout.journal.com.workoutjournal.ui.exercises_new.holders.ExerciseViewHolder" />
     </data>
 
     <RelativeLayout
@@ -47,16 +47,30 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/exercise"
+                android:id="@+id/equipment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha=".7"
                 android:fontFamily="sans-serif"
-                android:text="@{exercise.groupPartNameFormatted}"
+                android:text="@{exercise.categoryName}"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/imgMore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/background_image"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:onClickListener="@{holder::onMenuMoreClicked}"
+            android:padding="9dp"
+            android:tint="@color/black"
+            app:srcCompat="@drawable/ic_more_vert" />
 
         <View
             android:id="@+id/divider"

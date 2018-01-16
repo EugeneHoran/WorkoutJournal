@@ -37,22 +37,12 @@ public class JournalParentViewModel extends AndroidViewModel {
     public JournalParentViewModel(@NonNull Application application) {
         super(application);
         repository = ((JournalApplication) application).getRepository();
-//        exercises = repository.getExercises();
-//        new ExerciseTasks().execute();
+        exercises = repository.getExercises();
     }
 
-//    LiveData<List<Exercise>> getExercises() {
-//        return exercises;
-//    }
-
-    class ExerciseTasks extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-//            repository.insertAllExercises(ExerciseLoaders.get().getExercises(getApplication().getApplicationContext()));
-            return null;
-        }
+    LiveData<List<Exercise>> getExercises() {
+        return exercises;
     }
-
 
     MediatorLiveData<List<ExerciseSetRepRelation>> getSetAndRepsList() {
         if (observeSetAndReps == null) {

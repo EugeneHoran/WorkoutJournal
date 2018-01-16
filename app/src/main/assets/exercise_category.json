@@ -1,0 +1,32 @@
+{
+  "exercise_category": [
+    {
+      "id": 11,
+      "name": "Chest"
+    },
+    {
+      "id": 8,
+      "name": "Arms"
+    },
+    {
+      "id": 13,
+      "name": "Shoulders"
+    },
+    {
+      "id": 12,
+      "name": "Back"
+    },
+    {
+      "id": 9,
+      "name": "Legs"
+    },
+    {
+      "id": 14,
+      "name": "Calves"
+    },
+    {
+      "id": 10,
+      "name": "Abs"
+    }
+  ]
+}

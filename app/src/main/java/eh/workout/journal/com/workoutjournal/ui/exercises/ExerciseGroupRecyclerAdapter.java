@@ -183,6 +183,7 @@ public class ExerciseGroupRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
         private void bindView() {
             exerciseLiftEntity = (ExerciseLiftEntity) objectList.get(getAdapterPosition());
+            binding.exercise.setVisibility(View.GONE);
             binding.setExercise(exerciseLiftEntity);
             binding.setHolder(this);
         }

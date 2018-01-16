@@ -83,7 +83,7 @@ public class RoutineLiftRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
         private void bindView() {
             exerciseLiftEntity = itemListFiltered.get(getAdapterPosition());
-            liftName.setText(exerciseLiftEntity.getNameWithEquipment());
+            liftName.setText(exerciseLiftEntity.getName());
             liftInfo.setText(exerciseLiftEntity.getGroupPartNameFormatted());
             checkBox.setOnCheckedChangeListener(this);
             checkBox.setChecked(exerciseLiftEntity.isSelected());

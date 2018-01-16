@@ -19,12 +19,12 @@ public class JournalTypeConverter {
 
     @TypeConverter
     public String dateToTimestamp(List<String> values) {
-        StringBuilder item = null;
+        if (values == null) {
+            return null;
+        }
+        StringBuilder item = new StringBuilder();
         for (int i = 0; i < values.size(); i++) {
             item.append(values.get(i));
-        }
-        if (item == null) {
-            return null;
         }
         return item.toString();
     }

@@ -37,18 +37,15 @@
         <item>lbs</item>
         <item>kgs</item>
     </string-array>
-
     <string-array name="exercise_body">
         <item>Chest</item>
-        <item>Triceps</item>
-        <item>Biceps</item>
-        <item>Forearm</item>
+        <item>Arms</item>
         <item>Shoulders</item>
         <item>Back</item>
         <item>Legs</item>
+        <item>Calves</item>
         <item>Abs</item>
         <item>Cardio</item>
-        <item>Weights and reps</item>
         <item>Other</item>
     </string-array>
     <string-array name="equipment_type">
@@ -108,4 +105,6 @@
     <string name="suggestion">Suggestion</string>
     <string name="suggestion_calc">Suggestion Calculator</string>
     <string name="suggestion_for_next_rep">Suggestion weight for next set based on selected reps</string>
+    <string name="or">or</string>
+    <string name="orm">ORM</string>
 </resources>

@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:text="Equipment type"
+            android:text="Input type"
             android:textSize="12sp" />
 
         <Spinner
@@ -42,7 +42,7 @@
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/equipment_type" />
+            android:entries="@array/exercise_type" />
 
 
         <android.support.design.widget.TextInputLayout

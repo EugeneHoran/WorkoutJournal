@@ -67,7 +67,7 @@ public class JournalChildFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.setFragment(this);
-        binding.recyclerJournal.setNestedScrollingEnabled(false);
+//        binding.recyclerJournal.setNestedScrollingEnabled(false);
         binding.recyclerJournal.setAdapter(adapterJournal);
         observeJournalPage();
     }

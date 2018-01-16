@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         JournalParentFragment journalParentFragment = JournalParentFragment.newInstance(page, false);
-        initTransitionN(journalParentFragment);
+//        initTransitionN(journalParentFragment);
         fm.beginTransaction()
                 .replace(R.id.container, journalParentFragment, TAG_FRAG_JOURNAL)
                 .commit();
@@ -87,14 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (fm.findFragmentById(R.id.container) instanceof ExerciseParentFragment) {
-            if (getExerciseFragment() != null) {
-                if (getExerciseFragment().searchVisible()) {
-                    getExerciseFragment().hideSearch();
-                    return;
-                }
-            }
-        }
         if (fm.findFragmentById(R.id.container) instanceof EntryParentFragment) {
             if (fm.getBackStackEntryCount() == 2 && getExerciseFragment() != null) {
                 fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);

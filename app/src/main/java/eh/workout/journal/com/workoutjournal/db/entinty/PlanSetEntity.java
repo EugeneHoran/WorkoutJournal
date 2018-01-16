@@ -99,8 +99,8 @@ public class PlanSetEntity {
         this.setCompleted = setCompleted;
     }
 
-    @Ignore
-    public String getNameWithEquipment() {
-        return name + " (" + DataHelper.EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
-    }
+//    @Ignore
+//    public String getNameWithEquipment() {
+//        return name + " (" + DataHelper.EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
+//    }
 }

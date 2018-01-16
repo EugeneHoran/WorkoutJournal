@@ -58,7 +58,7 @@ public class ExerciseSelectorAddExerciseDialogFragment extends DialogFragment {
                         liftEntity.setTimestampRecent(new Date().getTime());
                         liftEntity.setExerciseEquipmentId(binding.spinnerEquipmentType.getSelectedItemPosition());
                         liftEntity.setExerciseGroupId(binding.spinnerExerciseBody.getSelectedItemPosition());
-                        liftEntity.setExerciseInputType(getInputType(binding.spinnerEquipmentType.getSelectedItemPosition()));
+                        liftEntity.setExerciseInputType(binding.spinnerEquipmentType.getSelectedItemPosition());
                         if (dataLoaded) {
                             model.addExercise(liftEntity);
                         }

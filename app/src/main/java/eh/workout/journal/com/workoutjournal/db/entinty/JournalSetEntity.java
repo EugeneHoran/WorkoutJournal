@@ -37,11 +37,6 @@ public class JournalSetEntity {
         return name;
     }
 
-    @Ignore
-    public String getNameWithEquipment() {
-        return name + " (" + DataHelper.EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
-    }
-
     public void setName(String name) {
         this.name = name;
     }

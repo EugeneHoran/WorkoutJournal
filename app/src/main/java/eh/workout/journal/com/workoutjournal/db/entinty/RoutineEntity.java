@@ -1,6 +1,7 @@
 package eh.workout.journal.com.workoutjournal.db.entinty;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ public class RoutineEntity {
     public RoutineEntity() {
     }
 
+    @Ignore
     public RoutineEntity(@NonNull String id, String routineName, String routineDayListString) {
         this.id = id;
         this.routineName = routineName;

@@ -22,7 +22,7 @@ public class ExerciseParentPagerAdapter extends FragmentPagerAdapter {
             "Plans",
             "Routines"};
 
-    ExerciseParentPagerAdapter(FragmentManager fm, Long timestamp) {
+    public ExerciseParentPagerAdapter(FragmentManager fm, Long timestamp) {
         super(fm);
         this.timestamp = timestamp;
     }

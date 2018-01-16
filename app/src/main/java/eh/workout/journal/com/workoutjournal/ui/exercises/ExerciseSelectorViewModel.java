@@ -44,7 +44,7 @@ public class ExerciseSelectorViewModel extends AndroidViewModel {
         return allExercises;
     }
 
-    void queryExercises(String query) {
+    public void queryExercises(String query) {
         if (TextUtils.isEmpty(query)) {
             observeExercisesObjects.setValue(new DataHelper().getFormattedExerciseList(allExercises.getValue()));
         } else {

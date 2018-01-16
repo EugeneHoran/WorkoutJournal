@@ -9,8 +9,6 @@ import android.support.annotation.NonNull;
 
 import java.util.UUID;
 
-import eh.workout.journal.com.workoutjournal.util.DataHelper;
-
 @Entity(tableName = "routine_sets",
         foreignKeys = {@ForeignKey(entity = RoutineEntity.class,
                 deferred = true,
@@ -106,8 +104,8 @@ public class RoutineSetEntity {
         this.setCompleted = setCompleted;
     }
 
-    @Ignore
-    public String getNameWithEquipment() {
-        return name + " (" + DataHelper.EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
-    }
+//    @Ignore
+//    public String getNameWithEquipment() {
+//        return name + " (" + DataHelper.EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
+//    }
 }

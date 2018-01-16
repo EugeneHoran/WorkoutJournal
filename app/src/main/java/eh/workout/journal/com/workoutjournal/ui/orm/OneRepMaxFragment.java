@@ -59,15 +59,10 @@ public class OneRepMaxFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_one_rep_max, container, false);
         binding.setNavListener(navListener);
-        if (getActivity() != null) {
-            binding.recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        }
-        if (which == Constants.ORM_PERCENTAGES) {
-            binding.setTitle("Percentage Calculator");
-            binding.viewToolbarWeightReps.percentageContainer.setVisibility(View.VISIBLE);
-        } else {
-            binding.setTitle("One Rep Max Calculator");
-        }
+        binding.viewToolbarWeightReps.setIsPercentage(which == Constants.ORM_PERCENTAGES);
+        binding.setTitle(which == Constants.ORM_PERCENTAGES ? "Percentage Calculator" : "One Rep Max Calculator");
+        //noinspection ConstantConditions
+        binding.recycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         editWeight = binding.viewToolbarWeightReps.editWeight;
         spinnerReps = binding.viewToolbarWeightReps.spinnerReps;
         binding.recycler.setItemAnimator(defaultItemAnimator);

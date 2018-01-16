@@ -129,59 +129,22 @@ public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
         this.selected = selected;
     }
 
-    @Ignore
-    public String getEquipmentName() {
-        return EXERCISE_EQUIPMENT[exerciseEquipmentId];
-    }
-
-    @Ignore
-    public String getGroupPartName() {
-        return EXERCISE_BODY_PART[exerciseGroupId];
-    }
-
-
-    /**
-     * Formatted Info
-     */
-
-    @Ignore
-    public String getNameWithEquipment() {
-        return name + " (" + EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
-    }
-
-    @Ignore
-    public Spanned getEquipmentNameFormatted() {
-        return Html.fromHtml("Equipment: " + EXERCISE_EQUIPMENT[exerciseEquipmentId]);
-    }
 
     @Ignore
     public Spanned getGroupPartNameFormatted() {
         return Html.fromHtml("Group: " + EXERCISE_BODY_PART[exerciseGroupId]);
     }
 
-    @Ignore
-    private final String[] EXERCISE_EQUIPMENT = new String[]{
-            "Barbell",//0
-            "Dumbbell",//1
-            "Machine",//2
-            "Cables",//3
-            "Body Weight",//4
-            "Cardio"
-    };
-
-    @Ignore
-    private final String[] EXERCISE_BODY_PART = new String[]{
-            "Chest",// 0
-            "Triceps",// 1
-            "Biceps",// 2
-            "Forearm",// 3
-            "Shoulders",// 4
-            "Back",// 5
-            "Legs",// 6
-            "Abs",// 7
-            "Cardio",// 8
-            "Other"
-    };
+    private static final String[] EXERCISE_BODY_PART = new String[]{
+            "Chest",
+            "Arms",
+            "Shoulders",
+            "Back",
+            "Legs",
+            "Calves",
+            "Abs",
+            "Cardio",
+            "Other"};
 
     /**
      * Comparator
