@@ -17,7 +17,7 @@ public class Test {
     public static void main(String args[]) {
 //        System.out.println(Test.isPalindromeRemoval("ABABC"));
 //        System.out.println(Test.isPalindromeRemoval("ABABAB"));
-        System.out.println(electionWinner(People));
+//        System.out.println(electionWinner(People));
 //        electionWinner(People);
 //        fizzBuzz();
     }

@@ -179,7 +179,7 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
             void bindItem() {
                 if (itemList.get(getAdapterPosition()) instanceof RoutineSetEntity) {
                     planSetEntity = (RoutineSetEntity) itemList.get(getAdapterPosition());
-                    binding.setName(planSetEntity.getName());
+                    binding.setName(planSetEntity.getNameWithEquipment());
                     if (planSetEntity.isSetCompleted()) {
                         binding.imageEdit.setImageDrawable(new LayoutUtil().getDrawableMutate(itemView.getContext(), R.drawable.ic_check_circle, R.color.colorAccent));
                     } else {
@@ -187,7 +187,7 @@ public class JournalRoutinePlanRecyclerAdapter extends RecyclerView.Adapter<Recy
                     }
                 } else {
                     planDaySetEntity = (PlanDaySetEntity) itemList.get(getAdapterPosition());
-                    binding.setName(planDaySetEntity.getName());
+                    binding.setName(planDaySetEntity.getNameWithEquipment());
                     if (planDaySetEntity.isSetCompleted()) {
                         binding.imageEdit.setImageResource(R.drawable.ic_check_circle);
                         binding.imageEdit.setImageDrawable(new LayoutUtil().getDrawableMutate(itemView.getContext(), R.drawable.ic_check_circle, R.color.colorAccent));

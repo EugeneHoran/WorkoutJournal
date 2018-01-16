@@ -50,6 +50,7 @@ public class ExerciseParentFragment extends BaseFragment {
             planViewModel = ViewModelProviders.of(this, new AppFactory((JournalApplication) getActivity().getApplicationContext(), timestamp)).get(ExerciseRoutineViewModel.class);
         }
         adapter = new ExerciseParentPagerAdapter(getChildFragmentManager(), timestamp);
+
     }
 
     private FragmentExerciseParentBinding binding;

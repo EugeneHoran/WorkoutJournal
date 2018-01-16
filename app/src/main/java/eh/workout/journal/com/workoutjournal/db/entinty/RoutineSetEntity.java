@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 
 import java.util.UUID;
 
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
+
 @Entity(tableName = "routine_sets",
         foreignKeys = {@ForeignKey(entity = RoutineEntity.class,
                 deferred = true,
@@ -21,15 +23,17 @@ public class RoutineSetEntity {
     public String id;
     private String name;
     private String exerciseId;
+    private int exerciseEquipmentId;
     private int exerciseInputType;
     private String routineId;
     @Ignore
     private boolean setCompleted = false;
 
-    public RoutineSetEntity(@NonNull String id, String name, String exerciseId, int exerciseInputType, String routineId) {
+    public RoutineSetEntity(@NonNull String id, String name, String exerciseId, int exerciseEquipmentId, int exerciseInputType, String routineId) {
         this.id = id;
         this.name = name;
         this.exerciseId = exerciseId;
+        this.exerciseEquipmentId = exerciseEquipmentId;
         this.exerciseInputType = exerciseInputType;
         this.routineId = routineId;
     }
@@ -38,6 +42,7 @@ public class RoutineSetEntity {
         this.id = UUID.randomUUID().toString();
         this.name = liftEntity.getName();
         this.exerciseId = liftEntity.getId();
+        this.exerciseEquipmentId = liftEntity.getExerciseEquipmentId();
         this.exerciseInputType = liftEntity.getExerciseInputType();
         this.routineId = routineId;
     }
@@ -67,6 +72,14 @@ public class RoutineSetEntity {
         this.exerciseId = exerciseId;
     }
 
+    public int getExerciseEquipmentId() {
+        return exerciseEquipmentId;
+    }
+
+    public void setExerciseEquipmentId(int exerciseEquipmentId) {
+        this.exerciseEquipmentId = exerciseEquipmentId;
+    }
+
     public int getExerciseInputType() {
         return exerciseInputType;
     }
@@ -91,5 +104,10 @@ public class RoutineSetEntity {
     @Ignore
     public void setSetCompleted(boolean setCompleted) {
         this.setCompleted = setCompleted;
+    }
+
+    @Ignore
+    public String getNameWithEquipment() {
+        return name + " (" + DataHelper.EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
     }
 }

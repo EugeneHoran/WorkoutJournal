@@ -10,18 +10,20 @@ import android.arch.lifecycle.Observer;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.JournalApplication;
 import eh.workout.journal.com.workoutjournal.db.JournalRepository;
-import eh.workout.journal.com.workoutjournal.db.entinty.JournalSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
 import eh.workout.journal.com.workoutjournal.db.relations.ExerciseSetRepRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.PlanDaySetRelation;
 import eh.workout.journal.com.workoutjournal.db.relations.RoutineSetRelation;
+import eh.workout.journal.com.workoutjournal.db.entinty.Exercise;
 import eh.workout.journal.com.workoutjournal.util.Constants;
 import eh.workout.journal.com.workoutjournal.util.DateHelper;
+import eh.workout.journal.com.workoutjournal.util.loaders.ExerciseLoaders;
 
 
 public class JournalParentViewModel extends AndroidViewModel {
@@ -30,12 +32,27 @@ public class JournalParentViewModel extends AndroidViewModel {
     private MediatorLiveData<List<ExerciseSetRepRelation>> observeSetAndReps;
     private MutableLiveData<List<Object>> routinePlanList;
     private MutableLiveData<Boolean> routinePlanListComplete;
-
+    private LiveData<List<Exercise>> exercises;
 
     public JournalParentViewModel(@NonNull Application application) {
         super(application);
         repository = ((JournalApplication) application).getRepository();
+//        exercises = repository.getExercises();
+//        new ExerciseTasks().execute();
     }
+
+//    LiveData<List<Exercise>> getExercises() {
+//        return exercises;
+//    }
+
+    class ExerciseTasks extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+//            repository.insertAllExercises(ExerciseLoaders.get().getExercises(getApplication().getApplicationContext()));
+            return null;
+        }
+    }
+
 
     MediatorLiveData<List<ExerciseSetRepRelation>> getSetAndRepsList() {
         if (observeSetAndReps == null) {

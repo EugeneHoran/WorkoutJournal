@@ -1,4 +1,7 @@
 <resources>
+    <!--Authorization: Token 37bec8da9c07b681eb2c6726a0508ea9aaf93155-->
+    <style name="key">37bec8da9c07b681eb2c6726a0508ea9aaf93155</style>
+
     <string name="app_name">Workout Journal</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="action_settings">Settings</string>

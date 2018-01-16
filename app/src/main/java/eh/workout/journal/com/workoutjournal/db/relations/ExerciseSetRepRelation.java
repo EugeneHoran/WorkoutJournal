@@ -2,6 +2,7 @@ package eh.workout.journal.com.workoutjournal.db.relations;
 
 
 import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Relation;
 
 import java.util.List;
@@ -42,5 +43,11 @@ public class ExerciseSetRepRelation {
 
     public void setExerciseOrmEntity(List<ExerciseOrmEntity> exerciseOrmEntity) {
         this.exerciseOrmEntity = exerciseOrmEntity;
+    }
+
+    @Ignore
+    @Override
+    public String toString() {
+        return journalSetEntity.getExerciseId();
     }
 }

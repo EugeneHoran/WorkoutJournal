@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 
 import java.util.UUID;
 
+import eh.workout.journal.com.workoutjournal.util.DataHelper;
+
 @Entity(tableName = "plan_day_sets",
         foreignKeys = {@ForeignKey(entity = PlanDayEntity.class,
                 deferred = true,
@@ -20,6 +22,7 @@ public class PlanDaySetEntity {
     public String id;
     private String name;
     private String exerciseId;
+    private int exerciseEquipmentId;
     private int exerciseInputType;
     private String planTempId;
     @Ignore
@@ -33,6 +36,7 @@ public class PlanDaySetEntity {
         this.id = UUID.randomUUID().toString();
         this.name = set.getName();
         this.exerciseId = set.getId();
+        this.exerciseEquipmentId = set.getExerciseEquipmentId();
         this.exerciseInputType = set.getExerciseInputType();
         this.planTempId = planId;
     }
@@ -42,6 +46,7 @@ public class PlanDaySetEntity {
         this.id = UUID.randomUUID().toString();
         this.name = set.getName();
         this.exerciseId = set.getExerciseId();
+        this.exerciseEquipmentId = set.getExerciseEquipmentId();
         this.exerciseInputType = set.getExerciseInputType();
         this.planTempId = planId;
     }
@@ -71,6 +76,15 @@ public class PlanDaySetEntity {
         this.exerciseId = exerciseId;
     }
 
+
+    public int getExerciseEquipmentId() {
+        return exerciseEquipmentId;
+    }
+
+    public void setExerciseEquipmentId(int exerciseEquipmentId) {
+        this.exerciseEquipmentId = exerciseEquipmentId;
+    }
+
     public int getExerciseInputType() {
         return exerciseInputType;
     }
@@ -93,5 +107,10 @@ public class PlanDaySetEntity {
 
     public void setSetCompleted(boolean setCompleted) {
         this.setCompleted = setCompleted;
+    }
+
+    @Ignore
+    public String getNameWithEquipment() {
+        return name + " (" + DataHelper.EXERCISE_EQUIPMENT[exerciseEquipmentId] + ")";
     }
 }

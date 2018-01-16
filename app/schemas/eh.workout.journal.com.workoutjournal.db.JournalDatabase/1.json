@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0d9bd05b499e0233853290d9b7401ebd",
+    "identityHash": "a4100705027899f5f33c2fa3fe6d76ff",
     "entities": [
       {
         "tableName": "journal_date_entities",
@@ -395,7 +395,7 @@
       },
       {
         "tableName": "routine_sets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `exerciseId` TEXT, `exerciseInputType` INTEGER NOT NULL, `routineId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`routineId`) REFERENCES `routines`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `exerciseId` TEXT, `exerciseEquipmentId` INTEGER NOT NULL, `exerciseInputType` INTEGER NOT NULL, `routineId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`routineId`) REFERENCES `routines`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)",
         "fields": [
           {
             "fieldPath": "id",
@@ -414,6 +414,12 @@
             "columnName": "exerciseId",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "exerciseEquipmentId",
+            "columnName": "exerciseEquipmentId",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "exerciseInputType",
@@ -477,7 +483,7 @@
       },
       {
         "tableName": "plan_sets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `exerciseId` TEXT, `exerciseInputType` INTEGER NOT NULL, `planTempId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`planTempId`) REFERENCES `plans`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `exerciseId` TEXT, `exerciseEquipmentId` INTEGER NOT NULL, `exerciseInputType` INTEGER NOT NULL, `planTempId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`planTempId`) REFERENCES `plans`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)",
         "fields": [
           {
             "fieldPath": "id",
@@ -496,6 +502,12 @@
             "columnName": "exerciseId",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "exerciseEquipmentId",
+            "columnName": "exerciseEquipmentId",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "exerciseInputType",
@@ -571,7 +583,7 @@
       },
       {
         "tableName": "plan_day_sets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `exerciseId` TEXT, `exerciseInputType` INTEGER NOT NULL, `planTempId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`planTempId`) REFERENCES `plan_days`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `exerciseId` TEXT, `exerciseEquipmentId` INTEGER NOT NULL, `exerciseInputType` INTEGER NOT NULL, `planTempId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`planTempId`) REFERENCES `plan_days`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)",
         "fields": [
           {
             "fieldPath": "id",
@@ -590,6 +602,12 @@
             "columnName": "exerciseId",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "exerciseEquipmentId",
+            "columnName": "exerciseEquipmentId",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "exerciseInputType",
@@ -628,7 +646,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0d9bd05b499e0233853290d9b7401ebd\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a4100705027899f5f33c2fa3fe6d76ff\")"
     ]
   }
 }

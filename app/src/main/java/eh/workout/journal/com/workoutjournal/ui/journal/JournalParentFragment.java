@@ -17,6 +17,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import eh.workout.journal.com.workoutjournal.R;
 import eh.workout.journal.com.workoutjournal.databinding.FragmentJournalParentBinding;
+import eh.workout.journal.com.workoutjournal.db.entinty.Exercise;
 import eh.workout.journal.com.workoutjournal.db.entinty.PlanDayEntity;
 import eh.workout.journal.com.workoutjournal.ui.BaseFragment;
 import eh.workout.journal.com.workoutjournal.ui.calendar.CalendarBottomSheetFragment;
@@ -111,11 +113,19 @@ public class JournalParentFragment extends BaseFragment implements View.OnClickL
         binding.viewToolbar.imgPrev.setOnClickListener(this);
         binding.viewToolbar.imgNext.setOnClickListener(this);
         binding.viewToolbar.dateSelector.setOnClickListener(this);
+
         binding.fab.setOnClickListener(this);
         getJournalPage().setValue(datePage);
         if (savedInstanceState == null) {
             model.initJournalData(journalPagerAdapter.getTimestamp(datePage));
         }
+//        model.getExercises().observe(this, new Observer<List<Exercise>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Exercise> exercises) {
+//                if (exercises != null)
+//                    Log.e("Testing", exercises.size() + "");
+//            }
+//        });
     }
 
     public void initJournalData() {

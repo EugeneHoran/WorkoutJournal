@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (fm.findFragmentById(R.id.container) instanceof JournalParentFragment) {
             JournalParentFragment joanJournalParentFragment = (JournalParentFragment) fm.findFragmentById(R.id.container);
-            if (joanJournalParentFragment.getPage() != 5000) {
+            if (joanJournalParentFragment.getPage() != Constants.JOURNAL_PAGE_TODAY) {
                 joanJournalParentFragment.setCurrentItem();
                 return;
             }

@@ -56,6 +56,7 @@ public class RoutineViewModel extends AndroidViewModel {
                     UUID.randomUUID().toString(),
                     exerciseLiftEntity.getName(),
                     exerciseLiftEntity.getId(),
+                    exerciseLiftEntity.getExerciseEquipmentId(),
                     exerciseLiftEntity.getExerciseInputType(),
                     planId);
             planSetEntityList.add(routineSetEntity);

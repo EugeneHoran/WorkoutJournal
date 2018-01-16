@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 
 import java.util.List;
 
+import eh.workout.journal.com.workoutjournal.db.entinty.Exercise;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseGroupEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
@@ -42,6 +43,19 @@ public class JournalRepository {
         }
         return instance;
     }
+
+//    public void insertAllExercises(final List<Exercise> exercises) {
+//        appExecutors.diskIO().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                database.getExerciseLiftDao().insertExercises(exercises);
+//            }
+//        });
+//    }
+
+//    public LiveData<List<Exercise>> getExercises() {
+//        return database.getExerciseLiftDao().getExercises();
+//    }
 
     /**
      * Return All Dates

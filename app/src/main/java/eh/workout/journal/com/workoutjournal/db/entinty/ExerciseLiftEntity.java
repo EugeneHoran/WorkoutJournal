@@ -50,6 +50,7 @@ public class ExerciseLiftEntity implements Comparable<ExerciseLiftEntity> {
         this.recent = recent;
     }
 
+
     @NonNull
     public String getId() {
         return id;

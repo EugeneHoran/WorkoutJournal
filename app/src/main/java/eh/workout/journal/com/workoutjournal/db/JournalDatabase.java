@@ -4,6 +4,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
@@ -12,6 +13,7 @@ import eh.workout.journal.com.workoutjournal.db.dao.ExerciseLiftDao;
 import eh.workout.journal.com.workoutjournal.db.dao.JournalDao;
 import eh.workout.journal.com.workoutjournal.db.dao.PlanDao;
 import eh.workout.journal.com.workoutjournal.db.dao.RoutineDao;
+import eh.workout.journal.com.workoutjournal.db.entinty.Exercise;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseGroupEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseLiftEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.ExerciseOrmEntity;
@@ -25,6 +27,7 @@ import eh.workout.journal.com.workoutjournal.db.entinty.PlanSetEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineEntity;
 import eh.workout.journal.com.workoutjournal.db.entinty.RoutineSetEntity;
 import eh.workout.journal.com.workoutjournal.util.DataHelper;
+import eh.workout.journal.com.workoutjournal.util.loaders.ExerciseLoaders;
 
 
 @Database(entities = {
@@ -39,7 +42,11 @@ import eh.workout.journal.com.workoutjournal.util.DataHelper;
         PlanEntity.class,
         PlanSetEntity.class,
         PlanDayEntity.class,
-        PlanDaySetEntity.class}, version = 1)
+        PlanDaySetEntity.class
+//        Exercise.class
+},
+        version = 1)
+@TypeConverters({JournalTypeConverter.class})
 public abstract class JournalDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = BuildConfig.DB_NAME;
     private static JournalDatabase instance;
@@ -72,6 +79,7 @@ public abstract class JournalDatabase extends RoomDatabase {
                     @Override
                     public void run() {
                         JournalDatabase database = JournalDatabase.getInstance(context, executors);
+//                        database.getExerciseLiftDao().insertExercises(ExerciseLoaders.get().getExercises(context));
                         database.getExerciseLiftDao().insertGroupAndExercises(new DataHelper().generateExerciseGroups(), DataHelper.generateExerciseLifts());
                     }
                 });
