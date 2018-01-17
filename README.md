@@ -5,6 +5,7 @@ Track your exercises with the Workout Journal.
 
 # Note:  1/16/2018
 - App is going through a data change. Found an open-source database of exercises and details. Due to this, parts of the application need to be rearchitect. Database is a bit of a mess but will be updated shortly with new features and data. 
+- App is not working on lover than v21 due to vector drawables. Its an easy fix, just not a priority at the moment. 
 
 
 Readme coming soon...
