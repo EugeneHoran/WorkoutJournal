@@ -3,7 +3,8 @@ Track your exercises with the Workout Journal.
 
 [Download link for stable pre-alpba build](https://rink.hockeyapp.net/apps/2d9b423d8e47445a8334994e9c935167/app_versions/6)
 
-Note: Removed calendar temp. A new calendar will be in the next few versions. 
+# Note:  1/16/2018
+- App is going through a data change. Found an open-source database of exercises and details. Due to this, parts of the application need to be rearchitect. Database is a bit of a mess but will be updated shortly with new features and data. 
 
 
 Readme coming soon...
